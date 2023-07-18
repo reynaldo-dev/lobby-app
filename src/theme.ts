@@ -12,5 +12,8 @@ export const theme = extendTheme({
     dark: "#1F2937",
     black: "#000000",
     white: "#FFFFFF",
+
+    gray: "#f7f6fb",
+    text: "#201e33",
   },
 });

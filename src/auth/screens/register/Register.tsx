@@ -1,5 +1,14 @@
 import React from "react";
-import { Input, Button, Text, Box, Center, Image, Link } from "native-base";
+import {
+  Input,
+  Button,
+  Text,
+  Box,
+  Center,
+  Image,
+  Link,
+  View,
+} from "native-base";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Register() {
@@ -13,7 +22,7 @@ export default function Register() {
   };
 
   return (
-    <Box
+    <View
       flex={1}
       justifyContent="space-around"
       alignItems="center"
@@ -81,6 +90,6 @@ export default function Register() {
       >
         Ya tienes una cuenta? Inicia sesión
       </Link>
-    </Box>
+    </View>
   );
 }
