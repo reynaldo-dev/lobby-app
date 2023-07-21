@@ -19,6 +19,7 @@ const CustomPressable = ({ children, widthCard, heightCard, onPress }: Props) =>
         return (
           <Box
             style={{
+              marginRight: 10,
               transform: [
                 {
                   scale: isPressed ? 0.96 : 1,

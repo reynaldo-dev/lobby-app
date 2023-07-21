@@ -8,6 +8,8 @@ import { Icon, useTheme } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import Home from "../home/screens/home/Home";
 import CustomQRCode from "../shared/qr/CustomQRCode";
+import { Community } from "../home/screens/Community/Community";
+import { NavigationContainer } from "@react-navigation/native";
 
 const authRouter = createNativeStackNavigator<AuthStackParamList>();
 const privateStack = createNativeStackNavigator<PrivateStackParamList>();
@@ -57,6 +59,17 @@ export const PrivateStack = () => {
           ),
         }}
       />
+      <Tab.Screen
+        name="Community"
+        component={Community}
+        options={{
+          headerShown: false,
+
+          tabBarIcon: ({ color }) => (
+            <Icon as={AntDesign} name="addusergroup" size={6} color={color} />
+          ),
+        }}
+      />
 
       <Tab.Screen
         name="Profile"
@@ -69,6 +82,8 @@ export const PrivateStack = () => {
           ),
         }}
       />
+
+
     </Tab.Navigator>
   );
 };
