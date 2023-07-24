@@ -4,7 +4,7 @@ import { ICommunity } from '../interfaces/community.interface';
 export const communitiesService = createApi({
   reducerPath: 'communitiesService',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://e45d-138-186-250-179.ngrok-free.app/api',
+    baseUrl: 'http://dd11-138-186-250-179.ngrok-free.app/api',
   }),
   endpoints: (builder) => ({
     getCommunities: builder.query<ICommunity, void>({
@@ -13,8 +13,14 @@ export const communitiesService = createApi({
     getCountMembers: builder.query<void, String>({
       query: (id: string) => `/communities/${id}/members/count`,
     }),
+    getSearchCommunities: builder.query<ICommunity, String>({
+      query: (name: string) => `/communities/search/${name}`,
+    }),
   }),
 });
 
-export const { useGetCommunitiesQuery, useGetCountMembersQuery } =
-  communitiesService;
+export const {
+  useGetCommunitiesQuery,
+  useGetCountMembersQuery,
+  useLazyGetSearchCommunitiesQuery,
+} = communitiesService;

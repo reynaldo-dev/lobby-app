@@ -1,13 +1,18 @@
-import { Box, HStack, Heading, Stack, Text } from 'native-base';
+import { Box, HStack, Heading, Pressable, Stack, Text } from 'native-base';
 import { ICommunity } from '../../../../interfaces/community.interface';
 import { useGetCountMembersQuery } from '../../../../services/communities.service';
-import CustomPressable from '../../../../shared/components/CustomPressable';
 
+type DimensionProp = number | string | (number | string)[];
 type Props = {
     community: ICommunity;
-}
+    widthCard: DimensionProp;
+    heightCard: DimensionProp;
+    marginTop?: number;
+    marginRight?: number;
+};
 
-const CommunityCard = ({ community }: Props) => {
+const CommunityCard = ({ community, widthCard, heightCard, marginTop = 0, marginRight = 0 }: Props) => {
+
     const onPress = () => {
         console.log("navigate to community page")
     }
@@ -15,52 +20,65 @@ const CommunityCard = ({ community }: Props) => {
     const { data: communityData } = useGetCountMembersQuery(community.id);
 
     return (
-        <CustomPressable widthCard={["80", "80", "4/6"]} heightCard={["40", "48", "48"]} onPress={onPress}>
-            <Stack
-                direction={["column", "column", "row"]}
-                rounded="lg"
-                alignSelf="center"
-                overflow="hidden"
-                width={["80", "80", "4/6"]}
-                height={["48", "48", "48"]}
-                shadow="1"
-                backgroundColor="coolGray.50"
-            >
-                <Box w={["100%", "100%", "40"]} h={["20%", "30%", "30"]}>
-                    <Box w={["100%", "100%", "40"]} h="100%" backgroundColor={community?.color}></Box>
-                </Box>
-                <Stack p="4" space={[3, 3, 1.5]} justifyContent="space-around">
-                    <Stack>
-                        <Heading size="md" ml="-1">
-                            {community?.name}
-                        </Heading>
-                    </Stack>
-                    <Text fontWeight="400">
-                        {community?.description}
-                    </Text>
-                    <HStack alignItems="center" justifyContent="flex-end">
-                        <Box
-                            bgColor={community?.color}
-                            p={2.5}
-                            rounded={"full"}
-                        >
-                            {
-                                communityData?.totalMembers === 0
-                                    ?
-                                    <Text color="white" fontSize="xs" fontWeight="bold">
-                                        Aún no hay miembros
-                                    </Text>
-                                    :
-                                    <Text color="white" fontSize="xs" fontWeight="bold">
-                                        {communityData?.totalMembers} miembros
-                                    </Text>
-
-                            }
+        <Pressable onPress={onPress}>
+            {({ isPressed }) => (
+                <Box
+                    style={{
+                        marginRight: marginRight,
+                        marginBottom: marginTop,
+                        marginTop: marginTop,
+                        transform: [{ scale: isPressed ? 0.96 : 1 }],
+                    }}
+                    width={widthCard}
+                    height={heightCard}
+                >
+                    <Stack
+                        direction={"column"}
+                        rounded="lg"
+                        alignSelf="center"
+                        overflow="hidden"
+                        width={widthCard}
+                        height={heightCard}
+                        shadow="1"
+                        backgroundColor="coolGray.50"
+                    >
+                        <Box w={"100%"} h={"20%"}>
+                            <Box w={"100%"} h="100%" backgroundColor={community?.color}></Box>
                         </Box>
-                    </HStack>
-                </Stack>
-            </Stack>
-        </CustomPressable>
+                        <Stack p="4" space={[3, 3, 1.5]} justifyContent="space-around">
+                            <Stack>
+                                <Heading size="md" ml="-1">
+                                    {community?.name}
+                                </Heading>
+                            </Stack>
+                            <Text fontWeight="400">
+                                {community?.description}
+                            </Text>
+                            <HStack alignItems="center" justifyContent="flex-end">
+                                <Box
+                                    bgColor={community?.color}
+                                    p={2.5}
+                                    rounded={"full"}
+                                >
+                                    {
+                                        communityData?.totalMembers === 0
+                                            ?
+                                            <Text color="white" fontSize="xs" fontWeight="bold">
+                                                Aún no hay miembros
+                                            </Text>
+                                            :
+                                            <Text color="white" fontSize="xs" fontWeight="bold">
+                                                {communityData?.totalMembers} miembros
+                                            </Text>
+                                    }
+                                </Box>
+                            </HStack>
+                        </Stack>
+                    </Stack>
+                </Box>
+            )}
+        </Pressable>
     )
 }
-export default CommunityCard
+
+export default CommunityCard;

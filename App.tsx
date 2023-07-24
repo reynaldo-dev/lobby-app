@@ -2,7 +2,7 @@ import { NativeBaseProvider } from "native-base";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { useState } from "react";
-import { AuthStack, PrivateStack } from "./src/routing/RouterStack";
+import { AuthStack, BottomTabNavigation, RootNavigator } from "./src/routing/RouterStack";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { theme } from "./src/theme";
 import { Provider } from "react-redux";
@@ -16,7 +16,7 @@ export default function App() {
       <Provider store={store}>
         <NavigationContainer>
           <NativeBaseProvider theme={theme}>
-            {isAuth ? <PrivateStack /> : <AuthStack />}
+            {isAuth ? <RootNavigator /> : <AuthStack />}
           </NativeBaseProvider>
         </NavigationContainer>
       </Provider>

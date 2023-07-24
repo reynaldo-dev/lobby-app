@@ -7,3 +7,11 @@ export type PrivateStackParamList = {
   Home: undefined;
   Profile: undefined;
 };
+
+export type RootStackParamList = {
+  Auth: AuthStackParamList;
+  Root: PrivateStackParamList;
+  QRCode: undefined;
+  Community: undefined;
+  SearchCommunity: undefined;
+};

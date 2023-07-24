@@ -1,29 +1,38 @@
-import React from "react";
+import { AntDesign } from "@expo/vector-icons";
 import {
   Box,
   Center,
+  Divider,
+  Icon,
   Image,
   ScrollView,
   Text,
-  Icon,
-  Divider,
   View,
 } from "native-base";
-import { AntDesign } from "@expo/vector-icons";
-
+import React from "react";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import image from "../../../../assets/icon.png";
+import { RootStackParamList } from "../../../routing/navigation-types";
 import Layout from "../../../shared/layout/Layout";
 
 export default function Profile() {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+
+  const handleQR = () => {
+    navigation.navigate("QRCode")
+  }
+
   return (
     <Layout>
-      <ScrollView>
+      <ScrollView >
         <Box mx={5} flexDir="row" justifyContent="space-between">
-          <Icon as={AntDesign} name="qrcode" size={6} color="primary" />
+          <Icon as={AntDesign} name="qrcode" size={6} color="primary" onPress={handleQR} />
           <Icon as={AntDesign} name="edit" size={6} color="primary" />
         </Box>
         <Center>
           <Image
-            source={require("../../../../assets/icon.png")}
+            source={image}
             alt="Logo"
             width={150}
             height={150}
