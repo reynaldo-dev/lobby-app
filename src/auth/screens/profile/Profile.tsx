@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Center,
@@ -12,13 +12,29 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 
 import Layout from "../../../shared/layout/Layout";
+import MainModal from "../../../shared/components/modal/MainModal";
+import CustomQRCode from "../../../shared/qr/CustomQRCode";
 
 export default function Profile() {
+  const [showQR, setShowQR] = useState<boolean>(false);
+  const handleShowQR = () => {
+    setShowQR(!showQR);
+  };
   return (
     <Layout>
+      <MainModal isOpen={showQR} setIsOpen={setShowQR}>
+        <CustomQRCode />
+      </MainModal>
       <ScrollView>
         <Box mx={5} flexDir="row" justifyContent="space-between">
-          <Icon as={AntDesign} name="qrcode" size={6} color="primary" />
+          <Icon
+            as={AntDesign}
+            name="qrcode"
+            size={6}
+            color="primary"
+            onPress={handleShowQR}
+          />
+
           <Icon as={AntDesign} name="edit" size={6} color="primary" />
         </Box>
         <Center>
@@ -30,10 +46,10 @@ export default function Profile() {
           />
           <Box>
             <Text fontSize="xl" fontWeight="bold" color="text">
-              John Doe
+              Reynaldo Martinez
             </Text>
             <Text fontSize="sm" color="text" textAlign="center">
-              Funcinario
+              Desarrollador
             </Text>
           </Box>
         </Center>

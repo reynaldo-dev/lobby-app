@@ -1,5 +1,14 @@
 import React from "react";
-import { Input, Button, Text, Box, Center, Image, Link } from "native-base";
+import {
+  Input,
+  Button,
+  Text,
+  Box,
+  Center,
+  Image,
+  Link,
+  StatusBar,
+} from "native-base";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Login() {
