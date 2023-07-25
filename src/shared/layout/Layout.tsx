@@ -3,11 +3,12 @@ import React from "react";
 
 interface LayoutProps {
   children: React.ReactNode;
+  backgroundColor?: string;
 }
-export default function Layout({ children }: LayoutProps) {
+export default function Layout({ children, backgroundColor }: LayoutProps) {
   return (
-    <View backgroundColor="white" flex={1}>
-      <StatusBar backgroundColor="white" barStyle="dark-content" />
+    <View backgroundColor={backgroundColor} flex={1}>
+      <StatusBar backgroundColor={backgroundColor} barStyle="dark-content" />
       {children}
     </View>
   );

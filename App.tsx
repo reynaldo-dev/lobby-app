@@ -7,7 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { theme } from "./src/theme";
 
 export default function App() {
-  const [isAuth, setIsAuth] = useState(true);
+  const [isAuth, setIsAuth] = useState(false);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

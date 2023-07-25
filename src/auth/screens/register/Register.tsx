@@ -1,95 +1,110 @@
-import React from "react";
+import React, { useState } from "react";
 import {
-  Input,
-  Button,
+  StyleSheet,
   Text,
-  Box,
-  Center,
-  Image,
-  Link,
+  TextInput,
+  TouchableOpacity,
   View,
-} from "native-base";
+} from "react-native";
+import Layout from "../../../shared/layout/Layout";
+import { theme } from "../../../theme";
+import { Link } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Register() {
-  const { navigate } = useNavigation();
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const { colors } = theme;
+  const navigation = useNavigation();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-    console.log("Username:", username);
+    console.log("Email:", email);
     console.log("Password:", password);
   };
 
   return (
-    <View
-      flex={1}
-      justifyContent="space-around"
-      alignItems="center"
-      padding={20}
-      backgroundColor="primary"
-    >
-      <Center>
-        <Image
-          source={require("../../../../assets/icon.png")}
-          alt="Logo"
-          width={150}
-          height={150}
-        />
-      </Center>
-      <Center>
-        <Text color="white" fontSize={20} fontWeight="bold" marginBottom={5}>
-          Bienvenido, por favor registrese
+    <Layout backgroundColor={colors.background}>
+      <View style={styles.container}>
+        <Text style={{ ...styles.title, color: colors.primary }}>
+          Registrate
         </Text>
-      </Center>
-      <Center>
-        <Input
-          borderColor="white"
-          placeholder="Nombre de usuario"
-          placeholderTextColor="white"
-          onChangeText={(text) => setUsername(text)}
-          value={username}
-          marginBottom={5}
-        />
-        <Input
-          borderColor="white"
-          placeholder="Email"
-          placeholderTextColor="white"
-          onChangeText={(text) => setUsername(text)}
-          value={username}
-          marginBottom={5}
-        />
-
-        <Input
-          borderColor="white"
-          placeholder="Contraseña"
-          placeholderTextColor="white"
-          secureTextEntry
-          onChangeText={(text) => setPassword(text)}
-          value={password}
-        />
-      </Center>
-
-      <Button
-        onPress={handleLogin}
-        marginTop={5}
-        backgroundColor="white"
-        width="100%"
-        _dark={{ backgroundColor: "white" }}
-      >
-        <Text color="primary" fontWeight="bold">
-          Registrarse
-        </Text>
-      </Button>
-
-      <Link
-        marginTop={5}
-        alignSelf="flex-start"
-        _text={{ color: "white", fontSize: "sm", fontWeight: "bold" }}
-        onPress={() => navigate("Login" as never)}
-      >
-        Ya tienes una cuenta? Inicia sesión
-      </Link>
-    </View>
+        <View style={styles.form}>
+          <TextInput
+            style={{
+              ...styles.input,
+              color: colors.text,
+              backgroundColor: colors.white,
+            }}
+            placeholder="Email"
+            placeholderTextColor={colors.primary}
+            onChangeText={(text) => setEmail(text)}
+            value={email}
+            autoCapitalize="none"
+          />
+          <TextInput
+            style={{
+              ...styles.input,
+              color: colors.text,
+              backgroundColor: colors.white,
+            }}
+            placeholder="Password"
+            placeholderTextColor={colors.primary}
+            secureTextEntry
+            onChangeText={(text) => setPassword(text)}
+            value={password}
+          />
+          <TouchableOpacity
+            style={{ ...styles.loginButton, backgroundColor: colors.primary }}
+            onPress={handleLogin}
+          >
+            <Text style={styles.loginButtonText}>Login</Text>
+          </TouchableOpacity>
+        </View>
+        <Link
+          _text={{ color: colors.primary }}
+          mt={5}
+          onPress={() => navigation.navigate("Login")}
+        >
+          Ya tienes una cuenta?
+        </Link>
+      </View>
+    </Layout>
   );
 }
+
+const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
+  },
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  title: {
+    fontSize: 40,
+    marginBottom: 30,
+  },
+  form: {
+    width: "80%",
+  },
+  input: {
+    height: 50,
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    marginBottom: 20,
+    fontSize: 16,
+  },
+  loginButton: {
+    height: 50,
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  loginButtonText: {
+    color: "#fff",
+    fontSize: 18,
+  },
+});
