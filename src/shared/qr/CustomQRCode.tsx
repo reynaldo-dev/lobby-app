@@ -8,11 +8,11 @@ import { useNavigation } from "@react-navigation/native";
 export default function CustomQRCode() {
   const navigation = useNavigation()
   const value = {
-    name: "John Doe",
-    email: "johndoe@gmail.com",
-    phone: "123456789",
-    address: "Calle 123",
-    city: "Bogota",
+    id: "hdgghs-44-djhjsd",
+    nombre: "Silas Velasquez",
+    rol: "Administrador",
+    cedula: "123456789",
+    activo: true,
   };
   return (
     <>
