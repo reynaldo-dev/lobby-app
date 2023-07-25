@@ -49,7 +49,7 @@ export const PrivateStack = () => {
     >
       <Tab.Screen
         name="Home"
-        component={CustomQRCode}
+        component={Home}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
