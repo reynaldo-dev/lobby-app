@@ -9,7 +9,7 @@ import { Provider } from "react-redux";
 import { store } from "./src/store/store";
 
 export default function App() {
-  const [isAuth, setIsAuth] = useState(true);
+  const [isAuth, setIsAuth] = useState(false);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
