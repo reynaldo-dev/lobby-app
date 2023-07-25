@@ -1,8 +1,12 @@
+import { Icon } from "native-base";
 import React from "react";
-import { View, Text, Center } from "native-base";
+import { View, Text, TouchableOpacity } from "react-native";
 import SvgQRCode from "react-native-qrcode-svg";
+import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from "@react-navigation/native";
 
 export default function CustomQRCode() {
+  const navigation = useNavigation()
   const value = {
     id: "hdgghs-44-djhjsd",
     nombre: "Silas Velasquez",
@@ -11,18 +15,19 @@ export default function CustomQRCode() {
     activo: true,
   };
   return (
-    <View justifyContent="center" alignItems="center" margin={2} height="100%">
-      <Center>
-        <Text
-          fontSize="xl"
-          fontWeight="bold"
-          color="secondary"
-          marginBottom={2}
-        >
-          Tu carnet digital
-        </Text>
-      </Center>
-      <SvgQRCode size={200} value={JSON.stringify(value)} />
-    </View>
+    <>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <View style={{ position: 'absolute', top: 10, left: 10 }}>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+          >
+            <AntDesign name="left" size={24} color="black" />
+          </TouchableOpacity>
+        </View>
+        <SvgQRCode value={JSON.stringify(value)} />
+      </View>
+    </>
+
+
   );
 }

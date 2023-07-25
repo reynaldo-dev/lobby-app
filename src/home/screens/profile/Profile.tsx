@@ -1,55 +1,48 @@
-import React, { useState } from "react";
+import { AntDesign } from "@expo/vector-icons";
 import {
   Box,
   Center,
+  Divider,
+  Icon,
   Image,
   ScrollView,
   Text,
-  Icon,
-  Divider,
   View,
 } from "native-base";
-import { AntDesign } from "@expo/vector-icons";
-
+import React from "react";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import image from "../../../../assets/icon.png";
+import { RootStackParamList } from "../../../routing/navigation-types";
 import Layout from "../../../shared/layout/Layout";
-import MainModal from "../../../shared/components/modal/MainModal";
-import CustomQRCode from "../../../shared/qr/CustomQRCode";
 
 export default function Profile() {
-  const [showQR, setShowQR] = useState<boolean>(false);
-  const handleShowQR = () => {
-    setShowQR(!showQR);
-  };
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>()
+
+  const handleQR = () => {
+    navigation.navigate("QRCode")
+  }
+
   return (
     <Layout>
-      <MainModal isOpen={showQR} setIsOpen={setShowQR}>
-        <CustomQRCode />
-      </MainModal>
-      <ScrollView>
+      <ScrollView >
         <Box mx={5} flexDir="row" justifyContent="space-between">
-          <Icon
-            as={AntDesign}
-            name="qrcode"
-            size={6}
-            color="primary"
-            onPress={handleShowQR}
-          />
-
+          <Icon as={AntDesign} name="qrcode" size={6} color="primary" onPress={handleQR} />
           <Icon as={AntDesign} name="edit" size={6} color="primary" />
         </Box>
         <Center>
           <Image
-            source={require("../../../../assets/icon.png")}
+            source={image}
             alt="Logo"
             width={150}
             height={150}
           />
           <Box>
             <Text fontSize="xl" fontWeight="bold" color="text">
-              Reynaldo Martinez
+              John Doe
             </Text>
             <Text fontSize="sm" color="text" textAlign="center">
-              Desarrollador
+              Funcinario
             </Text>
           </Box>
         </Center>
