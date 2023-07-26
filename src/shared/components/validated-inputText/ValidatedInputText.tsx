@@ -65,7 +65,7 @@ export default function ValidatedInputText({
 const styles = StyleSheet.create({
   input: {
     fontSize: 16,
-    color: theme.colors.primary,
+
     backgroundColor: "#fff",
     width: "100%",
   },

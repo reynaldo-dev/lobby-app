@@ -22,7 +22,7 @@ import {
   useAppSelector,
 } from "../../../redux/store/store";
 import { theme } from "../../../theme";
-import { logout } from "../../../redux/slices/user/user.slice";
+import { logout } from "../../../redux/slices/user/user.thunk";
 
 export default function Profile() {
   const { user } = useAppSelector((state: RootState) => state.user);
