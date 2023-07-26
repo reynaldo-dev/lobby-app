@@ -6,10 +6,10 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import Layout from "../../../shared/layout/Layout";
-import { theme } from "../../../theme";
 import { Link } from "native-base";
+import { theme } from "../../../theme";
 import { useNavigation } from "@react-navigation/native";
+import Layout from "../../../shared/layout/Layout";
 
 export default function Register() {
   const { colors } = theme;
@@ -64,7 +64,7 @@ export default function Register() {
         <Link
           _text={{ color: colors.primary }}
           mt={5}
-          onPress={() => navigation.navigate("Login")}
+          onPress={() => navigation.navigate("Login" as never)}
         >
           Ya tienes una cuenta?
         </Link>
