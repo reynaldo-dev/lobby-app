@@ -1,9 +1,11 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { communitiesService } from '../services/communities.service';
+import { configureStore } from "@reduxjs/toolkit";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { communitiesService } from "../communities.service";
+import user from "../slices/user/user.slice";
 
 export const store = configureStore({
   reducer: {
+    user,
     [communitiesService.reducerPath]: communitiesService.reducer,
   },
   middleware: (getDefaultMiddleware) =>

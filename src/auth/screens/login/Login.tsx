@@ -1,72 +1,131 @@
-import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { Formik } from "formik";
 import {
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+  Box,
+  FormControl,
+  Input,
+  Link,
+  WarningOutlineIcon,
+  useToast,
+} from "native-base";
+import React, { useEffect } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import * as Yup from "yup";
 import Layout from "../../../shared/layout/Layout";
 import { theme } from "../../../theme";
-import { Link } from "native-base";
-import { useNavigation } from "@react-navigation/native";
+import {
+  RootState,
+  useAppDispatch,
+  useAppSelector,
+} from "../../../redux/store/store";
+import { login } from "../../../redux/slices/user/user.thunk";
+import ValidatedInputText from "../../../shared/components/validated-inputText/ValidatedInputText";
+import CustomToast from "../../../shared/components/toast/CustomToast";
+import TextField from "../../../shared/components/TextField/TextField";
+
+const validationLoginSchema = Yup.object().shape({
+  email: Yup.string().email("Email invalido").required("Email es requerido"),
+});
+interface LoginFormValues {
+  email: string;
+  password: string;
+}
 
 export default function Login() {
   const { colors } = theme;
+  const dispatch = useAppDispatch();
+  const initialValues: LoginFormValues = { email: "", password: "" };
   const navigation = useNavigation();
+  const toast = useToast();
+  const { error, isAuth } = useAppSelector((state: RootState) => state.user);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleLogin = () => {
-    console.log("Email:", email);
-    console.log("Password:", password);
+  const onLogin = (values: LoginFormValues) => {
+    dispatch(login(values));
+    if (error) {
+      toast.show({
+        render: () => <CustomToast message={error} color={colors.danger} />,
+        placement: "top",
+      });
+    }
   };
 
   return (
-    <Layout backgroundColor={colors.background}>
+    <Layout backgroundColor={colors.white}>
       <View style={styles.container}>
         <Text style={{ ...styles.title, color: colors.primary }}>
           Bienvenido
         </Text>
-        <View style={styles.form}>
-          <TextInput
-            style={{
-              ...styles.input,
-              color: colors.text,
-              backgroundColor: colors.white,
-            }}
-            placeholder="Email"
-            placeholderTextColor={colors.primary}
-            onChangeText={(text) => setEmail(text)}
-            value={email}
-            autoCapitalize="none"
-          />
-          <TextInput
-            style={{
-              ...styles.input,
-              color: colors.text,
-              backgroundColor: colors.white,
-            }}
-            placeholder="Password"
-            placeholderTextColor={colors.primary}
-            secureTextEntry
-            onChangeText={(text) => setPassword(text)}
-            value={password}
-          />
-          <TouchableOpacity
-            style={{ ...styles.loginButton, backgroundColor: colors.primary }}
-            onPress={handleLogin}
-          >
-            <Text style={styles.loginButtonText}>Login</Text>
-          </TouchableOpacity>
-        </View>
+
+        <Formik
+          initialValues={initialValues}
+          onSubmit={onLogin}
+          validationSchema={validationLoginSchema}
+        >
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            values,
+            errors,
+            touched,
+          }) => (
+            <View style={styles.form}>
+              <ValidatedInputText
+                bgColor={colors.muted["200"]}
+                isInvalid={errors.email ? true : false}
+                formControlLabel="Correo electrónico"
+                placeholder="johndoe@example.com"
+                placeholderTextColor={colors.muted["400"]}
+                onChangeText={handleChange("email")}
+                value={values.email}
+                errors={errors.email}
+              />
+
+              {/* <Box alignItems="center" mb={10} mt={5}>
+                <FormControl w="100%" maxW="300px">
+                  <Input
+                    bgColor={colors.muted["200"]}
+                    style={styles.input}
+                    placeholder="Password"
+                    placeholderTextColor={colors.muted["400"]}
+                    onChangeText={handleChange("password")}
+                    onBlur={handleBlur("password")}
+                    value={values.password}
+                    autoCapitalize="none"
+                    type="password"
+                    borderColor="transparent"
+                  />
+                </FormControl>
+              </Box> */}
+
+              <TextField
+                isInvalid={errors.password ? true : false}
+                placeholder="********"
+                placeholderTextColor={colors.muted["400"]}
+                onChangeText={handleChange("password")}
+                value={values.password}
+                errors={errors.password}
+              />
+              <TouchableOpacity
+                style={{
+                  ...styles.loginButton,
+                  backgroundColor: colors.primary,
+                }}
+                onPress={() => {
+                  handleSubmit();
+                }}
+              >
+                <Text style={styles.loginButtonText}>Iniciar Sesión</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        </Formik>
         <Link
           _text={{ color: colors.primary }}
           mt={5}
-          onPress={() => navigation.navigate("Register")}
+          onPress={() => navigation.navigate("Register" as never)}
         >
-          No tienes una cuenta?
+          ¿No tienes una cuenta? Regístrate
         </Link>
       </View>
     </Layout>
@@ -82,6 +141,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: theme.colors.white,
   },
   title: {
     fontSize: 40,
@@ -91,20 +151,30 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   input: {
-    height: 50,
-    borderRadius: 10,
-    paddingHorizontal: 15,
-    marginBottom: 20,
     fontSize: 16,
+    color: theme.colors.primary,
+    backgroundColor: "#fff",
   },
   loginButton: {
-    height: 50,
-    borderRadius: 10,
+    height: 40,
+    borderRadius: 2,
     alignItems: "center",
     justifyContent: "center",
   },
   loginButtonText: {
     color: "#fff",
     fontSize: 18,
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    height: 50,
+    paddingHorizontal: 15,
+    marginBottom: 20,
+    fontSize: 16,
+    backgroundColor: "#fff",
+  },
+  icon: {
+    marginRight: 10,
   },
 });
