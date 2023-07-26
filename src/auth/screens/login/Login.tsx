@@ -1,27 +1,21 @@
 import { useNavigation } from "@react-navigation/native";
 import { Formik } from "formik";
-import {
-  Box,
-  FormControl,
-  Input,
-  Link,
-  WarningOutlineIcon,
-  useToast,
-} from "native-base";
-import React, { useEffect } from "react";
+import { Link, useToast } from "native-base";
+import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import * as Yup from "yup";
-import Layout from "../../../shared/layout/Layout";
-import { theme } from "../../../theme";
+import { login } from "../../../redux/slices/user/user.thunk";
 import {
   RootState,
   useAppDispatch,
   useAppSelector,
 } from "../../../redux/store/store";
-import { login } from "../../../redux/slices/user/user.thunk";
-import ValidatedInputText from "../../../shared/components/validated-inputText/ValidatedInputText";
-import CustomToast from "../../../shared/components/toast/CustomToast";
 import TextField from "../../../shared/components/TextField/TextField";
+import CustomToast from "../../../shared/components/toast/CustomToast";
+import ValidatedInputText from "../../../shared/components/validated-inputText/ValidatedInputText";
+import Layout from "../../../shared/layout/Layout";
+import { theme } from "../../../theme";
+import { setDefaultState } from "../../../redux/slices/user/user.slice";
 
 const validationLoginSchema = Yup.object().shape({
   email: Yup.string().email("Email invalido").required("Email es requerido"),
@@ -44,8 +38,9 @@ export default function Login() {
     if (error) {
       toast.show({
         render: () => <CustomToast message={error} color={colors.danger} />,
-        placement: "top",
+        placement: "top-right",
       });
+      dispatch(setDefaultState());
     }
   };
 
@@ -81,23 +76,6 @@ export default function Login() {
                 errors={errors.email}
               />
 
-              {/* <Box alignItems="center" mb={10} mt={5}>
-                <FormControl w="100%" maxW="300px">
-                  <Input
-                    bgColor={colors.muted["200"]}
-                    style={styles.input}
-                    placeholder="Password"
-                    placeholderTextColor={colors.muted["400"]}
-                    onChangeText={handleChange("password")}
-                    onBlur={handleBlur("password")}
-                    value={values.password}
-                    autoCapitalize="none"
-                    type="password"
-                    borderColor="transparent"
-                  />
-                </FormControl>
-              </Box> */}
-
               <TextField
                 isInvalid={errors.password ? true : false}
                 placeholder="********"
@@ -111,9 +89,7 @@ export default function Login() {
                   ...styles.loginButton,
                   backgroundColor: colors.primary,
                 }}
-                onPress={() => {
-                  handleSubmit();
-                }}
+                onPress={handleSubmit as never}
               >
                 <Text style={styles.loginButtonText}>Iniciar Sesión</Text>
               </TouchableOpacity>

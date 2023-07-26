@@ -14,12 +14,14 @@ export const login = createAsyncThunk(
   async (payload: LoginPayload) => {
     try {
       const user = await http.post<Authentication>("/auth", payload);
-      return {
+      const authState: Authentication = {
         access_token: user.data.access_token,
         user: user.data.user,
         isAuth: true,
         error: null,
       };
+      await AsyncStorage.setItem("authState", JSON.stringify(authState));
+      return authState;
     } catch (error: any) {
       return {
         access_token: null,
@@ -53,3 +55,13 @@ export const getUserCredentials = createAsyncThunk(
     }
   }
 );
+
+export const logout = createAsyncThunk("user/logout", async () => {
+  await AsyncStorage.removeItem("authState");
+  return {
+    access_token: null,
+    user: null,
+    isAuth: false,
+    error: null,
+  };
+});
