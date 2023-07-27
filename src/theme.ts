@@ -17,6 +17,8 @@ export const theme = extendTheme({
     darkGray: "#6b6b6b",
 
     gray: "#f7f6fb",
-    text: "#201e33",
+    text: {
+      900: "#1F2937",
+    },
   },
 });

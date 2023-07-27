@@ -1,16 +1,15 @@
-import React from "react";
-import { View } from "react-native";
-import { CommunityList } from "../Community/components/CommunityList";
-import { CustomAlert } from "../../../shared/components/CustomAlert";
-import { SearchBarCustom } from "../Community/components/SearchBarCustom";
 import { Box, ScrollView, Text } from "native-base";
-import CardEvent from "../Events/components/CardEvent";
+import React from "react";
+import { CustomAlert } from "../../../shared/components/CustomAlert";
 import Layout from "../../../shared/layout/Layout";
 import { theme } from "../../../theme";
+import { CommunityList } from "../Community/components/CommunityList";
+import { SearchBarCustom } from "../Community/components/SearchBarCustom";
+import CardEvent from "../Events/components/CardEvent";
 
 export default function Home() {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
-  console.log(apiUrl, "apiUrl");
+
   return (
     <Layout backgroundColor={theme.colors.background}>
       <ScrollView>
@@ -21,7 +20,13 @@ export default function Home() {
           place="Davivienda"
           time="4:00 pm"
         />
-        <Text ml={5} my={3} fontSize={"2xl"} bold>
+        <Text
+          ml={5}
+          my={3}
+          fontSize={"xl"}
+          bold
+          color={theme.colors.muted["400"]}
+        >
           Mis comunidades
         </Text>
         <CommunityList />
