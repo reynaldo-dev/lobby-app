@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { communitiesService } from "../communities.service";
+import { communitiesService } from "../services/communities.service";
 import user from "../slices/user/user.slice";
 
 export const store = configureStore({

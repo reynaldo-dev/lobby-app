@@ -13,7 +13,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import CommunityCard from "./components/CommunityCard";
-import { useLazyGetSearchCommunitiesQuery } from "../../../redux/communities.service";
+import { useLazyGetSearchCommunitiesQuery } from "../../../redux/services/communities.service";
 import { ICommunity } from "../../../interfaces/community.interface";
 
 export const SearchCommunity = () => {

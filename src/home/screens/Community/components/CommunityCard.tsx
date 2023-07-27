@@ -1,6 +1,8 @@
 import { Box, HStack, Heading, Pressable, Stack, Text } from "native-base";
 import { ICommunity } from "../../../../interfaces/community.interface";
-import { useGetCountMembersQuery } from "../../../../redux/communities.service";
+import { useGetCountMembersQuery } from "../../../../redux/services/communities.service";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { RootStackParamList } from "../../../../routing/navigation-types";
 
 type DimensionProp = number | string | (number | string)[];
 type Props = {
@@ -18,8 +20,9 @@ const CommunityCard = ({
   marginTop = 0,
   marginRight = 0,
 }: Props) => {
+  const navigation = useNavigation();
   const onPress = () => {
-    console.log("navigate to community page");
+    navigation.navigate("Community", { id: community.id });
   };
 
   const { data: communityData } = useGetCountMembersQuery(community.id);

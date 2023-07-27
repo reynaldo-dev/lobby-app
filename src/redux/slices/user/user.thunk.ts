@@ -20,7 +20,8 @@ export const login = createAsyncThunk(
         isAuth: true,
         error: null,
       };
-      await AsyncStorage.setItem("authState", JSON.stringify(authState));
+      const { error, ...rest } = authState;
+      await AsyncStorage.setItem("authState", JSON.stringify(rest));
       return authState;
     } catch (error: any) {
       return {
@@ -43,7 +44,7 @@ export const getUserCredentials = createAsyncThunk(
         access_token: auth.access_token,
         user: auth.user,
         isAuth: auth.isAuth,
-        error: auth.error,
+        error: null,
       };
     } else {
       return {

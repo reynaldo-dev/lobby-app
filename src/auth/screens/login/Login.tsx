@@ -40,7 +40,6 @@ export default function Login() {
         render: () => <CustomToast message={error} color={colors.danger} />,
         placement: "top-right",
       });
-      dispatch(setDefaultState());
     }
   };
 

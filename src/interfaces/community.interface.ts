@@ -28,3 +28,24 @@ export interface User {
   createdAt: Date;
   rolId: string;
 }
+
+export interface ICommunityResponse {
+  id: string;
+  name: string;
+  description: string;
+  color: string;
+  createdAt: string;
+  Event: Event[];
+}
+
+export interface Event {
+  id: string;
+  title: string;
+  description: string;
+  status: string;
+  isPrivate: string;
+  createdAt: string;
+  place: string;
+  communityId: string;
+  dateTime: string;
+}
