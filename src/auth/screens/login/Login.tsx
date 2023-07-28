@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { Formik } from "formik";
 import { Link, useToast } from "native-base";
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import * as Yup from "yup";
 import { login } from "../../../redux/slices/user/user.thunk";
@@ -15,7 +15,6 @@ import CustomToast from "../../../shared/components/toast/CustomToast";
 import ValidatedInputText from "../../../shared/components/validated-inputText/ValidatedInputText";
 import Layout from "../../../shared/layout/Layout";
 import { theme } from "../../../theme";
-import { setDefaultState } from "../../../redux/slices/user/user.slice";
 
 const validationLoginSchema = Yup.object().shape({
   email: Yup.string().email("Email invalido").required("Email es requerido"),
@@ -27,14 +26,15 @@ interface LoginFormValues {
 
 export default function Login() {
   const { colors } = theme;
+  const { error, isAuth } = useAppSelector((state: RootState) => state.user);
   const dispatch = useAppDispatch();
   const initialValues: LoginFormValues = { email: "", password: "" };
   const navigation = useNavigation();
   const toast = useToast();
-  const { error, isAuth } = useAppSelector((state: RootState) => state.user);
 
   const onLogin = (values: LoginFormValues) => {
     dispatch(login(values));
+
     if (error) {
       toast.show({
         render: () => <CustomToast message={error} color={colors.danger} />,

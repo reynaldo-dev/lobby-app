@@ -8,7 +8,9 @@ import {
   ScrollView,
   StatusBar,
   Text,
+  Toast,
   View,
+  useToast,
 } from "native-base";
 import React from "react";
 import {
@@ -24,12 +26,14 @@ import EventList from "./components/event-list/EventList";
 import SkeletonCommunityScreen from "./components/skeleton-community-screen/SkeletonCommunityScreen";
 import { LinearGradient } from "expo-linear-gradient";
 import CommunityCover from "./components/community-cover/CommunityCover";
+import CustomToast from "../../../shared/components/toast/CustomToast";
 
 export const CommunityScreen = () => {
   const { user } = useAppSelector((state: RootState) => state.user);
   const route = useRoute();
   const { id } = route.params as { id: string };
   const { data: community, isLoading } = useGetCommunityByIdQuery(id.trim());
+  const toast = useToast();
 
   const { data: imIInCommunity, refetch } = useImIInCommuityQuery({
     userId: user?.id as string,
@@ -50,6 +54,17 @@ export const CommunityScreen = () => {
     });
     refetch();
     refetchCountMembers();
+    toast.show({
+      render: () => (
+        <CustomToast
+          message={`Te has unido ${community?.name}`}
+          color={theme.colors.success}
+        />
+      ),
+      duration: 1000,
+
+      placement: "bottom",
+    });
   };
 
   const handleLeaveCommunity = async () => {
@@ -59,6 +74,17 @@ export const CommunityScreen = () => {
     });
     refetch();
     refetchCountMembers();
+
+    toast.show({
+      render: () => (
+        <CustomToast
+          message={`Te has salido de ${community?.name}`}
+          color={theme.colors.primary}
+        />
+      ),
+      duration: 1000,
+      placement: "bottom",
+    });
   };
 
   return (
