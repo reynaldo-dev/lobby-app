@@ -1,7 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { Authentication } from "./user.interface";
-import { getUserCredentials, login, logout } from "./user.thunk";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { createSlice } from '@reduxjs/toolkit';
+import { Authentication } from './user.interface';
+import { getUserCredentials, login, logout } from './user.thunk';
 
 const initialState: Authentication = {
   access_token: null,
@@ -11,7 +10,7 @@ const initialState: Authentication = {
 };
 
 const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
     setDefaultState: (state) => {
