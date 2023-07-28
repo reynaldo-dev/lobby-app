@@ -13,7 +13,6 @@ export default function CustomToast({ message, color }: CustomToastProps) {
       <Box bg={color} px="2" py="1" rounded="sm" mb={5}>
         <Text color={theme.colors.white}>{message}</Text>
       </Box>
-      ;
     </Center>
   );
 }
