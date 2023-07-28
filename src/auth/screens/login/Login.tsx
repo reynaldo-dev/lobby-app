@@ -1,14 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
 import { Formik } from "formik";
 import { Link, useToast } from "native-base";
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import * as Yup from "yup";
 import { login } from "../../../redux/slices/user/user.thunk";
 import {
-  RootState,
   useAppDispatch,
-  useAppSelector,
 } from "../../../redux/store/store";
 import TextField from "../../../shared/components/TextField/TextField";
 import CustomToast from "../../../shared/components/toast/CustomToast";
@@ -17,7 +15,7 @@ import Layout from "../../../shared/layout/Layout";
 import { theme } from "../../../theme";
 
 const validationLoginSchema = Yup.object().shape({
-  email: Yup.string().email("Email invalido").required("Email es requerido"),
+  email: Yup.string().email("Correo electrónico invalido").required("Correo electrónico es requerido"),
 });
 interface LoginFormValues {
   email: string;
@@ -26,22 +24,40 @@ interface LoginFormValues {
 
 export default function Login() {
   const { colors } = theme;
-  const { error, isAuth } = useAppSelector((state: RootState) => state.user);
   const dispatch = useAppDispatch();
   const initialValues: LoginFormValues = { email: "", password: "" };
   const navigation = useNavigation();
   const toast = useToast();
+  const [toastVisible, setToastVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
+
 
   const onLogin = (values: LoginFormValues) => {
-    dispatch(login(values));
+    setLoading(true);
+    dispatch(login(values))
+      .unwrap()
+      .catch((error) => {
+        if (!toastVisible) {
+          setToastVisible(true);
+          toast.show({
 
-    if (error) {
-      toast.show({
-        render: () => <CustomToast message={error} color={colors.danger} />,
-        placement: "top-right",
+            render: () => (
+              <CustomToast
+                message={error.message}
+                color={colors.danger}
+              />
+            ),
+            placement: "top",
+            duration: 2000,
+            onCloseComplete: () => setToastVisible(false),
+          });
+        }
+      })
+      .finally(() => {
+        setLoading(false);
       });
-    }
   };
+
 
   return (
     <Layout backgroundColor={colors.white}>
@@ -84,6 +100,7 @@ export default function Login() {
                 errors={errors.password}
               />
               <TouchableOpacity
+                disabled={loading}
                 style={{
                   ...styles.loginButton,
                   backgroundColor: colors.primary,
