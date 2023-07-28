@@ -2,7 +2,7 @@ import { View, Text, FlatList } from "native-base";
 import React from "react";
 import { theme } from "../../../../../theme";
 import EventCommunityCard from "../event-community-card/EventCommunityCard";
-import { IEvent } from "../../../../../redux/services/interfaces/community-response.interface";
+import { IEvent } from "../../../../../redux/services/community/interfaces/community-response.interface";
 
 interface EventListProps {
   events: IEvent[];

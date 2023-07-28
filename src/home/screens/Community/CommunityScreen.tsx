@@ -19,7 +19,7 @@ import {
   useImIInCommuityQuery,
   useJoinCommunityMutation,
   useLeaveCommunityMutation,
-} from "../../../redux/services/communities.service";
+} from "../../../redux/services/community/communities.service";
 import { RootState, useAppSelector } from "../../../redux/store/store";
 import { theme } from "../../../theme";
 import EventList from "./components/event-list/EventList";

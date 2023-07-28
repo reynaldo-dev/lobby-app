@@ -1,5 +1,5 @@
 import { FlatList, Text, View } from "native-base";
-import { useGetCommunitiesQuery } from "../../../../redux/services/communities.service";
+import { useGetCommunitiesQuery } from "../../../../redux/services/community/communities.service";
 import CommunityCard from "./CommunityCard";
 import { ICommunity } from "../../../../interfaces/community.interface";
 import { SkeletonCard } from "./SkeletonCard";

@@ -1,4 +1,4 @@
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Icon } from "native-base";
@@ -8,12 +8,14 @@ import { CommunityScreen } from "../home/screens/Community/CommunityScreen";
 import { SearchCommunity } from "../home/screens/Community/SearchCommunity";
 import Home from "../home/screens/home/Home";
 import Profile from "../home/screens/profile/Profile";
+import { TicketsScreen } from "../home/screens/tickets/TicketsScreen";
 import CustomQRCode from "../shared/components/qr/CustomQRCode";
 import {
   AuthStackParamList,
   PrivateStackParamList,
   RootStackParamList,
 } from "./navigation-types";
+
 
 const authRouter = createNativeStackNavigator<AuthStackParamList>();
 const privateStack = createNativeStackNavigator<PrivateStackParamList>();
@@ -88,17 +90,17 @@ export const BottomTabNavigation = () => {
         }}
       />
 
-      {/* <Tab.Screen
-        name="Community"
-        component={CommunityScreen}
+      <Tab.Screen
+        name="Tickets"
+        component={TicketsScreen}
         options={{
           headerShown: false,
 
           tabBarIcon: ({ color }) => (
-            <Icon as={AntDesign} name="addusergroup" size={6} color={color} />
+            <Icon as={MaterialCommunityIcons} name="ticket-confirmation-outline" size={6} color={color} />
           ),
         }}
-      /> */}
+      />
 
       <Tab.Screen
         name="Profile"

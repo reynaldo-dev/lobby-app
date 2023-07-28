@@ -1,5 +1,5 @@
 import React from "react";
-import { IEvent } from "../../../../../redux/services/interfaces/community-response.interface";
+import { IEvent } from "../../../../../redux/services/community/interfaces/community-response.interface";
 import { Badge, Box, Card, IconButton, Text } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { theme } from "../../../../../theme";

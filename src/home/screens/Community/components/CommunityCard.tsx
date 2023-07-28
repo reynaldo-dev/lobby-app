@@ -1,6 +1,6 @@
 import { Box, HStack, Heading, Pressable, Stack, Text } from "native-base";
 import { ICommunity } from "../../../../interfaces/community.interface";
-import { useGetCountMembersQuery } from "../../../../redux/services/communities.service";
+import { useGetCountMembersQuery } from "../../../../redux/services/community/communities.service";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../../../routing/navigation-types";
 

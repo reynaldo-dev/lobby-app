@@ -1,5 +1,5 @@
 import React from "react";
-import { GetCommunityByIDResponse } from "../../../../../redux/services/interfaces/community-response.interface";
+import { GetCommunityByIDResponse } from "../../../../../redux/services/community/interfaces/community-response.interface";
 import { Box, Text, View } from "native-base";
 import { LinearGradient } from "expo-linear-gradient";
 import { theme } from "../../../../../theme";
