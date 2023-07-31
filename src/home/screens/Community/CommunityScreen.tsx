@@ -5,12 +5,10 @@ import {
   Button,
   Center,
   Icon,
-  ScrollView,
   StatusBar,
   Text,
-  Toast,
   View,
-  useToast,
+  useToast
 } from "native-base";
 import React from "react";
 import {
@@ -21,12 +19,11 @@ import {
   useLeaveCommunityMutation,
 } from "../../../redux/services/community/communities.service";
 import { RootState, useAppSelector } from "../../../redux/store/store";
+import CustomToast from "../../../shared/components/toast/CustomToast";
 import { theme } from "../../../theme";
+import CommunityCover from "./components/community-cover/CommunityCover";
 import EventList from "./components/event-list/EventList";
 import SkeletonCommunityScreen from "./components/skeleton-community-screen/SkeletonCommunityScreen";
-import { LinearGradient } from "expo-linear-gradient";
-import CommunityCover from "./components/community-cover/CommunityCover";
-import CustomToast from "../../../shared/components/toast/CustomToast";
 
 export const CommunityScreen = () => {
   const { user } = useAppSelector((state: RootState) => state.user);
