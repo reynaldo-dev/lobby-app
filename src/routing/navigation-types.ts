@@ -14,4 +14,5 @@ export type RootStackParamList = {
   QRCode: undefined;
   Community: { id: string };
   SearchCommunity: undefined;
+  Tickets: undefined;
 };
