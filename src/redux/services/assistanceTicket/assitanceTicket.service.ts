@@ -11,13 +11,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export const assistanceTicketApi = createApi({
   reducerPath: 'assistanceTicketService',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://2955-138-186-250-135.ngrok-free.app/api',
+    baseUrl: 'http://172.27.48.1:4000/api',
     prepareHeaders: async (headers) => {
       const authStateString = await AsyncStorage.getItem('authState');
       if (authStateString !== null) {
         const authState = JSON.parse(authStateString);
         if (authState.access_token) {
-          headers.set('authorization', `Bearer ${authState.access_token}`);
+          headers.set('Authorization', `Bearer ${authState.access_token}`);
         }
       }
       return headers;
