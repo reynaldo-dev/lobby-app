@@ -46,6 +46,7 @@ export interface IAssistanceTicketByUserIDResponse {
   eventId: string;
   userId: string;
   event: Event;
+  user:      User;
 }
 
 export interface IAssistanceTicketResponse {
@@ -55,3 +56,5 @@ export interface IAssistanceTicketResponse {
   eventId: string;
   userId: string;
 }
+
+
