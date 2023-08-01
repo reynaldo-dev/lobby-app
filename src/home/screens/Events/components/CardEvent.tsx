@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { Box, Button, Center, HStack, Heading, VStack, Spacer, Stack, Text } from 'native-base';
 
 type DimensionProp = number | string | (number | string)[];
@@ -9,10 +10,11 @@ type Props = {
 };
 
 const CardEvent = ({ widthCard, heightCard, marginTop = 0, marginRight = 0 }: Props) => {
+    const navigation = useNavigation();
 
     const handleMoreInfoPress = () => {
-        console.log("navigate to more info page")
-    }
+        console.log("More info")
+    };
 
     return (
         <Box

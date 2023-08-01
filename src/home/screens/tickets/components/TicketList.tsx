@@ -33,6 +33,7 @@ export const TicketList: React.FC = () => {
     }
 
     if (error) {
+        console.log(error)
         return <Text>Ocurrió un error.</Text>;
     }
 
