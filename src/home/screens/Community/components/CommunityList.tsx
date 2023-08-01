@@ -7,6 +7,7 @@ import { SkeletonCard } from "./SkeletonCard";
 export const CommunityList = () => {
   const { data: communityData, isLoading: communityIsLoading } =
     useGetCommunitiesQuery();
+
   return communityIsLoading ? (
     <SkeletonCard />
   ) : (

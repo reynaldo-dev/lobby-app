@@ -1,7 +1,9 @@
-import React from "react";
-import { IEvent } from "../../../../../redux/services/community/interfaces/community-response.interface";
-import { Badge, Box, Card, IconButton, Text } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { Badge, Box, Pressable, Text } from "native-base";
+import React, { useState } from "react";
+import { IEvent } from "../../../../../redux/services/community/interfaces/community-response.interface";
+import { RootStackParamList } from "../../../../../routing/navigation-types";
 import { theme } from "../../../../../theme";
 
 interface Props {
@@ -9,8 +11,24 @@ interface Props {
 }
 
 export default function EventCommunityCard({ event }: Props) {
+  const [isPressed, setIsPressed] = useState(false)
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+  const handleNavigateToEventInfo = () => {
+
+    setIsPressed(true)
+
+    navigation.navigate("Event", { id: event.id })
+
+  }
+
   return (
-    <Box
+    <Pressable
+    onPress={handleNavigateToEventInfo} 
+    isPressed={isPressed}
+    style={{
+      transform: [{ scale: isPressed ? 0.95 : 1 }],
+    }}
       borderColor={theme.colors.muted["300"]}
       borderWidth={1}
       borderRadius={10}
@@ -71,6 +89,6 @@ export default function EventCommunityCard({ event }: Props) {
           {event.description}
         </Text>
       </Box>
-    </Box>
+    </Pressable>
   );
 }

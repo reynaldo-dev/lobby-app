@@ -15,6 +15,8 @@ export type RootStackParamList = {
   Root: PrivateStackParamList;
   QRCode: undefined;
   Community: { id: string };
+  Event: { id: string };
+
   SearchCommunity: undefined;
   Tickets: undefined;
   TicketAssistanceDetail: { event: Event; user: User; isActive: boolean };
