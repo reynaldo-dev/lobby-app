@@ -41,12 +41,9 @@ export const TicketList: React.FC = () => {
             <FlatList
                 data={tickets}
                 renderItem={({ item }) => <TicketCard
-                    title={item.event.title}
+                    event={item.event}
+                    user={item.user}
                     isActive={item.isActive}
-                    name={item.user.name}
-                    lastname={item.user.lastname}
-                    place={item.event.place}
-                    date={item.event.dateTime}
                 />}
                 keyExtractor={(item) => item.id}
             />
