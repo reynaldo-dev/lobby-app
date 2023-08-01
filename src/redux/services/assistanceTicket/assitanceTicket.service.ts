@@ -11,7 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export const assistanceTicketApi = createApi({
   reducerPath: 'assistanceTicketService',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://172.27.48.1:4000/api',
+       baseUrl: 'http://172.27.48.1:4000/api',
     prepareHeaders: async (headers) => {
       const authStateString = await AsyncStorage.getItem('authState');
       if (authStateString !== null) {
@@ -45,7 +45,7 @@ export const assistanceTicketApi = createApi({
       }),
     }),
     getTicketsByUserId: builder.query<
-      IAssistanceTicketByUserIDResponse,
+      IAssistanceTicketByUserIDResponse[],
       string
     >({
       query: (userId) => `assistance-tickets/user/${userId}`,

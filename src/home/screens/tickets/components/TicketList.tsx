@@ -1,12 +1,33 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FlatList, Text, VStack } from "native-base";
-import React from "react";
-import { useGetTicketsQuery } from "../../../../redux/services/assistanceTicket/assitanceTicket.service";
+import React, { useEffect, useState } from "react";
+import { useGetTicketsByUserIdQuery } from "../../../../redux/services/assistanceTicket/assitanceTicket.service";
 import { TicketCard } from "./TicketCard";
+;
 
 
 export const TicketList: React.FC = () => {
-    const { data: tickets, error, isLoading } = useGetTicketsQuery({ from: 0, limit: 10 });
+    const [userId, setUserId] = useState<string | null>(null);
 
+    // const { data: tickets, error, isLoading } = useGetTicketsQuery({ from: 0, limit: 10 });
+
+    const { data: tickets, error, isLoading } = useGetTicketsByUserIdQuery(userId || '', {
+        skip: userId === null,
+    });
+
+    useEffect(() => {
+        const getUserData = async () => {
+            const authStateString = await AsyncStorage.getItem('authState');
+            if (authStateString) {
+                const authState = JSON.parse(authStateString);
+                setUserId(authState.user.id);
+            }
+        }
+
+        getUserData();
+    }, []);
+
+    console.log(tickets)
     if (isLoading) {
         return <Text>Cargando...</Text>;
     }
@@ -19,7 +40,7 @@ export const TicketList: React.FC = () => {
     return (
         <VStack>
             <FlatList
-                data={tickets?.data}
+                data={tickets}
                 renderItem={({ item }) => <TicketCard
                     title={item.event.title}
                     isActive={item.isActive}
