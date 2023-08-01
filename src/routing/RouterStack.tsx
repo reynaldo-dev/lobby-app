@@ -15,7 +15,9 @@ import {
   PrivateStackParamList,
   RootStackParamList,
 } from "./navigation-types";
+import { TicketAssistanceDetailScreen } from "../home/screens/tickets/TicketAssistanceDetailScreen";
 import EventScreen from "../home/screens/Events/EventScreen";
+
 
 
 const authRouter = createNativeStackNavigator<AuthStackParamList>();
@@ -62,9 +64,10 @@ export function RootNavigator() {
           headerShown: false,
         }}
       >
+        <Stack.Screen name="TicketAssistanceDetail" component={TicketAssistanceDetailScreen} />
         <Stack.Screen name="QRCode" component={CustomQRCode} />
         <Stack.Screen name="Community" component={CommunityScreen} />
-        <Stack.Screen name="Event" component={EventScreen}/>
+        <Stack.Screen name="Event" component={EventScreen} />
         <Stack.Screen name="SearchCommunity" component={SearchCommunity} />
       </Stack.Group>
     </Stack.Navigator>

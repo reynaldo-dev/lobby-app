@@ -1,3 +1,5 @@
+import { Event, User } from "../redux/services/assistanceTicket/interfaces/assistanceTicket.interface";
+
 export type AuthStackParamList = {
   Login: undefined;
   Register: undefined;
@@ -17,4 +19,5 @@ export type RootStackParamList = {
 
   SearchCommunity: undefined;
   Tickets: undefined;
+  TicketAssistanceDetail: { event: Event; user: User; isActive: boolean };
 };
