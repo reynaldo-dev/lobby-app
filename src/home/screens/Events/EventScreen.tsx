@@ -7,8 +7,10 @@ import {
   Icon,
   Pressable,
   ScrollView,
+  StatusBar,
   Text,
   VStack,
+  View,
   useDisclose,
 } from "native-base";
 import React from "react";
@@ -19,66 +21,77 @@ import Layout from "../../../shared/layout/Layout";
 import { theme } from "../../../theme";
 import ConfirmAssistanceBottomSheet from "./components/confirm-assistance-bottomSheet/ConfirmAssistanceBottomSheet";
 
+const DetailItem = ({ label, value }: { label: string; value: string }) => (
+  <Box flexDir="row" justifyContent="space-between" mt={1}>
+    <Text color="gray.600" fontSize={["sm", "lg", "md"]} fontWeight="bold">
+      {label}
+    </Text>
+
+    <Text color="gray.500" fontSize={["sm", "lg", "md"]}>
+      {value}
+    </Text>
+  </Box>
+);
+
 export default function EventScreen() {
   const { isOpen, onOpen, onClose } = useDisclose();
   const { params } = useRoute<RouteProp<RootStackParamList>>();
   const { data: event, isLoading, isError } = useGetEventByIdQuery(params?.id);
 
   return (
-    <Layout backgroundColor={theme.colors.background}>
+    <Layout backgroundColor={theme.colors.primary}>
       {isLoading ? (
         <Center flex={1}>
           <ActivityIndicator size="large" color={theme.colors.primary} />
         </Center>
       ) : (
-        <>
-          <ScrollView>
-            <Center borderRadius={5} flex={1}>
-              <Text
-                bold
-                color={theme.colors.muted["500"]}
-                fontSize={["lg", "xl", "md"]}
-              >
-                {event?.title}
-              </Text>
-              <Box w="full" flexDir="row" justifyContent="flex-end" mt={5}>
-                <Pressable
-                  onPress={() => onOpen()}
-                  flexDir="row"
-                  alignItems="center"
-                  p={3}
-                  mr={2}
-                  borderRadius="full"
-                  backgroundColor={`${theme.colors.secondary}:alpha.20`}
-                  _pressed={{
-                    backgroundColor: `${theme.colors.secondary}:alpha.30`,
-                  }}
-                >
-                  <Icon
-                    as={Feather}
-                    name="user-plus"
-                    color={theme.colors.secondary}
-                    mr={1}
-                  />
-                  <Text color={theme.colors.secondary}>Asistir</Text>
-                </Pressable>
-              </Box>
-            </Center>
+        <View flex={1}>
+          <Center bg={`${theme.colors.primary}`} h="30%">
+            <Text
+              bold
+              color={theme.colors.white}
+              fontSize={["xl", "2xl", "3xl"]}
+              letterSpacing={1}
+            >
+              {event?.title}
+            </Text>
+            <Pressable
+              onPress={() => onOpen()}
+              flexDir="row"
+              alignItems="center"
+              p={3}
+              mt={4}
+              borderRadius="full"
+              backgroundColor={theme.colors.white}
+              _pressed={{
+                backgroundColor: "yellow.500",
+              }}
+            >
+              <Icon
+                as={Feather}
+                name="user-plus"
+                color={theme.colors.primary}
+                mr={1}
+              />
+              <Text color={theme.colors.primary}>¡Asistir!</Text>
+            </Pressable>
+          </Center>
 
+          <ScrollView
+            borderTopLeftRadius={20}
+            borderTopRightRadius={20}
+            mt={-5}
+            bg={theme.colors.white}
+          >
             {/* descripcion */}
-            <Box mx={2} mb={10}>
-              <Text
-                bold
-                color={theme.colors.muted["400"]}
-                fontSize={["md", "xl", "md"]}
-                mb={4}
-              >
+            <Box mx={4} my={4}>
+              <Text bold color="gray.600" fontSize={["lg", "xl", "2xl"]} mb={4}>
                 Descripción
               </Text>
-              <Box bgColor={theme.colors.white} mx={2} borderRadius={10} p={2}>
+              <Box p={4} borderRadius={10}>
                 <Text
-                  color={theme.colors.muted["500"]}
-                  fontSize={["sm", "lg", "md"]}
+                  color={theme.colors.muted["400"]}
+                  fontSize={["sm", "md", "lg"]}
                 >
                   {event?.description}
                 </Text>
@@ -86,134 +99,49 @@ export default function EventScreen() {
             </Box>
 
             {/* detalles */}
-            <VStack mx={4} flex={2} mb={2} space={5}>
-              <Text
-                bold
-                color={theme.colors.muted["400"]}
-                fontSize={["md", "xl", "md"]}
-                mb={4}
-              >
+            <VStack mx={4} space={4}>
+              <Text bold color="gray.600" fontSize={["lg", "xl", "2xl"]}>
                 Detalles
               </Text>
 
-              {/* estado */}
-              <Box flexDir="row" w="full" justifyContent="space-between">
-                <Text
-                  color={theme.colors.text}
-                  fontSize={["sm", "lg", "md"]}
-                  fontWeight="semibold"
-                >
-                  Estado
-                </Text>
-
-                <Text
-                  bold
-                  fontWeight="semibold"
-                  color={theme.colors.muted["400"]}
-                  fontSize={["sm", "lg", "md"]}
-                >
-                  {event?.status}
-                </Text>
-              </Box>
+              <DetailItem label="Estado" value={event?.status as string} />
               <Divider />
 
-              {/* lugar */}
-              <Box flexDir="row" w="full" justifyContent="space-between" mt={1}>
-                <Text
-                  color={theme.colors.text}
-                  fontSize={["sm", "lg", "md"]}
-                  fontWeight="semibold"
-                >
-                  Lugar
-                </Text>
-
-                <Text
-                  bold
-                  fontWeight="semibold"
-                  color={theme.colors.muted["400"]}
-                  fontSize={["sm", "lg", "md"]}
-                >
-                  {event?.place}
-                </Text>
-              </Box>
+              <DetailItem label="Lugar" value={event?.place as string} />
               <Divider />
 
-              {/* comunidad */}
-              <Box flexDir="row" w="full" justifyContent="space-between" mt={1}>
-                <Text
-                  color={theme.colors.text}
-                  fontSize={["sm", "lg", "md"]}
-                  fontWeight="semibold"
-                >
-                  Comunidad
-                </Text>
-
-                <Text
-                  bold
-                  fontWeight="semibold"
-                  color={theme.colors.muted["400"]}
-                  fontSize={["sm", "lg", "md"]}
-                >
-                  {event?.community?.name}
-                </Text>
-              </Box>
+              <DetailItem
+                label="Comunidad"
+                value={event?.community?.name as string}
+              />
               <Divider />
 
               {/* Fecha */}
-              <Box flexDir="row" w="full" justifyContent="space-between" mt={1}>
-                <Text
-                  color={theme.colors.text}
-                  fontSize={["sm", "lg", "md"]}
-                  fontWeight="semibold"
-                >
-                  Fecha
-                </Text>
-
-                <Text
-                  bold
-                  fontWeight="semibold"
-                  color={theme.colors.muted["400"]}
-                  fontSize={["sm", "lg", "md"]}
-                >
-                  {new Date(event?.dateTime as string).toLocaleDateString()}
-                </Text>
-              </Box>
+              <DetailItem
+                label="Fecha"
+                value={new Date(event?.dateTime as string).toLocaleDateString()}
+              />
               <Divider />
 
               {/* Hora */}
-              <Box flexDir="row" w="full" justifyContent="space-between" mt={1}>
-                <Text
-                  color={theme.colors.text}
-                  fontSize={["sm", "lg", "md"]}
-                  fontWeight="semibold"
-                >
-                  Hora
-                </Text>
-
-                <Text
-                  bold
-                  fontWeight="semibold"
-                  color={theme.colors.muted["400"]}
-                  fontSize={["sm", "lg", "md"]}
-                >
-                  {new Date(event?.dateTime as string)
-                    .toLocaleTimeString()
-                    .split(":")
-                    .slice(0, 2)
-                    .join(":")}
-                </Text>
-              </Box>
+              <DetailItem
+                label="Hora"
+                value={new Date(event?.dateTime as string).toLocaleTimeString(
+                  [],
+                  { hour: "2-digit", minute: "2-digit" }
+                )}
+              />
               <Divider />
             </VStack>
           </ScrollView>
-
-          <ConfirmAssistanceBottomSheet
-            isOpen={isOpen}
-            onClose={onClose}
-            onOpen={onOpen}
-          />
-        </>
+        </View>
       )}
+
+      <ConfirmAssistanceBottomSheet
+        isOpen={isOpen}
+        onClose={onClose}
+        onOpen={onOpen}
+      />
     </Layout>
   );
 }

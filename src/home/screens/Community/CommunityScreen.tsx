@@ -5,10 +5,13 @@ import {
   Button,
   Center,
   Icon,
+  ScrollView,
+  Skeleton,
   StatusBar,
   Text,
+  VStack,
   View,
-  useToast
+  useToast,
 } from "native-base";
 import React from "react";
 import {
@@ -86,7 +89,9 @@ export const CommunityScreen = () => {
 
   return (
     <View flex={1}>
-      {community && (
+      {isLoading ? (
+        <SkeletonLayout />
+      ) : (
         <>
           <StatusBar backgroundColor={community?.color} />
           <CommunityCover community={community} />
@@ -143,7 +148,65 @@ export const CommunityScreen = () => {
           </View>
         </>
       )}
-      {isLoading && <SkeletonCommunityScreen />}
+    </View>
+  );
+};
+
+const SkeletonLayout = () => {
+  return (
+    <View flex={1}>
+      <View flex={1}>
+        <Box flex={1} justifyContent="center" alignItems="center">
+          <Skeleton.Text
+            lines={1}
+            w="1/2"
+            endColor={theme.colors.muted["300"]}
+          />
+          <Skeleton.Text
+            lines={1}
+            w="70%"
+            mt={5}
+            endColor={theme.colors.muted["300"]}
+          />
+        </Box>
+        <Box justifyContent="space-between" flexDir="row" mx={2}>
+          <Skeleton
+            borderRadius="full"
+            w={10}
+            endColor={theme.colors.muted["300"]}
+          />
+          <Skeleton
+            borderRadius="full"
+            w={100}
+            endColor={theme.colors.muted["300"]}
+          />
+        </Box>
+      </View>
+
+      <View flex={3} mt={5} mb={2}>
+        <VStack mx={4} flex={1} space={23}>
+          <Skeleton
+            borderRadius={10}
+            flex={1}
+            endColor={theme.colors.muted["300"]}
+          />
+          <Skeleton
+            borderRadius={10}
+            flex={1}
+            endColor={theme.colors.muted["300"]}
+          />
+          <Skeleton
+            borderRadius={10}
+            flex={1}
+            endColor={theme.colors.muted["300"]}
+          />
+          <Skeleton
+            borderRadius={10}
+            flex={1}
+            endColor={theme.colors.muted["300"]}
+          />
+        </VStack>
+      </View>
     </View>
   );
 };
