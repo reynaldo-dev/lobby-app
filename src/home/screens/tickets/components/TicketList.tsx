@@ -1,51 +1,61 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { FlatList, Text, VStack } from "native-base";
-import React, { useEffect, useState } from "react";
-import { useGetTicketsByUserIdQuery } from "../../../../redux/services/assistanceTicket/assitanceTicket.service";
+import { Center, FlatList, Text, VStack } from "native-base";
+import React from "react";
+import { IAssistanceTicketByUserIDResponse } from "../../../../redux/services/assistanceTicket/interfaces/assistanceTicket.interface";
+import { ConsumableTicketData } from "../../../../redux/services/consumableTicket/interfaces/consumablesTickets.interface";
 import { TicketCard } from "./TicketCard";
-;
+import { ActivityIndicator } from 'react-native';
+
+type CommonTicket = IAssistanceTicketByUserIDResponse | ConsumableTicketData;
+
+type Props = {
+    tickets: CommonTicket[];
+    isLoading: boolean;
+    error: boolean;
+    errorMessage: string;
+}
 
 
-export const TicketList: React.FC = () => {
-    const [userId, setUserId] = useState<string | null>(null);
+export const TicketList = ({ tickets, isLoading, error, errorMessage }: Props) => {
 
-    // const { data: tickets, error, isLoading } = useGetTicketsQuery({ from: 0, limit: 10 });
 
-    const { data: tickets, error, isLoading } = useGetTicketsByUserIdQuery(userId || '', {
-        skip: userId === null,
-    });
-
-    useEffect(() => {
-        const getUserData = async () => {
-            const authStateString = await AsyncStorage.getItem('authState');
-            if (authStateString) {
-                const authState = JSON.parse(authStateString);
-                setUserId(authState.user.id);
-            }
-        }
-
-        getUserData();
-    }, []);
-
-    console.log(tickets)
     if (isLoading) {
-        return <Text>Cargando...</Text>;
+        return (
+            <Center my={"auto"}>
+                <ActivityIndicator size="large" color="#d50d2c" />;
+            </Center>
+        )
     }
 
-    if (error) {
-        console.log(error)
-        return <Text>Ocurrió un error.</Text>;
+    if (error || !tickets) {
+        return (
+            <Center my={"auto"}>
+                <Text>{errorMessage}</Text>
+            </Center>
+        )
     }
+
 
     return (
         <VStack>
             <FlatList
                 data={tickets}
-                renderItem={({ item }) => <TicketCard
-                    event={item.event}
-                    user={item.user}
-                    isActive={item.isActive}
-                />}
+                renderItem={({ item }) => {
+                    if ('consumable' in item) {
+                        return <TicketCard
+                            event={item.event}
+                            user={item.user}
+                            isActive={item.isActive}
+                            consumable={item.consumable}
+                        />
+                    }
+                    else {
+                        return <TicketCard
+                            event={item.event}
+                            user={item.user}
+                            isActive={item.isActive}
+                        />
+                    }
+                }}
                 keyExtractor={(item) => item.id}
             />
         </VStack>

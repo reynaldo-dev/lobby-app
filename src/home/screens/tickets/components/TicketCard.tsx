@@ -1,28 +1,44 @@
-import { Box, VStack, HStack, Heading, Badge, Text, Pressable } from "native-base";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { Badge, HStack, Heading, Pressable, Text, VStack } from "native-base";
 import React from "react";
 import { formatDate } from "../../../../helpers/DateFormat";
 import { Event, User } from "../../../../redux/services/assistanceTicket/interfaces/assistanceTicket.interface";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { IConsumable } from "../../../../redux/services/consumableTicket/interfaces/consumablesTickets.interface";
 import { RootStackParamList } from "../../../../routing/navigation-types";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 type TicketCardProps = {
     event: Event
     user: User
     isActive: boolean
+    consumable?: IConsumable
 }
 
-export const TicketCard = ({ event, user, isActive }: TicketCardProps) => {
+export const TicketCard = ({ event, user, isActive, consumable }: TicketCardProps) => {
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'TicketAssistanceDetail'>>();
 
     const handlePress = () => {
-        navigation.navigate("TicketAssistanceDetail", { event, user, isActive });
+        navigation.navigate("TicketAssistanceDetail", { event, user, isActive, consumable });
     };
 
     const formattedDate = formatDate(event?.dateTime);
 
     return (
-        <Pressable bg='white' shadow={1} rounded='lg' width='90%' mx='auto' my={3} onPress={handlePress}>
+        <Pressable
+            bg='white'
+            shadow={1}
+            rounded='lg'
+            width='90%'
+            mx='auto'
+            my={3}
+            onPress={handlePress}
+            disabled={!isActive}
+            _disabled={
+                {
+                    opacity: 0.7,
+                }
+            }
+        >
             <VStack space={2} p={4}>
                 <HStack space={2} justifyContent='space-between'>
                     <Heading size='sm' ml={-1}>
@@ -35,6 +51,11 @@ export const TicketCard = ({ event, user, isActive }: TicketCardProps) => {
                 <Text color='gray.500'>
                     {user?.name} {user?.lastname}
                 </Text>
+                {consumable &&
+                    <Text color='gray.500'>
+                        {consumable?.name}
+                    </Text>
+                }
                 <HStack justifyContent={"space-between"}>
                     <Text color='gray.500'>
                         {event?.place}
