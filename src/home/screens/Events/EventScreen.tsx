@@ -107,7 +107,11 @@ export default function EventScreen() {
 
             {/* detalles */}
             <VStack mx={4} space={4}>
-              <Text bold color="gray.600" fontSize={["lg", "xl", "2xl"]}>
+              <Text
+                bold
+                color={theme.colors.muted["400"]}
+                fontSize={["lg", "xl", "2xl"]}
+              >
                 Detalles
               </Text>
 
