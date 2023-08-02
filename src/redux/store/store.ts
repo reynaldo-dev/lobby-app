@@ -4,6 +4,7 @@ import { communitiesService } from '../services/community/communities.service';
 import user from '../slices/user/user.slice';
 import { assistanceTicketApi } from '../services/assistanceTicket/assitanceTicket.service';
 import { eventsApi } from '../services/events/events.service';
+import { consumablesTicketsApi } from '../services/consumableTicket/consumableTicket.service';
 
 export const store = configureStore({
   reducer: {
@@ -11,12 +12,14 @@ export const store = configureStore({
     [communitiesService.reducerPath]: communitiesService.reducer,
     [assistanceTicketApi.reducerPath]: assistanceTicketApi.reducer,
     [eventsApi.reducerPath]: eventsApi.reducer,
+    [consumablesTicketsApi.reducerPath]: consumablesTicketsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       communitiesService.middleware,
       assistanceTicketApi.middleware,
-      eventsApi.middleware
+      eventsApi.middleware,
+      consumablesTicketsApi.middleware
     ),
 });
 

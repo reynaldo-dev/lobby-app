@@ -1,29 +1,26 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { getAuthStateFromAsyncStorage } from "../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage";
+import { getAuthStateFromAsyncStorage } from '../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage';
 import { GetEventByIDResponse } from './interfaces/getEventByIdResponse';
 
 export const eventsApi = createApi({
-  reducerPath: "eventsApi",
+  reducerPath: 'eventsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://172.27.48.1:4000/api",
+    baseUrl: 'http://e9d2-138-186-250-135.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
-        headers.set("authorization", bearerToken);
+        headers.set('authorization', bearerToken);
       }
 
       return headers;
     },
   }),
 
-
-  tagTypes: ["Events"],
+  tagTypes: ['Events'],
   refetchOnFocus: true,
   refetchOnMountOrArgChange: true,
   refetchOnReconnect: true,
-
-
 
   endpoints: (builder) => ({
     getEventById: builder.query<GetEventByIDResponse, string>({
@@ -32,8 +29,4 @@ export const eventsApi = createApi({
   }),
 });
 
-
-export const { useGetEventByIdQuery } = eventsApi
-
-
-
+export const { useGetEventByIdQuery } = eventsApi;

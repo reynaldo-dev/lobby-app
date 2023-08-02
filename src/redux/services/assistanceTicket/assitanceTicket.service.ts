@@ -1,25 +1,23 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { getAuthStateFromAsyncStorage } from '../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage';
+import { IPagination } from '../../../shared/interfaces/shared.interface';
 import {
   IAssistanceTicket,
-  IAssistanceTicketResponse,
   IAssistanceTicketByUserIDResponse,
   IAssistanceTicketListResponse,
+  IAssistanceTicketResponse,
 } from './interfaces/assistanceTicket.interface';
-import { IPagination } from '../../../shared/interfaces/shared.interface';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const assistanceTicketApi = createApi({
   reducerPath: 'assistanceTicketService',
   baseQuery: fetchBaseQuery({
-       baseUrl: 'http://172.27.48.1:4000/api',
+    baseUrl: 'http://e9d2-138-186-250-135.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
-      const authStateString = await AsyncStorage.getItem('authState');
-      if (authStateString !== null) {
-        const authState = JSON.parse(authStateString);
-        if (authState.access_token) {
-          headers.set('Authorization', `Bearer ${authState.access_token}`);
-        }
+      const bearerToken = await getAuthStateFromAsyncStorage();
+      if (bearerToken) {
+        headers.set('authorization', bearerToken);
       }
+
       return headers;
     },
   }),

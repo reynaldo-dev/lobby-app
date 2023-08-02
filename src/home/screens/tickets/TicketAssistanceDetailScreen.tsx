@@ -11,7 +11,7 @@ import { formatDate } from '../../../helpers/DateFormat';
 export const TicketAssistanceDetailScreen = () => {
     const navigation = useNavigation();
     const route = useRoute<RouteProp<RootStackParamList, 'TicketAssistanceDetail'>>();
-    const { event, user, isActive } = route.params;
+    const { event, user, isActive, consumable } = route.params;
     const formattedDate = formatDate(event?.dateTime);
 
     const qrData = JSON.stringify({
@@ -57,6 +57,16 @@ export const TicketAssistanceDetailScreen = () => {
                     <Text fontSize='md' color='gray.600'>Dueño del Ticket:</Text>
                     <Text fontSize='sm' color='muted.700'>{`${user?.name} ${user?.lastname}`}</Text>
                 </HStack>
+                {
+                    consumable!! &&
+                    <>
+                        <Divider my={2} />
+                        <HStack justifyContent='space-between' alignItems='center'>
+                            <Text fontSize='md' color='gray.600'>Consumible:</Text>
+                            <Text fontSize='sm' color='muted.700'>{consumable.name}</Text>
+                        </HStack>
+                    </>
+                }
             </Box>
         </Box>
     );
