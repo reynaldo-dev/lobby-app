@@ -21,7 +21,13 @@ import Layout from "../../../shared/layout/Layout";
 import { theme } from "../../../theme";
 import ConfirmAssistanceBottomSheet from "./components/confirm-assistance-bottomSheet/ConfirmAssistanceBottomSheet";
 
-const DetailItem = ({ label, value }: { label: string; value: string }) => (
+const DetailItem = ({
+  label,
+  value,
+}: {
+  label: string;
+  value: string | number;
+}) => (
   <Box flexDir="row" justifyContent="space-between" mt={1}>
     <Text color="gray.600" fontSize={["sm", "lg", "md"]} fontWeight="bold">
       {label}
@@ -82,6 +88,7 @@ export default function EventScreen() {
             borderTopRightRadius={20}
             mt={-5}
             bg={theme.colors.white}
+            mb={2}
           >
             {/* descripcion */}
             <Box mx={4} my={4}>
@@ -130,6 +137,17 @@ export default function EventScreen() {
                   [],
                   { hour: "2-digit", minute: "2-digit" }
                 )}
+              />
+              <Divider />
+
+              {/* Score */}
+              <DetailItem label="Puntaje" value={event?.score as number} />
+              <Divider />
+
+              {/* Categoria */}
+              <DetailItem
+                label="Categoría"
+                value={event?.eventCategory.name as string}
               />
               <Divider />
             </VStack>
