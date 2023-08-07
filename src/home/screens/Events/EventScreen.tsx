@@ -1,24 +1,24 @@
 import { Feather } from "@expo/vector-icons";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import {
+  AlertDialog,
   Box,
+  Button,
   Center,
   Divider,
   Icon,
   Pressable,
   ScrollView,
-  StatusBar,
   Text,
   VStack,
   View,
-  useDisclose,
+  useDisclose
 } from "native-base";
-import React from "react";
-import { ActivityIndicator, StyleSheet } from "react-native";
-import { useGetEventByIdQuery } from "../../../redux/services/events/events.service";
+import { ActivityIndicator } from "react-native";
 import { RootStackParamList } from "../../../routing/navigation-types";
 import Layout from "../../../shared/layout/Layout";
 import { theme } from "../../../theme";
+import useEventScreenLogic from './EventScreenLogic';
 import ConfirmAssistanceBottomSheet from "./components/confirm-assistance-bottomSheet/ConfirmAssistanceBottomSheet";
 
 const DetailItem = ({
@@ -41,28 +41,48 @@ const DetailItem = ({
 
 export default function EventScreen() {
   const { isOpen, onOpen, onClose } = useDisclose();
-  const { params } = useRoute<RouteProp<RootStackParamList>>();
-  const { data: event, isLoading, isError } = useGetEventByIdQuery(params?.id);
+  const { params } = useRoute<RouteProp<RootStackParamList, 'Event'>>();
+  const {
+    event,
+    isLoading,
+    isError,
+    isEnrolling,
+    isCancelling,
+    isEnrolled,
+    showDialog,
+    cancelRef,
+    handleEnroll,
+    handleCancelEnrollment,
+    handleButtonPress,
+    setShowDialog
+  } = useEventScreenLogic(params?.id);
+
+  //TODO: fix consumables tickets refetching
+
+  if (isLoading || isEnrolled === null) {
+    return (
+      <Center flex={1}>
+        <ActivityIndicator size="large" color={theme.colors.primary} />
+      </Center>
+    );
+  }
 
   return (
     <Layout backgroundColor={theme.colors.primary}>
-      {isLoading ? (
-        <Center flex={1}>
-          <ActivityIndicator size="large" color={theme.colors.primary} />
-        </Center>
-      ) : (
-        <View flex={1}>
-          <Center bg={`${theme.colors.primary}`} h="30%">
-            <Text
-              bold
-              color={theme.colors.white}
-              fontSize={["xl", "2xl", "3xl"]}
-              letterSpacing={1}
-            >
-              {event?.title}
-            </Text>
+
+      <View flex={1}>
+        <Center bg={`${theme.colors.primary}`} h="30%">
+          <Text
+            bold
+            color={theme.colors.white}
+            fontSize={["xl", "2xl", "3xl"]}
+            letterSpacing={1}
+          >
+            {event?.title}
+          </Text>
+          {isEnrolled !== null && (
             <Pressable
-              onPress={() => onOpen()}
+              onPress={handleButtonPress}
               flexDir="row"
               alignItems="center"
               p={3}
@@ -73,91 +93,124 @@ export default function EventScreen() {
                 backgroundColor: "yellow.500",
               }}
             >
+              <AlertDialog isOpen={showDialog} leastDestructiveRef={cancelRef} onClose={() => setShowDialog(false)}>
+                <AlertDialog.Content style={{ borderRadius: 20, width: "80%" }}>
+                  <AlertDialog.Header>Confirmar Acción</AlertDialog.Header>
+                  <AlertDialog.Body>
+                    <Text style={{ flexWrap: 'wrap' }}>
+                      ¿Estás seguro que quieres {isEnrolled ? "cancelar tu asistencia" : "asistir"} a este evento?
+                    </Text>
+                  </AlertDialog.Body>
+                  <AlertDialog.Footer>
+                    <Button
+                      ref={cancelRef}
+                      onPress={() => setShowDialog(false)}
+                      colorScheme="red"
+                      mr={3}
+                      _text={{ color: "white" }}
+                    >
+                      Cancelar
+                    </Button>
+                    <Button
+                      isLoading={isEnrolling || isCancelling}
+                      onPress={isEnrolled ? handleCancelEnrollment : handleEnroll}
+                      colorScheme="green"
+                      _text={{ color: "white" }}
+                    >
+                      Confirmar
+                    </Button>
+                  </AlertDialog.Footer>
+                </AlertDialog.Content>
+              </AlertDialog>
+
               <Icon
                 as={Feather}
                 name="user-plus"
                 color={theme.colors.primary}
                 mr={1}
               />
-              <Text color={theme.colors.primary}>¡Asistir!</Text>
+              <Text color={theme.colors.primary}>
+                {isEnrolled ? "Cancelar asistencia" : "¡Asistir!"}
+              </Text>
             </Pressable>
-          </Center>
+          )}
+        </Center>
 
-          <ScrollView
-            borderTopLeftRadius={20}
-            borderTopRightRadius={20}
-            mt={-5}
-            bg={theme.colors.white}
-            mb={2}
-          >
-            {/* descripcion */}
-            <Box mx={4} my={4}>
-              <Text bold color="gray.600" fontSize={["lg", "xl", "2xl"]} mb={4}>
-                Descripción
-              </Text>
-              <Box p={4} borderRadius={10}>
-                <Text
-                  color={theme.colors.muted["400"]}
-                  fontSize={["sm", "md", "lg"]}
-                >
-                  {event?.description}
-                </Text>
-              </Box>
-            </Box>
-
-            {/* detalles */}
-            <VStack mx={4} space={4}>
+        <ScrollView
+          borderTopLeftRadius={20}
+          borderTopRightRadius={20}
+          mt={-5}
+          bg={theme.colors.white}
+          mb={2}
+        >
+          {/* descripcion */}
+          <Box mx={4} my={4}>
+            <Text bold color="gray.600" fontSize={["lg", "xl", "2xl"]} mb={4}>
+              Descripción
+            </Text>
+            <Box p={4} borderRadius={10}>
               <Text
-                bold
                 color={theme.colors.muted["400"]}
-                fontSize={["lg", "xl", "2xl"]}
+                fontSize={["sm", "md", "lg"]}
               >
-                Detalles
+                {event?.description}
               </Text>
+            </Box>
+          </Box>
 
-              <DetailItem label="Estado" value={event?.status as string} />
-              <Divider />
+          {/* detalles */}
+          <VStack mx={4} space={4}>
+            <Text
+              bold
+              color={theme.colors.muted["400"]}
+              fontSize={["lg", "xl", "2xl"]}
+            >
+              Detalles
+            </Text>
 
-              <DetailItem label="Lugar" value={event?.place as string} />
-              <Divider />
+            <DetailItem label="Estado" value={event?.status as string} />
+            <Divider />
 
-              <DetailItem
-                label="Comunidad"
-                value={event?.community?.name as string}
-              />
-              <Divider />
+            <DetailItem label="Lugar" value={event?.place as string} />
+            <Divider />
 
-              {/* Fecha */}
-              <DetailItem
-                label="Fecha"
-                value={new Date(event?.dateTime as string).toLocaleDateString()}
-              />
-              <Divider />
+            <DetailItem
+              label="Comunidad"
+              value={event?.community?.name as string}
+            />
+            <Divider />
 
-              {/* Hora */}
-              <DetailItem
-                label="Hora"
-                value={new Date(event?.dateTime as string).toLocaleTimeString(
-                  [],
-                  { hour: "2-digit", minute: "2-digit" }
-                )}
-              />
-              <Divider />
+            {/* Fecha */}
+            <DetailItem
+              label="Fecha"
+              value={new Date(event?.dateTime as string).toLocaleDateString()}
+            />
+            <Divider />
 
-              {/* Score */}
-              <DetailItem label="Puntaje" value={event?.score as number} />
-              <Divider />
+            {/* Hora */}
+            <DetailItem
+              label="Hora"
+              value={new Date(event?.dateTime as string).toLocaleTimeString(
+                [],
+                { hour: "2-digit", minute: "2-digit" }
+              )}
+            />
+            <Divider />
 
-              {/* Categoria */}
-              <DetailItem
-                label="Categoría"
-                value={event?.eventCategory.name as string}
-              />
-              <Divider />
-            </VStack>
-          </ScrollView>
-        </View>
-      )}
+            {/* Score */}
+            <DetailItem label="Puntaje" value={event?.score as number} />
+            <Divider />
+
+            {/* Categoria */}
+            <DetailItem
+              label="Categoría"
+              value={event?.eventCategory?.name as string}
+            />
+            <Divider />
+          </VStack>
+        </ScrollView>
+      </View>
+
 
       <ConfirmAssistanceBottomSheet
         isOpen={isOpen}
@@ -167,5 +220,3 @@ export default function EventScreen() {
     </Layout>
   );
 }
-
-const styles = StyleSheet.create({});
