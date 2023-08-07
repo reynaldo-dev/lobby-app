@@ -30,7 +30,12 @@ export default function Home() {
           Mis comunidades
         </Text>
         <CommunityList />
-        <Text ml={5} fontSize={"2xl"} bold>
+        <Text
+          ml={5}
+          my={3}
+          fontSize={"xl"}
+          bold
+          color={theme.colors.muted["400"]}>
           Eventos próximos
         </Text>
         <Box p={2}>
