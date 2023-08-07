@@ -28,3 +28,25 @@ export interface EventCategory {
   name: string;
   createdAt: string;
 }
+
+export interface IEnrollEventResponse {
+  id: string;
+  title: string;
+  description: string;
+  status: string;
+  isPrivate: string;
+  createdAt: Date;
+  place: string;
+  communityId: string;
+  score: null;
+  dateTime: Date;
+  eventCategoryId: null;
+}
+
+export interface ICancelEventResponse {
+  id: string;
+  isActive: boolean;
+  createdAt: Date;
+  eventId: string;
+  userId: string;
+}
