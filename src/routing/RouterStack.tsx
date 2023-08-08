@@ -18,7 +18,8 @@ import {
 import { TicketAssistanceDetailScreen } from "../home/screens/tickets/TicketAssistanceDetailScreen";
 import EventScreen from "../home/screens/Events/EventScreen";
 
-
+import CalendarScreen from "../home/screens/calendar/CalendarScreen";
+import { theme } from "../theme";
 
 const authRouter = createNativeStackNavigator<AuthStackParamList>();
 const privateStack = createNativeStackNavigator<PrivateStackParamList>();
@@ -64,7 +65,10 @@ export function RootNavigator() {
           headerShown: false,
         }}
       >
-        <Stack.Screen name="TicketAssistanceDetail" component={TicketAssistanceDetailScreen} />
+        <Stack.Screen
+          name="TicketAssistanceDetail"
+          component={TicketAssistanceDetailScreen}
+        />
         <Stack.Screen name="QRCode" component={CustomQRCode} />
         <Stack.Screen name="Community" component={CommunityScreen} />
         <Stack.Screen name="Event" component={EventScreen} />
@@ -102,7 +106,30 @@ export const BottomTabNavigation = () => {
           headerShown: false,
 
           tabBarIcon: ({ color }) => (
-            <Icon as={MaterialCommunityIcons} name="ticket-confirmation-outline" size={6} color={color} />
+            <Icon
+              as={MaterialCommunityIcons}
+              name="ticket-confirmation-outline"
+              size={6}
+              color={color}
+            />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="Calendar"
+        component={CalendarScreen}
+        options={{
+          title: "Calendario",
+          headerStyle: { backgroundColor: theme.colors.background },
+
+          tabBarIcon: ({ color }) => (
+            <Icon
+              as={MaterialCommunityIcons}
+              name="calendar"
+              size={6}
+              color={color}
+            />
           ),
         }}
       />

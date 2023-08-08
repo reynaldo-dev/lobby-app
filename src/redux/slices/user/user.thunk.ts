@@ -15,6 +15,8 @@ export const login = createAsyncThunk(
     try {
       const user = await http.post<Authentication>("/auth", payload);
 
+      console.log(user.data);
+
       const authState: Authentication = {
         access_token: user.data.access_token,
         user: user.data.user,
