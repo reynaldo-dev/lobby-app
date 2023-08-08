@@ -1,27 +1,28 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { getAuthStateFromAsyncStorage } from '../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage';
-import { IPagination } from '../../../shared/interfaces/shared.interface';
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { getAuthStateFromAsyncStorage } from "../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage";
+import { IPagination } from "../../../shared/interfaces/shared.interface";
 import {
   IAssistanceTicket,
   IAssistanceTicketByUserIDResponse,
   IAssistanceTicketListResponse,
   IAssistanceTicketResponse,
-} from './interfaces/assistanceTicket.interface';
+} from "./interfaces/assistanceTicket.interface";
+import { ICalendarEventsResponse } from "../events/interfaces/getEventByIdResponse";
 
 export const assistanceTicketApi = createApi({
-  reducerPath: 'assistanceTicketService',
+  reducerPath: "assistanceTicketService",
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://a8bf-138-186-250-91.ngrok-free.app/api',
+    baseUrl: "http://172.27.48.1:4000/api",
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
-        headers.set('authorization', bearerToken);
+        headers.set("authorization", bearerToken);
       }
 
       return headers;
     },
   }),
-  tagTypes: ['AssistanceTicket'],
+  tagTypes: ["AssistanceTicket"],
   refetchOnFocus: true,
   refetchOnMountOrArgChange: true,
   refetchOnReconnect: true,
@@ -31,14 +32,14 @@ export const assistanceTicketApi = createApi({
       IAssistanceTicket
     >({
       query: (newTicket) => ({
-        url: '/assistance-tickets',
-        method: 'POST',
+        url: "/assistance-tickets",
+        method: "POST",
         body: newTicket,
       }),
     }),
     getTickets: builder.query<IAssistanceTicketListResponse, IPagination>({
       query: ({ from = 0, limit = 10 }) => ({
-        url: '/assistance-tickets',
+        url: "/assistance-tickets",
         params: { from, limit },
       }),
     }),
@@ -46,10 +47,13 @@ export const assistanceTicketApi = createApi({
       IAssistanceTicketByUserIDResponse[],
       string
     >({
-      query: (userId) => `assistance-tickets/user/${userId}`,
+      query: (userId) => `/assistance-tickets/user/${userId}`,
     }),
     getTicketById: builder.query<IAssistanceTicketResponse, string>({
-      query: (id) => `assistance-tickets/${id}`,
+      query: (id) => `/assistance-tickets/${id}`,
+    }),
+    getMyEventsCalendar: builder.query<ICalendarEventsResponse[], string>({
+      query: (id) => `/assistance-tickets/my-events-calendar/${id}`,
     }),
     updateTicket: builder.mutation<
       IAssistanceTicketResponse,
@@ -57,20 +61,20 @@ export const assistanceTicketApi = createApi({
     >({
       query: ({ id, updateTicketDto }) => ({
         url: `/assistance-tickets/${id}`,
-        method: 'PATCH',
+        method: "PATCH",
         body: updateTicketDto,
       }),
     }),
     deleteTicket: builder.mutation<IAssistanceTicketResponse, string>({
       query: (id) => ({
         url: `/assistance-tickets/${id}`,
-        method: 'DELETE',
+        method: "DELETE",
       }),
     }),
     redeemTicket: builder.mutation<IAssistanceTicketResponse, string>({
       query: (id) => ({
         url: `/assistance-tickets/${id}/redeem`,
-        method: 'POST',
+        method: "POST",
       }),
     }),
   }),
@@ -84,4 +88,5 @@ export const {
   useUpdateTicketMutation,
   useDeleteTicketMutation,
   useRedeemTicketMutation,
+  useGetMyEventsCalendarQuery,
 } = assistanceTicketApi;
