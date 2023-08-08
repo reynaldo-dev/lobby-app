@@ -5,13 +5,12 @@ import {
   Button,
   Center,
   Icon,
-  ScrollView,
   Skeleton,
   StatusBar,
   Text,
   VStack,
   View,
-  useToast,
+  useToast
 } from "native-base";
 import React from "react";
 import {
@@ -26,7 +25,6 @@ import CustomToast from "../../../shared/components/toast/CustomToast";
 import { theme } from "../../../theme";
 import CommunityCover from "./components/community-cover/CommunityCover";
 import EventList from "./components/event-list/EventList";
-import SkeletonCommunityScreen from "./components/skeleton-community-screen/SkeletonCommunityScreen";
 
 export const CommunityScreen = () => {
   const { user } = useAppSelector((state: RootState) => state.user);

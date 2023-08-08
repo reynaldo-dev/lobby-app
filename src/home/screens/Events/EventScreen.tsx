@@ -54,10 +54,9 @@ export default function EventScreen() {
     handleEnroll,
     handleCancelEnrollment,
     handleButtonPress,
-    setShowDialog
+    setShowDialog,
+    isLoadingAction,
   } = useEventScreenLogic(params?.id);
-
-  //TODO: fix consumables tickets refetching
 
   if (isLoading || isEnrolled === null) {
     return (
@@ -97,9 +96,16 @@ export default function EventScreen() {
                 <AlertDialog.Content style={{ borderRadius: 20, width: "80%" }}>
                   <AlertDialog.Header>Confirmar Acción</AlertDialog.Header>
                   <AlertDialog.Body>
-                    <Text style={{ flexWrap: 'wrap' }}>
-                      ¿Estás seguro que quieres {isEnrolled ? "cancelar tu asistencia" : "asistir"} a este evento?
-                    </Text>
+                    {isLoadingAction ? (
+                      <Center>
+                        <ActivityIndicator size="large" color={theme.colors.primary} />
+                        <Text style={{ flexWrap: 'wrap' }}>Cargando...</Text>
+                      </Center>
+                    ) : (
+                      <Text style={{ flexWrap: 'wrap' }}>
+                        ¿Estás seguro que quieres {isEnrolled ? "cancelar tu asistencia" : "asistir"} a este evento?
+                      </Text>
+                    )}
                   </AlertDialog.Body>
                   <AlertDialog.Footer>
                     <Button
@@ -108,14 +114,17 @@ export default function EventScreen() {
                       colorScheme="red"
                       mr={3}
                       _text={{ color: "white" }}
+                      disabled={isLoadingAction}
+                      _disabled={{ opacity: 0.5 }}
                     >
                       Cancelar
                     </Button>
                     <Button
-                      isLoading={isEnrolling || isCancelling}
                       onPress={isEnrolled ? handleCancelEnrollment : handleEnroll}
                       colorScheme="green"
                       _text={{ color: "white" }}
+                      disabled={isLoadingAction}
+                      _disabled={{ opacity: 0.5 }}
                     >
                       Confirmar
                     </Button>
