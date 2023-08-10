@@ -1,7 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getAuthStateFromAsyncStorage } from "../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage";
 import { ICommunity } from "../../../interfaces/community.interface";
-import { GetCommunityByIDResponse } from "./interfaces/community-response.interface";
+import {
+  CountMembersResponse,
+  GetCommunityByIDResponse,
+} from "./interfaces/community-response.interface";
 
 export const communitiesService = createApi({
   reducerPath: "communitiesService",
@@ -24,7 +27,7 @@ export const communitiesService = createApi({
     getCommunities: builder.query<ICommunity, void>({
       query: () => "/communities",
     }),
-    getCountMembers: builder.query<void, String>({
+    getCountMembers: builder.query<CountMembersResponse, String>({
       query: (id: string) => `/communities/${id}/members/count`,
     }),
     getSearchCommunities: builder.query<ICommunity, String>({

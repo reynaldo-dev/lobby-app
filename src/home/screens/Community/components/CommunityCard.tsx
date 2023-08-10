@@ -3,6 +3,7 @@ import { ICommunity } from "../../../../interfaces/community.interface";
 import { useGetCountMembersQuery } from "../../../../redux/services/community/communities.service";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../../../routing/navigation-types";
+import { theme } from "../../../../theme";
 
 type DimensionProp = number | string | (number | string)[];
 type Props = {
@@ -20,7 +21,8 @@ const CommunityCard = ({
   marginTop = 0,
   marginRight = 0,
 }: Props) => {
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NavigationProp<RootStackParamList, "Community">>();
   const onPress = () => {
     navigation.navigate("Community", { id: community.id });
   };
@@ -47,8 +49,7 @@ const CommunityCard = ({
             overflow="hidden"
             width={widthCard}
             height={heightCard}
-            shadow="1"
-            backgroundColor="coolGray.50"
+            backgroundColor={theme.colors.white}
           >
             <Box w={"100%"} h={"20%"}>
               <Box w={"100%"} h="100%" backgroundColor={community?.color}></Box>

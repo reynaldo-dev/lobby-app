@@ -1,6 +1,7 @@
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import { useRoute } from "@react-navigation/native";
 import {
+  Badge,
   Box,
   Button,
   Center,
@@ -10,9 +11,9 @@ import {
   Text,
   VStack,
   View,
-  useToast
+  useToast,
 } from "native-base";
-import React from "react";
+import React, { useState } from "react";
 import {
   useGetCommunityByIdQuery,
   useGetCountMembersQuery,
@@ -25,6 +26,9 @@ import CustomToast from "../../../shared/components/toast/CustomToast";
 import { theme } from "../../../theme";
 import CommunityCover from "./components/community-cover/CommunityCover";
 import EventList from "./components/event-list/EventList";
+import { ICommunityResponse } from "../../../interfaces/community.interface";
+import { IEvent } from "../../../redux/services/community/interfaces/community-response.interface";
+import Layout from "../../../shared/layout/Layout";
 
 export const CommunityScreen = () => {
   const { user } = useAppSelector((state: RootState) => state.user);
@@ -32,6 +36,10 @@ export const CommunityScreen = () => {
   const { id } = route.params as { id: string };
   const { data: community, isLoading } = useGetCommunityByIdQuery(id.trim());
   const toast = useToast();
+  const [isLoadingJoinCommunity, setIsLoadingJoinCommunity] =
+    useState<boolean>(false);
+  const [isLoadingLeaveCommunity, setIsLoadingLeaveCommunity] =
+    useState<boolean>(false);
 
   const { data: imIInCommunity, refetch } = useImIInCommuityQuery({
     userId: user?.id as string,
@@ -46,11 +54,13 @@ export const CommunityScreen = () => {
   const [leaveCommunity] = useLeaveCommunityMutation();
 
   const handleJoinCommunity = async () => {
+    setIsLoadingJoinCommunity(true);
     await joinCommunity({
       userId: user?.id as string,
       communityId: id.trim(),
     });
     refetch();
+    setIsLoadingJoinCommunity(false);
     refetchCountMembers();
     toast.show({
       render: () => (
@@ -66,13 +76,14 @@ export const CommunityScreen = () => {
   };
 
   const handleLeaveCommunity = async () => {
+    setIsLoadingLeaveCommunity(true);
     await leaveCommunity({
       userId: user?.id as string,
       communityId: id.trim(),
     });
     refetch();
+    setIsLoadingLeaveCommunity(false);
     refetchCountMembers();
-
     toast.show({
       render: () => (
         <CustomToast
@@ -86,13 +97,13 @@ export const CommunityScreen = () => {
   };
 
   return (
-    <View flex={1}>
+    <Layout>
       {isLoading ? (
         <SkeletonLayout />
       ) : (
         <>
           <StatusBar backgroundColor={community?.color} />
-          <CommunityCover community={community} />
+          <CommunityCover community={community as ICommunityResponse} />
 
           <View bgColor={theme.colors.background} h="85%">
             <Box flexDirection="row" justifyContent="space-between" mx={2}>
@@ -105,12 +116,12 @@ export const CommunityScreen = () => {
                 h="100%"
                 p={2}
               >
-                <Text fontSize="md" color={theme.colors.secondary}>
+                <Text fontSize="md" color={theme.colors.muted["500"]}>
                   {members?.totalMembers}
                 </Text>
                 <Icon
                   ml={2}
-                  color={theme.colors.secondary}
+                  color={theme.colors.muted["500"]}
                   as={Ionicons}
                   name="people-outline"
                   size="md"
@@ -121,11 +132,21 @@ export const CommunityScreen = () => {
                 onPress={
                   imIInCommunity ? handleLeaveCommunity : handleJoinCommunity
                 }
+                _spinner={{
+                  color: theme.colors.primary,
+                }}
+                spinnerPlacement="end"
+                isLoading={
+                  imIInCommunity
+                    ? isLoadingLeaveCommunity
+                    : isLoadingJoinCommunity
+                }
+                isLoadingText={imIInCommunity ? "Saliendo" : "Uniendome"}
                 borderRadius={30}
                 mt={2}
                 mr={2}
                 color={theme.colors.primary}
-                background={theme.colors.primary}
+                background={theme.colors.secondary}
                 endIcon={
                   <Icon
                     color={theme.colors.white}
@@ -146,7 +167,7 @@ export const CommunityScreen = () => {
           </View>
         </>
       )}
-    </View>
+    </Layout>
   );
 };
 

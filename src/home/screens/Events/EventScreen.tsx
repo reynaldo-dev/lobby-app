@@ -12,13 +12,13 @@ import {
   Text,
   VStack,
   View,
-  useDisclose
+  useDisclose,
 } from "native-base";
 import { ActivityIndicator } from "react-native";
 import { RootStackParamList } from "../../../routing/navigation-types";
 import Layout from "../../../shared/layout/Layout";
 import { theme } from "../../../theme";
-import useEventScreenLogic from './EventScreenLogic';
+import useEventScreenLogic from "./EventScreenLogic";
 import ConfirmAssistanceBottomSheet from "./components/confirm-assistance-bottomSheet/ConfirmAssistanceBottomSheet";
 
 const DetailItem = ({
@@ -41,7 +41,7 @@ const DetailItem = ({
 
 export default function EventScreen() {
   const { isOpen, onOpen, onClose } = useDisclose();
-  const { params } = useRoute<RouteProp<RootStackParamList, 'Event'>>();
+  const { params } = useRoute<RouteProp<RootStackParamList, "Event">>();
   const {
     event,
     isLoading,
@@ -58,6 +58,16 @@ export default function EventScreen() {
     isLoadingAction,
   } = useEventScreenLogic(params?.id);
 
+  const getEventDateFormatted = () => {
+    //format event date just like this: "Lunes, 12 de Julio de 2021, 18:02"
+    const date = new Date(event?.dateTime as string);
+    const dayNumber = date.toLocaleDateString("es-ES", { day: "numeric" });
+    const month = date.toLocaleDateString("es-ES", { month: "long" });
+    const year = date.toLocaleDateString("es-ES", { year: "numeric" });
+
+    return `${dayNumber} de ${month} de ${year}`;
+  };
+
   if (isLoading || isEnrolled === null) {
     return (
       <Center flex={1}>
@@ -68,7 +78,6 @@ export default function EventScreen() {
 
   return (
     <Layout backgroundColor={theme.colors.primary}>
-
       <View flex={1}>
         <Center bg={`${theme.colors.primary}`} h="30%">
           <Text
@@ -81,6 +90,7 @@ export default function EventScreen() {
           </Text>
           {isEnrolled !== null && (
             <Pressable
+              display={event?.status === "Inactivo" ? "none" : "flex"}
               onPress={handleButtonPress}
               flexDir="row"
               alignItems="center"
@@ -92,18 +102,27 @@ export default function EventScreen() {
                 backgroundColor: "yellow.500",
               }}
             >
-              <AlertDialog isOpen={showDialog} leastDestructiveRef={cancelRef} onClose={() => setShowDialog(false)}>
+              <AlertDialog
+                isOpen={showDialog}
+                leastDestructiveRef={cancelRef}
+                onClose={() => setShowDialog(false)}
+              >
                 <AlertDialog.Content style={{ borderRadius: 20, width: "80%" }}>
                   <AlertDialog.Header>Confirmar Acción</AlertDialog.Header>
                   <AlertDialog.Body>
                     {isLoadingAction ? (
                       <Center>
-                        <ActivityIndicator size="large" color={theme.colors.primary} />
-                        <Text style={{ flexWrap: 'wrap' }}>Cargando...</Text>
+                        <ActivityIndicator
+                          size="large"
+                          color={theme.colors.primary}
+                        />
+                        <Text style={{ flexWrap: "wrap" }}>Cargando...</Text>
                       </Center>
                     ) : (
-                      <Text style={{ flexWrap: 'wrap' }}>
-                        ¿Estás seguro que quieres {isEnrolled ? "cancelar tu asistencia" : "asistir"} a este evento?
+                      <Text style={{ flexWrap: "wrap" }}>
+                        ¿Estás seguro que quieres{" "}
+                        {isEnrolled ? "cancelar tu asistencia" : "asistir"} a
+                        este evento?
                       </Text>
                     )}
                   </AlertDialog.Body>
@@ -120,7 +139,9 @@ export default function EventScreen() {
                       Cancelar
                     </Button>
                     <Button
-                      onPress={isEnrolled ? handleCancelEnrollment : handleEnroll}
+                      onPress={
+                        isEnrolled ? handleCancelEnrollment : handleEnroll
+                      }
                       colorScheme="green"
                       _text={{ color: "white" }}
                       disabled={isLoadingAction}
@@ -192,7 +213,7 @@ export default function EventScreen() {
             {/* Fecha */}
             <DetailItem
               label="Fecha"
-              value={new Date(event?.dateTime as string).toLocaleDateString()}
+              value={getEventDateFormatted() as string}
             />
             <Divider />
 
@@ -219,7 +240,6 @@ export default function EventScreen() {
           </VStack>
         </ScrollView>
       </View>
-
 
       <ConfirmAssistanceBottomSheet
         isOpen={isOpen}
