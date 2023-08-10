@@ -11,26 +11,23 @@ interface Props {
 }
 
 export default function EventCommunityCard({ event }: Props) {
-  const [isPressed, setIsPressed] = useState(false)
+  const [isPressed, setIsPressed] = useState(false);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const handleNavigateToEventInfo = () => {
+    setIsPressed(true);
 
-    setIsPressed(true)
-
-    navigation.navigate("Event", { id: event.id })
-
-  }
+    navigation.navigate("Event", { id: event.id });
+  };
 
   return (
     <Pressable
-    onPress={handleNavigateToEventInfo} 
-    isPressed={isPressed}
-    style={{
-      transform: [{ scale: isPressed ? 0.95 : 1 }],
-    }}
-      borderColor={theme.colors.muted["300"]}
-      borderWidth={1}
+      onPress={handleNavigateToEventInfo}
+      isPressed={isPressed}
+      style={{
+        transform: [{ scale: isPressed ? 0.95 : 1 }],
+      }}
+      backgroundColor={theme.colors.white}
       borderRadius={10}
       w="100%"
       my={2}

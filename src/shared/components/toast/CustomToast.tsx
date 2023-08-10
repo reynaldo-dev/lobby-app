@@ -10,7 +10,7 @@ interface CustomToastProps {
 export default function CustomToast({ message, color }: CustomToastProps) {
   return (
     <Center>
-      <Box bg={color} px="2" py="1" rounded="sm" mb={5}>
+      <Box bg={color} p={3} rounded="lg" mb={5}>
         <Text color={theme.colors.white}>{message}</Text>
       </Box>
     </Center>

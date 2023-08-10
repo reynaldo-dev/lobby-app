@@ -18,7 +18,7 @@ export default function EventList({ events }: EventListProps) {
       <FlatList
         w="100%"
         p={2}
-        mt={5}
+        mt={2}
         data={events}
         renderItem={(item) => <EventCommunityCard event={item.item} />}
         keyExtractor={(item) => item.id}

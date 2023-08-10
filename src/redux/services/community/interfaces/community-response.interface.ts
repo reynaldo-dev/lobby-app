@@ -20,3 +20,9 @@ export interface IEvent {
   communityId: string;
   dateTime: string;
 }
+
+//count members response
+export interface CountMembersResponse {
+  coummunityId: string;
+  totalMembers: number;
+}
