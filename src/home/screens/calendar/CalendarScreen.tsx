@@ -38,6 +38,7 @@ export default function CalendarScreen() {
           }}
           maxDate={dateAfterTwoMonths}
           pastScrollRange={10}
+          minDate={getCurrentDate()}
           showClosingKnob={true}
           style={{ height: "90%" }}
           futureScrollRange={10}
