@@ -20,6 +20,7 @@ import EventScreen from "../home/screens/Events/EventScreen";
 
 import CalendarScreen from "../home/screens/calendar/CalendarScreen";
 import { theme } from "../theme";
+import EditProfile from "../home/screens/profile/components/edit-profile/EditProfile";
 
 const authRouter = createNativeStackNavigator<AuthStackParamList>();
 const privateStack = createNativeStackNavigator<PrivateStackParamList>();
@@ -71,6 +72,17 @@ export function RootNavigator() {
         />
         <Stack.Screen name="QRCode" component={CustomQRCode} />
         <Stack.Screen name="Community" component={CommunityScreen} />
+        <Stack.Screen
+          name="EditProfile"
+          options={{
+            headerTitle: "Editar perfil",
+            headerShown: true,
+            headerShadowVisible: false,
+            headerTitleStyle: { color: theme.colors.muted["500"] },
+            headerTintColor: theme.colors.muted["500"],
+          }}
+          component={EditProfile}
+        />
         <Stack.Screen name="Event" component={EventScreen} />
         <Stack.Screen name="SearchCommunity" component={SearchCommunity} />
       </Stack.Group>
