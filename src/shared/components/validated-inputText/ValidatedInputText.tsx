@@ -26,7 +26,7 @@ export default function ValidatedInputText({
   bgColor,
 }: ValidatedInputTextProps) {
   return (
-    <Box alignItems="center">
+    <Box alignItems="center" w="full">
       <FormControl
         isInvalid={isInvalid}
         w="100%"

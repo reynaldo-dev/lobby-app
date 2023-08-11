@@ -10,7 +10,7 @@ import {
   Text,
   View,
 } from "native-base";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import image from "../../../../assets/icon.png";
@@ -23,9 +23,12 @@ import {
 } from "../../../redux/store/store";
 import { theme } from "../../../theme";
 import { logout } from "../../../redux/slices/user/user.thunk";
+import MainModal from "../../../shared/components/modal/MainModal";
+import EditProfile from "./components/edit-profile/EditProfile";
 
 export default function Profile() {
   const { user } = useAppSelector((state: RootState) => state.user);
+
   const dispatch = useAppDispatch();
 
   const navigation =
@@ -33,6 +36,10 @@ export default function Profile() {
 
   const handleQR = () => {
     navigation.navigate("QRCode");
+  };
+
+  const handleEdit = () => {
+    navigation.navigate("EditProfile");
   };
 
   const onLogout = () => {
@@ -50,7 +57,13 @@ export default function Profile() {
             color="primary"
             onPress={handleQR}
           />
-          <Icon as={AntDesign} name="edit" size={6} color="primary" />
+          <Icon
+            as={AntDesign}
+            name="edit"
+            size={6}
+            color="primary"
+            onPress={handleEdit}
+          />
         </Box>
         <Center>
           <Image source={image} alt="Logo" width={150} height={150} />
