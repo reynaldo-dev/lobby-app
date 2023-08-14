@@ -1,6 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 import { getAuthStateFromAsyncStorage } from "../../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage";
 import { UpdateProfilePayload, UpdateProfileResponse } from "./update-profile";
+import {
+  IPasswordUpdatePayload,
+  IPasswordUpdateResponse,
+} from "./password-update";
 
 export const userApi = createApi({
   reducerPath: "userApi",
@@ -35,7 +39,21 @@ export const userApi = createApi({
         },
       }),
     }),
+
+    updatePassword: builder.mutation<
+      IPasswordUpdateResponse,
+      IPasswordUpdatePayload
+    >({
+      query: (payload) => ({
+        url: `/user/password-update/${payload.id}`,
+        method: "PUT",
+        body: {
+          lastPassword: payload.currentPassword,
+          newPassword: payload.newPassword,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useUpdateProfileMutation } = userApi;
+export const { useUpdateProfileMutation, useUpdatePasswordMutation } = userApi;

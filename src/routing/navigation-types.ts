@@ -19,6 +19,7 @@ export type RootStackParamList = {
   Root: PrivateStackParamList;
   QRCode: undefined;
   EditProfile: undefined;
+  PasswordUpdate: undefined;
   Community: { id: string };
   Event: { id: string };
 
