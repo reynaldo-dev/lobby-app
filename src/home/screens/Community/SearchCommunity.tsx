@@ -68,7 +68,7 @@ export const SearchCommunity = () => {
         {searchResults?.map((community) => (
           <Center>
             <CommunityCard
-              community={community}
+              data={community}
               heightCard={48}
               widthCard={80}
               marginTop={10}

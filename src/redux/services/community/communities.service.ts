@@ -1,31 +1,34 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { getAuthStateFromAsyncStorage } from "../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage";
-import { ICommunity } from "../../../interfaces/community.interface";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { getAuthStateFromAsyncStorage } from '../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage';
+import {
+  ICommunity,
+  IUserCommunity,
+} from '../../../interfaces/community.interface';
 import {
   CountMembersResponse,
   GetCommunityByIDResponse,
-} from "./interfaces/community-response.interface";
+} from './interfaces/community-response.interface';
 
 export const communitiesService = createApi({
-  reducerPath: "communitiesService",
+  reducerPath: 'communitiesService',
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://172.27.48.1:4000/api",
+    baseUrl: 'http://4ba1-138-186-250-188.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
-        headers.set("authorization", bearerToken);
+        headers.set('authorization', bearerToken);
       }
 
       return headers;
     },
   }),
-  tagTypes: ["Communities"],
+  tagTypes: ['Communities'],
   refetchOnFocus: true,
   refetchOnMountOrArgChange: true,
   refetchOnReconnect: true,
   endpoints: (builder) => ({
     getCommunities: builder.query<ICommunity, void>({
-      query: () => "/communities",
+      query: () => '/communities',
     }),
     getCountMembers: builder.query<CountMembersResponse, String>({
       query: (id: string) => `/communities/${id}/members/count`,
@@ -35,6 +38,10 @@ export const communitiesService = createApi({
     }),
     getCommunityById: builder.query<GetCommunityByIDResponse, String>({
       query: (id: string) => `/communities/${id}`,
+    }),
+
+    getCommunitiesByUserId: builder.query<IUserCommunity[], String>({
+      query: (id: string) => `/user-community/users/${id}/communities`,
     }),
 
     imIInCommuity: builder.query<
@@ -51,7 +58,7 @@ export const communitiesService = createApi({
     >({
       query: (payload) => ({
         url: `/user-community`,
-        method: "POST",
+        method: 'POST',
         body: {
           userId: payload.userId,
           communityId: payload.communityId,
@@ -65,7 +72,7 @@ export const communitiesService = createApi({
     >({
       query: (payload) => ({
         url: `/user-community/community/${payload.communityId}/user/${payload.userId}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
     }),
   }),
@@ -76,6 +83,7 @@ export const {
   useGetCountMembersQuery,
   useLazyGetSearchCommunitiesQuery,
   useGetCommunityByIdQuery,
+  useGetCommunitiesByUserIdQuery,
   useImIInCommuityQuery,
   useJoinCommunityMutation,
   useLeaveCommunityMutation,
