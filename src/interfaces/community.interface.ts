@@ -3,7 +3,7 @@ export interface DataCommunityUser {
   data: DataCommunityUser[];
 }
 
-export interface ICommutiesUser {
+export interface ICommunitiesUser {
   userId: string;
   communityId: string;
   createdAt: Date;
@@ -17,6 +17,12 @@ export interface ICommunity {
   description: string;
   color: string;
   createdAt: Date;
+}
+export interface IUserCommunity {
+  userId: string;
+  communityId: string;
+  createdAt: Date;
+  community: ICommunity;
 }
 
 export interface User {
