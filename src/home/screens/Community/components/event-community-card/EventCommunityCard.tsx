@@ -24,9 +24,6 @@ export default function EventCommunityCard({ event }: Props) {
     <Pressable
       onPress={handleNavigateToEventInfo}
       isPressed={isPressed}
-      style={{
-        transform: [{ scale: isPressed ? 0.95 : 1 }],
-      }}
       backgroundColor={theme.colors.white}
       borderRadius={10}
       w="100%"

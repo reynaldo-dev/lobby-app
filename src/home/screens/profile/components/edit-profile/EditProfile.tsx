@@ -69,16 +69,14 @@ export default function EditProfile() {
     toast.show({
       render: () => (
         <CustomToast
-          message="Perfil actualizado correctamente, tienes que hacer login nuevamente."
+          message="Perfil actualizado correctamente, tienes que volver a iniciar sesión."
           color={theme.colors.success}
         />
       ),
-      placement: "bottom",
-      duration: 5000,
-      onCloseComplete: () => {
-        dispatch(logout());
-      },
+      placement: "top",
+      duration: 6000,
     });
+    dispatch(logout());
   };
   return (
     <Layout backgroundColor={theme.colors.white}>
