@@ -12,7 +12,7 @@ import {
 export const communitiesService = createApi({
   reducerPath: 'communitiesService',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://4ba1-138-186-250-188.ngrok-free.app/api',
+    baseUrl: 'http://a62f-138-186-250-188.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
@@ -27,13 +27,13 @@ export const communitiesService = createApi({
   refetchOnMountOrArgChange: true,
   refetchOnReconnect: true,
   endpoints: (builder) => ({
-    getCommunities: builder.query<ICommunity, void>({
+    getCommunities: builder.query<ICommunity[], void>({
       query: () => '/communities',
     }),
     getCountMembers: builder.query<CountMembersResponse, String>({
       query: (id: string) => `/communities/${id}/members/count`,
     }),
-    getSearchCommunities: builder.query<ICommunity, String>({
+    getSearchCommunities: builder.query<ICommunity[], String>({
       query: (name: string) => `/communities/search/${name}`,
     }),
     getCommunityById: builder.query<GetCommunityByIDResponse, String>({
