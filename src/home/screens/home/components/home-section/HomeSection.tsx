@@ -9,7 +9,7 @@ interface HomeSectionProps {
 
 export default function HomeSection({ title, children }: HomeSectionProps) {
   return (
-    <View mt={10}>
+    <View>
       <Text
         ml={5}
         mb={3}

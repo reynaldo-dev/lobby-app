@@ -5,7 +5,7 @@ import user from "../slices/user/user.slice";
 import { assistanceTicketApi } from "../services/assistanceTicket/assitanceTicket.service";
 import { eventsApi } from "../services/events/events.service";
 import { consumablesTicketsApi } from "../services/consumableTicket/consumableTicket.service";
-import { userApi } from "../services/user/interfaces/user.service";
+import { userApi } from "../services/user/user.service";
 
 export const store = configureStore({
   reducer: {

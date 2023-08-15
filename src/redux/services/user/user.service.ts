@@ -1,10 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
-import { getAuthStateFromAsyncStorage } from "../../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage";
-import { UpdateProfilePayload, UpdateProfileResponse } from "./update-profile";
+import { getAuthStateFromAsyncStorage } from "../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage";
+import {
+  UpdateProfilePayload,
+  UpdateProfileResponse,
+} from "./interfaces/update-profile";
 import {
   IPasswordUpdatePayload,
   IPasswordUpdateResponse,
-} from "./password-update";
+} from "./interfaces/password-update";
 
 export const userApi = createApi({
   reducerPath: "userApi",

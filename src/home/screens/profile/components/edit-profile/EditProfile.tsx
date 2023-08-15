@@ -5,7 +5,7 @@ import { Button, Text, VStack, View, useToast } from "native-base";
 import React, { useState } from "react";
 import { TouchableOpacity } from "react-native";
 import * as Yup from "yup";
-import { useUpdateProfileMutation } from "../../../../../redux/services/user/interfaces/user.service";
+import { useUpdateProfileMutation } from "../../../../../redux/services/user/user.service";
 import {
   RootState,
   useAppDispatch,

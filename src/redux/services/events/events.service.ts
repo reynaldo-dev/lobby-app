@@ -5,6 +5,7 @@ import {
   GetEventByIDResponse,
   IEnrollEventResponse,
 } from "./interfaces/getEventByIdResponse";
+import { IGetMyEventsResponse } from "./interfaces/get-my-events";
 
 export const eventsApi = createApi({
   reducerPath: "eventsApi",
@@ -29,6 +30,11 @@ export const eventsApi = createApi({
     getEventById: builder.query<GetEventByIDResponse, string>({
       query: (id: string) => `/events/${id}`,
     }),
+
+    getMyevents: builder.query<IGetMyEventsResponse[], string>({
+      query: (userId: string) => `/events/my-events/${userId}`,
+    }),
+
     enrollToEvent: builder.mutation<{}, { userId: string; eventId: string }>({
       query: ({ userId, eventId }) => ({
         url: `/events/${eventId}/enroll/${userId}`,
@@ -58,4 +64,5 @@ export const {
   useCancelEnrollmentToEventMutation,
   useEnrollToEventMutation,
   useIsEnrolledToEventQuery,
+  useGetMyeventsQuery,
 } = eventsApi;

@@ -7,6 +7,7 @@ import {
   Card,
   Center,
   ScrollView,
+  View,
 } from "native-base";
 import React, { useState, useEffect } from "react";
 import { AntDesign } from "@expo/vector-icons";
@@ -35,7 +36,7 @@ export const SearchCommunity = () => {
   }, [searchCommunitiesData]);
 
   return (
-    <>
+    <View>
       <HStack
         w="100%"
         justifyContent={"space-around"}
@@ -76,6 +77,6 @@ export const SearchCommunity = () => {
           </Center>
         ))}
       </ScrollView>
-    </>
+    </View>
   );
 };
