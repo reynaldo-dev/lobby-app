@@ -26,11 +26,13 @@ export const CommunityList = () => {
     getUserData();
   }, []);
 
+  const communities = communityData?.map(item => item.community);
+
   return communityIsLoading ? (
     <SkeletonCard />
   ) : (
     <FlatList
-      data={communityData}
+      data={communities}
       renderItem={({ item }) => (
         <CommunityCard
           data={item}
@@ -39,7 +41,7 @@ export const CommunityList = () => {
           marginRight={10}
         />
       )}
-      keyExtractor={(item) => item.community.id}
+      keyExtractor={(item) => item.id}
       horizontal={true}
       showsHorizontalScrollIndicator={false}
       style={{ padding: 10, height: 215 }}

@@ -1,18 +1,20 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
-import { getAuthStateFromAsyncStorage } from "../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage";
-import {
-  UpdateProfilePayload,
-  UpdateProfileResponse,
-} from "./interfaces/update-profile";
+
 import {
   IPasswordUpdatePayload,
   IPasswordUpdateResponse,
 } from "./interfaces/password-update";
 
+import { getAuthStateFromAsyncStorage } from "../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage";
+import {
+  UpdateProfilePayload,
+  UpdateProfileResponse,
+} from "./interfaces/update-profile";
+
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://172.27.48.1:4000/api",
+    baseUrl: "http://a62f-138-186-250-188.ngrok-free.app/api",
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {

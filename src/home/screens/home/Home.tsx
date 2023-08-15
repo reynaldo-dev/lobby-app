@@ -36,12 +36,6 @@ export default function Home() {
         <View flex={1}>
           <SearchBarCustom />
         </View>
-        <CustomAlert
-          title="¡El evento tarde de peliculas se acerca!"
-          description="Recuerda que debes confirmar tu asistencia para el evento."
-          place="Davivienda"
-          time="4:00 pm"
-        />
 
         <View mt={10} flex={2}>
           <HomeSection title="Mis Comunidades">
@@ -49,7 +43,7 @@ export default function Home() {
           </HomeSection>
         </View>
 
-        <View mb={2} flex={2}>
+        <View mb={2} flex={2} mt={5}>
           <HomeSection title="Eventos próximos">
             {isLoading ? (
               <EventListSkeleton />
