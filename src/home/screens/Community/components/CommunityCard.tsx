@@ -1,13 +1,13 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Box, HStack, Heading, Pressable, Stack, Text } from "native-base";
-import { IUserCommunity } from "../../../../interfaces/community.interface";
+import { ICommunity, IUserCommunity } from "../../../../interfaces/community.interface";
 import { useGetCountMembersQuery } from "../../../../redux/services/community/communities.service";
 import { RootStackParamList } from "../../../../routing/navigation-types";
 import { theme } from "../../../../theme";
 
 type DimensionProp = number | string | (number | string)[];
 type Props = {
-  data: IUserCommunity;
+  data: ICommunity;
   widthCard: DimensionProp;
   heightCard: DimensionProp;
   marginTop?: number;
@@ -25,12 +25,11 @@ const CommunityCard = ({
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "Community">>();
   const onPress = () => {
-    navigation.navigate("Community", { id: data?.community?.id });
+    navigation.navigate("Community", { id: data?.id });
   };
 
 
-  const { data: communityData } = useGetCountMembersQuery(data?.community?.id);
-  console.log(data?.community?.id)
+  const { data: communityData } = useGetCountMembersQuery(data?.id);
   return (
     <Pressable onPress={onPress}>
       {({ isPressed }) => (
@@ -54,17 +53,17 @@ const CommunityCard = ({
             backgroundColor={theme.colors.white}
           >
             <Box w={"100%"} h={"20%"}>
-              <Box w={"100%"} h="100%" backgroundColor={data?.community?.color}></Box>
+              <Box w={"100%"} h="100%" backgroundColor={data?.color}></Box>
             </Box>
             <Stack p="4" space={[3, 3, 1.5]} justifyContent="space-around">
               <Stack>
                 <Heading size="md" ml="-1">
-                  {data?.community?.name}
+                  {data?.name}
                 </Heading>
               </Stack>
-              <Text fontWeight="400">{data?.community?.description}</Text>
+              <Text fontWeight="400">{data?.description}</Text>
               <HStack alignItems="center" justifyContent="flex-end">
-                <Box bgColor={data?.community?.color} p={2.5} rounded={"full"}>
+                <Box bgColor={data?.color} p={2.5} rounded={"full"}>
                   {communityData?.totalMembers === 0 ? (
                     <Text color="white" fontSize="xs" fontWeight="bold">
                       Aún no hay miembros

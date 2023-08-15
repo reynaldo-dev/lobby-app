@@ -1,38 +1,64 @@
-import {
-  Stack,
-  Input,
-  Icon,
-  Button,
-  HStack,
-  Card,
-  Center,
-  ScrollView,
-} from "native-base";
-import React, { useState, useEffect } from "react";
 import { AntDesign } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import CommunityCard from "./components/CommunityCard";
-import { useLazyGetSearchCommunitiesQuery } from "../../../redux/services/community/communities.service";
+import {
+  Center,
+  HStack,
+  Icon,
+  Input,
+  ScrollView,
+  Text
+} from "native-base";
+import React, { useEffect, useState } from "react";
+import { TouchableOpacity, ActivityIndicator } from "react-native";
 import { ICommunity } from "../../../interfaces/community.interface";
+import { useGetCommunitiesQuery, useLazyGetSearchCommunitiesQuery } from "../../../redux/services/community/communities.service";
+import CommunityCard from "./components/CommunityCard";
 
 export const SearchCommunity = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [localSearchResults, setLocalSearchResults] = useState<ICommunity[] | null>(null);
   const [searchResults, setSearchResults] = useState<ICommunity[] | null>(null);
   const navigation = useNavigation();
+
+  const { data: allCommunities } = useGetCommunitiesQuery();
 
   const [getSearchCommunities, { data: searchCommunitiesData }] =
     useLazyGetSearchCommunitiesQuery();
 
   const handleSearch = () => {
+    setIsSearching(true);
     getSearchCommunities(searchTerm);
   };
 
   useEffect(() => {
     if (searchCommunitiesData) {
-      setSearchResults(searchCommunitiesData);
+      setLocalSearchResults(searchCommunitiesData);
+      setIsSearching(false);
     }
   }, [searchCommunitiesData]);
+
+  useEffect(() => {
+    if (searchTerm === "") {
+      setLocalSearchResults(null);
+      setSearchResults(allCommunities || null);
+    } else if (localSearchResults) {
+      setSearchResults(localSearchResults);
+    }
+  }, [searchTerm, allCommunities, localSearchResults]);
+
+  useEffect(() => {
+    if (allCommunities) {
+      setIsLoading(false);
+    }
+  }, [allCommunities]);
+
+  const clearSearch = () => {
+    setSearchTerm("");
+    setLocalSearchResults(null);
+  };
+
 
   return (
     <>
@@ -58,24 +84,47 @@ export const SearchCommunity = () => {
               color="muted.400"
             />
           }
+          InputRightElement={
+            searchTerm ? (
+              <Icon
+                as={<AntDesign name="closecircle" />}
+                size={5}
+                mr="2"
+                color="muted.400"
+                onPress={clearSearch}
+              />
+            ) : undefined
+          }
+
           placeholder="Buscar comunidad"
           value={searchTerm}
           onChangeText={setSearchTerm}
           onSubmitEditing={handleSearch}
         />
+
       </HStack>
-      <ScrollView>
-        {searchResults?.map((community) => (
-          <Center>
-            <CommunityCard
-              data={community}
-              heightCard={48}
-              widthCard={80}
-              marginTop={10}
-            />
-          </Center>
-        ))}
-      </ScrollView>
+      {isLoading || isSearching ? (
+        <Center flex={1}>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </Center>
+      ) : searchResults?.length === 0 ? (
+        <Center my={"auto"}>
+          <Text>No se encontraron comunidades</Text>
+        </Center>
+      ) : (
+        <ScrollView>
+          {searchResults?.map((community) => (
+            <Center key={community.id}>
+              <CommunityCard
+                data={community}
+                heightCard={48}
+                widthCard={80}
+                marginTop={10}
+              />
+            </Center>
+          ))}
+        </ScrollView>
+      )}
     </>
   );
 };
