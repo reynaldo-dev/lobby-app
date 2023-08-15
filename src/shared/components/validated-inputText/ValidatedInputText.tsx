@@ -11,7 +11,7 @@ interface ValidatedInputTextProps {
   onChangeText: any;
   value: string;
   bgColor?: string;
-
+  type?: "text" | "password" | undefined;
   errors: any;
 }
 
@@ -24,6 +24,7 @@ export default function ValidatedInputText({
   value,
   errors,
   bgColor,
+  type = "text",
 }: ValidatedInputTextProps) {
   return (
     <Box alignItems="center" w="full">
@@ -33,15 +34,6 @@ export default function ValidatedInputText({
         maxW="300px"
         borderRadius={10}
       >
-        {/* <FormControl.Label
-          _text={{
-            fontSize: "sm",
-
-            color: theme.colors.muted["400"],
-          }}
-        >
-          {formControlLabel}
-        </FormControl.Label> */}
         <Input
           bgColor={bgColor}
           style={styles.input}
@@ -51,6 +43,7 @@ export default function ValidatedInputText({
           value={value}
           autoCapitalize="none"
           borderColor="transparent"
+          type={type}
         />
         {errors && (
           <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>

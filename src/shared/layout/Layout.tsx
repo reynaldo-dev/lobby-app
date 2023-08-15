@@ -7,7 +7,7 @@ interface LayoutProps {
 }
 export default function Layout({ children, backgroundColor }: LayoutProps) {
   return (
-    <View flex={1}>
+    <View flex={1} backgroundColor={backgroundColor}>
       <StatusBar backgroundColor={backgroundColor} barStyle="dark-content" />
       {children}
     </View>
