@@ -1,29 +1,30 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import { getAuthStateFromAsyncStorage } from '../../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage';
-import { UpdateProfilePayload, UpdateProfileResponse } from './update-profile';
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
-import { getAuthStateFromAsyncStorage } from "../../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage";
-import { UpdateProfilePayload, UpdateProfileResponse } from "./update-profile";
+
 import {
   IPasswordUpdatePayload,
   IPasswordUpdateResponse,
-} from "./password-update";
+} from "./interfaces/password-update";
 
+import { getAuthStateFromAsyncStorage } from "../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage";
+import {
+  UpdateProfilePayload,
+  UpdateProfileResponse,
+} from "./interfaces/update-profile";
 
 export const userApi = createApi({
-  reducerPath: 'userApi',
+  reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://a62f-138-186-250-188.ngrok-free.app/api',
+    baseUrl: "http://a62f-138-186-250-188.ngrok-free.app/api",
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
-        headers.set('authorization', bearerToken);
+        headers.set("authorization", bearerToken);
       }
       return headers;
     },
   }),
 
-  tagTypes: ['User'],
+  tagTypes: ["User"],
   refetchOnFocus: true,
   refetchOnMountOrArgChange: true,
   refetchOnReconnect: true,
@@ -35,7 +36,7 @@ export const userApi = createApi({
     >({
       query: (payload) => ({
         url: `/user/${payload.id}`,
-        method: 'PATCH',
+        method: "PATCH",
         body: {
           name: payload.name,
           lastname: payload.lastname,

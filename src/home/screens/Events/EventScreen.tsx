@@ -59,7 +59,6 @@ export default function EventScreen() {
   } = useEventScreenLogic(params?.id);
 
   const getEventDateFormatted = () => {
-    //format event date just like this: "Lunes, 12 de Julio de 2021, 18:02"
     const date = new Date(event?.dateTime as string);
     const dayNumber = date.toLocaleDateString("es-ES", { day: "numeric" });
     const month = date.toLocaleDateString("es-ES", { month: "long" });

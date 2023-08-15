@@ -6,19 +6,25 @@ import {
   Icon,
   Input,
   ScrollView,
-  Text
+  Text,
+  View,
 } from "native-base";
 import React, { useEffect, useState } from "react";
 import { TouchableOpacity, ActivityIndicator } from "react-native";
 import { ICommunity } from "../../../interfaces/community.interface";
-import { useGetCommunitiesQuery, useLazyGetSearchCommunitiesQuery } from "../../../redux/services/community/communities.service";
+import {
+  useGetCommunitiesQuery,
+  useLazyGetSearchCommunitiesQuery,
+} from "../../../redux/services/community/communities.service";
 import CommunityCard from "./components/CommunityCard";
 
 export const SearchCommunity = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [localSearchResults, setLocalSearchResults] = useState<ICommunity[] | null>(null);
+  const [localSearchResults, setLocalSearchResults] = useState<
+    ICommunity[] | null
+  >(null);
   const [searchResults, setSearchResults] = useState<ICommunity[] | null>(null);
   const navigation = useNavigation();
 
@@ -59,9 +65,8 @@ export const SearchCommunity = () => {
     setLocalSearchResults(null);
   };
 
-
   return (
-    <>
+    <View>
       <HStack
         w="100%"
         justifyContent={"space-around"}
@@ -95,13 +100,11 @@ export const SearchCommunity = () => {
               />
             ) : undefined
           }
-
           placeholder="Buscar comunidad"
           value={searchTerm}
           onChangeText={setSearchTerm}
           onSubmitEditing={handleSearch}
         />
-
       </HStack>
       {isLoading || isSearching ? (
         <Center flex={1}>
@@ -125,6 +128,6 @@ export const SearchCommunity = () => {
           ))}
         </ScrollView>
       )}
-    </>
+    </View>
   );
 };

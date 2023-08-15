@@ -111,6 +111,8 @@ export const BottomTabNavigation = () => {
         tabBarStyle: { backgroundColor: "#f7f6fb" },
         tabBarShowLabel: false,
         tabBarActiveTintColor: "#3B82F6",
+        tabBarHideOnKeyboard: true,
+        unmountOnBlur: true,
       }}
     >
       <Tab.Screen

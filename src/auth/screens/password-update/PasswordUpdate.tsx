@@ -5,7 +5,7 @@ import { Button, Text, VStack, View, useToast } from "native-base";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import ValidatedInputText from "../../../shared/components/validated-inputText/ValidatedInputText";
-import { useUpdatePasswordMutation } from "../../../redux/services/user/interfaces/user.service";
+import { useUpdatePasswordMutation } from "../../../redux/services/user/user.service";
 import {
   RootState,
   useAppDispatch,
