@@ -1,5 +1,13 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { Box, HStack, Heading, Icon, Text, VStack } from "native-base";
+import {
+  Box,
+  HStack,
+  Heading,
+  Icon,
+  Pressable,
+  Text,
+  VStack,
+} from "native-base";
 import { formatDate } from "../../../../helpers/DateFormat";
 import { IGetMyEventsResponse } from "../../../../redux/services/events/interfaces/get-my-events";
 import { RootStackParamList } from "../../../../routing/navigation-types";
@@ -17,7 +25,13 @@ const CardEvent = ({ event }: CardEventProps) => {
   const eventDateTime = formatDate(event.dateTime);
 
   return (
-    <Box backgroundColor={theme.colors.white} w="full" borderRadius={10} p={2}>
+    <Pressable
+      onPress={() => navigation.navigate("Event", { id: event.id })}
+      backgroundColor={theme.colors.white}
+      w="full"
+      borderRadius={10}
+      p={2}
+    >
       <VStack>
         <Heading size="sm" color={theme.colors.muted[500]}>
           {event.title}
@@ -32,7 +46,7 @@ const CardEvent = ({ event }: CardEventProps) => {
           <Text color={theme.colors.secondary}>{eventDateTime}</Text>
         </HStack>
       </VStack>
-    </Box>
+    </Pressable>
   );
 };
 

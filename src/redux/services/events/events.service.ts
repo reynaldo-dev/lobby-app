@@ -10,7 +10,7 @@ import { IGetMyEventsResponse } from "./interfaces/get-my-events";
 export const eventsApi = createApi({
   reducerPath: "eventsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://a62f-138-186-250-188.ngrok-free.app/api",
+    baseUrl: "http://172.27.48.1:4000/api",
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {

@@ -1,7 +1,6 @@
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import { useRoute } from "@react-navigation/native";
 import {
-  Badge,
   Box,
   Button,
   Center,
@@ -14,7 +13,9 @@ import {
   useToast,
 } from "native-base";
 import React, { useState } from "react";
+import { ICommunityResponse } from "../../../interfaces/community.interface";
 import {
+  useGetCommunitiesByUserIdQuery,
   useGetCommunityByIdQuery,
   useGetCountMembersQuery,
   useImIInCommuityQuery,
@@ -23,12 +24,10 @@ import {
 } from "../../../redux/services/community/communities.service";
 import { RootState, useAppSelector } from "../../../redux/store/store";
 import CustomToast from "../../../shared/components/toast/CustomToast";
+import Layout from "../../../shared/layout/Layout";
 import { theme } from "../../../theme";
 import CommunityCover from "./components/community-cover/CommunityCover";
 import EventList from "./components/event-list/EventList";
-import { ICommunityResponse } from "../../../interfaces/community.interface";
-import { IEvent } from "../../../redux/services/community/interfaces/community-response.interface";
-import Layout from "../../../shared/layout/Layout";
 
 export const CommunityScreen = () => {
   const { user } = useAppSelector((state: RootState) => state.user);
@@ -52,6 +51,9 @@ export const CommunityScreen = () => {
     useGetCountMembersQuery(id.trim());
 
   const [leaveCommunity] = useLeaveCommunityMutation();
+  const { refetch: refetchMyCommunitites } = useGetCommunitiesByUserIdQuery(
+    user?.id as string
+  );
 
   const handleJoinCommunity = async () => {
     setIsLoadingJoinCommunity(true);
@@ -60,8 +62,9 @@ export const CommunityScreen = () => {
       communityId: id.trim(),
     });
     refetch();
-    setIsLoadingJoinCommunity(false);
+    refetchMyCommunitites();
     refetchCountMembers();
+    setIsLoadingJoinCommunity(false);
     toast.show({
       render: () => (
         <CustomToast
@@ -82,8 +85,9 @@ export const CommunityScreen = () => {
       communityId: id.trim(),
     });
     refetch();
-    setIsLoadingLeaveCommunity(false);
+    refetchMyCommunitites();
     refetchCountMembers();
+    setIsLoadingLeaveCommunity(false);
     toast.show({
       render: () => (
         <CustomToast
