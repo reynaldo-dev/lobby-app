@@ -22,6 +22,7 @@ import CalendarScreen from "../home/screens/calendar/CalendarScreen";
 import { theme } from "../theme";
 import EditProfile from "../home/screens/profile/components/edit-profile/EditProfile";
 import PasswordUpdate from "../auth/screens/password-update/PasswordUpdate";
+import { BarScanner } from "../home/screens/tickets/components/BarScanner";
 
 const authRouter = createNativeStackNavigator<AuthStackParamList>();
 const privateStack = createNativeStackNavigator<PrivateStackParamList>();
@@ -98,6 +99,7 @@ export function RootNavigator() {
         />
         <Stack.Screen name="Event" component={EventScreen} />
         <Stack.Screen name="SearchCommunity" component={SearchCommunity} />
+        <Stack.Screen name="BarScanner" component={BarScanner} />
       </Stack.Group>
     </Stack.Navigator>
   );
