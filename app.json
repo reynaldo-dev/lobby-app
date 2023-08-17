@@ -6,6 +6,14 @@
     "orientation": "portrait",
     "icon": "./assets/davivienda.png",
     "userInterfaceStyle": "light",
+    "plugins": [
+      [
+        "expo-barcode-scanner",
+        {
+          "cameraPermission": "Permitir a $(PRODUCT_NAME) acceos a la cámara."
+        }
+      ]
+    ],
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",

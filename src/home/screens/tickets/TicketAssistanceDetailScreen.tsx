@@ -1,15 +1,13 @@
-import { Box, VStack, HStack, Heading, Text, Badge, Divider } from 'native-base';
+import { AntDesign } from '@expo/vector-icons';
+import { NavigationProp, RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { Badge, Box, Divider, HStack, Heading, IconButton, Text, VStack } from 'native-base';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import SvgQRCode from 'react-native-qrcode-svg';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { AntDesign } from '@expo/vector-icons';
-import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../../../routing/navigation-types';
 import { formatDate } from '../../../helpers/DateFormat';
+import { RootStackParamList } from '../../../routing/navigation-types';
 
 export const TicketAssistanceDetailScreen = () => {
-    const navigation = useNavigation();
     const route = useRoute<RouteProp<RootStackParamList, 'TicketAssistanceDetail'>>();
     const { event, user, isActive, consumable } = route.params;
     const formattedDate = formatDate(event?.dateTime);
@@ -21,14 +19,23 @@ export const TicketAssistanceDetailScreen = () => {
         isActive
     });
 
+    const navigation = useNavigation<NavigationProp<RootStackParamList, "BarScanner">>();
+
+    const onPress = () => {
+        navigation.navigate("BarScanner");
+    };
+
     return (
         <Box safeArea flex={1} p="2" w="100%" mx="auto" bg='white' justifyContent='center'>
-            <Box position='absolute' top={0} left={0} p={2}>
+            <HStack position='absolute' top={0} left={0} p={2} space={3} justifyContent="space-between" width="100%">
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <AntDesign name="left" size={24} color="black" />
                 </TouchableOpacity>
-            </Box>
-
+                <IconButton
+                    icon={<AntDesign name="scan1" size={24} color="black" />}
+                    onPress={onPress}
+                />
+            </HStack>
             <VStack space={4} mt={5} alignItems="center">
                 <Heading size='lg' color='gray.700'>
                     {event?.title}

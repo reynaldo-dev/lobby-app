@@ -66,7 +66,7 @@ export const SearchCommunity = () => {
   };
 
   return (
-    <View>
+    <View flex={1}>
       <HStack
         w="100%"
         justifyContent={"space-around"}
@@ -115,7 +115,7 @@ export const SearchCommunity = () => {
           <Text>No se encontraron comunidades</Text>
         </Center>
       ) : (
-        <ScrollView>
+        <ScrollView flex={1}>
           {searchResults?.map((community) => (
             <Center key={community.id}>
               <CommunityCard
