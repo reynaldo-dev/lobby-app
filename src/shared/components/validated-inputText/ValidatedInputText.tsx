@@ -35,6 +35,7 @@ export default function ValidatedInputText({
         borderRadius={10}
       >
         <Input
+          autoCorrect={true}
           bgColor={bgColor}
           style={styles.input}
           placeholder={placeholder}
