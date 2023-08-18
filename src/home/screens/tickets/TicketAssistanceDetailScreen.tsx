@@ -5,18 +5,19 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import SvgQRCode from 'react-native-qrcode-svg';
 import { formatDate } from '../../../helpers/DateFormat';
+import { useGetEventQRByIdQuery } from '../../../redux/services/events/events.service';
 import { RootStackParamList } from '../../../routing/navigation-types';
+
 
 export const TicketAssistanceDetailScreen = () => {
     const route = useRoute<RouteProp<RootStackParamList, 'TicketAssistanceDetail'>>();
     const { event, user, isActive, consumable } = route.params;
     const formattedDate = formatDate(event?.dateTime);
 
+    const { data: qrCodeData, error } = useGetEventQRByIdQuery(event?.id);
+
     const qrData = JSON.stringify({
-        title: event?.title,
-        dateTime: formattedDate,
-        owner: `${user?.name} ${user?.lastname}`,
-        isActive
+        qrCodeData
     });
 
     const navigation = useNavigation<NavigationProp<RootStackParamList, "BarScanner">>();
@@ -25,16 +26,20 @@ export const TicketAssistanceDetailScreen = () => {
         navigation.navigate("BarScanner");
     };
 
+
     return (
         <Box safeArea flex={1} p="2" w="100%" mx="auto" bg='white' justifyContent='center'>
             <HStack position='absolute' top={0} left={0} p={2} space={3} justifyContent="space-between" width="100%">
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <AntDesign name="left" size={24} color="black" />
                 </TouchableOpacity>
-                <IconButton
-                    icon={<AntDesign name="scan1" size={24} color="black" />}
-                    onPress={onPress}
-                />
+                {
+                    !consumable &&
+                    <IconButton
+                        icon={<AntDesign name="scan1" size={24} color="black" />}
+                        onPress={onPress}
+                    />
+                }
             </HStack>
             <VStack space={4} mt={5} alignItems="center">
                 <Heading size='lg' color='gray.700'>

@@ -12,7 +12,7 @@ import { ICalendarEventsResponse } from '../events/interfaces/getEventByIdRespon
 export const assistanceTicketApi = createApi({
   reducerPath: 'assistanceTicketService',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://11fc-138-186-250-119.ngrok-free.app/api',
+    baseUrl: 'http://0f1d-138-186-250-119.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
@@ -71,9 +71,12 @@ export const assistanceTicketApi = createApi({
         method: 'DELETE',
       }),
     }),
-    redeemTicket: builder.mutation<IAssistanceTicketResponse, string>({
-      query: (id) => ({
-        url: `/assistance-tickets/${id}/redeem`,
+    redeemTicket: builder.mutation<
+      IAssistanceTicketResponse,
+      { id: string; qrCodeId: string }
+    >({
+      query: ({ id, qrCodeId }) => ({
+        url: `/assistance-tickets/${id}/redeem/qrCodeId/${qrCodeId}`,
         method: 'POST',
       }),
     }),

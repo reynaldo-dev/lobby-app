@@ -15,26 +15,26 @@ import { theme } from "../../../../theme";
 import { Entypo } from "@expo/vector-icons";
 
 interface CardEventProps {
-  event: IGetMyEventsResponse;
+  data: IGetMyEventsResponse;
 }
 
-const CardEvent = ({ event }: CardEventProps) => {
+const CardEvent = ({ data }: CardEventProps) => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "Event">>();
-
-  const eventDateTime = formatDate(event.dateTime);
+  const eventDateTime = formatDate(data?.event.dateTime);
 
   return (
     <Pressable
-      onPress={() => navigation.navigate("Event", { id: event.id })}
+      onPress={() => navigation.navigate("Event", { id: data?.event.id })}
       backgroundColor={theme.colors.white}
-      w="full"
+      w="95%"
+      alignSelf="center"
       borderRadius={10}
-      p={2}
+      p={4}
     >
       <VStack>
         <Heading size="sm" color={theme.colors.muted[500]}>
-          {event.title}
+          {data?.event.title}
         </Heading>
         <HStack mt={2} alignItems="center" space={2}>
           <Icon

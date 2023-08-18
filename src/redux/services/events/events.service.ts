@@ -4,23 +4,22 @@ import { getAuthStateFromAsyncStorage } from '../../../helpers/get-auth-state-fr
 import {
   GetEventByIDResponse,
   IEnrollEventResponse,
+  IEventQr,
 } from './interfaces/getEventByIdResponse';
 import { IGetMyEventsResponse } from './interfaces/get-my-events';
 
 export const eventsApi = createApi({
   reducerPath: 'eventsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://11fc-138-186-250-119.ngrok-free.app/api',
+    baseUrl: 'http://0f1d-138-186-250-119.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
         headers.set('authorization', bearerToken);
       }
-
       return headers;
     },
   }),
-
   tagTypes: ['Events'],
   refetchOnFocus: true,
   refetchOnMountOrArgChange: true,
@@ -31,8 +30,12 @@ export const eventsApi = createApi({
       query: (id: string) => `/events/${id}`,
     }),
 
-    getMyevents: builder.query<IGetMyEventsResponse[], string>({
+    getMyEvents: builder.query<IGetMyEventsResponse[], string>({
       query: (userId: string) => `/events/my-events/${userId}`,
+    }),
+
+    getEventQRById: builder.query<IEventQr, string>({
+      query: (id: string) => `/event-qr/qr-event/${id}`,
     }),
 
     enrollToEvent: builder.mutation<{}, { userId: string; eventId: string }>({
@@ -64,5 +67,6 @@ export const {
   useCancelEnrollmentToEventMutation,
   useEnrollToEventMutation,
   useIsEnrolledToEventQuery,
-  useGetMyeventsQuery,
+  useGetMyEventsQuery,
+  useGetEventQRByIdQuery,
 } = eventsApi;

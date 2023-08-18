@@ -68,3 +68,10 @@ export interface ICalendarEventsResponse {
   dateTime: string;
   eventCategoryId?: string;
 }
+
+export interface IEventQr {
+  id: string;
+  eventId: string;
+  code: string;
+  expires: Date;
+}
