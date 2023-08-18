@@ -67,6 +67,7 @@ export default function EventScreen() {
     return `${dayNumber} de ${month} de ${year}`;
   };
 
+
   if (isLoading || isEnrolled === null) {
     return (
       <Center flex={1}>
@@ -76,12 +77,12 @@ export default function EventScreen() {
   }
 
   return (
-    <Layout backgroundColor={theme.colors.primary}>
+    <Layout backgroundColor={theme.colors.background}>
       <View flex={1}>
-        <Center bg={`${theme.colors.primary}`} h="30%">
+        <Center bg={`${theme.colors.background}`} h="30%">
           <Text
             bold
-            color={theme.colors.white}
+            color={theme.colors.black}
             fontSize={["xl", "2xl", "3xl"]}
             letterSpacing={1}
           >
@@ -98,7 +99,7 @@ export default function EventScreen() {
               borderRadius="full"
               backgroundColor={theme.colors.white}
               _pressed={{
-                backgroundColor: "yellow.500",
+                backgroundColor: "muted.300",
               }}
             >
               <AlertDialog

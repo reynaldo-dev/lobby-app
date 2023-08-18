@@ -71,10 +71,13 @@ export const assistanceTicketApi = createApi({
         method: "DELETE",
       }),
     }),
-    redeemTicket: builder.mutation<IAssistanceTicketResponse, string>({
-      query: (id) => ({
-        url: `/assistance-tickets/${id}/redeem`,
-        method: "POST",
+    redeemTicket: builder.mutation<
+      IAssistanceTicketResponse,
+      { id: string; qrCodeId: string }
+    >({
+      query: ({ id, qrCodeId }) => ({
+        url: `/assistance-tickets/${id}/redeem/qrCodeId/${qrCodeId}`,
+        method: 'POST',
       }),
     }),
   }),

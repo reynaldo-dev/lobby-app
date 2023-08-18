@@ -4,8 +4,9 @@ import { getAuthStateFromAsyncStorage } from "../../../helpers/get-auth-state-fr
 import {
   GetEventByIDResponse,
   IEnrollEventResponse,
-} from "./interfaces/getEventByIdResponse";
-import { IGetMyEventsResponse } from "./interfaces/get-my-events";
+  IEventQr,
+} from './interfaces/getEventByIdResponse';
+import { IGetMyEventsResponse } from './interfaces/get-my-events';
 
 export const eventsApi = createApi({
   reducerPath: "eventsApi",
@@ -16,11 +17,9 @@ export const eventsApi = createApi({
       if (bearerToken) {
         headers.set("authorization", bearerToken);
       }
-
       return headers;
     },
   }),
-
   tagTypes: ["Events"],
   refetchOnFocus: true,
   refetchOnMountOrArgChange: true,
@@ -31,8 +30,12 @@ export const eventsApi = createApi({
       query: (id: string) => `/events/${id}`,
     }),
 
-    getMyevents: builder.query<IGetMyEventsResponse[], string>({
+    getMyEvents: builder.query<IGetMyEventsResponse[], string>({
       query: (userId: string) => `/events/my-events/${userId}`,
+    }),
+
+    getEventQRById: builder.query<IEventQr, string>({
+      query: (id: string) => `/event-qr/qr-event/${id}`,
     }),
 
     enrollToEvent: builder.mutation<{}, { userId: string; eventId: string }>({
@@ -64,5 +67,6 @@ export const {
   useCancelEnrollmentToEventMutation,
   useEnrollToEventMutation,
   useIsEnrolledToEventQuery,
-  useGetMyeventsQuery,
+  useGetMyEventsQuery,
+  useGetEventQRByIdQuery,
 } = eventsApi;
