@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { Authentication } from './user.interface';
-import { getUserCredentials, login, logout } from './user.thunk';
+import { createSlice } from "@reduxjs/toolkit";
+import { Authentication } from "./user.interface";
+import { getUserCredentials, login, logout, register } from "./user.thunk";
 
 const initialState: Authentication = {
   access_token: null,
@@ -10,7 +10,7 @@ const initialState: Authentication = {
 };
 
 const userSlice = createSlice({
-  name: 'user',
+  name: "user",
   initialState,
   reducers: {
     setDefaultState: (state) => {
@@ -22,6 +22,13 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(login.fulfilled, (state, action) => {
+      state.error = action.payload.error;
+      state.access_token = action.payload.access_token;
+      state.user = action.payload.user;
+      state.isAuth = action.payload.isAuth;
+    });
+
+    builder.addCase(register.fulfilled, (state, action) => {
       state.error = action.payload.error;
       state.access_token = action.payload.access_token;
       state.user = action.payload.user;
