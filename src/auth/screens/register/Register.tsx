@@ -1,110 +1,176 @@
-import React, { useState } from "react";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { Formik } from "formik";
 import {
-  StyleSheet,
+  Button,
+  Center,
+  Link,
   Text,
-  TextInput,
-  TouchableOpacity,
+  VStack,
   View,
-} from "react-native";
-import { Link } from "native-base";
-import { theme } from "../../../theme";
-import { useNavigation } from "@react-navigation/native";
+  useToast,
+} from "native-base";
+import React, { useState } from "react";
+import { TouchableOpacity } from "react-native";
+import * as Yup from "yup";
+import { useAppDispatch } from "../../../redux/store/store";
+import { RootStackParamList } from "../../../routing/navigation-types";
+import ValidatedInputText from "../../../shared/components/validated-inputText/ValidatedInputText";
 import Layout from "../../../shared/layout/Layout";
+import { theme } from "../../../theme";
+import { register } from "../../../redux/slices/user/user.thunk";
+import CustomToast from "../../../shared/components/toast/CustomToast";
+import TextField from "../../../shared/components/TextField/TextField";
+
+interface IRegisterFormValues {
+  name: string;
+  lastname: string;
+  email: string;
+  password: string;
+}
+
+const registerValidationSchema = Yup.object().shape({
+  name: Yup.string().required("Nombre es requerido"),
+  lastname: Yup.string().required("Apellido es requerido"),
+  email: Yup.string()
+    .email("Correo electrónico invalido")
+    .required("Correo electrónico es requerido"),
+  password: Yup.string()
+    .required("Contraseña es requerida")
+    .min(8, "La contraseña debe tener al menos 8 caracteres"),
+});
 
 export default function Register() {
   const { colors } = theme;
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  const dispatch = useAppDispatch();
+  const [isLoading, setisLoading] = useState(false);
+  const toast = useToast();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const initialValues: IRegisterFormValues = {
+    name: "",
+    lastname: "",
+    email: "",
+    password: "",
+  };
 
-  const handleLogin = () => {
-    console.log("Email:", email);
-    console.log("Password:", password);
+  const onRegister = (values: IRegisterFormValues) => {
+    setisLoading(true);
+    dispatch(register(values))
+      .unwrap()
+      .catch((error) => {
+        toast.show({
+          render: () => (
+            <CustomToast color={theme.colors.danger} message={error.message} />
+          ),
+          duration: 2000,
+          placement: "top",
+          color: theme.colors.danger,
+        });
+      })
+      .finally(() => {
+        setisLoading(false);
+      });
   };
 
   return (
     <Layout backgroundColor={colors.background}>
-      <View style={styles.container}>
-        <Text style={{ ...styles.title, color: colors.primary }}>
-          Registrate
-        </Text>
-        <View style={styles.form}>
-          <TextInput
-            style={{
-              ...styles.input,
-              color: colors.text,
-              backgroundColor: colors.white,
-            }}
-            placeholder="Email"
-            placeholderTextColor={colors.primary}
-            onChangeText={(text) => setEmail(text)}
-            value={email}
-            autoCapitalize="none"
-          />
-          <TextInput
-            style={{
-              ...styles.input,
-              color: colors.text,
-              backgroundColor: colors.white,
-            }}
-            placeholder="Password"
-            placeholderTextColor={colors.primary}
-            secureTextEntry
-            onChangeText={(text) => setPassword(text)}
-            value={password}
-          />
-          <TouchableOpacity
-            style={{ ...styles.loginButton, backgroundColor: colors.primary }}
-            onPress={handleLogin}
+      <View>
+        <Center>
+          <Text color={theme.colors.primary} fontSize="2xl" mb={10}>
+            Registrate
+          </Text>
+        </Center>
+
+        <View>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={onRegister}
+            validationSchema={registerValidationSchema}
           >
-            <Text style={styles.loginButtonText}>Login</Text>
-          </TouchableOpacity>
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              errors,
+              touched,
+            }) => (
+              <VStack space={4} justifyContent="center">
+                <ValidatedInputText
+                  bgColor={colors.muted["200"]}
+                  isInvalid={errors.name ? true : false}
+                  formControlLabel="Nombres"
+                  placeholder="Nombres"
+                  placeholderTextColor={colors.muted["400"]}
+                  onChangeText={handleChange("name")}
+                  value={values.name}
+                  errors={errors.name}
+                />
+
+                <ValidatedInputText
+                  bgColor={colors.muted["200"]}
+                  isInvalid={errors.lastname ? true : false}
+                  formControlLabel="Apellidos"
+                  placeholder="Apellidos"
+                  placeholderTextColor={colors.muted["400"]}
+                  onChangeText={handleChange("lastname")}
+                  value={values.lastname}
+                  errors={errors.lastname}
+                />
+
+                <ValidatedInputText
+                  bgColor={colors.muted["200"]}
+                  isInvalid={errors.email ? true : false}
+                  formControlLabel="Correo electrónico"
+                  placeholder="Email"
+                  placeholderTextColor={colors.muted["400"]}
+                  onChangeText={handleChange("email")}
+                  value={values.email}
+                  errors={errors.email}
+                />
+
+                <ValidatedInputText
+                  bgColor={colors.muted["200"]}
+                  isInvalid={errors.password ? true : false}
+                  formControlLabel="Contraseña"
+                  placeholder="Contraseña"
+                  placeholderTextColor={colors.muted["400"]}
+                  onChangeText={handleChange("password")}
+                  value={values.password}
+                  errors={errors.password}
+                  type="password"
+                />
+
+                <Center mx={10}>
+                  <Button
+                    isLoading={isLoading}
+                    onPress={() => onRegister(values)}
+                    style={{
+                      backgroundColor: theme.colors.primary,
+                      width: "100%",
+                      padding: 10,
+                      borderRadius: 5,
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text color={theme.colors.white}>Regístrarse</Text>
+                  </Button>
+                </Center>
+              </VStack>
+            )}
+          </Formik>
         </View>
-        <Link
-          _text={{ color: colors.primary }}
-          mt={5}
-          onPress={() => navigation.navigate("Login" as never)}
-        >
-          Ya tienes una cuenta?
-        </Link>
+
+        <Center>
+          <Link
+            _text={{ color: colors.primary }}
+            mt={5}
+            onPress={() => navigation.navigate("Login" as never)}
+          >
+            Ya tienes una cuenta?
+          </Link>
+        </Center>
       </View>
     </Layout>
   );
 }
-
-const styles = StyleSheet.create({
-  backgroundImage: {
-    flex: 1,
-    resizeMode: "cover",
-  },
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 40,
-    marginBottom: 30,
-  },
-  form: {
-    width: "80%",
-  },
-  input: {
-    height: 50,
-    borderRadius: 10,
-    paddingHorizontal: 15,
-    marginBottom: 20,
-    fontSize: 16,
-  },
-  loginButton: {
-    height: 50,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  loginButtonText: {
-    color: "#fff",
-    fontSize: 18,
-  },
-});
