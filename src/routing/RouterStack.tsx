@@ -23,6 +23,10 @@ import { theme } from "../theme";
 import EditProfile from "../home/screens/profile/components/edit-profile/EditProfile";
 import PasswordUpdate from "../auth/screens/password-update/PasswordUpdate";
 import { BarScanner } from "../home/screens/tickets/components/BarScanner";
+import Step1 from "../home/screens/onboarding/step-1/Step1";
+import Step2 from "../home/screens/onboarding/step-2/Step2";
+import Step3 from "../home/screens/onboarding/step-3/Step3";
+import Step4 from "../home/screens/onboarding/step-4/Step4";
 
 const authRouter = createNativeStackNavigator<AuthStackParamList>();
 const privateStack = createNativeStackNavigator<PrivateStackParamList>();
@@ -31,7 +35,38 @@ const Tab = createBottomTabNavigator();
 
 export const AuthStack = () => {
   return (
-    <authRouter.Navigator initialRouteName="Login">
+    <authRouter.Navigator initialRouteName="Step1">
+      <authRouter.Screen
+        name="Step1"
+        component={Step1}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <authRouter.Screen
+        name="Step2"
+        component={Step2}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <authRouter.Screen
+        name="Step3"
+        component={Step3}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <authRouter.Screen
+        name="Step4"
+        component={Step4}
+        options={{
+          headerShown: false,
+        }}
+      />
+
       <authRouter.Screen
         name="Login"
         component={Login}
@@ -112,7 +147,7 @@ export const BottomTabNavigation = () => {
       screenOptions={{
         tabBarStyle: { backgroundColor: "#f7f6fb" },
         tabBarShowLabel: false,
-        tabBarActiveTintColor: "#3B82F6",
+        tabBarActiveTintColor: "#F50057",
         tabBarHideOnKeyboard: true,
         unmountOnBlur: true,
       }}

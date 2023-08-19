@@ -1,9 +1,4 @@
-import {
-  Center,
-  FlatList,
-  Text,
-  View
-} from "native-base";
+import { Center, FlatList, Text, View } from "native-base";
 import React from "react";
 import { useGetMyEventsQuery } from "../../../redux/services/events/events.service";
 import { IGetMyEventsResponse } from "../../../redux/services/events/interfaces/get-my-events";
@@ -27,8 +22,7 @@ export default function Home() {
   return (
     <Layout backgroundColor={theme.colors.background}>
       <View style={{ flex: 1 }}>
-
-        <View style={{ height: 60, marginBottom: 10 }}>
+        <View style={{ height: 60, marginBottom: 20 }}>
           <SearchBarCustom />
         </View>
 
@@ -59,7 +53,6 @@ export default function Home() {
             />
           )}
         </HomeSection>
-
       </View>
     </Layout>
   );

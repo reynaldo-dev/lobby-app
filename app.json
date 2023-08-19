@@ -4,7 +4,7 @@
     "slug": "lobby",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/davivienda.png",
+    "icon": "./assets/logo.png",
     "userInterfaceStyle": "light",
     "plugins": [
       [
@@ -32,7 +32,7 @@
       }
     },
     "web": {
-      "favicon": "./assets/davivienda.png"
+      "favicon": "./assets/logo.png"
     }
   }
 }

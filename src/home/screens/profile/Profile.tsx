@@ -6,13 +6,11 @@ import {
   Center,
   Divider,
   Icon,
-  Image,
   ScrollView,
   Text,
   View,
 } from "native-base";
 import React from "react";
-import image from "../../../../assets/icon.png";
 import { RootState, useAppSelector } from "../../../redux/store/store";
 import { RootStackParamList } from "../../../routing/navigation-types";
 import Layout from "../../../shared/layout/Layout";
@@ -43,7 +41,6 @@ export default function Profile() {
           <ProfileMenu />
         </Box>
         <Center>
-          <Image source={image} alt="Logo" width={150} height={150} />
           <Box>
             <Text fontSize="xl" fontWeight="bold" color="text">
               {user?.name}

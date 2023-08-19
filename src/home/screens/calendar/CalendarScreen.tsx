@@ -1,5 +1,5 @@
 import { useFocusEffect } from "@react-navigation/native";
-import { Center, Text, theme } from "native-base";
+import { Center, Text } from "native-base";
 import React from "react";
 import { Agenda } from "react-native-calendars";
 import { useEventsCalendar } from "../../../hooks/useEventsCalendar";
@@ -7,6 +7,7 @@ import Layout from "../../../shared/layout/Layout";
 import { RenderError } from "./components/RenderError";
 import RenderItem from "./components/RenderItem";
 import { RenderLoading } from "./components/RenderLoading";
+import { theme } from "../../../theme";
 
 export default function CalendarScreen() {
   const {
@@ -27,7 +28,7 @@ export default function CalendarScreen() {
   );
 
   return (
-    <Layout>
+    <Layout backgroundColor={theme.colors.background}>
       {isLoading && <RenderLoading />}
       {isError && <RenderError />}
 

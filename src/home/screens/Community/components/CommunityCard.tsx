@@ -1,9 +1,21 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { Box, HStack, Heading, Pressable, Stack, Text } from "native-base";
-import { ICommunity, IUserCommunity } from "../../../../interfaces/community.interface";
+import {
+  Box,
+  HStack,
+  Heading,
+  Icon,
+  Pressable,
+  Stack,
+  Text,
+} from "native-base";
+import {
+  ICommunity,
+  IUserCommunity,
+} from "../../../../interfaces/community.interface";
 import { useGetCountMembersQuery } from "../../../../redux/services/community/communities.service";
 import { RootStackParamList } from "../../../../routing/navigation-types";
 import { theme } from "../../../../theme";
+import { Feather } from "@expo/vector-icons";
 
 type DimensionProp = number | string | (number | string)[];
 type Props = {
@@ -21,13 +33,11 @@ const CommunityCard = ({
   marginTop = 0,
   marginRight = 0,
 }: Props) => {
-
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "Community">>();
   const onPress = () => {
     navigation.navigate("Community", { id: data?.id });
   };
-
 
   const { data: communityData } = useGetCountMembersQuery(data?.id);
   return (
@@ -61,7 +71,9 @@ const CommunityCard = ({
                   {data?.name}
                 </Heading>
               </Stack>
-              <Text fontWeight="400">{data?.description}</Text>
+              <Text fontWeight="400" color={theme.colors.muted[500]}>
+                {data?.description}
+              </Text>
               <HStack alignItems="center" justifyContent="flex-end">
                 <Box bgColor={data?.color} p={2.5} rounded={"full"}>
                   {communityData?.totalMembers === 0 ? (
@@ -69,9 +81,25 @@ const CommunityCard = ({
                       Aún no hay miembros
                     </Text>
                   ) : (
-                    <Text color="white" fontSize="xs" fontWeight="bold">
-                      {communityData?.totalMembers} miembros
-                    </Text>
+                    <Box
+                      flexDir="row"
+                      justifyContent="center"
+                      alignItems="center"
+                    >
+                      <Text
+                        color="white"
+                        fontSize="xs"
+                        mr={2}
+                        fontWeight="bold"
+                      >
+                        {communityData?.totalMembers}
+                      </Text>
+                      <Icon
+                        as={<Feather name="users" />}
+                        color="white"
+                        size="xs"
+                      />
+                    </Box>
                   )}
                 </Box>
               </HStack>
