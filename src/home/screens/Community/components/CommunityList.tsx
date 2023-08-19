@@ -1,32 +1,30 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FlatList, View } from "native-base";
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import { useGetCommunitiesByUserIdQuery } from "../../../../redux/services/community/communities.service";
 import CommunityCard from "./CommunityCard";
 import { SkeletonCard } from "./SkeletonCard";
 
 export const CommunityList = () => {
-
   const [userId, setUserId] = useState<string | null>(null);
 
-
   const { data: communityData, isLoading: communityIsLoading } =
-    useGetCommunitiesByUserIdQuery(userId || '', {
+    useGetCommunitiesByUserIdQuery(userId || "", {
       skip: userId === null,
     });
 
   useEffect(() => {
     const getUserData = async () => {
-      const authStateString = await AsyncStorage.getItem('authState');
+      const authStateString = await AsyncStorage.getItem("authState");
       if (authStateString) {
         const authState = JSON.parse(authStateString);
         setUserId(authState.user.id);
       }
-    }
+    };
     getUserData();
   }, []);
 
-  const communities = communityData?.map(item => item.community);
+  const communities = communityData?.map((item) => item.community);
 
   return communityIsLoading ? (
     <SkeletonCard />
@@ -37,7 +35,7 @@ export const CommunityList = () => {
         <CommunityCard
           data={item}
           heightCard={48}
-          widthCard={80}
+          widthCard={48}
           marginRight={10}
         />
       )}
