@@ -11,7 +11,7 @@ import { IGetMyEventsResponse } from './interfaces/get-my-events';
 export const eventsApi = createApi({
   reducerPath: 'eventsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://0f1d-138-186-250-119.ngrok-free.app/api',
+    baseUrl: 'http://f8a7-138-186-250-119.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
@@ -59,6 +59,15 @@ export const eventsApi = createApi({
     >({
       query: ({ userId, eventId }) => `/events/${eventId}/isEnrolled/${userId}`,
     }),
+    scanQRCode: builder.mutation<
+      { message: string },
+      { eventId: string; userId: string }
+    >({
+      query: ({ userId, eventId }) => ({
+        url: `/events/${eventId}/scan/${userId}`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
@@ -69,4 +78,5 @@ export const {
   useIsEnrolledToEventQuery,
   useGetMyEventsQuery,
   useGetEventQRByIdQuery,
+  useScanQRCodeMutation,
 } = eventsApi;
