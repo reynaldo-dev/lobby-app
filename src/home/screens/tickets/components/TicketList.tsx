@@ -23,7 +23,7 @@ export const TicketList = ({
   if (isLoading) {
     return (
       <Center my={"auto"}>
-        <ActivityIndicator size="large" color="#d50d2c" />;
+        <ActivityIndicator size="large" color="#d50d2c" />
       </Center>
     );
   }

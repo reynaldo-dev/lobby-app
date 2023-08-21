@@ -1,19 +1,22 @@
-import React, { useState } from "react";
-import Layout from "../../../shared/layout/Layout";
-import { theme } from "../../../theme";
-import { Button, Text, VStack, View, useToast } from "native-base";
-import * as Yup from "yup";
+import { AntDesign } from '@expo/vector-icons';
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Formik } from "formik";
-import ValidatedInputText from "../../../shared/components/validated-inputText/ValidatedInputText";
+import { Box, Button, Center, Text, VStack, View, useToast } from "native-base";
+import React, { useState } from "react";
+import { TouchableOpacity } from "react-native";
+import * as Yup from "yup";
 import { useUpdatePasswordMutation } from "../../../redux/services/user/user.service";
+import { logout } from "../../../redux/slices/user/user.thunk";
 import {
   RootState,
   useAppDispatch,
   useAppSelector,
 } from "../../../redux/store/store";
+import { RootStackParamList } from "../../../routing/navigation-types";
 import CustomToast from "../../../shared/components/toast/CustomToast";
-import { logout } from "../../../redux/slices/user/user.thunk";
-import { QueryStatus } from "@reduxjs/toolkit/dist/query";
+import ValidatedInputText from "../../../shared/components/validated-inputText/ValidatedInputText";
+import Layout from "../../../shared/layout/Layout";
+import { theme } from "../../../theme";
 
 const updatePasswordSchema = Yup.object().shape({
   currentPassword: Yup.string()
@@ -34,12 +37,14 @@ export default function PasswordUpdate() {
   };
   const { user } = useAppSelector((state: RootState) => state.user);
   const dispatch = useAppDispatch();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [updatePassword, { data, error, status }] = useUpdatePasswordMutation();
 
   const toast = useToast();
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const navigation = useNavigation<NavigationProp<RootStackParamList, "PasswordUpdate">>();
 
   const handleUpdatePassword = async (values: PasswordUpdateFormValues) => {
     if (updatePasswordSchema.isValidSync(values)) {
@@ -88,6 +93,18 @@ export default function PasswordUpdate() {
   };
   return (
     <Layout backgroundColor={theme.colors.white}>
+      <Box flexDirection="row" alignItems="center" ml={2} height={50}>
+        <Box>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <AntDesign name="left" size={24} color="black" />
+          </TouchableOpacity>
+        </Box>
+        <Center flex={1}>
+          <Text fontSize={16} color={"muted.500"} fontWeight="bold" marginRight={10}>
+            Cambiar contraseña
+          </Text>
+        </Center>
+      </Box>
       <View backgroundColor={theme.colors.white} flex={1}>
         <Formik
           validationSchema={updatePasswordSchema}

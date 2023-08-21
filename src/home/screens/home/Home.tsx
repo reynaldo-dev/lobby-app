@@ -50,8 +50,17 @@ export default function Home() {
                   </Text>
                 </Center>
               }
+              ListFooterComponent={
+                <Center flex={1}>
+                  <Text color={theme.colors.muted[400]} mb={5}>
+                    No hay más eventos
+                  </Text>
+                </Center>
+              }
             />
+
           )}
+
         </HomeSection>
       </View>
     </Layout>

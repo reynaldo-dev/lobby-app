@@ -7,13 +7,14 @@ import { RootState, useAppSelector } from "../../../redux/store/store";
 import { theme } from "../../../theme";
 import { Center, Text } from "native-base";
 import logo from "../../../../assets/davivienda.png";
+import Layout from "../../layout/Layout";
 
 export default function CustomQRCode() {
   const { user } = useAppSelector((state: RootState) => state.user);
   const navigation = useNavigation();
 
   return (
-    <>
+    <Layout>
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <View style={{ position: "absolute", top: 10, left: 10 }}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -34,6 +35,6 @@ export default function CustomQRCode() {
           value={JSON.stringify(user)}
         />
       </View>
-    </>
+    </Layout>
   );
 }

@@ -1,37 +1,42 @@
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { HeaderBackButton } from '@react-navigation/elements';
+import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Icon } from "native-base";
+import { Platform } from "react-native";
 import Login from "../auth/screens/login/Login";
+import PasswordUpdate from "../auth/screens/password-update/PasswordUpdate";
 import Register from "../auth/screens/register/Register";
 import { CommunityScreen } from "../home/screens/Community/CommunityScreen";
 import { SearchCommunity } from "../home/screens/Community/SearchCommunity";
+import EventScreen from "../home/screens/Events/EventScreen";
+import CalendarScreen from "../home/screens/calendar/CalendarScreen";
 import Home from "../home/screens/home/Home";
+import Step1 from "../home/screens/onboarding/step-1/Step1";
+import Step2 from "../home/screens/onboarding/step-2/Step2";
+import Step3 from "../home/screens/onboarding/step-3/Step3";
+import Step4 from "../home/screens/onboarding/step-4/Step4";
 import Profile from "../home/screens/profile/Profile";
+import EditProfile from "../home/screens/profile/components/edit-profile/EditProfile";
+import { TicketAssistanceDetailScreen } from "../home/screens/tickets/TicketAssistanceDetailScreen";
 import { TicketsScreen } from "../home/screens/tickets/TicketsScreen";
+import { BarScanner } from "../home/screens/tickets/components/BarScanner";
 import CustomQRCode from "../shared/components/qr/CustomQRCode";
+import { theme } from "../theme";
 import {
   AuthStackParamList,
   PrivateStackParamList,
   RootStackParamList,
 } from "./navigation-types";
-import { TicketAssistanceDetailScreen } from "../home/screens/tickets/TicketAssistanceDetailScreen";
-import EventScreen from "../home/screens/Events/EventScreen";
 
-import CalendarScreen from "../home/screens/calendar/CalendarScreen";
-import { theme } from "../theme";
-import EditProfile from "../home/screens/profile/components/edit-profile/EditProfile";
-import PasswordUpdate from "../auth/screens/password-update/PasswordUpdate";
-import { BarScanner } from "../home/screens/tickets/components/BarScanner";
-import Step1 from "../home/screens/onboarding/step-1/Step1";
-import Step2 from "../home/screens/onboarding/step-2/Step2";
-import Step3 from "../home/screens/onboarding/step-3/Step3";
-import Step4 from "../home/screens/onboarding/step-4/Step4";
+
 
 const authRouter = createNativeStackNavigator<AuthStackParamList>();
 const privateStack = createNativeStackNavigator<PrivateStackParamList>();
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
+
 
 export const AuthStack = () => {
   return (
@@ -86,8 +91,16 @@ export const AuthStack = () => {
 };
 
 export function RootNavigator() {
+  const navigation = useNavigation();
+
   return (
-    <Stack.Navigator initialRouteName="Auth">
+    <Stack.Navigator initialRouteName="Auth"
+      screenOptions={
+        {
+          gestureEnabled: true,
+        }
+      }
+    >
       <Stack.Screen
         name="Root"
         component={BottomTabNavigation}
@@ -98,7 +111,6 @@ export function RootNavigator() {
 
       <Stack.Group
         screenOptions={{
-          presentation: "modal",
           animation: "slide_from_right",
           headerShown: false,
         }}
@@ -106,30 +118,19 @@ export function RootNavigator() {
         <Stack.Screen
           name="TicketAssistanceDetail"
           component={TicketAssistanceDetailScreen}
+
         />
+
         <Stack.Screen name="QRCode" component={CustomQRCode} />
-        <Stack.Screen name="Community" component={CommunityScreen} />
+        <Stack.Screen name="Community" component={CommunityScreen}
+        />
         <Stack.Screen
           name="EditProfile"
-          options={{
-            headerTitle: "Editar perfil",
-            headerShown: true,
-            headerShadowVisible: false,
-            headerTitleStyle: { color: theme.colors.muted["500"] },
-            headerTintColor: theme.colors.muted["500"],
-          }}
           component={EditProfile}
         />
 
         <Stack.Screen
           name="PasswordUpdate"
-          options={{
-            headerTitle: "Cambiar contraseña",
-            headerShown: true,
-            headerShadowVisible: false,
-            headerTitleStyle: { color: theme.colors.muted["500"] },
-            headerTintColor: theme.colors.muted["500"],
-          }}
           component={PasswordUpdate}
         />
         <Stack.Screen name="Event" component={EventScreen} />

@@ -1,11 +1,12 @@
 import { AntDesign } from "@expo/vector-icons";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Formik } from "formik";
-import { Button, Text, VStack, View, useToast } from "native-base";
+import { Box, Button, Center, Text, VStack, useToast } from "native-base";
 import React, { useState } from "react";
 import { TouchableOpacity } from "react-native";
 import * as Yup from "yup";
 import { useUpdateProfileMutation } from "../../../../../redux/services/user/user.service";
+import { logout } from "../../../../../redux/slices/user/user.thunk";
 import {
   RootState,
   useAppDispatch,
@@ -14,9 +15,8 @@ import {
 import { RootStackParamList } from "../../../../../routing/navigation-types";
 import CustomToast from "../../../../../shared/components/toast/CustomToast";
 import ValidatedInputText from "../../../../../shared/components/validated-inputText/ValidatedInputText";
-import { theme } from "../../../../../theme";
 import Layout from "../../../../../shared/layout/Layout";
-import { logout } from "../../../../../redux/slices/user/user.thunk";
+import { theme } from "../../../../../theme";
 
 const validationEditProfileSchema = Yup.object().shape({
   name: Yup.string().required("Nombre es requerido"),
@@ -36,6 +36,7 @@ export default function EditProfile() {
   const { user } = useAppSelector((state: RootState) => state.user);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const toast = useToast();
+  const navigation = useNavigation<NavigationProp<RootStackParamList, "EditProfile">>();
 
   const dispatch = useAppDispatch();
 
@@ -80,6 +81,19 @@ export default function EditProfile() {
   };
   return (
     <Layout backgroundColor={theme.colors.white}>
+      <Box flexDirection="row" alignItems="center" ml={2} height={50}>
+        <Box>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <AntDesign name="left" size={24} color="black" />
+          </TouchableOpacity>
+        </Box>
+        <Center flex={1}>
+          <Text fontSize={16} color={"muted.500"} fontWeight="bold" marginRight={10}>
+            Editar perfil
+          </Text>
+        </Center>
+      </Box>
+
       <Formik
         initialValues={initialValues}
         validationSchema={validationEditProfileSchema}

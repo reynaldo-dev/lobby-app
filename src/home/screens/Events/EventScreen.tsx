@@ -1,5 +1,5 @@
-import { Feather } from "@expo/vector-icons";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { Feather, AntDesign } from '@expo/vector-icons';
+import { NavigationProp, RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import {
   AlertDialog,
   Box,
@@ -14,12 +14,13 @@ import {
   View,
   useDisclose,
 } from "native-base";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { RootStackParamList } from "../../../routing/navigation-types";
 import Layout from "../../../shared/layout/Layout";
 import { theme } from "../../../theme";
 import useEventScreenLogic from "./EventScreenLogic";
 import ConfirmAssistanceBottomSheet from "./components/confirm-assistance-bottomSheet/ConfirmAssistanceBottomSheet";
+import React from "react";
 
 const DetailItem = ({
   label,
@@ -67,6 +68,7 @@ export default function EventScreen() {
     return `${dayNumber} de ${month} de ${year}`;
   };
 
+  const navigation = useNavigation<NavigationProp<RootStackParamList, "Event">>();
 
   if (isLoading || isEnrolled === null) {
     return (
@@ -79,6 +81,11 @@ export default function EventScreen() {
   return (
     <Layout backgroundColor={theme.colors.background}>
       <View flex={1}>
+        <Box ml={4} mt={5}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <AntDesign name="left" size={24} color="black" />
+          </TouchableOpacity>
+        </Box>
         <Center bg={`${theme.colors.background}`} h="30%">
           <Text
             bold

@@ -28,8 +28,12 @@ import Layout from "../../../shared/layout/Layout";
 import { theme } from "../../../theme";
 import CommunityCover from "./components/community-cover/CommunityCover";
 import EventList from "./components/event-list/EventList";
+import { Platform } from 'react-native';
+import { isDarkColor } from "../../../helpers/isDarkColor";
+
 
 export const CommunityScreen = () => {
+
   const { user } = useAppSelector((state: RootState) => state.user);
   const route = useRoute();
   const { id } = route.params as { id: string };
@@ -39,6 +43,10 @@ export const CommunityScreen = () => {
     useState<boolean>(false);
   const [isLoadingLeaveCommunity, setIsLoadingLeaveCommunity] =
     useState<boolean>(false);
+
+  const barStyle = Platform.OS === 'android' && isDarkColor(community?.color) ? 'light-content' : 'dark-content';
+
+
 
   const { data: imIInCommunity, refetch } = useImIInCommuityQuery({
     userId: user?.id as string,
@@ -106,7 +114,7 @@ export const CommunityScreen = () => {
         <SkeletonLayout />
       ) : (
         <>
-          <StatusBar backgroundColor={community?.color} />
+          <StatusBar backgroundColor={community?.color} barStyle={barStyle} />
           <CommunityCover community={community as ICommunityResponse} />
 
           <View bgColor={theme.colors.background} h="85%">

@@ -1,11 +1,10 @@
-import { AuthStack, RootNavigator } from "./routing/RouterStack";
-import { NativeBaseProvider } from "native-base";
 import { NavigationContainer } from "@react-navigation/native";
-import { RootState, useAppDispatch, useAppSelector } from "./redux/store/store";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { theme } from "./theme";
+import { NativeBaseProvider } from "native-base";
 import { useEffect } from "react";
 import { getUserCredentials } from "./redux/slices/user/user.thunk";
+import { RootState, useAppDispatch, useAppSelector } from "./redux/store/store";
+import { AuthStack, RootNavigator } from "./routing/RouterStack";
+import { theme } from "./theme";
 
 export default function Main() {
   const { isAuth } = useAppSelector((state: RootState) => state.user);
@@ -16,12 +15,10 @@ export default function Main() {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <NavigationContainer>
-        <NativeBaseProvider theme={theme}>
-          {isAuth ? <RootNavigator /> : <AuthStack />}
-        </NativeBaseProvider>
-      </NavigationContainer>
-    </SafeAreaView>
+    <NavigationContainer>
+      <NativeBaseProvider theme={theme}>
+        {isAuth ? <RootNavigator /> : <AuthStack />}
+      </NativeBaseProvider>
+    </NavigationContainer>
   );
 }
