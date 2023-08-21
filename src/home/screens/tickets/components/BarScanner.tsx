@@ -3,7 +3,7 @@ import { Text } from "native-base";
 import { Button } from "react-native";
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
-import { useRedeemTicketMutation } from "../../../../redux/services/assistanceTicket/assitanceTicket.service";
+import { useReedemTicketMutation } from "../../../../redux/services/assistanceTicket/assitanceTicket.service";
 
 interface IError {
     data: Data;
@@ -16,15 +16,12 @@ interface Data {
     statusCode: number;
 }
 
-
-
 export const BarScanner = () => {
     const [hasPermission, setHasPermission] = useState<boolean | null>(null);
     const [scanned, setScanned] = useState<boolean>(false);
 
-    const [redeemTicket, { isLoading: isRedeeming, isSuccess: redeemSuccess, isError: redeemError, error: reedemErrorMessage }] = useRedeemTicketMutation();
-
-    console.log(reedemErrorMessage, "reedemErrorMessage")
+    const [reedemTicket, { isLoading: isReedeming, isSuccess: reedemSuccess, error: redeemErrorMessage }] = useReedemTicketMutation();
+    console.log(redeemErrorMessage)
 
     useEffect(() => {
         const getBarCodeScannerPermissions = async () => {
@@ -38,27 +35,17 @@ export const BarScanner = () => {
     const handleBarCodeScanned = async ({ type, data }: { type: string, data: string }) => {
         setScanned(true);
 
+        const errorMessage: IError = redeemErrorMessage as IError;
         const scannedData = JSON.parse(data);
 
         try {
-            await redeemTicket({ id: scannedData.eventId, qrCodeId: scannedData.id });
-            if (redeemError) {
-                alert("El ticket ha sido canjeado con éxito.");
+            await reedemTicket({ id: scannedData?.eventId, qrCodeId: scannedData?.id });
+            if (!reedemSuccess) {
+                throw new Error(errorMessage?.data?.message);
             }
-
-
+            alert("Cupón canjeado con éxito.");
         } catch (error) {
-            let errorMsg: IError;
-
-            // if ('message' in reedemErrorMessage) {
-            //     errorMsg = reedemErrorMessage.message;
-            // } else if ('status' in reedemErrorMessage) {
-            //     errorMsg = `Error ${reedemErrorMessage.status}`;
-            // } else {
-            //     errorMsg = "Ocurrió un error al canjear el ticket.";
-            // }
-
-            alert(error || "Ocurrió un error al canjear el ticket.");
+            alert(errorMessage?.data?.message || "Ocurrió un error al canjear el ticket.");
         }
     };
 

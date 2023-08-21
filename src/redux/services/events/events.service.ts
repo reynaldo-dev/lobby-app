@@ -1,6 +1,6 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { getAuthStateFromAsyncStorage } from "../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage";
+import { getAuthStateFromAsyncStorage } from '../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage';
 import {
   GetEventByIDResponse,
   IEnrollEventResponse,
@@ -9,18 +9,18 @@ import {
 import { IGetMyEventsResponse } from './interfaces/get-my-events';
 
 export const eventsApi = createApi({
-  reducerPath: "eventsApi",
+  reducerPath: 'eventsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://172.27.48.1:4000/api",
+    baseUrl: 'http://f8a7-138-186-250-119.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
-        headers.set("authorization", bearerToken);
+        headers.set('authorization', bearerToken);
       }
       return headers;
     },
   }),
-  tagTypes: ["Events"],
+  tagTypes: ['Events'],
   refetchOnFocus: true,
   refetchOnMountOrArgChange: true,
   refetchOnReconnect: true,
@@ -41,7 +41,7 @@ export const eventsApi = createApi({
     enrollToEvent: builder.mutation<{}, { userId: string; eventId: string }>({
       query: ({ userId, eventId }) => ({
         url: `/events/${eventId}/enroll/${userId}`,
-        method: "POST",
+        method: 'POST',
       }),
     }),
     cancelEnrollmentToEvent: builder.mutation<
@@ -50,7 +50,7 @@ export const eventsApi = createApi({
     >({
       query: ({ userId, eventId }) => ({
         url: `/events/${eventId}/cancel/${userId}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
     }),
     isEnrolledToEvent: builder.query<
@@ -58,6 +58,15 @@ export const eventsApi = createApi({
       { userId: string; eventId: string }
     >({
       query: ({ userId, eventId }) => `/events/${eventId}/isEnrolled/${userId}`,
+    }),
+    scanQRCode: builder.mutation<
+      { message: string },
+      { eventId: string; userId: string }
+    >({
+      query: ({ userId, eventId }) => ({
+        url: `/events/${eventId}/scan/${userId}`,
+        method: 'POST',
+      }),
     }),
   }),
 });
@@ -69,4 +78,5 @@ export const {
   useIsEnrolledToEventQuery,
   useGetMyEventsQuery,
   useGetEventQRByIdQuery,
+  useScanQRCodeMutation,
 } = eventsApi;

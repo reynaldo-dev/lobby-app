@@ -15,6 +15,7 @@ export const TicketAssistanceDetailScreen = () => {
     const formattedDate = formatDate(event?.dateTime);
 
     const { data: qrCodeData, error } = useGetEventQRByIdQuery(event?.id);
+    console.log(qrCodeData, "qrCodeData from TicketAssistanceDetailScreen")
 
     const qrData = JSON.stringify({
         qrCodeData
