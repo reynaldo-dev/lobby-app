@@ -7,11 +7,12 @@ import {
   IConsumableTicketResponse,
   IconsumableTicket,
 } from './interfaces/consumablesTickets.interface';
+import { IScanQrResponse } from '../events/interfaces/getEventByIdResponse';
 
 export const consumablesTicketsApi = createApi({
   reducerPath: 'consumablesTicketsService',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://f8a7-138-186-250-119.ngrok-free.app/api',
+    baseUrl: 'http://07d1-138-186-250-155.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
@@ -57,9 +58,12 @@ export const consumablesTicketsApi = createApi({
         method: 'DELETE',
       }),
     }),
-    redeemTicket: builder.mutation<IConsumableTicketRedeem, string>({
-      query: (id) => ({
-        url: `/consumables-tickets/${id}/redeem`,
+    redeemTicket: builder.mutation<
+      IScanQrResponse,
+      { ticketId: string; consumedById: string }
+    >({
+      query: ({ ticketId, consumedById }) => ({
+        url: `/consumables-tickets/${ticketId}/redeem-by/${consumedById}`,
         method: 'POST',
       }),
     }),
@@ -70,6 +74,7 @@ export const {
   useCreateTicketMutation,
   useGetTicketsQuery,
   useGetTicketsByUserIdQuery,
+  useLazyGetTicketsByUserIdQuery,
   useGetTicketByIdQuery,
   useUpdateTicketMutation,
   useDeleteTicketMutation,

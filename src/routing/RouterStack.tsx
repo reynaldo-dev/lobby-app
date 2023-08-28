@@ -1,10 +1,8 @@
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { HeaderBackButton } from '@react-navigation/elements';
 import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Icon } from "native-base";
-import { Platform } from "react-native";
 import Login from "../auth/screens/login/Login";
 import PasswordUpdate from "../auth/screens/password-update/PasswordUpdate";
 import Register from "../auth/screens/register/Register";
@@ -26,16 +24,18 @@ import CustomQRCode from "../shared/components/qr/CustomQRCode";
 import { theme } from "../theme";
 import {
   AuthStackParamList,
-  PrivateStackParamList,
   RootStackParamList,
 } from "./navigation-types";
+import { HomeStaff } from "../staff/screens/home/HomeStaff";
+import { BarScannerStaff } from "../staff/screens/BarScanner/BarScannerStaff";
+import { TicketConsumableDetailScreen } from "../home/screens/tickets/TicketConsumableDetailScreen";
 
 
 
 const authRouter = createNativeStackNavigator<AuthStackParamList>();
-const privateStack = createNativeStackNavigator<PrivateStackParamList>();
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator();
+const TabStaff = createBottomTabNavigator();
 
 
 export const AuthStack = () => {
@@ -91,7 +91,6 @@ export const AuthStack = () => {
 };
 
 export function RootNavigator() {
-  const navigation = useNavigation();
 
   return (
     <Stack.Navigator initialRouteName="Auth"
@@ -118,12 +117,16 @@ export function RootNavigator() {
         <Stack.Screen
           name="TicketAssistanceDetail"
           component={TicketAssistanceDetailScreen}
+        />
 
+        <Stack.Screen
+          name="TicketConsumableDetail"
+          component={TicketConsumableDetailScreen}
         />
 
         <Stack.Screen name="QRCode" component={CustomQRCode} />
-        <Stack.Screen name="Community" component={CommunityScreen}
-        />
+        <Stack.Screen name="Community" component={CommunityScreen} />
+
         <Stack.Screen
           name="EditProfile"
           component={EditProfile}
@@ -133,6 +136,7 @@ export function RootNavigator() {
           name="PasswordUpdate"
           component={PasswordUpdate}
         />
+
         <Stack.Screen name="Event" component={EventScreen} />
         <Stack.Screen name="SearchCommunity" component={SearchCommunity} />
         <Stack.Screen name="BarScanner" component={BarScanner} />
@@ -211,5 +215,85 @@ export const BottomTabNavigation = () => {
         }}
       />
     </Tab.Navigator>
+  );
+};
+
+
+export function RootNavigatorStaff() {
+
+  return (
+    <Stack.Navigator initialRouteName="Auth"
+      screenOptions={
+        {
+          gestureEnabled: true,
+        }
+      }
+    >
+      <Stack.Screen
+        name="Root"
+        component={BottomTabNavigationStaff}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <Stack.Group
+        screenOptions={{
+          animation: "slide_from_right",
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen name="QRCode" component={CustomQRCode} />
+
+        <Stack.Screen
+          name="EditProfile"
+          component={EditProfile}
+        />
+
+        <Stack.Screen
+          name="PasswordUpdate"
+          component={PasswordUpdate}
+        />
+        <Stack.Screen name="BarScannerStaff" component={BarScannerStaff} />
+      </Stack.Group>
+    </Stack.Navigator>
+  );
+}
+
+export const BottomTabNavigationStaff = () => {
+  return (
+    <TabStaff.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        tabBarStyle: { backgroundColor: "#f7f6fb" },
+        tabBarShowLabel: false,
+        tabBarActiveTintColor: "#F50057",
+        tabBarHideOnKeyboard: true,
+        unmountOnBlur: true,
+      }}
+    >
+      <TabStaff.Screen
+        name="Home"
+        component={HomeStaff}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color }) => (
+            <Icon as={AntDesign} name="home" size={6} color={color} />
+          ),
+        }}
+      />
+
+      <TabStaff.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          headerShown: false,
+
+          tabBarIcon: ({ color }) => (
+            <Icon as={AntDesign} name="user" size={6} color={color} />
+          ),
+        }}
+      />
+    </TabStaff.Navigator>
   );
 };

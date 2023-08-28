@@ -19,6 +19,7 @@ export default function Home() {
     data: myEvents,
   } = useGetMyEventsQuery(user?.id as string);
 
+
   return (
     <Layout backgroundColor={theme.colors.background}>
       <View style={{ flex: 1 }}>
@@ -51,11 +52,13 @@ export default function Home() {
                 </Center>
               }
               ListFooterComponent={
-                <Center flex={1}>
-                  <Text color={theme.colors.muted[400]} mb={5}>
-                    No hay más eventos
-                  </Text>
-                </Center>
+                myEvents && myEvents?.length > 0 ? (
+                  <Center flex={1}>
+                    <Text color={theme.colors.muted[400]} mb={5}>
+                      No hay más eventos
+                    </Text>
+                  </Center>
+                ) : null
               }
             />
 

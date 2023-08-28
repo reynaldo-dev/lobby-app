@@ -1,17 +1,18 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { getAuthStateFromAsyncStorage } from '../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage';
+import { IGetMyEventsResponse } from './interfaces/get-my-events';
 import {
   GetEventByIDResponse,
   IEnrollEventResponse,
   IEventQr,
+  IScanQrResponse,
 } from './interfaces/getEventByIdResponse';
-import { IGetMyEventsResponse } from './interfaces/get-my-events';
 
 export const eventsApi = createApi({
   reducerPath: 'eventsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://f8a7-138-186-250-119.ngrok-free.app/api',
+    baseUrl: 'http://07d1-138-186-250-155.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
@@ -68,6 +69,15 @@ export const eventsApi = createApi({
         method: 'POST',
       }),
     }),
+    scanAndRedeemTicket: builder.mutation<
+      IScanQrResponse,
+      { userId: string; qrCodeId: string }
+    >({
+      query: ({ userId, qrCodeId }) => ({
+        url: `/events/redeem/${qrCodeId}/user/${userId}`,
+        method: 'POST',
+      }),
+    }),
   }),
 });
 
@@ -79,4 +89,5 @@ export const {
   useGetMyEventsQuery,
   useGetEventQRByIdQuery,
   useScanQRCodeMutation,
+  useScanAndRedeemTicketMutation,
 } = eventsApi;

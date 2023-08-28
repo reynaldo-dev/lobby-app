@@ -1,8 +1,8 @@
 import {
   Event,
   User,
-} from "../redux/services/assistanceTicket/interfaces/assistanceTicket.interface";
-import { IConsumable } from "../redux/services/consumableTicket/interfaces/consumablesTickets.interface";
+} from '../redux/services/assistanceTicket/interfaces/assistanceTicket.interface';
+import { IConsumable } from '../redux/services/consumableTicket/interfaces/consumablesTickets.interface';
 
 export type AuthStackParamList = {
   Login: undefined;
@@ -26,7 +26,6 @@ export type RootStackParamList = {
   PasswordUpdate: undefined;
   Community: { id: string };
   Event: { id: string };
-
   SearchCommunity: undefined;
   Tickets: undefined;
   TicketAssistanceDetail: {
@@ -35,6 +34,15 @@ export type RootStackParamList = {
     isActive: boolean;
     consumable?: IConsumable;
   };
+  TicketConsumableDetail: {
+    event: Event;
+    user: User;
+    isActive: boolean;
+    consumable?: IConsumable;
+    ticketId?: string;
+    userId?: string;
+  };
   Calendar: undefined;
   BarScanner: undefined;
+  BarScannerStaff: undefined;
 };

@@ -6,8 +6,25 @@ import { AssistanceTickets } from "./components/AssistanceTickets";
 import { ConsumablesTickets } from "./components/ConsumablesTickets";
 import Layout from "../../../shared/layout/Layout";
 import { theme } from "../../../theme";
+import { useRefetchOnFocus } from "../../../hooks/useRefetchOnFocus";
+import { RootState, useAppSelector } from "../../../redux/store/store";
+import { useGetTicketsByUserIdQuery as useGetConsumablesTicketsByUserIdQuery } from '../../../redux/services/consumableTicket/consumableTicket.service';
+import { useGetTicketsByUserIdQuery } from "../../../redux/services/assistanceTicket/assitanceTicket.service";
 
 export const TicketsScreen: React.FC = () => {
+
+  const { user } = useAppSelector((state: RootState) => state.user);
+  const { refetch: refetchConsumablesTickets } =
+    useGetConsumablesTicketsByUserIdQuery(user?.id as string);
+
+  const { refetch: refetchAssistanceTickets } = useGetTicketsByUserIdQuery(
+    user?.id as string
+  );
+
+  useRefetchOnFocus(refetchConsumablesTickets);
+  useRefetchOnFocus(refetchAssistanceTickets);
+
+
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: "assistance", title: "Asistencia" },

@@ -20,6 +20,7 @@ export const TicketList = ({
   error,
   errorMessage,
 }: Props) => {
+
   if (isLoading) {
     return (
       <Center my={"auto"}>
@@ -48,6 +49,8 @@ export const TicketList = ({
                 user={item.user}
                 isActive={item.isActive}
                 consumable={item.consumable}
+                ticketId={item.id}
+                userId={item.userId}
               />
             );
           } else {

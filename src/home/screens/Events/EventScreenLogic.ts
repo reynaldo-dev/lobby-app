@@ -1,9 +1,5 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useRef, useState } from 'react';
-import {
-  useGetMyEventsCalendarQuery,
-  useGetTicketsByUserIdQuery,
-} from '../../../redux/services/assistanceTicket/assitanceTicket.service';
+import { useGetTicketsByUserIdQuery } from '../../../redux/services/assistanceTicket/assitanceTicket.service';
 import { useGetTicketsByUserIdQuery as useGetConsumablesTicketsByUserIdQuery } from '../../../redux/services/consumableTicket/consumableTicket.service';
 import {
   useCancelEnrollmentToEventMutation,
@@ -12,11 +8,10 @@ import {
   useGetMyEventsQuery,
   useIsEnrolledToEventQuery,
 } from '../../../redux/services/events/events.service';
-import useCustomToast from '../../../shared/hooks/useCustomToast';
 import { RootState, useAppSelector } from '../../../redux/store/store';
+import useCustomToast from '../../../shared/hooks/useCustomToast';
 
 export default function useEventScreenLogic(paramsId: string) {
-  const [userId, setUserId] = useState<string>('');
   const [showDialog, setShowDialog] = useState(false);
   const [isEnrolled, setIsEnrolled] = useState<null | boolean>(null);
   const [isLoadingAction, setIsLoadingAction] = useState(false);
@@ -24,7 +19,6 @@ export default function useEventScreenLogic(paramsId: string) {
 
   const cancelRef = useRef(null);
   const showToast = useCustomToast();
-  console.log(paramsId, 'paramsId');
   const {
     data: event,
     isLoading,
@@ -38,27 +32,16 @@ export default function useEventScreenLogic(paramsId: string) {
   const [cancelEnrollmentToEvent, { isLoading: isCancelling }] =
     useCancelEnrollmentToEventMutation();
   const { data: isEnrolledData, isLoading: isEnrolledLoading } =
-    useIsEnrolledToEventQuery({ userId: userId, eventId: paramsId });
-
-  const { refetch: refetchAssistanceTickets } = useGetTicketsByUserIdQuery(
-    userId || '',
-    { skip: userId === null }
-  );
-  const { refetch: refetchConsumablesTickets } =
-    useGetConsumablesTicketsByUserIdQuery(userId || '', {
-      skip: userId === null,
+    useIsEnrolledToEventQuery({
+      userId: user?.id as string,
+      eventId: paramsId,
     });
 
-  useEffect(() => {
-    const getUserData = async () => {
-      const authStateString = await AsyncStorage.getItem('authState');
-      if (authStateString) {
-        const authState = JSON.parse(authStateString);
-        setUserId(authState.user.id);
-      }
-    };
-    getUserData();
-  }, []);
+  const { refetch: refetchAssistanceTickets } = useGetTicketsByUserIdQuery(
+    user?.id as string
+  );
+  const { refetch: refetchConsumablesTickets } =
+    useGetConsumablesTicketsByUserIdQuery(user?.id as string);
 
   useEffect(() => {
     if (!isEnrolledLoading && typeof isEnrolledData !== 'undefined') {
@@ -69,7 +52,7 @@ export default function useEventScreenLogic(paramsId: string) {
   const handleEnroll = async () => {
     try {
       setIsLoadingAction(true);
-      await enrollToEvent({ userId: userId, eventId: paramsId });
+      await enrollToEvent({ userId: user?.id as string, eventId: paramsId });
       setIsLoadingAction(false);
       setIsEnrolled(true);
       refetchAssistanceTickets();
@@ -90,7 +73,10 @@ export default function useEventScreenLogic(paramsId: string) {
   const handleCancelEnrollment = async () => {
     try {
       setIsLoadingAction(true);
-      await cancelEnrollmentToEvent({ userId: userId, eventId: paramsId });
+      await cancelEnrollmentToEvent({
+        userId: user?.id as string,
+        eventId: paramsId,
+      });
       setIsLoadingAction(false);
       setIsEnrolled(false);
       refetchAssistanceTickets();

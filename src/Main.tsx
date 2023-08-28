@@ -3,11 +3,11 @@ import { NativeBaseProvider } from "native-base";
 import { useEffect } from "react";
 import { getUserCredentials } from "./redux/slices/user/user.thunk";
 import { RootState, useAppDispatch, useAppSelector } from "./redux/store/store";
-import { AuthStack, RootNavigator } from "./routing/RouterStack";
+import { AuthStack, RootNavigator, RootNavigatorStaff } from "./routing/RouterStack";
 import { theme } from "./theme";
 
 export default function Main() {
-  const { isAuth } = useAppSelector((state: RootState) => state.user);
+  const { isAuth, user } = useAppSelector((state: RootState) => state.user);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -17,7 +17,13 @@ export default function Main() {
   return (
     <NavigationContainer>
       <NativeBaseProvider theme={theme}>
-        {isAuth ? <RootNavigator /> : <AuthStack />}
+        {isAuth ? (
+          user?.role === 'funcionario' ? <RootNavigator /> :
+            user?.role === 'staff' ? <RootNavigatorStaff /> :
+              <RootNavigator />
+        ) : (
+          <AuthStack />
+        )}
       </NativeBaseProvider>
     </NavigationContainer>
   );

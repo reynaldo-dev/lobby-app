@@ -46,8 +46,6 @@ export const CommunityScreen = () => {
 
   const barStyle = Platform.OS === 'android' && isDarkColor(community?.color) ? 'light-content' : 'dark-content';
 
-
-
   const { data: imIInCommunity, refetch } = useImIInCommuityQuery({
     userId: user?.id as string,
     communityId: id.trim(),

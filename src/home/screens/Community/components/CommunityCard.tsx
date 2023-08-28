@@ -71,7 +71,7 @@ const CommunityCard = ({
                   {data?.name}
                 </Heading>
               </Stack>
-              <Text fontWeight="400" color={theme.colors.muted[500]}>
+              <Text fontWeight="400" color={theme.colors.muted[500]} numberOfLines={2}>
                 {data?.description}
               </Text>
               <HStack alignItems="center" justifyContent="flex-end">

@@ -16,6 +16,8 @@ type TicketCardProps = {
   user: User;
   isActive: boolean;
   consumable?: IConsumable;
+  ticketId?: string
+  userId?: string
 };
 
 export const TicketCard = ({
@@ -23,19 +25,30 @@ export const TicketCard = ({
   user,
   isActive,
   consumable,
+  ticketId,
+  userId
 }: TicketCardProps) => {
-  const navigation =
-    useNavigation<
-      NativeStackNavigationProp<RootStackParamList, "TicketAssistanceDetail">
-    >();
+
+
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const handlePress = () => {
-    navigation.navigate("TicketAssistanceDetail", {
-      event,
-      user,
-      isActive,
-      consumable,
-    });
+    if (consumable) {
+      navigation.navigate("TicketConsumableDetail", {
+        event,
+        user,
+        isActive,
+        consumable,
+        ticketId,
+        userId
+      });
+    } else {
+      navigation.navigate("TicketAssistanceDetail", {
+        event,
+        user,
+        isActive,
+      });
+    }
   };
 
   const formattedDate = formatDate(event?.dateTime);

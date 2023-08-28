@@ -75,3 +75,9 @@ export interface IEventQr {
   code: string;
   expires: Date;
 }
+
+export interface IScanQrResponse {
+  status: string;
+  message: string;
+  data: any;
+}

@@ -1,18 +1,18 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { getAuthStateFromAsyncStorage } from '../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage';
 import { IPagination } from '../../../shared/interfaces/shared.interface';
+import { ICalendarEventsResponse } from '../events/interfaces/getEventByIdResponse';
 import {
   IAssistanceTicket,
   IAssistanceTicketByUserIDResponse,
   IAssistanceTicketListResponse,
   IAssistanceTicketResponse,
 } from './interfaces/assistanceTicket.interface';
-import { ICalendarEventsResponse } from '../events/interfaces/getEventByIdResponse';
 
 export const assistanceTicketApi = createApi({
   reducerPath: 'assistanceTicketService',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://f8a7-138-186-250-119.ngrok-free.app/api',
+    baseUrl: 'http://07d1-138-186-250-155.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
@@ -71,15 +71,6 @@ export const assistanceTicketApi = createApi({
         method: 'DELETE',
       }),
     }),
-    redeemTicket: builder.mutation<
-      IAssistanceTicketResponse,
-      { id: string; qrCodeId: string }
-    >({
-      query: ({ id, qrCodeId }) => ({
-        url: `/assistance-tickets/${id}/redeem/qrCodeId/${qrCodeId}`,
-        method: 'POST',
-      }),
-    }),
   }),
 });
 
@@ -90,6 +81,5 @@ export const {
   useGetTicketByIdQuery,
   useUpdateTicketMutation,
   useDeleteTicketMutation,
-  useRedeemTicketMutation,
   useGetMyEventsCalendarQuery,
 } = assistanceTicketApi;
