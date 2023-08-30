@@ -31,7 +31,6 @@ export const BarScannerStaff = () => {
         }
     };
 
-
     return (
         <CustomBarScanner
             isLoading={isLoading}

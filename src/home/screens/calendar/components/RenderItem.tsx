@@ -20,7 +20,7 @@ export default function RenderItem({ item }: IRenderItemProps) {
   return (
     <Pressable ml={5} mt={2} p={1} onPress={handlePress}>
       <Text fontSize="md" fontWeight="bold" color={theme.colors.secondary}>
-        {item.title}
+        {item?.title}
       </Text>
 
       <View flexDir="row" alignItems="center" mt={2}>
@@ -31,7 +31,7 @@ export default function RenderItem({ item }: IRenderItemProps) {
           color={theme.colors.muted["500"]}
         />
         <Text fontSize="sm" color={theme.colors.muted["500"]}>
-          {item.place}
+          {item?.place}
         </Text>
       </View>
       <Divider my={2} />

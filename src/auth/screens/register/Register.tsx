@@ -1,4 +1,7 @@
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+import {
+  NavigationProp,
+  useNavigation,
+} from "@react-navigation/native";
 import { Formik } from "formik";
 import {
   Button,
@@ -8,9 +11,13 @@ import {
   VStack,
   View,
   useToast,
+  Input,
+  Select,
+  CheckIcon,
+  Box,
+  ScrollView,
 } from "native-base";
 import React, { useState } from "react";
-import { TouchableOpacity } from "react-native";
 import * as Yup from "yup";
 import { useAppDispatch } from "../../../redux/store/store";
 import { RootStackParamList } from "../../../routing/navigation-types";
@@ -19,14 +26,22 @@ import Layout from "../../../shared/layout/Layout";
 import { theme } from "../../../theme";
 import { register } from "../../../redux/slices/user/user.thunk";
 import CustomToast from "../../../shared/components/toast/CustomToast";
-import TextField from "../../../shared/components/TextField/TextField";
 
 interface IRegisterFormValues {
   name: string;
   lastname: string;
   email: string;
   password: string;
+  phone: string;
+  city: string;
+  department: string;
 }
+
+const departments = [
+  "Ahuachapán", "Santa Ana", "Sonsonate", "Chalatenango", "La Libertad",
+  "San Salvador", "Cuscatlán", "La Paz", "Cabañas", "San Vicente",
+  "Usulután", "San Miguel", "Morazán", "La Unión"
+];
 
 const registerValidationSchema = Yup.object().shape({
   name: Yup.string().required("Nombre es requerido"),
@@ -37,13 +52,19 @@ const registerValidationSchema = Yup.object().shape({
   password: Yup.string()
     .required("Contraseña es requerida")
     .min(8, "La contraseña debe tener al menos 8 caracteres"),
+  phone: Yup.string()
+    .required("Teléfono es requerido")
+    .length(8, "El teléfono no puede contener más de 8 digitos")
+    .matches(/^[0-9]+$/, "Solo se permiten números"),
+  city: Yup.string().required("Ciudad es requerida"),
+  department: Yup.string().required("Departamento es requerido"),
 });
 
 export default function Register() {
   const { colors } = theme;
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const dispatch = useAppDispatch();
-  const [isLoading, setisLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
 
   const initialValues: IRegisterFormValues = {
@@ -51,10 +72,13 @@ export default function Register() {
     lastname: "",
     email: "",
     password: "",
+    phone: "",
+    city: "",
+    department: "",
   };
 
   const onRegister = (values: IRegisterFormValues) => {
-    setisLoading(true);
+    setIsLoading(true);
     dispatch(register(values))
       .unwrap()
       .catch((error) => {
@@ -68,109 +92,160 @@ export default function Register() {
         });
       })
       .finally(() => {
-        setisLoading(false);
+        setIsLoading(false);
       });
   };
 
   return (
     <Layout backgroundColor={colors.background}>
-      <View>
+      <ScrollView>
         <Center>
-          <Text color={theme.colors.primary} fontSize="2xl" mb={10}>
+          <Text color={theme.colors.primary} fontSize="2xl" my={5}>
             Registrate
           </Text>
         </Center>
 
-        <View>
-          <Formik
-            initialValues={initialValues}
-            onSubmit={onRegister}
-            validationSchema={registerValidationSchema}
-          >
-            {({
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              values,
-              errors,
-              touched,
-            }) => (
-              <VStack space={4} justifyContent="center">
-                <ValidatedInputText
-                  bgColor={colors.muted["200"]}
-                  isInvalid={errors.name ? true : false}
-                  formControlLabel="Nombres"
-                  placeholder="Nombres"
-                  placeholderTextColor={colors.muted["400"]}
-                  onChangeText={handleChange("name")}
-                  value={values.name}
-                  errors={errors.name}
-                />
+        <Formik
+          initialValues={initialValues}
+          onSubmit={onRegister}
+          validationSchema={registerValidationSchema}
+        >
+          {({
+            handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldValue,
+          }) => (
+            <VStack space={4}>
+              <ValidatedInputText
+                bgColor={colors.muted["200"]}
+                isInvalid={touched.name && errors.name ? true : false}
+                formControlLabel="Nombres"
+                placeholder="Nombres"
+                placeholderTextColor={colors.muted["400"]}
+                onChangeText={handleChange("name")}
+                onBlur={handleBlur("name")}
+                value={values.name}
+                errors={touched.name ? errors.name : ''}
+              />
 
-                <ValidatedInputText
-                  bgColor={colors.muted["200"]}
-                  isInvalid={errors.lastname ? true : false}
-                  formControlLabel="Apellidos"
-                  placeholder="Apellidos"
-                  placeholderTextColor={colors.muted["400"]}
-                  onChangeText={handleChange("lastname")}
-                  value={values.lastname}
-                  errors={errors.lastname}
-                />
+              <ValidatedInputText
+                bgColor={colors.muted["200"]}
+                isInvalid={touched.lastname && errors.lastname ? true : false}
+                formControlLabel="Apellidos"
+                placeholder="Apellidos"
+                placeholderTextColor={colors.muted["400"]}
+                onChangeText={handleChange("lastname")}
+                value={values.lastname}
+                onBlur={handleBlur("lastname")}
+                errors={touched.lastname && errors.lastname}
+              />
 
-                <ValidatedInputText
-                  bgColor={colors.muted["200"]}
-                  isInvalid={errors.email ? true : false}
-                  formControlLabel="Correo electrónico"
-                  placeholder="Email"
-                  placeholderTextColor={colors.muted["400"]}
-                  onChangeText={handleChange("email")}
-                  value={values.email}
-                  errors={errors.email}
-                />
+              <ValidatedInputText
+                bgColor={colors.muted["200"]}
+                isInvalid={touched.email && errors.email ? true : false}
+                formControlLabel="Correo electrónico"
+                placeholder="Correo electrónico"
+                placeholderTextColor={colors.muted["400"]}
+                onChangeText={handleChange("email")}
+                value={values.email}
+                onBlur={handleBlur("email")}
+                errors={touched.email && errors.email}
+                keyboardType="email-address"
+              />
 
-                <ValidatedInputText
-                  bgColor={colors.muted["200"]}
-                  isInvalid={errors.password ? true : false}
-                  formControlLabel="Contraseña"
-                  placeholder="Contraseña"
-                  placeholderTextColor={colors.muted["400"]}
-                  onChangeText={handleChange("password")}
-                  value={values.password}
-                  errors={errors.password}
-                  type="password"
-                />
+              <ValidatedInputText
+                bgColor={colors.muted["200"]}
+                isInvalid={touched.password && errors.password ? true : false}
+                formControlLabel="Contraseña"
+                placeholder="Contraseña"
+                placeholderTextColor={colors.muted["400"]}
+                onChangeText={handleChange("password")}
+                value={values.password}
+                onBlur={handleBlur("password")}
+                errors={touched.password && errors.password}
+                type="password"
+              />
 
-                <Center mx={10}>
-                  <Button
-                    isLoading={isLoading}
-                    onPress={() => onRegister(values)}
-                    style={{
-                      backgroundColor: theme.colors.primary,
-                      width: "100%",
-                      padding: 10,
-                      borderRadius: 5,
-                      alignItems: "center",
-                    }}
-                  >
-                    <Text color={theme.colors.white}>Regístrarse</Text>
-                  </Button>
-                </Center>
-              </VStack>
-            )}
-          </Formik>
-        </View>
+              <ValidatedInputText
+                bgColor={colors.muted["200"]}
+                isInvalid={touched.phone && errors.phone ? true : false}
+                formControlLabel="Teléfono"
+                placeholder="1234-5678"
+                placeholderTextColor={colors.muted["400"]}
+                onChangeText={handleChange("phone")}
+                value={values.phone}
+                onBlur={handleBlur("phone")}
+                errors={touched.phone && errors.phone}
+                keyboardType="phone-pad"
+              />
 
-        <Center>
-          <Link
-            _text={{ color: colors.primary }}
-            mt={5}
-            onPress={() => navigation.navigate("Login" as never)}
-          >
-            Ya tienes una cuenta?
-          </Link>
-        </Center>
-      </View>
+              <Box
+                w="100%"
+                maxW="300px"
+                height="50px"
+                borderRadius="5px"
+                overflow="hidden"
+                alignSelf={"center"}
+              >
+                <Select
+                  color="#000"
+                  fontSize={16}
+                  selectedValue={values.department}
+                  onValueChange={(itemValue) => setFieldValue("department", itemValue)}
+                  placeholder="Selecciona un departamento"
+                  borderColor="transparent"
+                  bgColor={"#fff"}
+                  _selectedItem={{
+                    bg: "cyan.400",
+                    endIcon: <CheckIcon size={5} />,
+                    color: "#000",
+                  }}
+                >
+                  {departments.map((dept, index) => (
+                    <Select.Item key={index} label={dept} value={dept} />
+                  ))}
+                </Select>
+              </Box>
+
+              <ValidatedInputText
+                bgColor={colors.muted["200"]}
+                isInvalid={touched.city && errors.city ? true : false}
+                formControlLabel="Ciudad"
+                placeholder="Ciudad"
+                placeholderTextColor={colors.muted["400"]}
+                onChangeText={handleChange("city")}
+                value={values.city}
+                onBlur={handleBlur("city")}
+                errors={touched.city && errors.city}
+              />
+
+              <Center mx={10}>
+                <Button
+                  isLoading={isLoading}
+                  onPress={() => onRegister(values)}
+                  style={{
+                    backgroundColor: theme.colors.primary,
+                    width: "100%",
+                    padding: 10,
+                    borderRadius: 5,
+                    alignItems: "center",
+                  }}
+                >
+                  <Text color={theme.colors.white}>Regístrarse</Text>
+                </Button>
+              </Center>
+
+              <Center>
+                <Link
+                  _text={{ color: colors.primary }}
+                  my={2}
+                  onPress={() => navigation.navigate("Login" as never)}
+                >
+                  ¿Ya tienes una cuenta?
+                </Link>
+              </Center>
+            </VStack>
+          )}
+        </Formik>
+      </ScrollView>
     </Layout>
   );
 }

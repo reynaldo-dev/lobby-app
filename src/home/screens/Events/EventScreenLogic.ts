@@ -65,9 +65,7 @@ export default function useEventScreenLogic(paramsId: string) {
         textColor: 'white',
       });
       setShowDialog(false);
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (error) {}
   };
 
   const handleCancelEnrollment = async () => {
@@ -90,9 +88,7 @@ export default function useEventScreenLogic(paramsId: string) {
         textColor: 'white',
       });
       setShowDialog(false);
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (error) {}
   };
 
   const handleButtonPress = () => {

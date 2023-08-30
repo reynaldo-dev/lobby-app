@@ -172,7 +172,7 @@ export const CommunityScreen = () => {
               </Button>
             </Box>
             <Center mb={100} mx={2}>
-              <EventList events={community.Event} />
+              <EventList events={community?.Event} />
             </Center>
           </View>
         </>

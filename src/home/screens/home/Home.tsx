@@ -10,6 +10,7 @@ import { SearchBarCustom } from "../Community/components/SearchBarCustom";
 import CardEvent from "../Events/components/CardEvent";
 import HomeSection from "./components/home-section/HomeSection";
 import { EventListSkeleton } from "./components/home-section/event-list-skeleton/EventListSkeleton";
+import { NotFound } from "../../../shared/components/notFound/NotFound";
 
 export default function Home() {
   const { user } = useAppSelector((state: RootState) => state.user);
@@ -45,11 +46,7 @@ export default function Home() {
               showsVerticalScrollIndicator={true}
               style={{ height: 350 }}
               ListEmptyComponent={
-                <Center flex={1}>
-                  <Text color={theme.colors.muted[400]}>
-                    Aun no tienes eventos
-                  </Text>
-                </Center>
+                <NotFound message="Aún no estas inscrito a ningún evento." height={250} />
               }
               ListFooterComponent={
                 myEvents && myEvents?.length > 0 ? (

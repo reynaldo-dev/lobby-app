@@ -1,9 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { FlatList, View } from "native-base";
+import { FlatList, Text, View } from "native-base";
 import { useEffect, useState } from "react";
 import { useGetCommunitiesByUserIdQuery } from "../../../../redux/services/community/communities.service";
 import CommunityCard from "./CommunityCard";
 import { SkeletonCard } from "./SkeletonCard";
+import { NotFound } from "../../../../shared/components/notFound/NotFound";
 
 export const CommunityList = () => {
   const [userId, setUserId] = useState<string | null>(null);
@@ -43,7 +44,11 @@ export const CommunityList = () => {
       horizontal={true}
       showsHorizontalScrollIndicator={false}
       style={{ padding: 10, height: 215 }}
+      contentContainerStyle={{ alignItems: 'center', justifyContent: 'center' }}
       ListFooterComponent={<View style={{ marginRight: 10 }} />}
+      ListEmptyComponent={
+        <NotFound message="Aún no perteneces a ninguna comunidad." />
+      }
     />
   );
 };

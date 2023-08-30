@@ -4,6 +4,7 @@ import { IAssistanceTicketByUserIDResponse } from "../../../../redux/services/as
 import { ConsumableTicketData } from "../../../../redux/services/consumableTicket/interfaces/consumablesTickets.interface";
 import { TicketCard } from "./TicketCard";
 import { ActivityIndicator } from "react-native";
+import { TicketsNotFound } from '../../../../shared/components/notFound/TicketsNotFound';
 
 type CommonTicket = IAssistanceTicketByUserIDResponse | ConsumableTicketData;
 
@@ -31,9 +32,7 @@ export const TicketList = ({
 
   if (error || !tickets) {
     return (
-      <Center my={"auto"}>
-        <Text>{errorMessage}</Text>
-      </Center>
+      <TicketsNotFound message={errorMessage} height={450} />
     );
   }
 

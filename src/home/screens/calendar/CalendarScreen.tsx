@@ -8,6 +8,7 @@ import { RenderError } from "./components/RenderError";
 import RenderItem from "./components/RenderItem";
 import { RenderLoading } from "./components/RenderLoading";
 import { theme } from "../../../theme";
+import { NotFound } from "../../../shared/components/notFound/NotFound";
 
 export default function CalendarScreen() {
   const {
@@ -18,6 +19,7 @@ export default function CalendarScreen() {
     loadItemsForMonth,
     refetch,
     events,
+    error,
     dateAfterTwoMonths,
   } = useEventsCalendar();
 
@@ -26,13 +28,12 @@ export default function CalendarScreen() {
       refetch();
     }, [])
   );
-
   return (
     <Layout backgroundColor={theme.colors.background}>
       {isLoading && <RenderLoading />}
       {isError && <RenderError />}
 
-      {!isLoading && !isError && events?.length && (
+      {!isLoading && !isError && (
         <Agenda
           rowHasChanged={(r1, r2) => {
             return r1.title !== r2.title;
@@ -49,9 +50,7 @@ export default function CalendarScreen() {
           renderItem={(item) => <RenderItem item={item} />}
           renderEmptyData={() => {
             return (
-              <Center flex={1}>
-                <Text>No hay eventos para este dia</Text>
-              </Center>
+              <NotFound message="No hay eventos para este día." height={400} />
             );
           }}
         />

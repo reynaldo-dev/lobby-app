@@ -11,9 +11,9 @@ export const SkeletonCard = () => {
 
 const SingleSkeletonCard = () => {
   return (
-    <Center w={["48", "48", "4/6"]} h={["48", "48", "48"]} mt={4}>
+    <Center w={["48", "48", "4/6"]} h={["48", "48", "48"]} mt={4} >
       <VStack
-        w={["80", "80", "4/6"]}
+        w={["48", "48", "4/6"]}
         h={["48", "48", "48"]}
         maxW="300"
         borderWidth="1"

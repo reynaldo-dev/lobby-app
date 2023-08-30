@@ -43,7 +43,7 @@ export default function Profile() {
         <Center>
           <Box>
             <Text fontSize="xl" fontWeight="bold" color="text">
-              {user?.name}
+              {user?.name} {user?.lastname}
             </Text>
             <Text fontSize="sm" color="text" textAlign="center">
               {user?.role}

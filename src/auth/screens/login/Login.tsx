@@ -89,6 +89,7 @@ export default function Login() {
                 onChangeText={handleChange("email")}
                 value={values.email}
                 errors={errors.email}
+                keyboardType="email-address"
               />
 
               <TextField
@@ -99,6 +100,7 @@ export default function Login() {
                 value={values.password}
                 errors={errors.password}
               />
+
               <TouchableOpacity
                 disabled={loading}
                 style={{

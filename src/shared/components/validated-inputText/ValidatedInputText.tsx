@@ -1,7 +1,8 @@
-import { Box, FormControl, Input, WarningOutlineIcon } from "native-base";
+import { Box, FormControl, Input, WarningOutlineIcon, Button } from "native-base";
 import { StyleSheet } from "react-native";
 import { theme } from "../../../theme";
-import React from "react";
+import React, { useState } from "react";
+import { Ionicons } from '@expo/vector-icons';
 
 interface ValidatedInputTextProps {
   isInvalid: boolean;
@@ -13,6 +14,8 @@ interface ValidatedInputTextProps {
   bgColor?: string;
   type?: "text" | "password" | undefined;
   errors: any;
+  onBlur?: (e: any) => void;
+  keyboardType?: "numeric" | "phone-pad" | "default" | "email-address" | "number-pad" | "decimal-pad" | undefined;
 }
 
 export default function ValidatedInputText({
@@ -25,7 +28,16 @@ export default function ValidatedInputText({
   errors,
   bgColor,
   type = "text",
+  onBlur,
+  keyboardType
 }: ValidatedInputTextProps) {
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <Box alignItems="center" w="full">
       <FormControl
@@ -35,16 +47,25 @@ export default function ValidatedInputText({
         borderRadius={10}
       >
         <Input
+          onBlur={onBlur}
           autoCorrect={true}
           bgColor={bgColor}
           style={styles.input}
+          keyboardType={keyboardType}
           placeholder={placeholder}
           placeholderTextColor={placeholderTextColor}
           onChangeText={onChangeText}
           value={value}
           autoCapitalize="none"
           borderColor="transparent"
-          type={type}
+          type={type === "password" && !showPassword ? "password" : "text"}
+          InputRightElement={
+            type === "password" ? (
+              <Button onPress={togglePasswordVisibility} variant="unstyled">
+                <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} color="gray" />
+              </Button>
+            ) : undefined
+          }
         />
         {errors && (
           <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size="xs" />}>
@@ -59,7 +80,6 @@ export default function ValidatedInputText({
 const styles = StyleSheet.create({
   input: {
     fontSize: 16,
-
     backgroundColor: "#fff",
     width: "100%",
   },
