@@ -45,4 +45,6 @@ export type RootStackParamList = {
   Calendar: undefined;
   BarScanner: undefined;
   BarScannerStaff: undefined;
+  EventHistory: undefined;
+  Alliances: undefined;
 };

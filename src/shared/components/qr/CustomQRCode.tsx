@@ -1,12 +1,11 @@
 import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { Center, Text } from "native-base";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
 import SvgQRCode from "react-native-qrcode-svg";
 import { RootState, useAppSelector } from "../../../redux/store/store";
 import { theme } from "../../../theme";
-import { Center, Text } from "native-base";
-import logo from "../../../../assets/davivienda.png";
 import Layout from "../../layout/Layout";
 
 export default function CustomQRCode() {
@@ -21,17 +20,14 @@ export default function CustomQRCode() {
             <AntDesign name="left" size={24} color="black" />
           </TouchableOpacity>
         </View>
-
         <Center mb={10}>
-          <Text color={theme.colors.muted["400"]} fontSize="xl">
-            Carnet digital
+          <Text color={theme.colors.muted["500"]} fontSize="2xl">
+            {user?.name} {user?.lastname}
           </Text>
         </Center>
         <SvgQRCode
           enableLinearGradient
           size={300}
-          logo={logo}
-          logoSize={100}
           value={JSON.stringify(user)}
         />
       </View>

@@ -10,6 +10,7 @@ import {
 import { IConsumable } from "../../../../redux/services/consumableTicket/interfaces/consumablesTickets.interface";
 import { RootStackParamList } from "../../../../routing/navigation-types";
 import { theme } from "../../../../theme";
+import { FontAwesome } from "@expo/vector-icons";
 
 type TicketCardProps = {
   event: Event;
@@ -68,7 +69,7 @@ export const TicketCard = ({
     >
       <VStack space={2} p={4}>
         <HStack space={2} justifyContent="space-between">
-          <Heading size="sm" ml={-1}>
+          <Heading size="sm" ml={-1} flex={1} isTruncated>
             {event?.title}
           </Heading>
           <Badge colorScheme={isActive ? "green" : "red"}>
@@ -80,9 +81,23 @@ export const TicketCard = ({
         </Text>
         {consumable && <Text color="gray.500">{consumable?.name}</Text>}
         <HStack justifyContent={"space-between"}>
-          <Text color="gray.500">{event?.place}</Text>
-          <Text color="gray.500">{formattedDate}</Text>
+          <HStack space={2}>
+            <FontAwesome
+              name={event.link ? "laptop" : "map-marker"}
+              size={20}
+              color="gray"
+            />
+            <Text color="muted.500">
+              {event?.link ? 'Virtual' : 'Presencial'}
+            </Text>
+          </HStack>
+
+          <HStack space={2}>
+            <FontAwesome name="clock-o" size={20} color="gray" />
+            <Text color="muted.500">{formattedDate}</Text>
+          </HStack>
         </HStack>
+
       </VStack>
     </Pressable>
   );

@@ -32,9 +32,9 @@ export default function CommunityCover({ community }: CommunityCoverProps) {
         <AntDesign name="left" size={24} color={styleBackButton} />
       </TouchableOpacity>
 
-      <View h="full" bg={community.color}>
+      <View h="full" bg={community?.color}>
         <LinearGradient
-          colors={[community.color, "transparent"]}
+          colors={[community?.color, "transparent"]}
         // style={{
         //   position: "absolute",
         //   left: 0,
@@ -46,7 +46,7 @@ export default function CommunityCover({ community }: CommunityCoverProps) {
         />
         <Box justifyContent="center" alignItems="center" h="full" p={4}>
           <Text bold fontSize="2xl" color={theme.colors.white}>
-            {community.name}
+            {community?.name}
           </Text>
           <Text
             fontSize="md"
@@ -54,7 +54,7 @@ export default function CommunityCover({ community }: CommunityCoverProps) {
             mt={2}
             numberOfLines={2}
           >
-            {community.description}
+            {community?.description}
           </Text>
         </Box>
       </View>

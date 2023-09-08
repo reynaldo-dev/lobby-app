@@ -139,7 +139,7 @@ export default function EditProfile() {
             <ValidatedInputText
               bgColor={theme.colors.muted["200"]}
               isInvalid={errors.email ? true : false}
-              formControlLabel="Email"
+              formControlLabel="Correo eléctronico"
               placeholder="Email"
               placeholderTextColor={theme.colors.muted["400"]}
               onChangeText={handleChange("email")}

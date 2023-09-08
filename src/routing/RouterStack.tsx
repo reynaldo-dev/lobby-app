@@ -29,6 +29,8 @@ import {
 import { HomeStaff } from "../staff/screens/home/HomeStaff";
 import { BarScannerStaff } from "../staff/screens/BarScanner/BarScannerStaff";
 import { TicketConsumableDetailScreen } from "../home/screens/tickets/TicketConsumableDetailScreen";
+import { EventHistory } from "../home/screens/profile/components/event-history/EventHistory";
+import { Alliances } from "../home/screens/profile/components/alliances/Alliances";
 
 
 
@@ -140,6 +142,8 @@ export function RootNavigator() {
         <Stack.Screen name="Event" component={EventScreen} />
         <Stack.Screen name="SearchCommunity" component={SearchCommunity} />
         <Stack.Screen name="BarScanner" component={BarScanner} />
+        <Stack.Screen name="EventHistory" component={EventHistory} />
+        <Stack.Screen name="Alliances" component={Alliances} />
       </Stack.Group>
     </Stack.Navigator>
   );

@@ -8,11 +8,12 @@ import {
   IEventQr,
   IScanQrResponse,
 } from './interfaces/getEventByIdResponse';
+import { IInactiveEvents } from '../../../shared/interfaces/shared.interface';
 
 export const eventsApi = createApi({
   reducerPath: 'eventsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://1c05-138-186-250-155.ngrok-free.app/api',
+    baseUrl: 'http://f5f7-138-186-250-93.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
@@ -37,6 +38,9 @@ export const eventsApi = createApi({
 
     getEventQRById: builder.query<IEventQr, string>({
       query: (id: string) => `/event-qr/qr-event/${id}`,
+    }),
+    getInactiveEvents: builder.query<IInactiveEvents[], string>({
+      query: (id: string) => `/events/inactive-events-with-attendance/${id}`,
     }),
 
     enrollToEvent: builder.mutation<{}, { userId: string; eventId: string }>({
@@ -84,9 +88,10 @@ export const eventsApi = createApi({
 export const {
   useGetEventByIdQuery,
   useCancelEnrollmentToEventMutation,
+  useGetMyEventsQuery,
+  useGetInactiveEventsQuery,
   useEnrollToEventMutation,
   useIsEnrolledToEventQuery,
-  useGetMyEventsQuery,
   useGetEventQRByIdQuery,
   useScanQRCodeMutation,
   useScanAndRedeemTicketMutation,

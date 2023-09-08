@@ -83,7 +83,6 @@ export default function Login() {
               <ValidatedInputText
                 bgColor={colors.muted["200"]}
                 isInvalid={errors.email ? true : false}
-                formControlLabel="Correo electrónico"
                 placeholder="johndoe@example.com"
                 placeholderTextColor={colors.muted["400"]}
                 onChangeText={handleChange("email")}

@@ -13,6 +13,7 @@ export interface GetEventByIDResponse {
   community: Community;
   Consumable: any[];
   eventCategory: EventCategory;
+  link: string;
 }
 
 export interface Community {

@@ -12,7 +12,7 @@ import {
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://1c05-138-186-250-155.ngrok-free.app/api',
+    baseUrl: 'http://f5f7-138-186-250-93.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {

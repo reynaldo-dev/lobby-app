@@ -40,7 +40,7 @@ export default function EventCommunityCard({ event }: Props) {
             mb={2}
             numberOfLines={2}
           >
-            {event.title}
+            {event?.title}
           </Text>
           <Box
             flexDirection="row"
@@ -65,10 +65,10 @@ export default function EventCommunityCard({ event }: Props) {
                 fontSize="xs"
                 color={theme.colors.white}
               >
-                {event.status}
+                {event?.status}
                 <Ionicons
                   name={
-                    event.status === "Activo"
+                    event?.status === "Activo"
                       ? "checkmark-circle"
                       : "close-circle"
                   }
@@ -80,7 +80,7 @@ export default function EventCommunityCard({ event }: Props) {
         </Box>
 
         <Text fontSize="xs" mb={2}>
-          {event.description}
+          {event?.description}
         </Text>
       </Box>
     </Pressable>

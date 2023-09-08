@@ -10,7 +10,6 @@ export const TicketAssistanceDetailScreen = () => {
     const { event, user, isActive, consumable } = route.params;
 
     const { data: qrCodeData, error } = useGetEventQRByIdQuery(event?.id);
-
     const qrData = JSON.stringify({
         qrCodeData
     });

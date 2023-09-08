@@ -1,11 +1,12 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { communitiesService } from "../services/community/communities.service";
-import user from "../slices/user/user.slice";
-import { assistanceTicketApi } from "../services/assistanceTicket/assitanceTicket.service";
-import { eventsApi } from "../services/events/events.service";
-import { consumablesTicketsApi } from "../services/consumableTicket/consumableTicket.service";
-import { userApi } from "../services/user/user.service";
+import { configureStore } from '@reduxjs/toolkit';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { communitiesService } from '../services/community/communities.service';
+import user from '../slices/user/user.slice';
+import { assistanceTicketApi } from '../services/assistanceTicket/assitanceTicket.service';
+import { eventsApi } from '../services/events/events.service';
+import { consumablesTicketsApi } from '../services/consumableTicket/consumableTicket.service';
+import { userApi } from '../services/user/user.service';
+import { alliancesApi } from '../services/alliances/alliances.service';
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     [eventsApi.reducerPath]: eventsApi.reducer,
     [consumablesTicketsApi.reducerPath]: consumablesTicketsApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
+    [alliancesApi.reducerPath]: alliancesApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -22,7 +24,8 @@ export const store = configureStore({
       assistanceTicketApi.middleware,
       eventsApi.middleware,
       consumablesTicketsApi.middleware,
-      userApi.middleware
+      userApi.middleware,
+      alliancesApi.middleware
     ),
 });
 

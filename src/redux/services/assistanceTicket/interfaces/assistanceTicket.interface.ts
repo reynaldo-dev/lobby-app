@@ -27,6 +27,7 @@ export interface Event {
   place: string;
   communityId: string;
   dateTime: Date;
+  link: string;
 }
 
 export interface User {
@@ -46,7 +47,7 @@ export interface IAssistanceTicketByUserIDResponse {
   eventId: string;
   userId: string;
   event: Event;
-  user:      User;
+  user: User;
 }
 
 export interface IAssistanceTicketResponse {
@@ -56,5 +57,3 @@ export interface IAssistanceTicketResponse {
   eventId: string;
   userId: string;
 }
-
-

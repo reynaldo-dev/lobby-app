@@ -1,29 +1,15 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { FlatList, Text, View } from "native-base";
-import { useEffect, useState } from "react";
+import { FlatList, View } from "native-base";
 import { useGetCommunitiesByUserIdQuery } from "../../../../redux/services/community/communities.service";
+import { RootState, useAppSelector } from "../../../../redux/store/store";
+import { NotFound } from "../../../../shared/components/notFound/NotFound";
 import CommunityCard from "./CommunityCard";
 import { SkeletonCard } from "./SkeletonCard";
-import { NotFound } from "../../../../shared/components/notFound/NotFound";
 
 export const CommunityList = () => {
-  const [userId, setUserId] = useState<string | null>(null);
+  const { user } = useAppSelector((state: RootState) => state.user);
 
   const { data: communityData, isLoading: communityIsLoading } =
-    useGetCommunitiesByUserIdQuery(userId || "", {
-      skip: userId === null,
-    });
-
-  useEffect(() => {
-    const getUserData = async () => {
-      const authStateString = await AsyncStorage.getItem("authState");
-      if (authStateString) {
-        const authState = JSON.parse(authStateString);
-        setUserId(authState.user.id);
-      }
-    };
-    getUserData();
-  }, []);
+    useGetCommunitiesByUserIdQuery(user?.id as string);
 
   const communities = communityData?.map((item) => item.community);
 

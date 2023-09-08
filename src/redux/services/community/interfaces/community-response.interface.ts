@@ -7,6 +7,7 @@ export interface GetCommunityByIDResponse {
   color: string;
   createdAt: string;
   Event: IEvent[];
+  count: ICount;
 }
 
 export interface IEvent {
@@ -25,4 +26,8 @@ export interface IEvent {
 export interface CountMembersResponse {
   coummunityId: string;
   totalMembers: number;
+}
+
+interface ICount {
+  users: number;
 }

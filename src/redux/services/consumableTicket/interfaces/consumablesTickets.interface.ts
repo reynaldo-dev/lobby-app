@@ -1,3 +1,4 @@
+import { Link } from 'native-base';
 export interface IConsumableTicketResponse {
   total: number;
   data: ConsumableTicketData[];
@@ -35,6 +36,7 @@ export interface Event {
   place: string;
   communityId: string;
   dateTime: Date;
+  link: string;
 }
 
 export interface User {

@@ -16,6 +16,7 @@ import { RootStackParamList } from "../../../routing/navigation-types";
 import Layout from "../../../shared/layout/Layout";
 import { theme } from "../../../theme";
 import ProfileMenu from "./components/profile-menu/ProfileMenu";
+import { TouchableOpacity } from 'react-native';
 
 export default function Profile() {
   const { user } = useAppSelector((state: RootState) => state.user);
@@ -23,9 +24,17 @@ export default function Profile() {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-  const handleQR = () => {
+  const onPressQr = () => {
     navigation.navigate("QRCode");
   };
+
+  const onPressHistory = () => {
+    navigation.navigate("EventHistory");
+  }
+
+  const onPressAlliances = () => {
+    navigation.navigate("Alliances");
+  }
 
   return (
     <Layout backgroundColor={theme.colors.background}>
@@ -36,7 +45,7 @@ export default function Profile() {
             name="qrcode"
             size={6}
             color="primary"
-            onPress={handleQR}
+            onPress={onPressQr}
           />
           <ProfileMenu />
         </Box>
@@ -45,7 +54,7 @@ export default function Profile() {
             <Text fontSize="xl" fontWeight="bold" color="text">
               {user?.name} {user?.lastname}
             </Text>
-            <Text fontSize="sm" color="text" textAlign="center">
+            <Text fontSize="sm" color="text" textAlign="center" textTransform={"capitalize"}>
               {user?.role}
             </Text>
           </Box>
@@ -58,7 +67,7 @@ export default function Profile() {
           justifyContent="space-around"
           mt={10}
         >
-          <Box alignItems="center">
+          {/* <Box alignItems="center">
             <Box flexDirection="row" alignItems="center">
               <Icon as={AntDesign} name="staro" mr={1} />
               <Text fontSize="xl" fontWeight="bold" color="text">
@@ -69,8 +78,8 @@ export default function Profile() {
             <Text fontSize="sm" fontWeight="bold" color="text">
               Estrellas obtenidas
             </Text>
-          </Box>
-          <Divider orientation="vertical" height={10} />
+          </Box> */}
+          {/* <Divider orientation="vertical" height={10} /> */}
 
           <Box alignItems="center">
             <Box flexDirection="row" alignItems="center">
@@ -87,31 +96,38 @@ export default function Profile() {
         </Box>
 
         <View mx={10} mt={16}>
-          <Box
-            backgroundColor="primary"
-            p={8}
-            borderRadius={20}
-            shadow={5}
-            marginBottom={5}
-          >
-            <Text color="white" fontSize="xl" fontWeight="bold">
-              Mi comunidad
-            </Text>
-            <Text color="white">Runners</Text>
-          </Box>
 
-          <Box
-            backgroundColor="secondary"
-            p={8}
-            borderRadius={20}
-            shadow={5}
-            marginBottom={5}
+          <TouchableOpacity
+            onPress={onPressAlliances}
           >
-            <Text color="white" fontSize="xl" fontWeight="bold">
-              Mis eventos
-            </Text>
-            <Text color="white">+60</Text>
-          </Box>
+            <Box
+              backgroundColor="primary"
+              p={8}
+              borderRadius={20}
+              shadow={5}
+              marginBottom={5}
+            >
+              <Text color="white" fontSize="xl" fontWeight="bold">
+                Mis beneficios
+              </Text>
+            </Box>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={onPressHistory}
+          >
+            <Box
+              backgroundColor="secondary"
+              p={8}
+              borderRadius={20}
+              shadow={5}
+              marginBottom={5}
+            >
+              <Text color="white" fontSize="xl" fontWeight="bold">
+                Historial de eventos
+              </Text>
+            </Box>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </Layout>

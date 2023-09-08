@@ -1,3 +1,4 @@
+import { Feather } from "@expo/vector-icons";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import {
   Box,
@@ -9,13 +10,11 @@ import {
   Text,
 } from "native-base";
 import {
-  ICommunity,
-  IUserCommunity,
+  ICommunity
 } from "../../../../interfaces/community.interface";
 import { useGetCountMembersQuery } from "../../../../redux/services/community/communities.service";
 import { RootStackParamList } from "../../../../routing/navigation-types";
 import { theme } from "../../../../theme";
-import { Feather } from "@expo/vector-icons";
 
 type DimensionProp = number | string | (number | string)[];
 type Props = {

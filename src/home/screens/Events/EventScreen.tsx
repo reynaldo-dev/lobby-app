@@ -14,7 +14,7 @@ import {
   View,
   useDisclose,
 } from "native-base";
-import { ActivityIndicator, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Linking, TouchableOpacity } from "react-native";
 import { RootStackParamList } from "../../../routing/navigation-types";
 import Layout from "../../../shared/layout/Layout";
 import { theme } from "../../../theme";
@@ -77,6 +77,14 @@ export default function EventScreen() {
       </Center>
     );
   }
+
+  const content = event?.place && event?.place !== '' ? event?.place : event?.link;
+
+  const handleLinkPress = (url: string | undefined) => {
+    if (url && url.startsWith('https://')) {
+      Linking.openURL(url);
+    }
+  };
 
   return (
     <Layout backgroundColor={theme.colors.background}>
@@ -208,7 +216,37 @@ export default function EventScreen() {
             <DetailItem label="Estado" value={event?.status as string} />
             <Divider />
 
-            <DetailItem label="Lugar" value={event?.place as string} />
+
+            <Box flexDir="row" justifyContent="space-between" mt={1}>
+              <Text
+                color="gray.600"
+                fontSize={["sm", "lg", "md"]}
+                fontWeight="bold">
+                {content === event?.link ? 'Enlace:' : 'Lugar:'}
+              </Text>
+
+              {content === event?.link ? (
+                <TouchableOpacity onPress={() => handleLinkPress(content)}>
+                  <Text
+                    fontSize={["sm", "lg", "md"]}
+                    color='blue.600'
+                    isTruncated
+                  >
+                    {content}
+                  </Text>
+                </TouchableOpacity>
+              ) : (
+                <Text
+                  fontSize='sm'
+                  color='muted.700'
+                  isTruncated
+                  maxWidth="80%"
+                >
+                  {content}
+                </Text>
+              )}
+            </Box>
+
             <Divider />
 
             <DetailItem

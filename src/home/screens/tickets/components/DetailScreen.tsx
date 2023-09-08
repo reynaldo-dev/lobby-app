@@ -9,6 +9,8 @@ import { User } from "../../../../interfaces/community.interface";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../../../routing/navigation-types";
 import { formatDate } from "../../../../helpers/DateFormat";
+import { Linking } from 'react-native';
+
 
 type Props = {
     event: Event
@@ -24,6 +26,14 @@ export const DetailScreen = ({ event, user, isActive, consumable, qrCodeData }: 
 
     const onPress = () => {
         navigation.navigate("BarScanner");
+    };
+
+    const content = event.place && event.place !== '' ? event.place : event.link;
+
+    const handleLinkPress = (url: string) => {
+        if (url && url.startsWith('https://')) {
+            Linking.openURL(url);
+        }
     };
 
     return (
@@ -42,22 +52,39 @@ export const DetailScreen = ({ event, user, isActive, consumable, qrCodeData }: 
                     }
                 </HStack>
                 <VStack space={4} mt={5} alignItems="center">
-                    <Heading size='lg' color='gray.700'>
+                    <Heading size='lg' color='gray.700' mx={4}>
                         {event?.title}
                     </Heading>
                     <SvgQRCode value={qrCodeData} enableLinearGradient size={250} />
                     <Badge fontSize='lg' colorScheme={isActive ? 'green' : 'red'} variant="subtle" px={2}>
                         {isActive ? 'Disponible' : 'No Disponible'}
                     </Badge>
-                    <Text fontSize='md' color='gray.600'>
+                    <Text fontSize='md' color='gray.600' mx={4}>
                         {event?.description}
                     </Text>
                 </VStack>
 
                 <Box bg='white' shadow={2} p={4} rounded='lg' mt={10}>
                     <HStack justifyContent='space-between' alignItems='center'>
-                        <Text fontSize='md' color='gray.600'>Ubicación:</Text>
-                        <Text fontSize='sm' color='muted.700'>{event?.place}</Text>
+                        {
+                            content === event.link ? (
+                                <>
+                                    <Text fontSize='md' color='gray.600'>Enlace:</Text>
+                                    <TouchableOpacity onPress={() => handleLinkPress(content)}>
+                                        <Text fontSize='sm' color='blue.600'>
+                                            {content}
+                                        </Text>
+                                    </TouchableOpacity>
+                                </>
+                            ) : (
+                                <>
+                                    <Text fontSize='md' color='gray.600'>Lugar:</Text>
+                                    <Text fontSize='sm' color='muted.700' maxWidth={"80%"} isTruncated>
+                                        {content}
+                                    </Text>
+                                </>
+                            )
+                        }
                     </HStack>
                     <Divider my={2} />
                     <HStack justifyContent='space-between' alignItems='center'>
@@ -66,7 +93,7 @@ export const DetailScreen = ({ event, user, isActive, consumable, qrCodeData }: 
                     </HStack>
                     <Divider my={2} />
                     <HStack justifyContent='space-between' alignItems='center'>
-                        <Text fontSize='md' color='gray.600'>Dueño del Ticket:</Text>
+                        <Text fontSize='md' color='gray.600'>Dueño del cupón:</Text>
                         <Text fontSize='sm' color='muted.700'>{`${user?.name} ${user?.lastname}`}</Text>
                     </HStack>
                     {

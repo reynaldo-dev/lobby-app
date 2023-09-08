@@ -1,12 +1,11 @@
-import { Box, FormControl, Input, WarningOutlineIcon, Button } from "native-base";
-import { StyleSheet } from "react-native";
-import { theme } from "../../../theme";
-import React, { useState } from "react";
 import { Ionicons } from '@expo/vector-icons';
+import { Box, Button, FormControl, Input, WarningOutlineIcon } from "native-base";
+import React, { useCallback, useState } from "react";
+import { StyleSheet } from "react-native";
 
 interface ValidatedInputTextProps {
   isInvalid: boolean;
-  formControlLabel: string;
+  formControlLabel?: string;
   placeholder: string;
   placeholderTextColor: string;
   onChangeText: any;
@@ -18,7 +17,7 @@ interface ValidatedInputTextProps {
   keyboardType?: "numeric" | "phone-pad" | "default" | "email-address" | "number-pad" | "decimal-pad" | undefined;
 }
 
-export default function ValidatedInputText({
+const ValidatedInputText = ({
   isInvalid,
   formControlLabel,
   placeholder,
@@ -30,13 +29,14 @@ export default function ValidatedInputText({
   type = "text",
   onBlur,
   keyboardType
-}: ValidatedInputTextProps) {
-
+}: ValidatedInputTextProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+  const togglePasswordVisibility = useCallback(() => {
+    setShowPassword(prev => !prev);
+  }, []);
+
+
 
   return (
     <Box alignItems="center" w="full">
@@ -46,7 +46,9 @@ export default function ValidatedInputText({
         maxW="300px"
         borderRadius={10}
       >
+        <FormControl.Label>{formControlLabel}</FormControl.Label>
         <Input
+          height={44}
           onBlur={onBlur}
           autoCorrect={true}
           bgColor={bgColor}
@@ -84,3 +86,5 @@ const styles = StyleSheet.create({
     width: "100%",
   },
 });
+
+export default React.memo(ValidatedInputText);

@@ -19,13 +19,18 @@ import {
 } from "native-base";
 import React, { useState } from "react";
 import * as Yup from "yup";
-import { useAppDispatch } from "../../../redux/store/store";
+import { RootState, useAppDispatch, useAppSelector } from "../../../redux/store/store";
 import { RootStackParamList } from "../../../routing/navigation-types";
 import ValidatedInputText from "../../../shared/components/validated-inputText/ValidatedInputText";
 import Layout from "../../../shared/layout/Layout";
 import { theme } from "../../../theme";
 import { register } from "../../../redux/slices/user/user.thunk";
 import CustomToast from "../../../shared/components/toast/CustomToast";
+import { FormControl } from 'native-base';
+import { useJoinCommunityMutation, useLazyGetSearchCommunitiesQuery } from "../../../redux/services/community/communities.service";
+import { KeyboardAvoidingView, Platform } from "react-native";
+import { useCallback } from "react";
+
 
 interface IRegisterFormValues {
   name: string;
@@ -35,6 +40,11 @@ interface IRegisterFormValues {
   phone: string;
   city: string;
   department: string;
+}
+
+interface DepartmentSelectProps {
+  value: string;
+  onChange: (itemValue: any) => void;
 }
 
 const departments = [
@@ -60,12 +70,47 @@ const registerValidationSchema = Yup.object().shape({
   department: Yup.string().required("Departamento es requerido"),
 });
 
+const DepartmentSelect = ({ value, onChange }: DepartmentSelectProps) => (
+  <Box alignItems="center" w="full">
+    <FormControl w="100%" maxW="300px" borderRadius={10}>
+      <FormControl.Label>Departamento</FormControl.Label>
+      <Select
+        height={44}
+        color="#000"
+        fontSize={16}
+        selectedValue={value}
+        onValueChange={onChange}
+        placeholder="Selecciona un departamento"
+        borderColor="transparent"
+        bgColor={"#fff"}
+        _selectedItem={{
+          bg: "cyan.400",
+          endIcon: <CheckIcon size={5} />,
+          color: "#000",
+        }}
+      >
+        {departments.map((dept, index) => (
+          <Select.Item key={index} label={dept} value={dept} />
+        ))}
+      </Select>
+    </FormControl>
+  </Box>
+);
+
+
 export default function Register() {
   const { colors } = theme;
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
+  const { user } = useAppSelector((state: RootState) => state.user);
+
+  const [joinCommunity] = useJoinCommunityMutation();
+
+  const [getSearchCommunities, { data: searchCommunitiesData, error }] =
+    useLazyGetSearchCommunitiesQuery();
+
 
   const initialValues: IRegisterFormValues = {
     name: "",
@@ -77,7 +122,8 @@ export default function Register() {
     department: "",
   };
 
-  const onRegister = (values: IRegisterFormValues) => {
+
+  const onRegister = useCallback((values: any) => {
     setIsLoading(true);
     dispatch(register(values))
       .unwrap()
@@ -94,158 +140,145 @@ export default function Register() {
       .finally(() => {
         setIsLoading(false);
       });
-  };
+  }, [dispatch, toast]);
+
+
+
 
   return (
     <Layout backgroundColor={colors.background}>
-      <ScrollView>
-        <Center>
-          <Text color={theme.colors.primary} fontSize="2xl" my={5}>
-            Registrate
-          </Text>
-        </Center>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
+      >
+        <ScrollView>
+          <Center>
+            <Text color={theme.colors.primary} fontSize="2xl" my={5}>
+              Registrate
+            </Text>
+          </Center>
 
-        <Formik
-          initialValues={initialValues}
-          onSubmit={onRegister}
-          validationSchema={registerValidationSchema}
-        >
-          {({
-            handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldValue,
-          }) => (
-            <VStack space={4}>
-              <ValidatedInputText
-                bgColor={colors.muted["200"]}
-                isInvalid={touched.name && errors.name ? true : false}
-                formControlLabel="Nombres"
-                placeholder="Nombres"
-                placeholderTextColor={colors.muted["400"]}
-                onChangeText={handleChange("name")}
-                onBlur={handleBlur("name")}
-                value={values.name}
-                errors={touched.name ? errors.name : ''}
-              />
+          <Formik
+            initialValues={initialValues}
+            onSubmit={onRegister}
+            validationSchema={registerValidationSchema}
+            validateOnChange={false}
+            validateOnBlur={false}
+          >
+            {({
+              handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldValue,
+            }) => (
+              <VStack space={4}>
+                <ValidatedInputText
+                  bgColor={colors.muted["200"]}
+                  isInvalid={touched.name && errors.name ? true : false}
+                  formControlLabel="Nombres"
+                  placeholder="Nombres"
+                  placeholderTextColor={colors.muted["400"]}
+                  onChangeText={handleChange("name")}
+                  onBlur={handleBlur("name")}
+                  value={values.name}
+                  errors={touched.name ? errors.name : ''}
+                />
 
-              <ValidatedInputText
-                bgColor={colors.muted["200"]}
-                isInvalid={touched.lastname && errors.lastname ? true : false}
-                formControlLabel="Apellidos"
-                placeholder="Apellidos"
-                placeholderTextColor={colors.muted["400"]}
-                onChangeText={handleChange("lastname")}
-                value={values.lastname}
-                onBlur={handleBlur("lastname")}
-                errors={touched.lastname && errors.lastname}
-              />
+                <ValidatedInputText
+                  bgColor={colors.muted["200"]}
+                  isInvalid={touched.lastname && errors.lastname ? true : false}
+                  formControlLabel="Apellidos"
+                  placeholder="Apellidos"
+                  placeholderTextColor={colors.muted["400"]}
+                  onChangeText={handleChange("lastname")}
+                  value={values.lastname}
+                  onBlur={handleBlur("lastname")}
+                  errors={touched.lastname && errors.lastname}
+                />
 
-              <ValidatedInputText
-                bgColor={colors.muted["200"]}
-                isInvalid={touched.email && errors.email ? true : false}
-                formControlLabel="Correo electrónico"
-                placeholder="Correo electrónico"
-                placeholderTextColor={colors.muted["400"]}
-                onChangeText={handleChange("email")}
-                value={values.email}
-                onBlur={handleBlur("email")}
-                errors={touched.email && errors.email}
-                keyboardType="email-address"
-              />
+                <ValidatedInputText
+                  bgColor={colors.muted["200"]}
+                  isInvalid={touched.email && errors.email ? true : false}
+                  formControlLabel="Correo electrónico"
+                  placeholder="Correo electrónico"
+                  placeholderTextColor={colors.muted["400"]}
+                  onChangeText={handleChange("email")}
+                  value={values.email}
+                  onBlur={handleBlur("email")}
+                  errors={touched.email && errors.email}
+                  keyboardType="email-address"
+                />
 
-              <ValidatedInputText
-                bgColor={colors.muted["200"]}
-                isInvalid={touched.password && errors.password ? true : false}
-                formControlLabel="Contraseña"
-                placeholder="Contraseña"
-                placeholderTextColor={colors.muted["400"]}
-                onChangeText={handleChange("password")}
-                value={values.password}
-                onBlur={handleBlur("password")}
-                errors={touched.password && errors.password}
-                type="password"
-              />
+                <ValidatedInputText
+                  bgColor={colors.muted["200"]}
+                  isInvalid={touched.password && errors.password ? true : false}
+                  formControlLabel="Contraseña"
+                  placeholder="Contraseña"
+                  placeholderTextColor={colors.muted["400"]}
+                  onChangeText={handleChange("password")}
+                  value={values.password}
+                  onBlur={handleBlur("password")}
+                  errors={touched.password && errors.password}
+                  type="password"
+                />
 
-              <ValidatedInputText
-                bgColor={colors.muted["200"]}
-                isInvalid={touched.phone && errors.phone ? true : false}
-                formControlLabel="Teléfono"
-                placeholder="1234-5678"
-                placeholderTextColor={colors.muted["400"]}
-                onChangeText={handleChange("phone")}
-                value={values.phone}
-                onBlur={handleBlur("phone")}
-                errors={touched.phone && errors.phone}
-                keyboardType="phone-pad"
-              />
+                <ValidatedInputText
+                  bgColor={colors.muted["200"]}
+                  isInvalid={touched.phone && errors.phone ? true : false}
+                  formControlLabel="Teléfono"
+                  placeholder="1234-5678"
+                  placeholderTextColor={colors.muted["400"]}
+                  onChangeText={handleChange("phone")}
+                  value={values.phone}
+                  onBlur={handleBlur("phone")}
+                  keyboardType="phone-pad"
+                  errors={touched.phone && errors.phone}
+                />
 
-              <Box
-                w="100%"
-                maxW="300px"
-                height="50px"
-                borderRadius="5px"
-                overflow="hidden"
-                alignSelf={"center"}
-              >
-                <Select
-                  color="#000"
-                  fontSize={16}
-                  selectedValue={values.department}
-                  onValueChange={(itemValue) => setFieldValue("department", itemValue)}
-                  placeholder="Selecciona un departamento"
-                  borderColor="transparent"
-                  bgColor={"#fff"}
-                  _selectedItem={{
-                    bg: "cyan.400",
-                    endIcon: <CheckIcon size={5} />,
-                    color: "#000",
-                  }}
-                >
-                  {departments.map((dept, index) => (
-                    <Select.Item key={index} label={dept} value={dept} />
-                  ))}
-                </Select>
-              </Box>
+                <DepartmentSelect
+                  value={values.department}
+                  onChange={(itemValue: any) => setFieldValue("department", itemValue)}
+                />
 
-              <ValidatedInputText
-                bgColor={colors.muted["200"]}
-                isInvalid={touched.city && errors.city ? true : false}
-                formControlLabel="Ciudad"
-                placeholder="Ciudad"
-                placeholderTextColor={colors.muted["400"]}
-                onChangeText={handleChange("city")}
-                value={values.city}
-                onBlur={handleBlur("city")}
-                errors={touched.city && errors.city}
-              />
+                <ValidatedInputText
+                  bgColor={colors.muted["200"]}
+                  isInvalid={touched.city && errors.city ? true : false}
+                  formControlLabel="Ciudad"
+                  placeholder="Ciudad"
+                  placeholderTextColor={colors.muted["400"]}
+                  onChangeText={handleChange("city")}
+                  value={values.city}
+                  onBlur={handleBlur("city")}
+                  errors={touched.city && errors.city}
+                />
 
-              <Center mx={10}>
-                <Button
-                  isLoading={isLoading}
-                  onPress={() => onRegister(values)}
-                  style={{
-                    backgroundColor: theme.colors.primary,
-                    width: "100%",
-                    padding: 10,
-                    borderRadius: 5,
-                    alignItems: "center",
-                  }}
-                >
-                  <Text color={theme.colors.white}>Regístrarse</Text>
-                </Button>
-              </Center>
+                <Center mx={10}>
+                  <Button
+                    isLoading={isLoading}
+                    onPress={() => onRegister(values)}
+                    style={{
+                      backgroundColor: theme.colors.primary,
+                      width: "100%",
+                      padding: 10,
+                      borderRadius: 5,
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text color={theme.colors.white}>Regístrarse</Text>
+                  </Button>
+                </Center>
 
-              <Center>
-                <Link
-                  _text={{ color: colors.primary }}
-                  my={2}
-                  onPress={() => navigation.navigate("Login" as never)}
-                >
-                  ¿Ya tienes una cuenta?
-                </Link>
-              </Center>
-            </VStack>
-          )}
-        </Formik>
-      </ScrollView>
+                <Center>
+                  <Link
+                    _text={{ color: colors.primary }}
+                    my={2}
+                    onPress={() => navigation.navigate("Login" as never)}
+                  >
+                    ¿Ya tienes una cuenta?
+                  </Link>
+                </Center>
+              </VStack>
+            )}
+          </Formik>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </Layout>
   );
 }

@@ -15,12 +15,11 @@ export const BarScanner = () => {
     const { user } = useAppSelector((state: RootState) => state.user);
     const navigation = useNavigation<NavigationProp<PrivateStackParamList, "Home">>();
 
-    const [scanQRCode, { isLoading }] = useScanAndRedeemTicketMutation();
+    const [scanQRCode, { isLoading, error }] = useScanAndRedeemTicketMutation();
 
     const handleBarCodeScanned = async ({ type, data }: { type: string, data: string }) => {
         try {
             setScanned(true);
-
             const { qrCodeData } = JSON.parse(data);
             const response = await scanQRCode({ userId: user?.id as string, qrCodeId: qrCodeData.id });
             if ('data' in response) {

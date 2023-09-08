@@ -17,6 +17,7 @@ export interface ICommunity {
   description: string;
   color: string;
   createdAt: Date;
+  _count: ICount;
 }
 export interface IUserCommunity {
   userId: string;
@@ -42,6 +43,7 @@ export interface ICommunityResponse {
   color: string;
   createdAt: string;
   Event: Event[];
+  count: ICount;
 }
 
 export interface Event {
@@ -54,4 +56,8 @@ export interface Event {
   place: string;
   communityId: string;
   dateTime: string;
+}
+
+interface ICount {
+  users: number;
 }
