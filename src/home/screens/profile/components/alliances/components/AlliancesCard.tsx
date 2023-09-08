@@ -1,4 +1,4 @@
-import { Box, VStack, Flex, Text } from "native-base";
+import { Box, VStack, Text } from "native-base";
 import { formatDate } from "../../../../../../helpers/DateFormat";
 import { IAlliances } from "../../../../../../shared/interfaces/shared.interface";
 
@@ -22,18 +22,19 @@ export const AlliancesCard = ({ alliance }: AllianceCardProps) => {
             <Text color="gray.500" fontStyle="italic" mb={3}>
                 Válido desde {formattedInitialDate} hasta {formattedEndDate}
             </Text>
-            <VStack space={2}>
-                {benefits.map((benefit, index) => (
-                    <Box key={index} bg="green.100" rounded="md" p={3} borderColor="green.500" borderWidth={1}>
-                        <VStack space={1} alignItems="start">
-                            <Text color="green.700" fontWeight="bold">
-                                Beneficio
-                            </Text>
+            <Box bg="green.100" rounded="md" p={3} borderColor="green.500" borderWidth={1} mt={2}>
+                <Text color="green.700" fontWeight="bold" mb={2}>
+                    Beneficios
+                </Text>
+                <VStack space={2}>
+                    {benefits.map((benefit, index) => (
+                        <Box key={index} flexDirection="row" alignItems="center">
+                            <Box bg="black" width={2} height={2} borderRadius="full" marginRight={3} />
                             <Text>{benefit}</Text>
-                        </VStack>
-                    </Box>
-                ))}
-            </VStack>
+                        </Box>
+                    ))}
+                </VStack>
+            </Box>
         </Box>
     );
 }
