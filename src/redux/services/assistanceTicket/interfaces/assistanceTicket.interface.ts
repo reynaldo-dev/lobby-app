@@ -2,7 +2,6 @@ export interface IAssistanceTicket {
   eventId: string;
   userId: string;
 }
-
 export interface IAssistanceTicketListResponse {
   total: number;
   data: AssistanceTicketData[];

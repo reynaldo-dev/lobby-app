@@ -45,9 +45,10 @@ interface IRegisterFormValues {
 interface DepartmentSelectProps {
   value: string;
   onChange: (itemValue: any) => void;
+  borderColor?: string;
 }
 
-const departments = [
+export const departments = [
   "Ahuachapán", "Santa Ana", "Sonsonate", "Chalatenango", "La Libertad",
   "San Salvador", "Cuscatlán", "La Paz", "Cabañas", "San Vicente",
   "Usulután", "San Miguel", "Morazán", "La Unión"
@@ -70,7 +71,7 @@ const registerValidationSchema = Yup.object().shape({
   department: Yup.string().required("Departamento es requerido"),
 });
 
-const DepartmentSelect = ({ value, onChange }: DepartmentSelectProps) => (
+export const DepartmentSelect = ({ value, onChange, borderColor = "transparent" }: DepartmentSelectProps) => (
   <Box alignItems="center" w="full">
     <FormControl w="100%" maxW="300px" borderRadius={10}>
       <FormControl.Label>Departamento</FormControl.Label>
@@ -81,7 +82,7 @@ const DepartmentSelect = ({ value, onChange }: DepartmentSelectProps) => (
         selectedValue={value}
         onValueChange={onChange}
         placeholder="Selecciona un departamento"
-        borderColor="transparent"
+        borderColor={borderColor}
         bgColor={"#fff"}
         _selectedItem={{
           bg: "cyan.400",

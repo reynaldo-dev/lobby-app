@@ -1,3 +1,4 @@
+import { departments } from '../../../../auth/screens/register/Register';
 export interface UpdateProfileResponse {
   id: string;
   isActive: boolean;
@@ -6,6 +7,9 @@ export interface UpdateProfileResponse {
   lastname: string;
   createdAt: string;
   rolId: string;
+  phone: string;
+  department: string;
+  city: string;
 }
 
 export interface UpdateProfilePayload {
@@ -13,4 +17,7 @@ export interface UpdateProfilePayload {
   name: string;
   lastname: string;
   email: string;
+  phone: string;
+  department: string;
+  city: string;
 }

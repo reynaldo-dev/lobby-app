@@ -2,6 +2,8 @@ export interface IPagination {
   from: number;
   limit: number;
 }
+
+//Events interfaces
 export interface IInactiveEvents {
   id: string;
   title: string;
@@ -19,15 +21,19 @@ export interface IInactiveEvents {
   eventCategory: EventCategory;
   AssistanceTicket: AssistanceTicket[];
 }
-export interface AssistanceTicket {
-  wasPresent: boolean;
-}
+
 export interface EventCategory {
   id: string;
   name: string;
   createdAt: Date;
 }
 
+//Assistance Ticket interfaces
+export interface AssistanceTicket {
+  wasPresent: boolean;
+}
+
+//Alliances interfaces
 export interface IAlliances {
   id: string;
   name: string;

@@ -13,7 +13,7 @@ import { IInactiveEvents } from '../../../shared/interfaces/shared.interface';
 export const eventsApi = createApi({
   reducerPath: 'eventsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://f5f7-138-186-250-93.ngrok-free.app/api',
+    baseUrl: 'http://b874-138-186-250-95.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {

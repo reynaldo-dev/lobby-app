@@ -1,7 +1,7 @@
 import { AntDesign } from "@expo/vector-icons";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Formik } from "formik";
-import { Box, Button, Center, Text, VStack, useToast } from "native-base";
+import { Box, Button, Center, KeyboardAvoidingView, ScrollView, Text, VStack, useToast } from "native-base";
 import React, { useState } from "react";
 import { TouchableOpacity } from "react-native";
 import * as Yup from "yup";
@@ -17,6 +17,8 @@ import CustomToast from "../../../../../shared/components/toast/CustomToast";
 import ValidatedInputText from "../../../../../shared/components/validated-inputText/ValidatedInputText";
 import Layout from "../../../../../shared/layout/Layout";
 import { theme } from "../../../../../theme";
+import { DepartmentSelect } from "../../../../../auth/screens/register/Register";
+import { Platform } from "react-native";
 
 const validationEditProfileSchema = Yup.object().shape({
   name: Yup.string().required("Nombre es requerido"),
@@ -24,13 +26,23 @@ const validationEditProfileSchema = Yup.object().shape({
   email: Yup.string()
     .email("Correo electrónico invalido")
     .required("Correo electrónico es requerido"),
+  phone: Yup.string()
+    .required("Teléfono es requerido")
+    .length(8, "El teléfono debe contener 8 digitos")
+    .matches(/^[0-9]+$/, "Solo se permiten números"),
+  city: Yup.string().required("Ciudad es requerida"),
+  department: Yup.string().required("Departamento es requerido"),
 });
 
 interface EditProfileFormValues {
   name: string;
   lastname: string;
   email: string;
+  phone: string;
+  city: string;
+  department: string;
 }
+
 
 export default function EditProfile() {
   const { user } = useAppSelector((state: RootState) => state.user);
@@ -44,14 +56,17 @@ export default function EditProfile() {
     name: user!.name,
     lastname: user!.lastname,
     email: user!.email,
+    phone: user!.phone as string,
+    city: user!.city as string,
+    department: user!.department as string,
   };
 
-  const [updateProfile, { data, error, status }] = useUpdateProfileMutation();
+
+  const [updateProfile, { data, error }] = useUpdateProfileMutation();
 
   const handleUpdateProfile = async (values: EditProfileFormValues) => {
     setIsLoading(true);
     await updateProfile({ id: user!.id, ...values });
-
     if (error) {
       toast.show({
         render: () => (
@@ -81,89 +96,127 @@ export default function EditProfile() {
   };
   return (
     <Layout backgroundColor={theme.colors.white}>
-      <Box flexDirection="row" alignItems="center" ml={2} height={50}>
-        <Box>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <AntDesign name="left" size={24} color="black" />
-          </TouchableOpacity>
-        </Box>
-        <Center flex={1}>
-          <Text fontSize={16} color={"muted.500"} fontWeight="bold" marginRight={10}>
-            Editar perfil
-          </Text>
-        </Center>
-      </Box>
-
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationEditProfileSchema}
-        onSubmit={handleUpdateProfile}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1 }}
       >
-        {({
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          values,
-          errors,
-          touched,
-        }) => (
-          <VStack
-            space={4}
-            bg={theme.colors.white}
-            h="full"
-            justifyContent="center"
-            alignItems="center"
-          >
-            <ValidatedInputText
-              bgColor={theme.colors.muted["200"]}
-              isInvalid={errors.name ? true : false}
-              formControlLabel="Nombre"
-              placeholder="Nombre"
-              placeholderTextColor={theme.colors.muted["400"]}
-              onChangeText={handleChange("name")}
-              value={values.name}
-              errors={errors.name}
-            />
-
-            <ValidatedInputText
-              bgColor={theme.colors.muted["200"]}
-              isInvalid={errors.lastname ? true : false}
-              formControlLabel="Apellido"
-              placeholder="Apellido"
-              placeholderTextColor={theme.colors.muted["400"]}
-              onChangeText={handleChange("lastname")}
-              value={values.lastname}
-              errors={errors.lastname}
-            />
-
-            <ValidatedInputText
-              bgColor={theme.colors.muted["200"]}
-              isInvalid={errors.email ? true : false}
-              formControlLabel="Correo eléctronico"
-              placeholder="Email"
-              placeholderTextColor={theme.colors.muted["400"]}
-              onChangeText={handleChange("email")}
-              value={values.email}
-              errors={errors.email}
-            />
-
-            <Button
-              borderRadius={10}
-              w="80%"
-              backgroundColor={theme.colors.primary}
-              onPress={() => handleUpdateProfile(values)}
-              colorScheme="primary"
-              isLoading={isLoading}
-              spinnerPlacement="end"
-              _spinner={{ color: theme.colors.white }}
-            >
-              <Text color={theme.colors.white} fontWeight="semibold">
-                Actualizar
+        <ScrollView>
+          <Box flexDirection="row" alignItems="center" ml={2} height={50}>
+            <Box>
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <AntDesign name="left" size={24} color="black" />
+              </TouchableOpacity>
+            </Box>
+            <Center flex={1}>
+              <Text fontSize={16} color={"muted.500"} fontWeight="bold" marginRight={10}>
+                Editar perfil
               </Text>
-            </Button>
-          </VStack>
-        )}
-      </Formik>
+            </Center>
+          </Box>
+
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationEditProfileSchema}
+            onSubmit={handleUpdateProfile}
+            validateOnChange={false}
+            validateOnBlur={false}
+          >
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              errors,
+              touched,
+              setFieldValue
+            }) => (
+              <VStack
+                space={4}
+                bg={theme.colors.white}
+                h="full"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <ValidatedInputText
+                  bgColor={theme.colors.muted["200"]}
+                  isInvalid={errors.name ? true : false}
+                  formControlLabel="Nombre"
+                  placeholder="Nombre"
+                  placeholderTextColor={theme.colors.muted["400"]}
+                  onChangeText={handleChange("name")}
+                  value={values.name}
+                  errors={errors.name}
+                />
+
+                <ValidatedInputText
+                  bgColor={theme.colors.muted["200"]}
+                  isInvalid={errors.lastname ? true : false}
+                  formControlLabel="Apellido"
+                  placeholder="Apellido"
+                  placeholderTextColor={theme.colors.muted["400"]}
+                  onChangeText={handleChange("lastname")}
+                  value={values.lastname}
+                  errors={errors.lastname}
+                />
+
+                <ValidatedInputText
+                  bgColor={theme.colors.muted["200"]}
+                  isInvalid={errors.email ? true : false}
+                  formControlLabel="Correo eléctronico"
+                  placeholder="Email"
+                  placeholderTextColor={theme.colors.muted["400"]}
+                  onChangeText={handleChange("email")}
+                  value={values.email}
+                  errors={errors.email}
+                />
+
+                <ValidatedInputText
+                  bgColor={theme.colors.muted["200"]}
+                  isInvalid={errors.phone ? true : false}
+                  formControlLabel="Teléfono"
+                  placeholder="1234-5678"
+                  placeholderTextColor={theme.colors.muted["400"]}
+                  onChangeText={handleChange("phone")}
+                  value={values.phone}
+                  errors={errors.phone}
+                />
+
+                <DepartmentSelect
+                  value={values.department}
+                  onChange={(itemValue: any) => setFieldValue("department", itemValue)}
+                  borderColor="muted.200"
+                />
+
+                <ValidatedInputText
+                  bgColor={theme.colors.muted["200"]}
+                  isInvalid={errors.city ? true : false}
+                  formControlLabel="Ciudad"
+                  placeholder="Ciudad"
+                  placeholderTextColor={theme.colors.muted["400"]}
+                  onChangeText={handleChange("city")}
+                  value={values.city}
+                  errors={errors.city}
+                />
+
+                <Button
+                  borderRadius={10}
+                  w="80%"
+                  backgroundColor={theme.colors.primary}
+                  onPress={() => handleSubmit()}
+                  colorScheme="primary"
+                  isLoading={isLoading}
+                  spinnerPlacement="end"
+                  _spinner={{ color: theme.colors.white }}
+                >
+                  <Text color={theme.colors.white} fontWeight="semibold">
+                    Actualizar
+                  </Text>
+                </Button>
+              </VStack>
+            )}
+          </Formik>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </Layout>
   );
 }

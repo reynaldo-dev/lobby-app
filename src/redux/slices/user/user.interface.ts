@@ -10,8 +10,12 @@ export interface Authentication {
 export interface User {
   id: string;
   email: string;
+  picture?: null;
   name: string;
   role: string;
   isActive: boolean;
   lastname: string;
+  city?: string;
+  department?: string;
+  phone?: string;
 }

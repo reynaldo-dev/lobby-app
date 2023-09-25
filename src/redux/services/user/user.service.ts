@@ -12,7 +12,7 @@ import {
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://f5f7-138-186-250-93.ngrok-free.app/api',
+    baseUrl: 'http://b874-138-186-250-95.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
@@ -21,12 +21,10 @@ export const userApi = createApi({
       return headers;
     },
   }),
-
   tagTypes: ['User'],
   refetchOnFocus: true,
   refetchOnMountOrArgChange: true,
   refetchOnReconnect: true,
-
   endpoints: (builder) => ({
     updateProfile: builder.mutation<
       UpdateProfileResponse,
@@ -39,10 +37,12 @@ export const userApi = createApi({
           name: payload.name,
           lastname: payload.lastname,
           email: payload.email,
+          phone: payload.phone,
+          department: payload.department,
+          city: payload.city,
         },
       }),
     }),
-
     updatePassword: builder.mutation<
       IPasswordUpdateResponse,
       IPasswordUpdatePayload
