@@ -76,8 +76,6 @@ export const SearchCommunity = () => {
           alignItems={"center"}
           mt={4}
         >
-
-
           <Box flexDirection="row" alignItems="center" height={50}>
             <View >
               <TouchableOpacity onPress={() => navigation.goBack()} >

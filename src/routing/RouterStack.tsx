@@ -1,11 +1,12 @@
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Icon } from "native-base";
 import Login from "../auth/screens/login/Login";
 import PasswordUpdate from "../auth/screens/password-update/PasswordUpdate";
 import Register from "../auth/screens/register/Register";
+import { Recognitions } from "../home/recognitions/Recognitions";
+import SendRecognition from "../home/recognitions/components/SendRecognition";
 import { CommunityScreen } from "../home/screens/Community/CommunityScreen";
 import { SearchCommunity } from "../home/screens/Community/SearchCommunity";
 import EventScreen from "../home/screens/Events/EventScreen";
@@ -16,21 +17,22 @@ import Step2 from "../home/screens/onboarding/step-2/Step2";
 import Step3 from "../home/screens/onboarding/step-3/Step3";
 import Step4 from "../home/screens/onboarding/step-4/Step4";
 import Profile from "../home/screens/profile/Profile";
+import { Alliances } from "../home/screens/profile/components/alliances/Alliances";
 import EditProfile from "../home/screens/profile/components/edit-profile/EditProfile";
+import { EventHistory } from "../home/screens/profile/components/event-history/EventHistory";
+import Redeemables from "../home/screens/reedemables/Reedemables";
 import { TicketAssistanceDetailScreen } from "../home/screens/tickets/TicketAssistanceDetailScreen";
+import { TicketConsumableDetailScreen } from "../home/screens/tickets/TicketConsumableDetailScreen";
 import { TicketsScreen } from "../home/screens/tickets/TicketsScreen";
 import { BarScanner } from "../home/screens/tickets/components/BarScanner";
 import CustomQRCode from "../shared/components/qr/CustomQRCode";
+import { BarScannerStaff } from "../staff/screens/BarScanner/BarScannerStaff";
+import { HomeStaff } from "../staff/screens/home/HomeStaff";
 import { theme } from "../theme";
 import {
   AuthStackParamList,
   RootStackParamList,
 } from "./navigation-types";
-import { HomeStaff } from "../staff/screens/home/HomeStaff";
-import { BarScannerStaff } from "../staff/screens/BarScanner/BarScannerStaff";
-import { TicketConsumableDetailScreen } from "../home/screens/tickets/TicketConsumableDetailScreen";
-import { EventHistory } from "../home/screens/profile/components/event-history/EventHistory";
-import { Alliances } from "../home/screens/profile/components/alliances/Alliances";
 
 
 
@@ -144,6 +146,9 @@ export function RootNavigator() {
         <Stack.Screen name="BarScanner" component={BarScanner} />
         <Stack.Screen name="EventHistory" component={EventHistory} />
         <Stack.Screen name="Alliances" component={Alliances} />
+        <Stack.Screen name="Recognitions" component={Recognitions} />
+        <Stack.Screen name="SendRecognition" component={SendRecognition} />
+        <Stack.Screen name="Redeemables" component={Redeemables} />
       </Stack.Group>
     </Stack.Navigator>
   );

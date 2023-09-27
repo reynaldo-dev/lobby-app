@@ -1,9 +1,10 @@
+// redeemables.service.ts
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { getAuthStateFromAsyncStorage } from '../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage';
-import { IAlliances } from '../../../shared/interfaces/shared.interface';
+import { IRedeemable } from '../alliances/interfaces/reedemable.interface';
 
-export const alliancesApi = createApi({
-  reducerPath: 'alliancesService',
+export const redeemablesApi = createApi({
+  reducerPath: 'redeemablesService',
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://1ff5-138-186-250-95.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
@@ -14,14 +15,15 @@ export const alliancesApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ['Alliances'],
+  tagTypes: ['Redeemables'],
   refetchOnFocus: true,
   refetchOnMountOrArgChange: true,
   refetchOnReconnect: true,
   endpoints: (builder) => ({
-    getAlliances: builder.query<IAlliances[], void>({
-      query: () => '/alliance',
+    getRedeemables: builder.query<IRedeemable[], void>({
+      query: () => '/redeemable',
     }),
   }),
 });
-export const { useGetAlliancesQuery } = alliancesApi;
+
+export const { useGetRedeemablesQuery } = redeemablesApi;

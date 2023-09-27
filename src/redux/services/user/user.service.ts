@@ -8,11 +8,19 @@ import {
   UpdateProfilePayload,
   UpdateProfileResponse,
 } from './interfaces/update-profile';
+import { User } from '../../slices/user/user.interface';
+
+interface CreateRecognitionDto {
+  userTargetId: string;
+  userSourceId: string;
+  description: string;
+  points: number;
+}
 
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://b874-138-186-250-95.ngrok-free.app/api',
+    baseUrl: 'http://1ff5-138-186-250-95.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
@@ -26,6 +34,16 @@ export const userApi = createApi({
   refetchOnMountOrArgChange: true,
   refetchOnReconnect: true,
   endpoints: (builder) => ({
+    getUserByFullName: builder.query<User[], string>({
+      query: (query: string) => `/user/search?query=${query}`,
+    }),
+    createRecognition: builder.mutation<any, CreateRecognitionDto>({
+      query: (payload) => ({
+        url: `/recognitions`,
+        method: 'POST',
+        body: payload,
+      }),
+    }),
     updateProfile: builder.mutation<
       UpdateProfileResponse,
       UpdateProfilePayload
@@ -59,4 +77,9 @@ export const userApi = createApi({
   }),
 });
 
-export const { useUpdateProfileMutation, useUpdatePasswordMutation } = userApi;
+export const {
+  useUpdateProfileMutation,
+  useUpdatePasswordMutation,
+  useLazyGetUserByFullNameQuery,
+  useCreateRecognitionMutation,
+} = userApi;

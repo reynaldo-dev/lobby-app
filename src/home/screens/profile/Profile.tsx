@@ -108,7 +108,7 @@ export default function Profile() {
               marginBottom={5}
             >
               <Text color="white" fontSize="xl" fontWeight="bold">
-                Mis beneficios
+                Mis alianzas
               </Text>
             </Box>
           </TouchableOpacity>

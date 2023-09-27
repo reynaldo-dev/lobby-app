@@ -3,6 +3,7 @@ import {
   User,
 } from '../redux/services/assistanceTicket/interfaces/assistanceTicket.interface';
 import { IConsumable } from '../redux/services/consumableTicket/interfaces/consumablesTickets.interface';
+import { User as UserInterface } from '../redux/slices/user/user.interface';
 
 export type AuthStackParamList = {
   Login: undefined;
@@ -47,4 +48,7 @@ export type RootStackParamList = {
   BarScannerStaff: undefined;
   EventHistory: undefined;
   Alliances: undefined;
+  Recognitions: undefined;
+  SendRecognition: { user: UserInterface };
+  Redeemables: undefined;
 };
