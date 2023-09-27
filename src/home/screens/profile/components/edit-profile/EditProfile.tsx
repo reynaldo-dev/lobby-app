@@ -3,8 +3,9 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Formik } from "formik";
 import { Box, Button, Center, KeyboardAvoidingView, ScrollView, Text, VStack, useToast } from "native-base";
 import React, { useState } from "react";
-import { TouchableOpacity } from "react-native";
+import { Platform, TouchableOpacity } from "react-native";
 import * as Yup from "yup";
+import { DepartmentSelect } from "../../../../../auth/screens/register/Register";
 import { useUpdateProfileMutation } from "../../../../../redux/services/user/user.service";
 import { logout } from "../../../../../redux/slices/user/user.thunk";
 import {
@@ -17,8 +18,6 @@ import CustomToast from "../../../../../shared/components/toast/CustomToast";
 import ValidatedInputText from "../../../../../shared/components/validated-inputText/ValidatedInputText";
 import Layout from "../../../../../shared/layout/Layout";
 import { theme } from "../../../../../theme";
-import { DepartmentSelect } from "../../../../../auth/screens/register/Register";
-import { Platform } from "react-native";
 
 const validationEditProfileSchema = Yup.object().shape({
   name: Yup.string().required("Nombre es requerido"),

@@ -4,11 +4,6 @@ import { useScanAndRedeemTicketMutation } from "../../../../redux/services/event
 import { RootState, useAppSelector } from "../../../../redux/store/store";
 import { PrivateStackParamList } from "../../../../routing/navigation-types";
 import { CustomBarScanner } from '../../../../shared/components/BarScanner/CustomBarScanner';
-interface Data {
-    error: string;
-    message: string;
-    statusCode: number;
-}
 
 export const BarScanner = () => {
     const [scanned, setScanned] = useState<boolean>(false);

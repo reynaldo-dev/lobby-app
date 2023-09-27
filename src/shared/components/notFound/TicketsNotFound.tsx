@@ -1,11 +1,8 @@
 import LottieView from 'lottie-react-native';
 import { Center, Text } from "native-base";
-import React, { useEffect, useRef } from 'react';
-import { Animated, Easing } from 'react-native';
+import React from 'react';
 import notFound from '../../../../assets/ticketsNotFound.json';
 import { theme } from "../../../theme";
-
-const AnimatedLottieView = Animated.createAnimatedComponent(LottieView);
 
 type Props = {
     message: string;
@@ -14,22 +11,10 @@ type Props = {
 }
 
 export const TicketsNotFound = ({ message, width = "100%", height = 200 }: Props) => {
-
-    const animationProgress = useRef(new Animated.Value(0));
-
-    useEffect(() => {
-        Animated.timing(animationProgress.current, {
-            toValue: 1,
-            duration: 5000,
-            easing: Easing.linear,
-            useNativeDriver: false,
-        }).start();
-    }, []);
     return (
         <Center my={"auto"}>
-            <AnimatedLottieView
+            <LottieView
                 source={notFound}
-                progress={animationProgress.current}
                 autoPlay={true}
                 loop={true}
                 style={{

@@ -27,7 +27,7 @@ export default function Step1() {
 
         <Center>
           <Text fontSize="xl" fontWeight="bold" color={theme.colors.primary}>
-            Encuentra y únete a diferentes comunidades!
+            ¡Encuentra y únete a diferentes comunidades!
           </Text>
         </Center>
 

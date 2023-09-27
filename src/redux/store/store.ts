@@ -8,6 +8,7 @@ import { consumablesTicketsApi } from '../services/consumableTicket/consumableTi
 import { userApi } from '../services/user/user.service';
 import { alliancesApi } from '../services/alliances/alliances.service';
 import { redeemablesApi } from '../services/reedemables/reedemeables.service';
+import { recognitionsApi } from '../services/recognitions/recognitions.service';
 
 export const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
     [userApi.reducerPath]: userApi.reducer,
     [alliancesApi.reducerPath]: alliancesApi.reducer,
     [redeemablesApi.reducerPath]: redeemablesApi.reducer,
+    [recognitionsApi.reducerPath]: recognitionsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -28,7 +30,8 @@ export const store = configureStore({
       consumablesTicketsApi.middleware,
       userApi.middleware,
       alliancesApi.middleware,
-      redeemablesApi.middleware
+      redeemablesApi.middleware,
+      recognitionsApi.middleware
     ),
 });
 

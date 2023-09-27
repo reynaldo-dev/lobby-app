@@ -3,15 +3,15 @@ import { AntDesign } from "@expo/vector-icons";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Button, Center, Icon, Image, Text, View } from "native-base";
 import step4Image from "../../../../../assets/step-4.png";
-import { AuthStackParamList } from "../../../../routing/navigation-types";
+import { AuthStackParamList, RootStackParamList } from "../../../../routing/navigation-types";
 import Layout from "../../../../shared/layout/Layout";
 import { theme } from "../../../../theme";
 
 export default function Step4() {
-  const navigation = useNavigation<NavigationProp<AuthStackParamList>>();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const onPress = () => {
-    navigation.navigate("Login");
+    (navigation as any).navigate("Root");
   };
   return (
     <Layout backgroundColor={theme.colors.white}>
@@ -32,7 +32,7 @@ export default function Step4() {
             fontWeight="bold"
             color={theme.colors.primary}
           >
-            Verifica tus tickets referentes a eventos!
+            ¡Verifica tus cupones referentes a eventos!
           </Text>
         </Center>
 
@@ -50,7 +50,7 @@ export default function Step4() {
             }
             backgroundColor={theme.colors.primary}
           >
-            <Text color={theme.colors.white}>Iniciar sesión</Text>
+            <Text color={theme.colors.white}>Ir al inicio</Text>
           </Button>
         </Center>
       </View>

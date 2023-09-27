@@ -4,10 +4,11 @@ import { TicketList } from "./TicketList";
 
 export const ConsumablesTickets = () => {
     const { user } = useAppSelector((state: RootState) => state.user);
-    const { data: tickets, error, isLoading } = useGetTicketsByUserIdQuery(user?.id as string);
+    const { data: allTickets, error, isLoading } = useGetTicketsByUserIdQuery(user?.id as string);
+    const activeTickets = allTickets?.filter(ticket => ticket.isActive) || [];
 
     return (
-        <TicketList tickets={tickets || []} error={!!error} isLoading={isLoading} errorMessage="Cupones de consumibles no encontrados."
+        <TicketList tickets={activeTickets} error={!!error} isLoading={isLoading} errorMessage="Cupones de consumibles no encontrados."
         />
     );
 }

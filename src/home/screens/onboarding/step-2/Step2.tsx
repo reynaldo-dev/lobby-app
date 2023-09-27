@@ -27,7 +27,7 @@ export default function Step2() {
 
         <Center>
           <Text fontSize="xl" fontWeight="bold" color={theme.colors.primary}>
-            Encuentra eventos y confirma tu asistencia!
+            ¡Encuentra eventos y confirma tu asistencia!
           </Text>
         </Center>
 

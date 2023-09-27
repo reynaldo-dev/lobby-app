@@ -31,6 +31,7 @@ const CardEvent = ({ data }: CardEventProps) => {
       alignSelf="center"
       borderRadius={10}
       p={4}
+      marginBottom={4}
     >
       <VStack>
         <Heading size="sm" color={theme.colors.muted[500]}>

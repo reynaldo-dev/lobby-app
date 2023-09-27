@@ -6,6 +6,7 @@ import Login from "../auth/screens/login/Login";
 import PasswordUpdate from "../auth/screens/password-update/PasswordUpdate";
 import Register from "../auth/screens/register/Register";
 import { Recognitions } from "../home/recognitions/Recognitions";
+import MyRecognitions from "../home/recognitions/components/MyRecognitions";
 import SendRecognition from "../home/recognitions/components/SendRecognition";
 import { CommunityScreen } from "../home/screens/Community/CommunityScreen";
 import { SearchCommunity } from "../home/screens/Community/SearchCommunity";
@@ -44,37 +45,7 @@ const TabStaff = createBottomTabNavigator();
 
 export const AuthStack = () => {
   return (
-    <authRouter.Navigator initialRouteName="Step1">
-      <authRouter.Screen
-        name="Step1"
-        component={Step1}
-        options={{
-          headerShown: false,
-        }}
-      />
-      <authRouter.Screen
-        name="Step2"
-        component={Step2}
-        options={{
-          headerShown: false,
-        }}
-      />
-
-      <authRouter.Screen
-        name="Step3"
-        component={Step3}
-        options={{
-          headerShown: false,
-        }}
-      />
-
-      <authRouter.Screen
-        name="Step4"
-        component={Step4}
-        options={{
-          headerShown: false,
-        }}
-      />
+    <authRouter.Navigator initialRouteName="Login">
 
       <authRouter.Screen
         name="Login"
@@ -118,6 +89,37 @@ export function RootNavigator() {
           headerShown: false,
         }}
       >
+
+        <Stack.Screen
+          name="Step1"
+          component={Step1}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Step2"
+          component={Step2}
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="Step3"
+          component={Step3}
+          options={{
+            headerShown: false,
+          }}
+        />
+
+        <Stack.Screen
+          name="Step4"
+          component={Step4}
+          options={{
+            headerShown: false,
+          }}
+        />
         <Stack.Screen
           name="TicketAssistanceDetail"
           component={TicketAssistanceDetailScreen}
@@ -149,6 +151,7 @@ export function RootNavigator() {
         <Stack.Screen name="Recognitions" component={Recognitions} />
         <Stack.Screen name="SendRecognition" component={SendRecognition} />
         <Stack.Screen name="Redeemables" component={Redeemables} />
+        <Stack.Screen name="MyRecognitions" component={MyRecognitions} />
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -160,7 +163,6 @@ export const BottomTabNavigation = () => {
       initialRouteName="Home"
       screenOptions={{
         tabBarStyle: { backgroundColor: "#f7f6fb" },
-        tabBarShowLabel: false,
         tabBarActiveTintColor: "#F50057",
         tabBarHideOnKeyboard: true,
         unmountOnBlur: true,
@@ -170,6 +172,7 @@ export const BottomTabNavigation = () => {
         name="Home"
         component={Home}
         options={{
+          title: "Inicio",
           headerShown: false,
           tabBarIcon: ({ color }) => (
             <Icon as={AntDesign} name="home" size={6} color={color} />
@@ -181,6 +184,7 @@ export const BottomTabNavigation = () => {
         name="Tickets"
         component={TicketsScreen}
         options={{
+          title: "Cupones",
           headerShown: false,
 
           tabBarIcon: ({ color }) => (
@@ -216,6 +220,7 @@ export const BottomTabNavigation = () => {
         name="Profile"
         component={Profile}
         options={{
+          title: "Perfil",
           headerShown: false,
 
           tabBarIcon: ({ color }) => (

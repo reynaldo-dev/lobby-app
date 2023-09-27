@@ -3,15 +3,12 @@ import {
   User,
 } from '../redux/services/assistanceTicket/interfaces/assistanceTicket.interface';
 import { IConsumable } from '../redux/services/consumableTicket/interfaces/consumablesTickets.interface';
+import { IRecognition } from '../redux/services/recognitions/interfaces/recognitions.interface';
 import { User as UserInterface } from '../redux/slices/user/user.interface';
 
 export type AuthStackParamList = {
   Login: undefined;
   Register: undefined;
-  Step1: undefined;
-  Step2: undefined;
-  Step3: undefined;
-  Step4: undefined;
 };
 
 export type PrivateStackParamList = {
@@ -51,4 +48,9 @@ export type RootStackParamList = {
   Recognitions: undefined;
   SendRecognition: { user: UserInterface };
   Redeemables: undefined;
+  Step1: undefined;
+  Step2: undefined;
+  Step3: undefined;
+  Step4: undefined;
+  MyRecognitions: { recognitions: IRecognition[] };
 };

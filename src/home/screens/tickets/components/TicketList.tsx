@@ -30,11 +30,12 @@ export const TicketList = ({
     );
   }
 
-  if (error || !tickets) {
+  if (error || !tickets || tickets.length === 0) {
     return (
       <TicketsNotFound message={errorMessage} height={450} />
     );
   }
+
 
   return (
     <VStack>

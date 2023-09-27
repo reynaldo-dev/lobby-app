@@ -11,15 +11,19 @@ import {
   View,
 } from "native-base";
 import React from "react";
+import { TouchableOpacity } from 'react-native';
+import { useGetGivenRecognitionsQuery, useGetReceivedRecognitionsQuery } from "../../../redux/services/recognitions/recognitions.service";
 import { RootState, useAppSelector } from "../../../redux/store/store";
 import { RootStackParamList } from "../../../routing/navigation-types";
 import Layout from "../../../shared/layout/Layout";
 import { theme } from "../../../theme";
 import ProfileMenu from "./components/profile-menu/ProfileMenu";
-import { TouchableOpacity } from 'react-native';
 
 export default function Profile() {
   const { user } = useAppSelector((state: RootState) => state.user);
+
+  const { data: receivedRecognitions, error: errorReceived } = useGetReceivedRecognitionsQuery(user?.id || '');
+  const { data: givenRecognitions, error: errorGiven } = useGetGivenRecognitionsQuery(user?.id || '');
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -35,6 +39,17 @@ export default function Profile() {
   const onPressAlliances = () => {
     navigation.navigate("Alliances");
   }
+
+  const onPressRecognitions = () => {
+    if (receivedRecognitions && givenRecognitions) {
+      navigation.navigate("MyRecognitions", {
+        recognitions: [...receivedRecognitions, ...givenRecognitions]
+      });
+    } else {
+      console.log("Waiting for data...");
+    }
+  };
+
 
   return (
     <Layout backgroundColor={theme.colors.background}>
@@ -67,30 +82,35 @@ export default function Profile() {
           justifyContent="space-around"
           mt={10}
         >
-          {/* <Box alignItems="center">
+          <Box alignItems="center">
             <Box flexDirection="row" alignItems="center">
               <Icon as={AntDesign} name="staro" mr={1} />
               <Text fontSize="xl" fontWeight="bold" color="text">
-                200
+                {receivedRecognitions?.length || 0}
               </Text>
             </Box>
-
-            <Text fontSize="sm" fontWeight="bold" color="text">
-              Estrellas obtenidas
+            <Text fontSize="sm" fontWeight="bold" color="text" >
+              Reconocimientos
             </Text>
-          </Box> */}
-          {/* <Divider orientation="vertical" height={10} /> */}
+            <Text fontSize="sm" fontWeight="bold" color="text" >
+              recibidos
+            </Text>
+          </Box>
+          <Divider orientation="vertical" height={10} />
 
           <Box alignItems="center">
             <Box flexDirection="row" alignItems="center">
-              <Icon as={AntDesign} name="checkcircleo" mr={1} />
+              <Icon as={AntDesign} name="staro" mr={1} />
               <Text fontSize="xl" fontWeight="bold" color="text">
-                200
+                {givenRecognitions?.length || 0}
               </Text>
             </Box>
 
             <Text fontSize="sm" fontWeight="bold" color="text">
-              Eventos asistidos
+              Reconocimientos
+            </Text>
+            <Text fontSize="sm" fontWeight="bold" color="text">
+              enviados
             </Text>
           </Box>
         </Box>
@@ -125,6 +145,22 @@ export default function Profile() {
             >
               <Text color="white" fontSize="xl" fontWeight="bold">
                 Historial de eventos
+              </Text>
+            </Box>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={onPressRecognitions}
+          >
+            <Box
+              backgroundColor="secondary"
+              p={8}
+              borderRadius={20}
+              shadow={5}
+              marginBottom={5}
+            >
+              <Text color="white" fontSize="xl" fontWeight="bold">
+                Mis reconocimientos
               </Text>
             </Box>
           </TouchableOpacity>

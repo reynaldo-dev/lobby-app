@@ -4,32 +4,29 @@ import {
 } from "@react-navigation/native";
 import { Formik } from "formik";
 import {
+  Box,
   Button,
   Center,
+  CheckIcon,
+  FormControl,
   Link,
+  ScrollView,
+  Select,
   Text,
   VStack,
-  View,
-  useToast,
-  Input,
-  Select,
-  CheckIcon,
-  Box,
-  ScrollView,
+  useToast
 } from "native-base";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
+import { KeyboardAvoidingView, Platform } from "react-native";
 import * as Yup from "yup";
+import { useJoinCommunityMutation, useLazyGetSearchCommunitiesQuery } from "../../../redux/services/community/communities.service";
+import { register } from "../../../redux/slices/user/user.thunk";
 import { RootState, useAppDispatch, useAppSelector } from "../../../redux/store/store";
 import { RootStackParamList } from "../../../routing/navigation-types";
+import CustomToast from "../../../shared/components/toast/CustomToast";
 import ValidatedInputText from "../../../shared/components/validated-inputText/ValidatedInputText";
 import Layout from "../../../shared/layout/Layout";
 import { theme } from "../../../theme";
-import { register } from "../../../redux/slices/user/user.thunk";
-import CustomToast from "../../../shared/components/toast/CustomToast";
-import { FormControl } from 'native-base';
-import { useJoinCommunityMutation, useLazyGetSearchCommunitiesQuery } from "../../../redux/services/community/communities.service";
-import { KeyboardAvoidingView, Platform } from "react-native";
-import { useCallback } from "react";
 
 
 interface IRegisterFormValues {
@@ -76,6 +73,8 @@ export const DepartmentSelect = ({ value, onChange, borderColor = "transparent" 
     <FormControl w="100%" maxW="300px" borderRadius={10}>
       <FormControl.Label>Departamento</FormControl.Label>
       <Select
+        // @ts-ignore-next-line
+        optimized={false}
         height={44}
         color="#000"
         fontSize={16}
@@ -128,6 +127,10 @@ export default function Register() {
     setIsLoading(true);
     dispatch(register(values))
       .unwrap()
+      .then((response) => {
+        navigation.navigate('Step1');
+      }
+      )
       .catch((error) => {
         toast.show({
           render: () => (

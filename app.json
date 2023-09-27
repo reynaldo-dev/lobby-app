@@ -23,16 +23,31 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Permitir a $(PRODUCT_NAME) acceos a la cámara.",
+        "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.dev.julioaguilar.lobby",
+      "permissions": [
+        "android.permission.CAMERA"
+      ]
     },
     "web": {
       "favicon": "./assets/logo.png"
-    }
-  }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b325d5e2-f7ec-4d16-aca9-374cfb688e20"
+      }
+    },
+    "owner": "dev.julioaguilar"
+  },
+  "owner": "dev.julioaguilar"
 }

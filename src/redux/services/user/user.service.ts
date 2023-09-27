@@ -20,7 +20,7 @@ interface CreateRecognitionDto {
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://1ff5-138-186-250-95.ngrok-free.app/api',
+    baseUrl: 'http://626b-138-186-250-181.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {

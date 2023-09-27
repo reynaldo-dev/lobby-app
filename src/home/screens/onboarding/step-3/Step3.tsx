@@ -32,7 +32,7 @@ export default function Step3() {
             fontWeight="bold"
             color={theme.colors.primary}
           >
-            Verifica la agenda de tus proximos eventos!
+            ¡Verifica la agenda de tus proximos eventos!
           </Text>
         </Center>
 
