@@ -1,9 +1,12 @@
 import { AntDesign, Entypo } from "@expo/vector-icons";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { Box, HStack, Icon, Image, Pressable, Text, VStack, useTheme } from "native-base";
+import { Box, HStack, Icon, Image, Pressable, Spacer, Text, VStack, useTheme } from "native-base";
 import React from "react";
 import avatarImage from "../../../../assets/avatar.png";
 import { RootStackParamList } from "../../../routing/navigation-types";
+import { RootState, useAppSelector } from "../../../redux/store/store";
+import { useGetReceivedRecognitionsQuery, useGetGivenRecognitionsQuery } from "../../../redux/services/recognitions/recognitions.service";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 type RecognitionCardProps = {
     name: string | undefined;
@@ -14,16 +17,30 @@ type RecognitionCardProps = {
 
 export const RecognitionCard = ({ name, lastName, imageSource = avatarImage, score }: RecognitionCardProps) => {
     const { colors } = useTheme();
+    const { user } = useAppSelector((state: RootState) => state.user);
+
+    const { data: receivedRecognitions, error: errorReceived } = useGetReceivedRecognitionsQuery(user?.id || '');
+    const { data: givenRecognitions, error: errorGiven } = useGetGivenRecognitionsQuery(user?.id || '');
+
+    const firstName = name?.split(' ')[0];
+    const firstLastName = lastName?.split(' ')[0];
+
 
     const navigation =
-        useNavigation<NavigationProp<RootStackParamList, "SendRecognition">>();
-    const onPress = () => {
-        // navigation.navigate("Recognitions");
-        console.log("pressed")
+        useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+    const onPressRecognitions = () => {
+        if (receivedRecognitions && givenRecognitions) {
+            navigation.navigate("MyRecognitions", {
+                recognitions: [...receivedRecognitions, ...givenRecognitions]
+            });
+        } else {
+            console.log("Waiting for data...");
+        }
     };
 
     return (
-        <Pressable onPress={onPress}>
+        <Pressable onPress={onPressRecognitions}>
             {({ isPressed }) => (
                 <Box
                     width="95%"
@@ -39,27 +56,34 @@ export const RecognitionCard = ({ name, lastName, imageSource = avatarImage, sco
                     style={{ transform: [{ scale: isPressed ? 0.98 : 1 }] }}
                 >
                     <HStack space={4}>
-                        <Image
-                            source={imageSource}
-                            alt={"imagen del usuario"}
-                            size={"sm"}
-                            borderRadius="full"
-                        />
+                        <VStack space={2} alignItems="center">
+                            <Text fontWeight="bold" fontSize={"16"}>{firstName} {firstLastName}</Text>
+                            <Image
+                                source={imageSource}
+                                alt={"imagen del usuario"}
+                                size={"lg"}
+                                borderRadius="full"
+                            />
+                            <Box mt={2} backgroundColor="darkgrey" px={2} py={1} borderRadius="sm" w={"100%"}>
+                                <Text fontSize={"16"} fontWeight="bold" color="white" textAlign={"center"}>Águila</Text>
+                            </Box>
+                        </VStack>
 
-                        <VStack flex={1} space={2} justifyContent="center">
-                            <Text fontWeight="bold" fontSize="lg">Bienvenido de nuevo {name} {lastName}</Text>
-                            <HStack alignItems="center" space={2} justifyContent={"flex-end"} >
-                                <HStack space={1}>
+                        <VStack flex={1}>
+                            <Box flexGrow={1} justifyContent="center" alignItems="center">
+                                <HStack space={2} alignItems="center">
+                                    <Text fontWeight="bold" fontSize="xl">Haz acumulado 100 reconocimientos</Text>
                                     <Icon
                                         as={AntDesign}
                                         name="star"
-                                        size={6}
+                                        size={8}
                                         color="primary"
                                     />
-                                    <Text fontWeight="semibold" fontSize={"lg"}>{score}</Text>
                                 </HStack>
-                                <HStack space={2} alignItems={"center"}>
-                                    <Text fontWeight="semibold" fontSize={"sm"}>Mis reconomientos</Text>
+                            </Box>
+                            <Box mt="auto">
+                                <HStack justifyContent={"flex-end"} >
+                                    <Text fontWeight="semibold" fontSize={"sm"}>Presiona aquí para leerlos</Text>
                                     <Icon
                                         as={Entypo}
                                         name="chevron-thin-right"
@@ -67,9 +91,9 @@ export const RecognitionCard = ({ name, lastName, imageSource = avatarImage, sco
                                         color="darkGray"
                                     />
                                 </HStack>
-
-                            </HStack>
+                            </Box>
                         </VStack>
+
                     </HStack>
                 </Box>
             )}

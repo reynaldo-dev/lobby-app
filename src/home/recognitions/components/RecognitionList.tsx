@@ -16,7 +16,6 @@ import avatarImage from "../../../../assets/avatar.png";
 import { IRecognition, IUserRecognition } from '../../../redux/services/recognitions/interfaces/recognitions.interface';
 import { RootState, useAppSelector } from '../../../redux/store/store';
 
-
 interface RecognitionListProps {
     recognitions: IRecognition[];
     type: 'all' | 'received' | 'given';
@@ -46,7 +45,7 @@ const RecognitionList: React.FC<RecognitionListProps> = ({ recognitions, type })
         const displayUser = getDisplayUser(recognition);
         return (
             <Box key={recognition.id} width={"95%"}>
-                <Pressable onPress={() => {/* Aquí puedes agregar una acción al presionar el reconocimiento si es necesario */ }}>
+                <Pressable onPress={() => { }}>
                     {({ isPressed }) => (
                         <VStack
                             pl="4"

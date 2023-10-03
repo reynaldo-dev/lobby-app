@@ -5,6 +5,7 @@ import {
 import { IConsumable } from '../redux/services/consumableTicket/interfaces/consumablesTickets.interface';
 import { IRecognition } from '../redux/services/recognitions/interfaces/recognitions.interface';
 import { User as UserInterface } from '../redux/slices/user/user.interface';
+import { MyCommunities } from '../home/screens/Community/components/MyCommunities';
 
 export type AuthStackParamList = {
   Login: undefined;
@@ -53,4 +54,6 @@ export type RootStackParamList = {
   Step3: undefined;
   Step4: undefined;
   MyRecognitions: { recognitions: IRecognition[] };
+  MyUpcomingEvents: undefined;
+  MyCommunities: undefined;
 };

@@ -1,4 +1,4 @@
-import { Box, Center, CheckIcon, FlatList, Select, Text } from "native-base";
+import { Box, Center, CheckIcon, FlatList, Select, Spinner, Text } from "native-base";
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
@@ -58,12 +58,18 @@ export const Redeemables = () => {
                 </Select>
             </Center>
 
-            <FlatList
-                data={filteredRedeemables}
-                renderItem={({ item }) => <RedeemableCard redeemable={item} />}
-                keyExtractor={item => item.id}
-                contentContainerStyle={{ padding: 4 }}
-            />
+            {isLoading ? (
+                <Center flex={1}>
+                    <Spinner size="lg" color="blue" />
+                </Center>
+            ) : (
+                <FlatList
+                    data={filteredRedeemables}
+                    renderItem={({ item }) => <RedeemableCard redeemable={item} />}
+                    keyExtractor={item => item.id}
+                    contentContainerStyle={{ padding: 4 }}
+                />
+            )}
         </Layout>
     )
 }

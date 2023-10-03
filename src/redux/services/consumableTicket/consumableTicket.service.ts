@@ -12,7 +12,7 @@ import { IScanQrResponse } from '../events/interfaces/getEventByIdResponse';
 export const consumablesTicketsApi = createApi({
   reducerPath: 'consumablesTicketsService',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://626b-138-186-250-181.ngrok-free.app/api',
+    baseUrl: 'http://a98a-138-186-250-181.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {

@@ -18,7 +18,6 @@ export interface User {
   city?: string;
   department?: string;
   phone?: string;
-  leaguePoints?: number;
   leagueId?: string;
   rol?: Rol;
 }

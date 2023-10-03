@@ -35,11 +35,17 @@ export interface AssistanceTicket {
 
 //Alliances interfaces
 export interface IAlliances {
-  id: string;
-  name: string;
-  description: string;
+  allianceCategory: AllianceCategory;
+  allianceCategoryId: string;
   benefits: string[];
-  initialDate: Date;
-  endDate: Date;
   createdAt: Date;
+  description: string;
+  endDate: Date;
+  id: string;
+  initialDate: Date;
+  name: string;
+}
+
+export interface AllianceCategory {
+  name: string;
 }

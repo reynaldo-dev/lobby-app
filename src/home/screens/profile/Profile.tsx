@@ -3,16 +3,16 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
   Box,
+  Button,
   Center,
-  Divider,
   Icon,
   ScrollView,
-  Text,
-  View,
+  VStack,
+  Image,
+  Text
 } from "native-base";
 import React from "react";
-import { TouchableOpacity } from 'react-native';
-import { useGetGivenRecognitionsQuery, useGetReceivedRecognitionsQuery } from "../../../redux/services/recognitions/recognitions.service";
+import SvgQRCode from 'react-native-qrcode-svg';
 import { RootState, useAppSelector } from "../../../redux/store/store";
 import { RootStackParamList } from "../../../routing/navigation-types";
 import Layout from "../../../shared/layout/Layout";
@@ -21,10 +21,6 @@ import ProfileMenu from "./components/profile-menu/ProfileMenu";
 
 export default function Profile() {
   const { user } = useAppSelector((state: RootState) => state.user);
-
-  const { data: receivedRecognitions, error: errorReceived } = useGetReceivedRecognitionsQuery(user?.id || '');
-  const { data: givenRecognitions, error: errorGiven } = useGetGivenRecognitionsQuery(user?.id || '');
-
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
@@ -36,135 +32,61 @@ export default function Profile() {
     navigation.navigate("EventHistory");
   }
 
-  const onPressAlliances = () => {
-    navigation.navigate("Alliances");
-  }
-
-  const onPressRecognitions = () => {
-    if (receivedRecognitions && givenRecognitions) {
-      navigation.navigate("MyRecognitions", {
-        recognitions: [...receivedRecognitions, ...givenRecognitions]
-      });
-    } else {
-      console.log("Waiting for data...");
-    }
-  };
-
-
   return (
     <Layout backgroundColor={theme.colors.background}>
       <ScrollView>
-        <Box mx={5} flexDir="row" justifyContent="space-between">
-          <Icon
-            as={AntDesign}
-            name="qrcode"
-            size={6}
-            color="primary"
-            onPress={onPressQr}
-          />
+        <Box mx={5} my={5} flexDir="row" justifyContent="flex-end">
           <ProfileMenu />
         </Box>
-        <Center>
-          <Box>
-            <Text fontSize="xl" fontWeight="bold" color="text">
+
+        <VStack space={5} alignItems="center" mx={5}>
+          {user?.picture && (
+            <Image
+              source={{ uri: user.picture }}
+              alt="Profile Picture"
+              size="150px"
+              borderRadius="full"
+              borderColor="gray.300"
+              borderWidth={2}
+            />
+          )}
+
+          <Center>
+            <Text fontSize="2xl" fontWeight="bold" color="text">
               {user?.name} {user?.lastname}
             </Text>
-            <Text fontSize="sm" color="text" textAlign="center" textTransform={"capitalize"}>
+            <Text fontSize="lg" color="text" mt={2} textTransform={"capitalize"}>
               {user?.role}
             </Text>
+          </Center>
+
+          <Box w="85%" p={4} borderWidth={1} borderRadius="md" borderColor="gray.200">
+            {user?.city && <Text><Text fontWeight="bold">Ciudad:</Text> {user.city}</Text>}
+            {user?.department && <Text mt={2}><Text fontWeight="bold">Departamento:</Text> {user.department}</Text>}
+            {user?.phone && <Text mt={2}><Text fontWeight="bold">Teléfono:</Text> {user.phone}</Text>}
           </Box>
-        </Center>
 
-        <Box
-          mx={10}
-          flexDirection="row"
-          alignItems="center"
-          justifyContent="space-around"
-          mt={10}
-        >
-          <Box alignItems="center">
-            <Box flexDirection="row" alignItems="center">
-              <Icon as={AntDesign} name="staro" mr={1} />
-              <Text fontSize="xl" fontWeight="bold" color="text">
-                {receivedRecognitions?.length || 0}
-              </Text>
-            </Box>
-            <Text fontSize="sm" fontWeight="bold" color="text" >
-              Reconocimientos
-            </Text>
-            <Text fontSize="sm" fontWeight="bold" color="text" >
-              recibidos
-            </Text>
+          <Box >
+            <SvgQRCode
+
+              enableLinearGradient
+              size={300}
+              value={JSON.stringify(user)}
+            />
           </Box>
-          <Divider orientation="vertical" height={10} />
 
-          <Box alignItems="center">
-            <Box flexDirection="row" alignItems="center">
-              <Icon as={AntDesign} name="staro" mr={1} />
-              <Text fontSize="xl" fontWeight="bold" color="text">
-                {givenRecognitions?.length || 0}
-              </Text>
-            </Box>
-
-            <Text fontSize="sm" fontWeight="bold" color="text">
-              Reconocimientos
-            </Text>
-            <Text fontSize="sm" fontWeight="bold" color="text">
-              enviados
-            </Text>
-          </Box>
-        </Box>
-
-        <View mx={10} mt={16}>
-
-          <TouchableOpacity
-            onPress={onPressAlliances}
+          {/* <Button
+            w={"85%"}
+            height="100px"
+            bg="secondary"
+            _text={{ color: 'white' }}
+            shadow={3}
+            _pressed={{ opacity: 0.5 }}
           >
-            <Box
-              backgroundColor="primary"
-              p={8}
-              borderRadius={20}
-              shadow={5}
-              marginBottom={5}
-            >
-              <Text color="white" fontSize="xl" fontWeight="bold">
-                Mis alianzas
-              </Text>
-            </Box>
-          </TouchableOpacity>
+            Historial de eventos
+          </Button> */}
 
-          <TouchableOpacity
-            onPress={onPressHistory}
-          >
-            <Box
-              backgroundColor="secondary"
-              p={8}
-              borderRadius={20}
-              shadow={5}
-              marginBottom={5}
-            >
-              <Text color="white" fontSize="xl" fontWeight="bold">
-                Historial de eventos
-              </Text>
-            </Box>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={onPressRecognitions}
-          >
-            <Box
-              backgroundColor="secondary"
-              p={8}
-              borderRadius={20}
-              shadow={5}
-              marginBottom={5}
-            >
-              <Text color="white" fontSize="xl" fontWeight="bold">
-                Mis reconocimientos
-              </Text>
-            </Box>
-          </TouchableOpacity>
-        </View>
+        </VStack>
       </ScrollView>
     </Layout>
   );

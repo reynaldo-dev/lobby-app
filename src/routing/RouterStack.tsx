@@ -34,6 +34,8 @@ import {
   AuthStackParamList,
   RootStackParamList,
 } from "./navigation-types";
+import { MyUpcomingEvents } from "../home/screens/Events/components/MyUpcomingEvents";
+import { MyCommunities } from "../home/screens/Community/components/MyCommunities";
 
 
 
@@ -152,6 +154,8 @@ export function RootNavigator() {
         <Stack.Screen name="SendRecognition" component={SendRecognition} />
         <Stack.Screen name="Redeemables" component={Redeemables} />
         <Stack.Screen name="MyRecognitions" component={MyRecognitions} />
+        <Stack.Screen name="MyUpcomingEvents" component={MyUpcomingEvents} />
+        <Stack.Screen name="MyCommunities" component={MyCommunities} />
       </Stack.Group>
     </Stack.Navigator>
   );

@@ -36,7 +36,7 @@ const RedeemableCard: React.FC<RedeemableCardProps> = ({ redeemable }) => {
                         px="3"
                         py="1.5"
                     >
-                        {`${redeemable.token.name}s requeridos: ${redeemable.required_token_amount}`}
+                        {`Creditos requeridos: ${redeemable.required_token_amount}`}
                     </Center>
                 </Box>
                 <Stack flex="1" p="4" space={[3, 3, 1.5]} justifyContent="space-around">

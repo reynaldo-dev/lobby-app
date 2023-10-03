@@ -1,13 +1,21 @@
-import React from 'react';
-import {
-    Box, Pressable, HStack, Avatar, VStack, Text, Spacer, FlatList, useTheme, Center
-} from 'native-base';
-import { User } from '../../../redux/slices/user/user.interface';
-import avatarImage from "../../../../assets/avatar.png";
 import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../../../routing/navigation-types';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import {
+    Avatar,
+    Box,
+    Center,
+    FlatList,
+    HStack,
+    Pressable,
+    Spacer,
+    Text,
+    VStack
+} from 'native-base';
+import React from 'react';
+import avatarImage from "../../../../assets/avatar.png";
+import { User } from '../../../redux/slices/user/user.interface';
 import { RootState, useAppSelector } from '../../../redux/store/store';
+import { RootStackParamList } from '../../../routing/navigation-types';
 
 interface UserListProps {
     users: User[];
@@ -17,10 +25,6 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
 
     const currentUser = useAppSelector((state: RootState) => state.user);
     const filteredUsers = users.filter(u => u.id !== currentUser.user?.id);
-
-
-
-
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'Recognitions'>>();
 
     const onPress = (selectedUser: User) => {
@@ -39,7 +43,7 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
                             style={{ transform: [{ scale: isPressed ? 0.98 : 1 }] }}
                         >
                             <HStack alignItems="center" space={2}>
-                                <Avatar size="48px" source={avatarImage} />
+                                <Avatar size="48px" source={user.picture ? { uri: user.picture } : avatarImage} />
                                 <VStack>
                                     <Text bold textTransform={"capitalize"}>{user.name} {user.lastname}</Text>
                                     <Text textTransform={"capitalize"}>{user?.rol?.role}</Text>
