@@ -28,7 +28,7 @@ export const AlliancesCard = ({ alliance }: AllianceCardProps) => {
                 </Text>
                 <VStack space={2}>
                     {benefits.map((benefit, index) => (
-                        <Box key={index} flexDirection="row" alignItems="center">
+                        <Box key={index} flexDirection="row" alignItems="center" maxW={"90%"}>
                             <Box bg="black" width={2} height={2} borderRadius="full" marginRight={3} />
                             <Text>{benefit}</Text>
                         </Box>

@@ -6,7 +6,7 @@ import { IRedeemable } from '../alliances/interfaces/reedemable.interface';
 export const redeemablesApi = createApi({
   reducerPath: 'redeemablesService',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://a98a-138-186-250-181.ngrok-free.app/api',
+    baseUrl: 'http://b8f8-138-186-250-181.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {

@@ -1,4 +1,4 @@
-import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Icon } from "native-base";
@@ -36,6 +36,9 @@ import {
 } from "./navigation-types";
 import { MyUpcomingEvents } from "../home/screens/Events/components/MyUpcomingEvents";
 import { MyCommunities } from "../home/screens/Community/components/MyCommunities";
+import { Ranking } from '../home/screens/ranking/Ranking';
+import { Challenges } from '../home/screens/challenges/Challenges';
+import { ChallengeDetailScreen } from '../home/screens/challenges/components/ChallengeDetailScreen';
 
 
 
@@ -156,6 +159,9 @@ export function RootNavigator() {
         <Stack.Screen name="MyRecognitions" component={MyRecognitions} />
         <Stack.Screen name="MyUpcomingEvents" component={MyUpcomingEvents} />
         <Stack.Screen name="MyCommunities" component={MyCommunities} />
+        <Stack.Screen name="Challenges" component={Challenges} />
+        <Stack.Screen name="ChallengeDetail" component={ChallengeDetailScreen} />
+
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -203,16 +209,17 @@ export const BottomTabNavigation = () => {
       />
 
       <Tab.Screen
-        name="Calendar"
-        component={CalendarScreen}
+        name="Ranking"
+        component={Ranking}
         options={{
-          title: "Calendario",
+          title: "Ranking",
           headerStyle: { backgroundColor: theme.colors.background },
+          headerShown: false,
 
           tabBarIcon: ({ color }) => (
             <Icon
-              as={MaterialCommunityIcons}
-              name="calendar"
+              as={AntDesign}
+              name="Trophy"
               size={6}
               color={color}
             />

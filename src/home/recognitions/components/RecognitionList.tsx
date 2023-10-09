@@ -14,16 +14,28 @@ import {
 import React from 'react';
 import avatarImage from "../../../../assets/avatar.png";
 import { IRecognition, IUserRecognition } from '../../../redux/services/recognitions/interfaces/recognitions.interface';
+import { useGetGivenRecognitionsQuery, useGetReceivedRecognitionsQuery } from "../../../redux/services/recognitions/recognitions.service";
 import { RootState, useAppSelector } from '../../../redux/store/store';
 
 interface RecognitionListProps {
-    recognitions: IRecognition[];
     type: 'all' | 'received' | 'given';
 }
 
-const RecognitionList: React.FC<RecognitionListProps> = ({ recognitions, type }) => {
+const RecognitionList: React.FC<RecognitionListProps> = ({ type }) => {
 
     const { user } = useAppSelector((state: RootState) => state.user);
+
+    const { data: receivedRecognitions, error: errorReceived } = useGetReceivedRecognitionsQuery(user?.id || '');
+    const { data: givenRecognitions, error: errorGiven } = useGetGivenRecognitionsQuery(user?.id || '');
+
+    let recognitions: IRecognition[] = [];
+    if (type === 'received' && receivedRecognitions) {
+        recognitions = receivedRecognitions;
+    } else if (type === 'given' && givenRecognitions) {
+        recognitions = givenRecognitions;
+    } else if (type === 'all' && receivedRecognitions && givenRecognitions) {
+        recognitions = [...receivedRecognitions, ...givenRecognitions];
+    }
 
     const getDisplayUser = (recognition: IRecognition): IUserRecognition => {
         if (type === 'received') return recognition.userSource;

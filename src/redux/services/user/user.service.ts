@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
 import { getAuthStateFromAsyncStorage } from '../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage';
+import { User } from '../../slices/user/user.interface';
 import {
   IPasswordUpdatePayload,
   IPasswordUpdateResponse,
@@ -8,19 +9,11 @@ import {
   UpdateProfilePayload,
   UpdateProfileResponse,
 } from './interfaces/update-profile';
-import { User } from '../../slices/user/user.interface';
-
-interface CreateRecognitionDto {
-  userTargetId: string;
-  userSourceId: string;
-  description: string;
-  points: number;
-}
 
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://a98a-138-186-250-181.ngrok-free.app/api',
+    baseUrl: 'http://b8f8-138-186-250-181.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
@@ -36,13 +29,6 @@ export const userApi = createApi({
   endpoints: (builder) => ({
     getUserByFullName: builder.query<User[], string>({
       query: (query: string) => `/user/search?query=${query}`,
-    }),
-    createRecognition: builder.mutation<any, CreateRecognitionDto>({
-      query: (payload) => ({
-        url: `/recognitions`,
-        method: 'POST',
-        body: payload,
-      }),
     }),
     updateProfile: builder.mutation<
       UpdateProfileResponse,
@@ -81,5 +67,4 @@ export const {
   useUpdateProfileMutation,
   useUpdatePasswordMutation,
   useLazyGetUserByFullNameQuery,
-  useCreateRecognitionMutation,
 } = userApi;

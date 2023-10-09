@@ -1,15 +1,12 @@
-import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
   Box,
-  Button,
   Center,
-  Icon,
-  ScrollView,
-  VStack,
   Image,
-  Text
+  ScrollView,
+  Text,
+  VStack
 } from "native-base";
 import React from "react";
 import SvgQRCode from 'react-native-qrcode-svg';
@@ -23,15 +20,6 @@ export default function Profile() {
   const { user } = useAppSelector((state: RootState) => state.user);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
-  const onPressQr = () => {
-    navigation.navigate("QRCode");
-  };
-
-  const onPressHistory = () => {
-    navigation.navigate("EventHistory");
-  }
-
   return (
     <Layout backgroundColor={theme.colors.background}>
       <ScrollView>
@@ -52,7 +40,7 @@ export default function Profile() {
           )}
 
           <Center>
-            <Text fontSize="2xl" fontWeight="bold" color="text">
+            <Text fontSize="2xl" fontWeight="bold" color="text" textTransform={"capitalize"}>
               {user?.name} {user?.lastname}
             </Text>
             <Text fontSize="lg" color="text" mt={2} textTransform={"capitalize"}>

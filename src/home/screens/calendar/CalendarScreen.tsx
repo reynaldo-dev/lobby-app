@@ -29,7 +29,7 @@ export default function CalendarScreen() {
     }, [])
   );
   return (
-    <Layout backgroundColor={theme.colors.background}>
+    <Layout backgroundColor={theme.colors.background} showCredits={false}>
       {isLoading && <RenderLoading />}
       {isError && <RenderError />}
 
@@ -42,7 +42,7 @@ export default function CalendarScreen() {
           pastScrollRange={10}
           minDate={getCurrentDate()}
           showClosingKnob={true}
-          style={{ height: "90%" }}
+          style={{ height: "90%", marginTop: 10 }}
           futureScrollRange={10}
           items={agendaItems}
           loadItemsForMonth={loadItemsForMonth}

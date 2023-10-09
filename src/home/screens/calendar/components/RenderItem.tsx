@@ -1,7 +1,7 @@
 import React from "react";
 import { ICalendarEventsResponse } from "../../../../redux/services/events/interfaces/getEventByIdResponse";
 import { Divider, Icon, Pressable, Text, View } from "native-base";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import { theme } from "../../../../theme";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../../../routing/navigation-types";
@@ -13,6 +13,7 @@ interface IRenderItemProps {
 export default function RenderItem({ item }: IRenderItemProps) {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "Event">>();
+  const isPlaceVirtual = !item?.place;
 
   const handlePress = () => {
     navigation.navigate("Event", { id: item.id as string });
@@ -24,14 +25,13 @@ export default function RenderItem({ item }: IRenderItemProps) {
       </Text>
 
       <View flexDir="row" alignItems="center" mt={2}>
-        <Icon
-          as={Ionicons}
-          name="location"
-          mr={1}
-          color={theme.colors.muted["500"]}
+        <FontAwesome
+          name={isPlaceVirtual ? "laptop" : "map-marker"}
+          size={20}
+          color="gray"
         />
-        <Text fontSize="sm" color={theme.colors.muted["500"]}>
-          {item?.place}
+        <Text fontSize="sm" color={theme.colors.muted["500"]} ml={2}>
+          {isPlaceVirtual ? "Virtual" : item?.place}
         </Text>
       </View>
       <Divider my={2} />

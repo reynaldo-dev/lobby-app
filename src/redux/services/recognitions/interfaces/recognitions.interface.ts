@@ -21,6 +21,6 @@ export interface ICreateRecognitionDto {
   userTargetId: string;
   userSourceId: string;
   description: string;
-  points: number;
-  createdAt: Date;
+  credits: number;
+  createdAt?: Date;
 }

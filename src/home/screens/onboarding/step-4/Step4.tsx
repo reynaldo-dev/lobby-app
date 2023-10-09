@@ -14,7 +14,7 @@ export default function Step4() {
     (navigation as any).navigate("Root");
   };
   return (
-    <Layout backgroundColor={theme.colors.white}>
+    <Layout backgroundColor={theme.colors.white} showCredits={false}>
       <View justifyContent="space-around" flex={1}>
         <Center>
           <Image

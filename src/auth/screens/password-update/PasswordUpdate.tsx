@@ -92,7 +92,7 @@ export default function PasswordUpdate() {
     }
   };
   return (
-    <Layout backgroundColor={theme.colors.white}>
+    <Layout backgroundColor={theme.colors.white} showCredits={false}>
       <Box flexDirection="row" alignItems="center" ml={2} height={50}>
         <Box>
           <TouchableOpacity onPress={() => navigation.goBack()}>

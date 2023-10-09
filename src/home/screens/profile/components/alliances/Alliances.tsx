@@ -1,12 +1,12 @@
+import { AntDesign } from '@expo/vector-icons';
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Box, Center, CheckIcon, FlatList, Select, Spinner, Text } from "native-base";
 import React from "react";
 import { TouchableOpacity } from "react-native";
-import { AntDesign } from '@expo/vector-icons';
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { RootStackParamList } from "../../../../../routing/navigation-types";
 import { useGetAlliancesQuery } from "../../../../../redux/services/alliances/alliances.service";
-import { AlliancesCard } from "./components/AlliancesCard";
+import { RootStackParamList } from "../../../../../routing/navigation-types";
 import Layout from "../../../../../shared/layout/Layout";
+import { AlliancesCard } from "./components/AlliancesCard";
 
 export const Alliances = () => {
     const navigation = useNavigation<NavigationProp<RootStackParamList, "Alliances">>();
@@ -26,7 +26,7 @@ export const Alliances = () => {
     );
 
     return (
-        <Layout>
+        <Layout showCredits={false}>
             <Box flexDirection="row" alignItems="center" ml={2} height={50}>
                 <Box>
                     <TouchableOpacity onPress={() => navigation.goBack()}>

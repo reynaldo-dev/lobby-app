@@ -60,7 +60,7 @@ export default function Login() {
 
 
   return (
-    <Layout backgroundColor={colors.white}>
+    <Layout backgroundColor={colors.white} showCredits={false}>
       <View style={styles.container}>
         <Text style={{ ...styles.title, color: colors.primary }}>
           Bienvenido

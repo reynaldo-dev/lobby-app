@@ -8,7 +8,7 @@ import {
 export const recognitionsApi = createApi({
   reducerPath: 'recognitionsService',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://a98a-138-186-250-181.ngrok-free.app/api',
+    baseUrl: 'http://b8f8-138-186-250-181.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
@@ -24,7 +24,7 @@ export const recognitionsApi = createApi({
   endpoints: (builder) => ({
     createRecognition: builder.mutation<IRecognition, ICreateRecognitionDto>({
       query: (newRecognition) => ({
-        url: '/recognition',
+        url: '/recognitions',
         method: 'POST',
         body: newRecognition,
       }),

@@ -94,7 +94,7 @@ export default function EditProfile() {
     dispatch(logout());
   };
   return (
-    <Layout backgroundColor={theme.colors.white}>
+    <Layout backgroundColor={theme.colors.white} showCredits={false}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}

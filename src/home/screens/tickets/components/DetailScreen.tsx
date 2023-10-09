@@ -11,7 +11,6 @@ import { RootStackParamList } from "../../../../routing/navigation-types";
 import { formatDate } from "../../../../helpers/DateFormat";
 import { Linking } from 'react-native';
 
-
 type Props = {
     event: Event
     user: User
@@ -37,7 +36,7 @@ export const DetailScreen = ({ event, user, isActive, consumable, qrCodeData }: 
     };
 
     return (
-        <Layout>
+        <Layout showCredits={false}>
             <Box safeArea flex={1} p="2" w="100%" mx="auto" bg='white' justifyContent='center'>
                 <HStack position='absolute' top={0} left={0} p={2} space={3} justifyContent="space-between" width="100%">
                     <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -56,8 +55,10 @@ export const DetailScreen = ({ event, user, isActive, consumable, qrCodeData }: 
                         {event?.title}
                     </Heading>
                     <SvgQRCode value={qrCodeData} enableLinearGradient size={250} />
-                    <Badge fontSize='lg' colorScheme={isActive ? 'green' : 'red'} variant="subtle" px={2}>
-                        {isActive ? 'Disponible' : 'No Disponible'}
+                    <Badge fontSize='lg' colorScheme={isActive ? 'green' : 'red'} variant="subtle" px={2} width={250} h={8}>
+                        <Text bold>
+                            {isActive ? 'Disponible' : 'No Disponible'}
+                        </Text>
                     </Badge>
                     <Text fontSize='md' color='gray.600' mx={4}>
                         {event?.description}

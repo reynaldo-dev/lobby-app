@@ -7,7 +7,7 @@ export interface GetEventByIDResponse {
   createdAt: string;
   place: string;
   communityId: string;
-  score: number;
+  credits: number;
   dateTime: string;
   eventCategoryId: string;
   community: Community;

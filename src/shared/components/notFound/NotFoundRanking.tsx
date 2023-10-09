@@ -1,7 +1,7 @@
 import LottieView from 'lottie-react-native';
 import { Center, Text } from "native-base";
 import React from 'react';
-import notFound from '../../../../assets/notFound.json';
+import notFound from '../../../../assets/notFountRanking.json';
 import { theme } from "../../../theme";
 
 
@@ -11,7 +11,7 @@ type Props = {
     height?: number | string;
 }
 
-export const NotFound = ({ message, width = "100%", height = 150 }: Props) => {
+export const NotFoundRanking = ({ message, width = "100%", height = 300 }: Props) => {
 
     return (
         <Center my={"auto"}>

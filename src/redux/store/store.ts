@@ -9,6 +9,8 @@ import { userApi } from '../services/user/user.service';
 import { alliancesApi } from '../services/alliances/alliances.service';
 import { redeemablesApi } from '../services/reedemables/reedemeables.service';
 import { recognitionsApi } from '../services/recognitions/recognitions.service';
+import { leaguesApi } from '../services/leagues/leagues.service';
+import { challengesApi } from '../services/challenges/challenges.service';
 
 export const store = configureStore({
   reducer: {
@@ -21,6 +23,8 @@ export const store = configureStore({
     [alliancesApi.reducerPath]: alliancesApi.reducer,
     [redeemablesApi.reducerPath]: redeemablesApi.reducer,
     [recognitionsApi.reducerPath]: recognitionsApi.reducer,
+    [leaguesApi.reducerPath]: leaguesApi.reducer,
+    [challengesApi.reducerPath]: challengesApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -31,7 +35,9 @@ export const store = configureStore({
       userApi.middleware,
       alliancesApi.middleware,
       redeemablesApi.middleware,
-      recognitionsApi.middleware
+      recognitionsApi.middleware,
+      leaguesApi.middleware,
+      challengesApi.middleware
     ),
 });
 

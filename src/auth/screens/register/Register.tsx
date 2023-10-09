@@ -150,7 +150,7 @@ export default function Register() {
 
 
   return (
-    <Layout backgroundColor={colors.background}>
+    <Layout backgroundColor={colors.background} showCredits={false}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}

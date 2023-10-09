@@ -3,7 +3,6 @@ import { useGetCommunitiesByUserIdQuery } from "../../../../redux/services/commu
 import { RootState, useAppSelector } from "../../../../redux/store/store";
 import { NotFound } from "../../../../shared/components/notFound/NotFound";
 import CommunityCard from "./CommunityCard";
-import { SkeletonCard } from "./SkeletonCard";
 
 export const CommunityList = () => {
   const { user } = useAppSelector((state: RootState) => state.user);
@@ -35,7 +34,7 @@ export const CommunityList = () => {
       contentContainerStyle={{ alignItems: 'center', justifyContent: 'center' }}
       ListFooterComponent={<View style={{ marginRight: 10 }} />}
       ListEmptyComponent={
-        <NotFound message="Aún no perteneces a ninguna comunidad." />
+        <NotFound message="Aún no perteneces a ninguna comunidad." height={250} />
       }
     />
   );

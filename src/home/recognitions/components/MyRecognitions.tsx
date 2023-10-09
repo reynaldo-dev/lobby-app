@@ -4,7 +4,6 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Box, Center, Text, VStack } from 'native-base';
 import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
-import { RootState, useAppSelector } from '../../../redux/store/store';
 import { RootStackParamList } from '../../../routing/navigation-types';
 import Layout from '../../../shared/layout/Layout';
 import RecognitionFilter from './RecognitionFilter';
@@ -14,19 +13,10 @@ type MyRecognitionsScreenProps = NativeStackScreenProps<RootStackParamList, 'MyR
 
 const MyRecognitions: React.FC<MyRecognitionsScreenProps> = ({ route }) => {
     const [filter, setFilter] = useState<'all' | 'received' | 'given'>('all');
-    const { user } = useAppSelector((state: RootState) => state.user);
-    const { recognitions } = route.params;
 
     const navigation = useNavigation();
-
-    const filteredRecognitions = recognitions.filter(recognition => {
-        if (filter === 'received') return recognition.userTargetId === user?.id;
-        if (filter === 'given') return recognition.userSourceId === user?.id;
-        return true;
-    });
-
     return (
-        <Layout>
+        <Layout showCredits={false}>
             <Box flexDirection="row" alignItems="center" ml={2} height={50}>
                 <Box>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -41,7 +31,7 @@ const MyRecognitions: React.FC<MyRecognitionsScreenProps> = ({ route }) => {
             </Box>
             <VStack space={4}>
                 <RecognitionFilter currentFilter={filter} onChange={setFilter} />
-                <RecognitionList recognitions={filteredRecognitions} type={filter} />
+                <RecognitionList type={filter} />
             </VStack>
         </Layout>
     );

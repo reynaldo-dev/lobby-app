@@ -1,18 +1,16 @@
-import React, { useState } from 'react';
-import { VStack, Text, Input, Button, Box, Center, HStack, Avatar } from 'native-base';
-import avatarImage from "../../../../assets/avatar.png";
-import { User } from '../../../redux/slices/user/user.interface';
-import { RootStackParamList } from '../../../routing/navigation-types';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import Layout from '../../../shared/layout/Layout';
-import { StyleSheet } from 'react-native';
-import { theme } from '../../../theme';
-import { TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Avatar, Box, Button, Center, HStack, Input, Modal, Spinner, Text, VStack } from 'native-base';
+import React, { useState } from 'react';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import avatarImage from "../../../../assets/avatar.png";
+import { useCreateRecognitionMutation } from '../../../redux/services/recognitions/recognitions.service';
 import { RootState, useAppSelector } from '../../../redux/store/store';
-import { useCreateRecognitionMutation } from '../../../redux/services/user/user.service';
+import { RootStackParamList } from '../../../routing/navigation-types';
 import useCustomToast from '../../../shared/hooks/useCustomToast';
+import Layout from '../../../shared/layout/Layout';
+import { theme } from '../../../theme';
 
 type SendRecognitionProps = NativeStackScreenProps<RootStackParamList, 'SendRecognition'>;
 
@@ -24,6 +22,7 @@ export const SendRecognition: React.FC<SendRecognitionProps> = ({ route }) => {
     const [createRecognition, { isLoading, isError, error }] = useCreateRecognitionMutation();
     const showToast = useCustomToast();
     const { user } = route.params;
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleSend = async () => {
         if (!message.trim()) {
@@ -36,36 +35,43 @@ export const SendRecognition: React.FC<SendRecognitionProps> = ({ route }) => {
             return;
         }
 
-        await createRecognition({ userSourceId: userFromState?.id as string, userTargetId: user.id as string, description: message, points: 2 });
+        setIsSubmitting(true);
 
-        if (isError) {
-            showToast({
-                id: 'recognition-error',
-                title: 'Error al enviar el reconocimiento',
-                backgroundColor: 'danger',
-                textColor: 'white',
+        await createRecognition({ userSourceId: userFromState?.id as string, userTargetId: user.id as string, description: message, credits: 2 })
+            .unwrap()
+            .then((payload) => {
+                showToast({
+                    id: 'recognition-sended',
+                    title: 'Reconocimiento enviado exitosamente',
+                    backgroundColor: 'success',
+                    textColor: 'white',
+                });
+                setMessage('');
+                navigation.goBack();
+            })
+            .catch((error) => {
+                showToast({
+                    id: 'recognition-error',
+                    title: 'Error al enviar el reconocimiento',
+                    backgroundColor: 'danger',
+                    textColor: 'white',
+                });
+            })
+            .finally(() => {
+                setIsSubmitting(false);
             });
-        } else {
-            showToast({
-                id: 'recognition-sended',
-                title: 'Reconocimiento enviado exitosamente',
-                backgroundColor: 'success',
-                textColor: 'white',
-            });
-            setMessage('');
-            navigation.goBack();
-        }
     };
 
+    const image = user?.picture ? { uri: user?.picture } : avatarImage;
 
     return (
-        <Layout>
+        <Layout showCredits={false}>
             <VStack flex={1} px={5} py={6} space={4}>
                 <TouchableOpacity onPress={() => navigation.goBack()} >
                     <AntDesign name="left" size={24} color="black" />
                 </TouchableOpacity>
                 <HStack alignItems="center" space={4}>
-                    <Avatar size="48px" source={avatarImage} />
+                    <Avatar size="48px" source={image} />
                     <VStack>
                         <Text fontSize="lg" bold textTransform={"capitalize"}>{user.name} {user.lastname}</Text>
                         <Text color="gray.500" textTransform={"capitalize"}>{user?.rol?.role}</Text>
@@ -88,6 +94,15 @@ export const SendRecognition: React.FC<SendRecognitionProps> = ({ route }) => {
                     <Text style={styles.buttonText}>Enviar reconocimiento</Text>
                 </Button>
             </VStack>
+
+            <Modal isOpen={isSubmitting} onClose={() => { }} closeOnOverlayClick={false}>
+                <Box p={4} bg="white" rounded="lg">
+                    <Center>
+                        <Spinner color="blue.500" />
+                        <Text mt={4} textAlign="center">Enviando reconocimiento...</Text>
+                    </Center>
+                </Box>
+            </Modal>
         </Layout>
     );
 }
