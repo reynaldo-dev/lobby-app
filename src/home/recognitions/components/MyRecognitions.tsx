@@ -29,7 +29,7 @@ const MyRecognitions: React.FC<MyRecognitionsScreenProps> = ({ route }) => {
                     </Text>
                 </Center>
             </Box>
-            <VStack space={4}>
+            <VStack space={4} flex={1}>
                 <RecognitionFilter currentFilter={filter} onChange={setFilter} />
                 <RecognitionList type={filter} />
             </VStack>

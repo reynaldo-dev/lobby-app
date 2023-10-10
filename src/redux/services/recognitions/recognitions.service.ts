@@ -3,12 +3,13 @@ import { getAuthStateFromAsyncStorage } from '../../../helpers/get-auth-state-fr
 import {
   ICreateRecognitionDto,
   IRecognition,
+  IRecognitionCategory,
 } from './interfaces/recognitions.interface';
 
 export const recognitionsApi = createApi({
   reducerPath: 'recognitionsService',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://b8f8-138-186-250-181.ngrok-free.app/api',
+    baseUrl: 'http://d357-138-186-250-181.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
@@ -41,6 +42,9 @@ export const recognitionsApi = createApi({
     getRecognitionById: builder.query<IRecognition, string>({
       query: (id) => `/recognition/${id}`,
     }),
+    getRecognitionCategories: builder.query<IRecognitionCategory[], void>({
+      query: () => '/recognition-category',
+    }),
   }),
 });
 
@@ -50,4 +54,5 @@ export const {
   useGetReceivedRecognitionsQuery,
   useGetGivenRecognitionsQuery,
   useGetRecognitionByIdQuery,
+  useGetRecognitionCategoriesQuery,
 } = recognitionsApi;

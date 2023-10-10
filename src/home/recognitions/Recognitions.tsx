@@ -1,5 +1,5 @@
 import { AntDesign } from '@expo/vector-icons';
-import { Center, Icon, Input } from "native-base";
+import { Center, Icon, Input, Spinner, Text } from "native-base";
 import { useEffect, useState } from "react";
 import { ActivityIndicator } from 'react-native';
 import { useLazyGetUserByFullNameQuery } from "../../redux/services/user/user.service";
@@ -9,8 +9,6 @@ import UserList from './components/UserList';
 export const Recognitions = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [isSearching, setIsSearching] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
-
 
     const [getSearchUsers, { data: searchUsersData }] = useLazyGetUserByFullNameQuery();
 
@@ -20,7 +18,7 @@ export const Recognitions = () => {
 
     const handleSearch = () => {
         setIsSearching(true);
-        getSearchUsers(searchTerm);
+        getSearchUsers({ query: searchTerm, limit: 20 });
     };
 
     useEffect(() => {
@@ -28,6 +26,11 @@ export const Recognitions = () => {
             setIsSearching(false);
         }
     }, [searchUsersData]);
+
+    useEffect(() => {
+        setIsSearching(true);
+        getSearchUsers({ query: '', limit: 10 });
+    }, [getSearchUsers]);
 
     return (
         <Layout showCredits={false}>
@@ -65,12 +68,19 @@ export const Recognitions = () => {
             {
                 isSearching ?
                     <Center flex={1}>
-                        <ActivityIndicator size="large" color="#0000ff" />
+                        <Spinner color="blue" />
                     </Center>
                     :
-                    searchUsersData && (
-                        <UserList users={searchUsersData} />
-                    )
+                    searchUsersData ? (
+                        searchUsersData.length > 0 ? (
+                            <UserList users={searchUsersData} />
+                        ) : (
+                            //TODO: cambiar por un componente de error
+                            <Center flex={1}>
+                                <Text>No se encontraron resultados</Text>
+                            </Center>
+                        )
+                    ) : null
             }
         </Layout>
     )

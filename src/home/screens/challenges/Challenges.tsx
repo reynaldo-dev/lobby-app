@@ -13,9 +13,6 @@ import { ChallengeCard } from './components/ChallengeCard';
 export const Challenges = () => {
     const navigation = useNavigation<NavigationProp<RootStackParamList, "Challenges">>();
     const { data: challengesData, isLoading, isError, error } = useGetAllChallengesQuery({ from: 0, limit: 10 });
-    console.log("first render")
-    console.log(challengesData, "data")
-    console.log(error, "error")
 
 
     if (isError || !challengesData) {

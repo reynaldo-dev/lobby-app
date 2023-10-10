@@ -1,11 +1,11 @@
 import { AntDesign } from '@expo/vector-icons';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Avatar, Box, Button, Center, HStack, Input, Modal, Spinner, Text, VStack } from 'native-base';
+import { Avatar, Box, Button, Center, HStack, Input, Modal, Select, Spinner, Text, VStack } from 'native-base';
 import React, { useState } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import avatarImage from "../../../../assets/avatar.png";
-import { useCreateRecognitionMutation } from '../../../redux/services/recognitions/recognitions.service';
+import { useCreateRecognitionMutation, useGetRecognitionCategoriesQuery } from '../../../redux/services/recognitions/recognitions.service';
 import { RootState, useAppSelector } from '../../../redux/store/store';
 import { RootStackParamList } from '../../../routing/navigation-types';
 import useCustomToast from '../../../shared/hooks/useCustomToast';
@@ -17,14 +17,32 @@ type SendRecognitionProps = NativeStackScreenProps<RootStackParamList, 'SendReco
 export const SendRecognition: React.FC<SendRecognitionProps> = ({ route }) => {
 
     const [message, setMessage] = useState('');
-    const navigation = useNavigation<NavigationProp<RootStackParamList, "SendRecognition">>();
+    const [selectedCategory, setSelectedCategory] = useState<string | undefined>(undefined);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const { user: userFromState } = useAppSelector((state: RootState) => state.user);
+
+    const navigation = useNavigation<NavigationProp<RootStackParamList, "SendRecognition">>();
     const [createRecognition, { isLoading, isError, error }] = useCreateRecognitionMutation();
+    const { data: categoriesData, isLoading: isCategoriesLoading, error: categoriesError } = useGetRecognitionCategoriesQuery();
+    console.log(categoriesData, "categoriesData")
+    console.log(categoriesError, "error")
+
     const showToast = useCustomToast();
     const { user } = route.params;
-    const [isSubmitting, setIsSubmitting] = useState(false);
+
 
     const handleSend = async () => {
+
+        if (!selectedCategory) {
+            showToast({
+                id: 'category-error-empty',
+                title: 'Debes seleccionar una categoría',
+                backgroundColor: 'danger',
+                textColor: 'white',
+            });
+            return;
+        }
+
         if (!message.trim()) {
             showToast({
                 id: 'recognition-error-empty',
@@ -35,9 +53,16 @@ export const SendRecognition: React.FC<SendRecognitionProps> = ({ route }) => {
             return;
         }
 
+
         setIsSubmitting(true);
 
-        await createRecognition({ userSourceId: userFromState?.id as string, userTargetId: user.id as string, description: message, credits: 2 })
+        await createRecognition({
+            userSourceId: userFromState?.id as string,
+            userTargetId: user.id as string,
+            description: message,
+            categoryId: selectedCategory,
+            credits: 2
+        })
             .unwrap()
             .then((payload) => {
                 showToast({
@@ -77,6 +102,19 @@ export const SendRecognition: React.FC<SendRecognitionProps> = ({ route }) => {
                         <Text color="gray.500" textTransform={"capitalize"}>{user?.rol?.role}</Text>
                     </VStack>
                 </HStack>
+
+                <Select
+                    selectedValue={selectedCategory}
+                    accessibilityLabel="Selecciona una categoría"
+                    placeholder="Selecciona una categoría"
+                    onValueChange={(itemValue) => setSelectedCategory(itemValue as string)}
+                    mt={4}
+                >
+                    {categoriesData?.map(category => (
+                        <Select.Item key={category.id} label={category.name} value={category.id} />
+                    ))}
+                </Select>
+
 
                 <Input
                     height="200px"

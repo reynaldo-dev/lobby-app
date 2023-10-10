@@ -157,7 +157,7 @@ export function RootNavigator() {
         <Stack.Screen name="SendRecognition" component={SendRecognition} />
         <Stack.Screen name="Redeemables" component={Redeemables} />
         <Stack.Screen name="MyRecognitions" component={MyRecognitions} />
-        <Stack.Screen name="MyUpcomingEvents" component={MyUpcomingEvents} />
+        <Stack.Screen name="Calendar" component={CalendarScreen} />
         <Stack.Screen name="MyCommunities" component={MyCommunities} />
         <Stack.Screen name="Challenges" component={Challenges} />
         <Stack.Screen name="ChallengeDetail" component={ChallengeDetailScreen} />

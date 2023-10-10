@@ -67,7 +67,7 @@ export const TicketsScreen: React.FC = () => {
   };
 
   return (
-    <Layout backgroundColor={theme.colors.background}>
+    <Layout backgroundColor={theme.colors.background} showCredits={false}>
       <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}

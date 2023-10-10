@@ -11,7 +11,8 @@ export interface IRecognition {
   userTargetId: string;
   userSourceId: string;
   description: string;
-  points: number;
+  credits: number;
+  categoryId: string;
   userSource: IUserRecognition;
   userTarget: IUserRecognition;
   createdAt: Date;
@@ -23,4 +24,12 @@ export interface ICreateRecognitionDto {
   description: string;
   credits: number;
   createdAt?: Date;
+  categoryId: string;
+}
+
+export interface IRecognitionCategory {
+  id: string;
+  name: string;
+  description: string;
+  createdAt: Date;
 }

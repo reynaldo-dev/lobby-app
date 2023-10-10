@@ -26,7 +26,7 @@ export default function Home() {
   }
 
   const onPressEvents = () => {
-    navigation.navigate("MyUpcomingEvents");
+    navigation.navigate("Calendar");
   }
 
   const onPressCommunities = () => {

@@ -21,6 +21,7 @@ export const ChallengeDetailScreen = () => {
     const { isOpen, onOpen, onClose } = useDisclose();
     const cancelRef = React.useRef(null);
 
+    //TODO: Implementar lógica de inscripción
     const handleEnroll = () => {
         console.log('Inscribirse en el reto');
         onClose();

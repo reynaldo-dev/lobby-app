@@ -8,6 +8,7 @@ import {
     Icon,
     Pressable,
     Spacer,
+    Spinner,
     Text,
     VStack
 } from 'native-base';
@@ -21,12 +22,12 @@ interface RecognitionListProps {
     type: 'all' | 'received' | 'given';
 }
 
-const RecognitionList: React.FC<RecognitionListProps> = ({ type }) => {
+const RecognitionList = ({ type }: RecognitionListProps) => {
 
     const { user } = useAppSelector((state: RootState) => state.user);
 
-    const { data: receivedRecognitions, error: errorReceived } = useGetReceivedRecognitionsQuery(user?.id || '');
-    const { data: givenRecognitions, error: errorGiven } = useGetGivenRecognitionsQuery(user?.id || '');
+    const { data: receivedRecognitions, error: errorReceived, isLoading: isReceivedLoading } = useGetReceivedRecognitionsQuery(user?.id || '');
+    const { data: givenRecognitions, error: errorGiven, isLoading: isGivenLoading } = useGetGivenRecognitionsQuery(user?.id || '');
 
     let recognitions: IRecognition[] = [];
     if (type === 'received' && receivedRecognitions) {
@@ -53,8 +54,17 @@ const RecognitionList: React.FC<RecognitionListProps> = ({ type }) => {
         return 'arrow-downward';
     };
 
+    if (isReceivedLoading || isGivenLoading) {
+        return (
+            <Center flex={1}>
+                <Spinner color="blue.500" />
+            </Center>
+        );
+    }
+
     const renderItem = ({ item: recognition }: { item: IRecognition }) => {
         const displayUser = getDisplayUser(recognition);
+
         return (
             <Box key={recognition.id} width={"95%"}>
                 <Pressable onPress={() => { }}>

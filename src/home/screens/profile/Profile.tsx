@@ -21,7 +21,7 @@ export default function Profile() {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   return (
-    <Layout backgroundColor={theme.colors.background}>
+    <Layout backgroundColor={theme.colors.background} showCredits={false}>
       <ScrollView>
         <Box mx={5} my={5} flexDir="row" justifyContent="flex-end">
           <ProfileMenu />

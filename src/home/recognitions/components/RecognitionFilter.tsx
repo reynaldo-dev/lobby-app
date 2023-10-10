@@ -5,7 +5,7 @@ interface RecognitionFilterProps {
     onChange: (type: 'all' | 'received' | 'given') => void;
 }
 
-const RecognitionFilter: React.FC<RecognitionFilterProps> = ({ currentFilter, onChange }) => {
+const RecognitionFilter = ({ currentFilter, onChange }: RecognitionFilterProps) => {
     return (
         <VStack alignItems="center" space={4}>
             <Select
@@ -14,7 +14,6 @@ const RecognitionFilter: React.FC<RecognitionFilterProps> = ({ currentFilter, on
                 accessibilityLabel="Filtrar reconocimientos"
                 placeholder="Filtrar reconocimientos"
                 onValueChange={(value) => {
-                    console.log("Filter changed to:", value);
                     onChange(value as 'all' | 'received' | 'given');
                 }}
             >
