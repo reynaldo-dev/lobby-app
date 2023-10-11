@@ -12,4 +12,5 @@ export interface User {
   lastname: string;
   isActive: boolean;
   role: string;
+  credits: number;
 }

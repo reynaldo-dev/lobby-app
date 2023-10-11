@@ -2,11 +2,15 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getAuthStateFromAsyncStorage } from "../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage";
 import { IRedeemable } from "../alliances/interfaces/reedemable.interface";
+import {
+  IConfirmOrderRequest,
+  IConfirmOrderResponse,
+} from "./interfaces/confirm-order.interface";
 
 export const redeemablesApi = createApi({
   reducerPath: "redeemablesService",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://bf09-138-186-250-181.ngrok-free.app/api",
+    baseUrl: "https://0075-190-150-88-140.ngrok-free.app/api",
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
@@ -23,7 +27,26 @@ export const redeemablesApi = createApi({
     getRedeemables: builder.query<IRedeemable[], void>({
       query: () => "/redeemable",
     }),
+
+    getRedeemableById: builder.query<IRedeemable, string>({
+      query: (id) => `/redeemable/${id}`,
+    }),
+
+    tradeRedeemable: builder.mutation<
+      IConfirmOrderResponse,
+      IConfirmOrderRequest
+    >({
+      query: (payload) => ({
+        url: "/trade-history/trade",
+        method: "POST",
+        body: payload,
+      }),
+    }),
   }),
 });
 
-export const { useGetRedeemablesQuery } = redeemablesApi;
+export const {
+  useGetRedeemablesQuery,
+  useGetRedeemableByIdQuery,
+  useTradeRedeemableMutation,
+} = redeemablesApi;
