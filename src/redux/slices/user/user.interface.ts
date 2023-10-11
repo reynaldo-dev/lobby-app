@@ -20,6 +20,7 @@ export interface User {
   phone?: string;
   leagueId?: string;
   rol?: Rol;
+  credits: number;
 }
 
 interface Rol {
