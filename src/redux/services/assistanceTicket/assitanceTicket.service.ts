@@ -12,7 +12,7 @@ import {
 export const assistanceTicketApi = createApi({
   reducerPath: "assistanceTicketService",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:4000/api",
+    baseUrl: "http://bf09-138-186-250-181.ngrok-free.app/api",
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {

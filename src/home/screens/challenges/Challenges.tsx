@@ -1,12 +1,12 @@
-import React from 'react';
-import { Box, Center, Text, FlatList, Spinner } from "native-base";
-import Layout from "../../../shared/layout/Layout";
-import { TouchableOpacity } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
-import { RootStackParamList } from "../../../routing/navigation-types";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { Box, Center, FlatList, Spinner, Text } from "native-base";
+import React from 'react';
+import { TouchableOpacity } from "react-native";
 import { useGetAllChallengesQuery } from '../../../redux/services/challenges/challenges.service';
 import { Challenge } from '../../../redux/services/challenges/interfaces/challenges.interfaces';
+import { RootStackParamList } from "../../../routing/navigation-types";
+import Layout from "../../../shared/layout/Layout";
 import { ChallengeCard } from './components/ChallengeCard';
 
 
@@ -19,7 +19,7 @@ export const Challenges = () => {
         return (
             <Layout showCredits={false}>
                 <Center>
-                    {/* Puedes mostrar un mensaje de error aquí */}
+
                 </Center>
             </Layout>
         );

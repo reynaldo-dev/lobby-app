@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Dimensions, Animated, Pressable } from 'react-native';
-import { Box } from 'native-base';
+import { Animated, Dimensions, Pressable, TouchableOpacity } from 'react-native';
 import { TabView, SceneMap, Route, SceneRendererProps, TabBarProps } from 'react-native-tab-view';
+import { Box, Center, Text } from 'native-base';
 import Layout from '../../../shared/layout/Layout';
-import { theme } from '../../../theme';
-import { HistoricRanking } from './components/HistoricRanking';
-import { WeeklyRanking } from './components/WeeklyRanking';
-import { MonthlyRanking } from './components/MonthlyRanking';
+import MyRecognitions from './MyRecognitions';
+import RecognitionChartBar from './RecognitionChartBar';
+import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 interface MyRoute extends Route {
     title: string;
@@ -14,28 +14,27 @@ interface MyRoute extends Route {
 
 interface RenderTabBarProps extends SceneRendererProps, TabBarProps<MyRoute> { }
 
-export const Ranking = () => {
 
+export const RecognitionsTabView = () => {
     const [index, setIndex] = useState(0);
+    const navigation = useNavigation();
+
     const [routes] = useState([
-        { key: 'weekly', title: 'Ranking Semanal' },
-        { key: 'monthly', title: 'Ranking Mensual' },
-        { key: 'historic', title: 'Ranking Histórico' },
+        { key: 'Stadistics', title: 'Estadisticas' },
+        { key: 'Details', title: 'Detalles' },
     ]);
 
     const initialLayout = { width: Dimensions.get('window').width };
 
     const renderScene = SceneMap({
-        weekly: WeeklyRanking,
-        monthly: MonthlyRanking,
-        historic: HistoricRanking,
+        Stadistics: RecognitionChartBar,
+        Details: MyRecognitions,
     });
 
     const renderTabBar = (props: RenderTabBarProps) => {
-        const inputRange = props.navigationState.routes.map((_: any, i: number) => i);
         return (
             <Box flexDirection="row" borderBottomWidth={1} borderColor="coolGray.200">
-                {props.navigationState.routes.map((route: any, i: number) => {
+                {props.navigationState.routes.map((route, i) => {
                     const borderBottomWidth = index === i ? 2 : 0;
                     return (
                         <Box
@@ -54,10 +53,22 @@ export const Ranking = () => {
                 })}
             </Box>
         );
-    };
+    }
 
     return (
-        <Layout backgroundColor={theme.colors.background} showCredits={false}>
+        <Layout backgroundColor={'#f0f0f0'} showCredits={false}>
+            <Box flexDirection="row" alignItems="center" ml={2} height={50}>
+                <Box>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <AntDesign name="left" size={24} color="black" />
+                    </TouchableOpacity>
+                </Box>
+                <Center flex={1}>
+                    <Text fontSize={16} color={"muted.500"} fontWeight="bold" marginRight={10}>
+                        Mis reconocimientos
+                    </Text>
+                </Center>
+            </Box>
             <TabView
                 navigationState={{ index, routes }}
                 renderScene={renderScene}
@@ -68,3 +79,4 @@ export const Ranking = () => {
         </Layout>
     );
 };
+

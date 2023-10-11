@@ -5,7 +5,7 @@ import { IAlliances } from "../../../shared/interfaces/shared.interface";
 export const alliancesApi = createApi({
   reducerPath: "alliancesService",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:4000/api",
+    baseUrl: "http://bf09-138-186-250-181.ngrok-free.app/api",
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {

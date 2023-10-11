@@ -4,12 +4,13 @@ import {
   ICreateRecognitionDto,
   IRecognition,
   IRecognitionCategory,
+  IRecognitionHistory,
 } from "./interfaces/recognitions.interface";
 
 export const recognitionsApi = createApi({
   reducerPath: "recognitionsService",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:4000/api",
+    baseUrl: "http://bf09-138-186-250-181.ngrok-free.app/api",
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
@@ -45,6 +46,15 @@ export const recognitionsApi = createApi({
     getRecognitionCategories: builder.query<IRecognitionCategory[], void>({
       query: () => "/recognition-category",
     }),
+    findByRecognitionsCategory: builder.query<
+      IRecognitionHistory[],
+      { id: string; category?: string; withRecognitions?: boolean }
+    >({
+      query: ({ id, category, withRecognitions }) => ({
+        url: `/user-credit-history/user/${id}/recognitions`,
+        params: { category, withRecognitions },
+      }),
+    }),
   }),
 });
 
@@ -55,4 +65,5 @@ export const {
   useGetGivenRecognitionsQuery,
   useGetRecognitionByIdQuery,
   useGetRecognitionCategoriesQuery,
+  useFindByRecognitionsCategoryQuery,
 } = recognitionsApi;

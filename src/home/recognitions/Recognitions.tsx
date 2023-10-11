@@ -2,9 +2,10 @@ import { AntDesign } from '@expo/vector-icons';
 import { Center, Icon, Input, Spinner, Text } from "native-base";
 import { useEffect, useState } from "react";
 import { ActivityIndicator } from 'react-native';
-import { useLazyGetUserByFullNameQuery } from "../../redux/services/user/user.service";
-import Layout from "../../shared/layout/Layout";
+import { useLazyGetUserByFullNameQuery } from '../../redux/services/user/user.service';
+import Layout from '../../shared/layout/Layout';
 import UserList from './components/UserList';
+
 
 export const Recognitions = () => {
     const [searchTerm, setSearchTerm] = useState("");
