@@ -1,25 +1,25 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { getAuthStateFromAsyncStorage } from '../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage';
-import { IPagination } from '../../../shared/interfaces/shared.interface';
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { getAuthStateFromAsyncStorage } from "../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage";
+import { IPagination } from "../../../shared/interfaces/shared.interface";
 import {
   Challenge,
   GetAllResponse,
   TakeChallengeDto,
-} from './interfaces/challenges.interfaces';
+} from "./interfaces/challenges.interfaces";
 
 export const challengesApi = createApi({
-  reducerPath: 'challengesService',
+  reducerPath: "challengesService",
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://d357-138-186-250-181.ngrok-free.app/api',
+    baseUrl: "http://localhost:4000/api",
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
-        headers.set('authorization', bearerToken);
+        headers.set("authorization", bearerToken);
       }
       return headers;
     },
   }),
-  tagTypes: ['Challenge'],
+  tagTypes: ["Challenge"],
   refetchOnFocus: true,
   refetchOnMountOrArgChange: true,
   refetchOnReconnect: true,
@@ -51,7 +51,7 @@ export const challengesApi = createApi({
     >({
       query: ({ challengeId, takeChallengeDto }) => ({
         url: `/challenges/take-challenge/${challengeId}`,
-        method: 'PATCH',
+        method: "PATCH",
         body: takeChallengeDto,
       }),
     }),

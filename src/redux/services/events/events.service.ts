@@ -1,28 +1,28 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-import { getAuthStateFromAsyncStorage } from '../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage';
-import { IGetMyEventsResponse } from './interfaces/get-my-events';
+import { getAuthStateFromAsyncStorage } from "../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage";
+import { IGetMyEventsResponse } from "./interfaces/get-my-events";
 import {
   GetEventByIDResponse,
   IEnrollEventResponse,
   IEventQr,
   IScanQrResponse,
-} from './interfaces/getEventByIdResponse';
-import { IInactiveEvents } from '../../../shared/interfaces/shared.interface';
+} from "./interfaces/getEventByIdResponse";
+import { IInactiveEvents } from "../../../shared/interfaces/shared.interface";
 
 export const eventsApi = createApi({
-  reducerPath: 'eventsApi',
+  reducerPath: "eventsApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://d357-138-186-250-181.ngrok-free.app/api',
+    baseUrl: "http://localhost:4000/api",
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
-        headers.set('authorization', bearerToken);
+        headers.set("authorization", bearerToken);
       }
       return headers;
     },
   }),
-  tagTypes: ['Events'],
+  tagTypes: ["Events"],
   refetchOnFocus: true,
   refetchOnMountOrArgChange: true,
   refetchOnReconnect: true,
@@ -46,7 +46,7 @@ export const eventsApi = createApi({
     enrollToEvent: builder.mutation<{}, { userId: string; eventId: string }>({
       query: ({ userId, eventId }) => ({
         url: `/events/${eventId}/enroll/${userId}`,
-        method: 'POST',
+        method: "POST",
       }),
     }),
     cancelEnrollmentToEvent: builder.mutation<
@@ -55,7 +55,7 @@ export const eventsApi = createApi({
     >({
       query: ({ userId, eventId }) => ({
         url: `/events/${eventId}/cancel/${userId}`,
-        method: 'DELETE',
+        method: "DELETE",
       }),
     }),
     isEnrolledToEvent: builder.query<
@@ -70,7 +70,7 @@ export const eventsApi = createApi({
     >({
       query: ({ userId, eventId }) => ({
         url: `/events/${eventId}/scan/${userId}`,
-        method: 'POST',
+        method: "POST",
       }),
     }),
     scanAndRedeemTicket: builder.mutation<
@@ -79,7 +79,7 @@ export const eventsApi = createApi({
     >({
       query: ({ userId, qrCodeId }) => ({
         url: `/events/redeem/${qrCodeId}/user/${userId}`,
-        method: 'POST',
+        method: "POST",
       }),
     }),
   }),

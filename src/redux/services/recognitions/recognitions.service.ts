@@ -1,37 +1,37 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { getAuthStateFromAsyncStorage } from '../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage';
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { getAuthStateFromAsyncStorage } from "../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage";
 import {
   ICreateRecognitionDto,
   IRecognition,
   IRecognitionCategory,
-} from './interfaces/recognitions.interface';
+} from "./interfaces/recognitions.interface";
 
 export const recognitionsApi = createApi({
-  reducerPath: 'recognitionsService',
+  reducerPath: "recognitionsService",
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://d357-138-186-250-181.ngrok-free.app/api',
+    baseUrl: "http://localhost:4000/api",
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
-        headers.set('authorization', bearerToken);
+        headers.set("authorization", bearerToken);
       }
       return headers;
     },
   }),
-  tagTypes: ['Recognition'],
+  tagTypes: ["Recognition"],
   refetchOnFocus: true,
   refetchOnMountOrArgChange: true,
   refetchOnReconnect: true,
   endpoints: (builder) => ({
     createRecognition: builder.mutation<IRecognition, ICreateRecognitionDto>({
       query: (newRecognition) => ({
-        url: '/recognitions',
-        method: 'POST',
+        url: "/recognitions",
+        method: "POST",
         body: newRecognition,
       }),
     }),
     getAllRecognitions: builder.query<IRecognition[], void>({
-      query: () => '/recognition',
+      query: () => "/recognition",
     }),
     getReceivedRecognitions: builder.query<IRecognition[], string>({
       query: (userId) => `/recognitions/received-recognitions/${userId}`,
@@ -43,7 +43,7 @@ export const recognitionsApi = createApi({
       query: (id) => `/recognition/${id}`,
     }),
     getRecognitionCategories: builder.query<IRecognitionCategory[], void>({
-      query: () => '/recognition-category',
+      query: () => "/recognition-category",
     }),
   }),
 });

@@ -1,7 +1,7 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
-const API_BASE_URL = 'http://d357-138-186-250-181.ngrok-free.app/api';
+const API_BASE_URL = "http://localhost:4000/api";
 
 const http = axios.create({
   baseURL: API_BASE_URL,
@@ -9,7 +9,7 @@ const http = axios.create({
 
 http.interceptors.request.use(
   async (config) => {
-    const token = await AsyncStorage.getItem('token');
+    const token = await AsyncStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
