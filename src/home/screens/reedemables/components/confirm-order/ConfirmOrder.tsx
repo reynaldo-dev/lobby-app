@@ -62,7 +62,6 @@ export default function ConfirmOrder({
         });
       })
       .catch((error) => {
-        console.log(error);
         if (!toastVisible) {
           setToastVisible(true);
           toast.show({
