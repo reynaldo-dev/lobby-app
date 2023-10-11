@@ -33,3 +33,27 @@ export interface IRecognitionCategory {
   description: string;
   createdAt: Date;
 }
+
+export interface IRecognitionHistory {
+  category: Category;
+  total: number;
+  recognitions?: Recognition[];
+}
+
+export interface Category {
+  id: string;
+  name: string;
+  description: string;
+  createdAt: Date;
+}
+
+export interface Recognition {
+  id: string;
+  userId: string;
+  eventId: null;
+  challengeId: null;
+  recognitionId: string;
+  earnedCredits: number;
+  earnedIn: string;
+  createdAt: Date;
+}

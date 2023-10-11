@@ -1,7 +1,7 @@
 import { Box } from "native-base";
 import React, { useState } from "react";
 import { Animated, Dimensions, Pressable } from "react-native";
-import { SceneMap, TabView } from "react-native-tab-view";
+import { Route, SceneMap, SceneRendererProps, TabBarProps, TabView } from "react-native-tab-view";
 import { AssistanceTickets } from "./components/AssistanceTickets";
 import { ConsumablesTickets } from "./components/ConsumablesTickets";
 import Layout from "../../../shared/layout/Layout";
@@ -11,7 +11,14 @@ import { RootState, useAppSelector } from "../../../redux/store/store";
 import { useGetTicketsByUserIdQuery as useGetConsumablesTicketsByUserIdQuery } from '../../../redux/services/consumableTicket/consumableTicket.service';
 import { useGetTicketsByUserIdQuery } from "../../../redux/services/assistanceTicket/assitanceTicket.service";
 
-export const TicketsScreen: React.FC = () => {
+
+interface MyRoute extends Route {
+  title: string;
+}
+
+interface RenderTabBarProps extends SceneRendererProps, TabBarProps<MyRoute> { }
+
+export const TicketsScreen = () => {
 
   const { user } = useAppSelector((state: RootState) => state.user);
   const { refetch: refetchConsumablesTickets } =
@@ -40,7 +47,7 @@ export const TicketsScreen: React.FC = () => {
     consumibles: ConsumablesTickets,
   });
 
-  const renderTabBar = (props: any) => {
+  const renderTabBar = (props: RenderTabBarProps) => {
     const inputRange = props.navigationState.routes.map(
       (_: any, i: number) => i
     );

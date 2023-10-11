@@ -1,17 +1,19 @@
-import { AntDesign, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Icon } from "native-base";
 import Login from "../auth/screens/login/Login";
 import PasswordUpdate from "../auth/screens/password-update/PasswordUpdate";
 import Register from "../auth/screens/register/Register";
-import { Recognitions } from "../home/recognitions/Recognitions";
-import MyRecognitions from "../home/recognitions/components/MyRecognitions";
+import { Recognitions } from '../home/recognitions/Recognitions';
 import SendRecognition from "../home/recognitions/components/SendRecognition";
 import { CommunityScreen } from "../home/screens/Community/CommunityScreen";
 import { SearchCommunity } from "../home/screens/Community/SearchCommunity";
+import { MyCommunities } from "../home/screens/Community/components/MyCommunities";
 import EventScreen from "../home/screens/Events/EventScreen";
 import CalendarScreen from "../home/screens/calendar/CalendarScreen";
+import { Challenges } from '../home/screens/challenges/Challenges';
+import { ChallengeDetailScreen } from '../home/screens/challenges/components/ChallengeDetailScreen';
 import Home from "../home/screens/home/Home";
 import Step1 from "../home/screens/onboarding/step-1/Step1";
 import Step2 from "../home/screens/onboarding/step-2/Step2";
@@ -21,6 +23,7 @@ import Profile from "../home/screens/profile/Profile";
 import { Alliances } from "../home/screens/profile/components/alliances/Alliances";
 import EditProfile from "../home/screens/profile/components/edit-profile/EditProfile";
 import { EventHistory } from "../home/screens/profile/components/event-history/EventHistory";
+import { Ranking } from '../home/screens/ranking/Ranking';
 import Redeemables from "../home/screens/reedemables/Reedemables";
 import { TicketAssistanceDetailScreen } from "../home/screens/tickets/TicketAssistanceDetailScreen";
 import { TicketConsumableDetailScreen } from "../home/screens/tickets/TicketConsumableDetailScreen";
@@ -34,11 +37,7 @@ import {
   AuthStackParamList,
   RootStackParamList,
 } from "./navigation-types";
-import { MyUpcomingEvents } from "../home/screens/Events/components/MyUpcomingEvents";
-import { MyCommunities } from "../home/screens/Community/components/MyCommunities";
-import { Ranking } from '../home/screens/ranking/Ranking';
-import { Challenges } from '../home/screens/challenges/Challenges';
-import { ChallengeDetailScreen } from '../home/screens/challenges/components/ChallengeDetailScreen';
+import { RecognitionsTabView } from '../home/recognitions/components/RecognitionsTabView';
 
 
 
@@ -156,7 +155,11 @@ export function RootNavigator() {
         <Stack.Screen name="Recognitions" component={Recognitions} />
         <Stack.Screen name="SendRecognition" component={SendRecognition} />
         <Stack.Screen name="Redeemables" component={Redeemables} />
-        <Stack.Screen name="MyRecognitions" component={MyRecognitions} />
+        <Stack.Screen name="MyRecognitions" component={RecognitionsTabView} options={
+          {
+            gestureEnabled: false,
+          }
+        } />
         <Stack.Screen name="Calendar" component={CalendarScreen} />
         <Stack.Screen name="MyCommunities" component={MyCommunities} />
         <Stack.Screen name="Challenges" component={Challenges} />

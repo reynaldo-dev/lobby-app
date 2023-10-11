@@ -14,7 +14,7 @@ import { GetUserByFullNameArgs } from './interfaces/user-search';
 export const userApi = createApi({
   reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://d357-138-186-250-181.ngrok-free.app/api',
+    baseUrl: 'http://bf09-138-186-250-181.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
