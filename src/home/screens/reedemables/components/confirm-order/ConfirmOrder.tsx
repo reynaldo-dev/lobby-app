@@ -14,11 +14,17 @@ import {
   useGetRedeemablesQuery,
   useTradeRedeemableMutation,
 } from "../../../../../redux/services/reedemables/reedemeables.service";
-import { RootState, useAppSelector } from "../../../../../redux/store/store";
+import {
+  RootState,
+  useAppDispatch,
+  useAppSelector,
+} from "../../../../../redux/store/store";
 import CustomToast from "../../../../../shared/components/toast/CustomToast";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../../../../routing/navigation-types";
 import { useGetCurrentCreditsQuery } from "../../../../../redux/services/user/user.service";
+import { IConfirmOrderResponse } from "../../../../../redux/services/reedemables/interfaces/confirm-order.interface";
+import { setTradeTicket } from "../../../../../redux/slices/trade-ticket/trade-ticket.slice";
 
 interface IConfirmOrderProps {
   showModal: boolean;
@@ -45,10 +51,12 @@ export default function ConfirmOrder({
   const { refetch: refetchCredits } = useGetCurrentCreditsQuery(
     user?.id as string
   );
+  const dispatch = useAppDispatch();
   const trade = () => {
     triggerTrade({ redeemedItemId: itemId, userId: user?.id as string })
       .unwrap()
-      .then(() => {
+      .then((data: IConfirmOrderResponse) => {
+        dispatch(setTradeTicket(data));
         toast.show({
           render: () => (
             <CustomToast
@@ -62,7 +70,7 @@ export default function ConfirmOrder({
             refetch();
             refetchCredits();
             setShowModal(false);
-            navigation.navigate("Redeemables");
+            navigation.navigate("TradeTicket");
           },
         });
       })
