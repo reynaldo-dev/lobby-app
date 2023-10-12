@@ -60,12 +60,12 @@ export default function ConfirmOrder({
         toast.show({
           render: () => (
             <CustomToast
-              message="Canjeado con exito"
+              message="Canjeado con exito, serás dirigido al ticket de canje"
               color={theme.colors.success}
             />
           ),
           placement: "top",
-          duration: 2000,
+          duration: 5000,
           onCloseComplete: () => {
             refetch();
             refetchCredits();

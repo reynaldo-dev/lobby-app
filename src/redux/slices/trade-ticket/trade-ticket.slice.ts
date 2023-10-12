@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { IConfirmOrderResponse } from "../../services/reedemables/interfaces/confirm-order.interface";
 
 const initialState: IConfirmOrderResponse = {
@@ -19,9 +19,11 @@ export const tradeTicketSlice = createSlice({
   name: "tradeTicket",
   initialState,
   reducers: {
-    setTradeTicket: (state, action) => {
-      state = action.payload;
-      console.log(state);
+    setTradeTicket: (state, action: PayloadAction<IConfirmOrderResponse>) => {
+      state.id = action.payload.id;
+      state.createdAt = action.payload.createdAt;
+      state.user = action.payload.user;
+      state.redeemedItem = action.payload.redeemedItem;
     },
   },
 });

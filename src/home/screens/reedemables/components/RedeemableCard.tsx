@@ -70,7 +70,7 @@ const RedeemableCard: React.FC<RedeemableCardProps> = ({ redeemable }) => {
                 navigation.navigate("RedeemableDetail", { id: redeemable.id })
               }
               bg={theme.colors.primary}
-              borderRadius={"full"}
+              borderRadius={"md"}
               padding={2}
             >
               <Text fontWeight="400" color={theme.colors.white}>
