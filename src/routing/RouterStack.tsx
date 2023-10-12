@@ -36,6 +36,7 @@ import { theme } from "../theme";
 import { AuthStackParamList, RootStackParamList } from "./navigation-types";
 import { RecognitionsTabView } from "../home/recognitions/components/RecognitionsTabView";
 import RedeemableDetail from "../home/screens/reedemables/redeemable/RedeemableDetail";
+import TradeTicketShot from "../home/screens/reedemables/components/trade-ticket-shot/TradeTicketShot";
 
 const authRouter = createNativeStackNavigator<AuthStackParamList>();
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -155,6 +156,7 @@ export function RootNavigator() {
           component={ChallengeDetailScreen}
         />
         <Stack.Screen name="RedeemableDetail" component={RedeemableDetail} />
+        <Stack.Screen name="TradeTicket" component={TradeTicketShot} />
       </Stack.Group>
     </Stack.Navigator>
   );

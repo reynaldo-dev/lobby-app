@@ -59,4 +59,5 @@ export type RootStackParamList = {
   Ranking: undefined;
   Challenges: undefined;
   ChallengeDetail: { challenge: Challenge };
+  TradeTicket: undefined;
 };
