@@ -12,7 +12,7 @@ import {
 export const communitiesService = createApi({
   reducerPath: "communitiesService",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://0075-190-150-88-140.ngrok-free.app/api",
+    baseUrl: "https://e09d-190-150-88-140.ngrok-free.app/api",
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
