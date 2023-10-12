@@ -15,7 +15,7 @@ import { ICurrentLeague } from "./interfaces/current-league.interface";
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://e09d-190-150-88-140.ngrok-free.app/api",
+    baseUrl: "https://0fdb-190-150-88-140.ngrok-free.app/api",
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
