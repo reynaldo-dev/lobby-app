@@ -18,6 +18,7 @@ import { RootState, useAppSelector } from "../../../../../redux/store/store";
 import CustomToast from "../../../../../shared/components/toast/CustomToast";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../../../../routing/navigation-types";
+import { useGetCurrentCreditsQuery } from "../../../../../redux/services/user/user.service";
 
 interface IConfirmOrderProps {
   showModal: boolean;
@@ -41,6 +42,9 @@ export default function ConfirmOrder({
   const { user } = useAppSelector((state: RootState) => state.user);
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "Redeemables">>();
+  const { refetch: refetchCredits } = useGetCurrentCreditsQuery(
+    user?.id as string
+  );
   const trade = () => {
     triggerTrade({ redeemedItemId: itemId, userId: user?.id as string })
       .unwrap()
@@ -56,6 +60,7 @@ export default function ConfirmOrder({
           duration: 2000,
           onCloseComplete: () => {
             refetch();
+            refetchCredits();
             setShowModal(false);
             navigation.navigate("Redeemables");
           },

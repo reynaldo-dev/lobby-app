@@ -10,11 +10,12 @@ import {
   UpdateProfileResponse,
 } from "./interfaces/update-profile";
 import { GetUserByFullNameArgs } from "./interfaces/user-search";
+import { ICurrentLeague } from "./interfaces/current-league.interface";
 
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://0075-190-150-88-140.ngrok-free.app/api",
+    baseUrl: "https://e09d-190-150-88-140.ngrok-free.app/api",
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
@@ -62,6 +63,21 @@ export const userApi = createApi({
         },
       }),
     }),
+
+    getCurrentCredits: builder.query<{ credits: number }, string>({
+      query: (userId) => `/user/current-credits/${userId}`,
+    }),
+
+    getCurrentRecognitionsCount: builder.query<
+      { recognitionsReceivedCount: number },
+      string
+    >({
+      query: (userId) => `/user/current-recognitions-count/${userId}`,
+    }),
+
+    getCurrentLeague: builder.query<ICurrentLeague, string>({
+      query: (userId) => `/user/current-league/${userId}`,
+    }),
   }),
 });
 
@@ -69,4 +85,7 @@ export const {
   useUpdateProfileMutation,
   useUpdatePasswordMutation,
   useLazyGetUserByFullNameQuery,
+  useGetCurrentCreditsQuery,
+  useGetCurrentRecognitionsCountQuery,
+  useGetCurrentLeagueQuery,
 } = userApi;
