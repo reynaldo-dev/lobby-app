@@ -87,9 +87,7 @@ export const RecognitionCard = ({
               />
               <Box
                 mt={2}
-                backgroundColor={
-                  league ? league.league.color : theme.colors.primary
-                }
+                backgroundColor={league?.league.color || theme.colors.primary}
                 px={2}
                 py={1}
                 borderRadius="sm"
@@ -103,7 +101,7 @@ export const RecognitionCard = ({
                     color="white"
                     textAlign={"center"}
                   >
-                    {league.league.name}
+                    {league?.league?.name}
                   </Text>
                 )}
               </Box>
@@ -118,19 +116,12 @@ export const RecognitionCard = ({
 
                   {isLoading && <Spinner color="primary" />}
 
-                  {data && data.recognitionsReceivedCount && (
-                    <HStack space={2} alignItems="center">
-                      <Text fontWeight="bold" fontSize="3xl">
-                        {data.recognitionsReceivedCount}
-                      </Text>
-                      <Icon
-                        as={AntDesign}
-                        name="star"
-                        size={8}
-                        color="primary"
-                      />
-                    </HStack>
-                  )}
+                  <HStack space={2} alignItems="center">
+                    <Text fontWeight="bold" fontSize="3xl">
+                      {data?.recognitionsReceivedCount}
+                    </Text>
+                    <Icon as={AntDesign} name="star" size={8} color="primary" />
+                  </HStack>
 
                   <Text fontWeight="bold" fontSize="2xl">
                     reconocimientos
