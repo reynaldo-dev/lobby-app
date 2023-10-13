@@ -59,11 +59,9 @@ export default function Layout({
               <Icon as={FontAwesome5} name="coins" color="white" size={5} />
               {isLoading && <Spinner color="white" />}
 
-              {data && data.credits && (
-                <Text color="white" bold fontSize={30}>
-                  {data?.credits}
-                </Text>
-              )}
+              <Text color="white" bold fontSize={30}>
+                {data?.credits}
+              </Text>
             </HStack>
           </Badge>
         </Box>
