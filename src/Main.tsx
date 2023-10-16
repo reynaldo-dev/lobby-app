@@ -1,15 +1,20 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { NativeBaseProvider } from "native-base";
 import { useEffect } from "react";
-import { getUserCredentials } from "./redux/slices/user/user.thunk";
+import { getUserCredentials } from "./redux/thunks/user.thunk";
 import { RootState, useAppDispatch, useAppSelector } from "./redux/store/store";
-import { AuthStack, RootNavigator, RootNavigatorStaff } from "./routing/RouterStack";
+import {
+  AuthStack,
+  RootNavigator,
+  RootNavigatorStaff,
+} from "./routing/RouterStack";
 import { theme } from "./theme";
 
 export default function Main() {
   const { isAuth, user } = useAppSelector((state: RootState) => state.user);
   const dispatch = useAppDispatch();
-
+  const api = process.env.EXPO_PUBLIC_API_URL;
+  console.log(api);
   useEffect(() => {
     dispatch(getUserCredentials());
   }, []);
@@ -18,9 +23,13 @@ export default function Main() {
     <NavigationContainer>
       <NativeBaseProvider theme={theme}>
         {isAuth ? (
-          user?.role === 'funcionario' ? <RootNavigator /> :
-            user?.role === 'staff' ? <RootNavigatorStaff /> :
-              <RootNavigator />
+          user?.role === "funcionario" ? (
+            <RootNavigator />
+          ) : user?.role === "staff" ? (
+            <RootNavigatorStaff />
+          ) : (
+            <RootNavigator />
+          )
         ) : (
           <AuthStack />
         )}

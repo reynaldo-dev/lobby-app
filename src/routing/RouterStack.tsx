@@ -5,39 +5,39 @@ import { Icon } from "native-base";
 import Login from "../auth/screens/login/Login";
 import PasswordUpdate from "../auth/screens/password-update/PasswordUpdate";
 import Register from "../auth/screens/register/Register";
-import { Recognitions } from "../home/recognitions/Recognitions";
-import SendRecognition from "../home/recognitions/components/SendRecognition";
-import { CommunityScreen } from "../home/screens/Community/CommunityScreen";
-import { SearchCommunity } from "../home/screens/Community/SearchCommunity";
-import { MyCommunities } from "../home/screens/Community/components/MyCommunities";
-import EventScreen from "../home/screens/Events/EventScreen";
-import CalendarScreen from "../home/screens/calendar/CalendarScreen";
-import { Challenges } from "../home/screens/challenges/Challenges";
-import { ChallengeDetailScreen } from "../home/screens/challenges/components/ChallengeDetailScreen";
-import Home from "../home/screens/home/Home";
-import Step1 from "../home/screens/onboarding/step-1/Step1";
-import Step2 from "../home/screens/onboarding/step-2/Step2";
-import Step3 from "../home/screens/onboarding/step-3/Step3";
-import Step4 from "../home/screens/onboarding/step-4/Step4";
-import Profile from "../home/screens/profile/Profile";
-import { Alliances } from "../home/screens/profile/components/alliances/Alliances";
-import EditProfile from "../home/screens/profile/components/edit-profile/EditProfile";
-import { EventHistory } from "../home/screens/profile/components/event-history/EventHistory";
-import { Ranking } from "../home/screens/ranking/Ranking";
-import Redeemables from "../home/screens/reedemables/Reedemables";
-import { TicketAssistanceDetailScreen } from "../home/screens/tickets/TicketAssistanceDetailScreen";
-import { TicketConsumableDetailScreen } from "../home/screens/tickets/TicketConsumableDetailScreen";
-import { TicketsScreen } from "../home/screens/tickets/TicketsScreen";
-import { BarScanner } from "../home/screens/tickets/components/BarScanner";
+import { Recognitions } from "../recognitions/screens/Recognitions";
+import SendRecognition from "../recognitions/screens/SendRecognition";
+import { CommunityScreen } from "../community/screens/CommunityScreen";
+import { SearchCommunity } from "../community/screens/SearchCommunity";
+import { MyCommunities } from "../community/screens/MyCommunities";
+import EventScreen from "../events/screens/EventScreen";
+import CalendarScreen from "../calendar/screens/CalendarScreen";
+import { Challenges } from "../challenges/screens/Challenges";
+import { ChallengeDetailScreen } from "../challenges/screens/ChallengeDetailScreen";
+import Home from "../home/screens/Home";
+import Step1 from "../onboarding/screens/Step1";
+import Step2 from "../onboarding/screens/Step2";
+import Step3 from "../onboarding/screens/Step3";
+import Step4 from "../onboarding/screens/Step4";
+import Profile from "../profile/screens/Profile";
+import { Alliances } from "../alliances/screens/Alliances";
+import EditProfile from "../profile/components/EditProfile";
+import { EventHistory } from "../profile/screens/EventHistory";
+import { Ranking } from "../ranking/screens/Ranking";
+import Redeemables from "../redeemables/screens/Reedemables";
+import { TicketAssistanceDetailScreen } from "../tickets/screens/TicketAssistanceDetailScreen";
+import { TicketConsumableDetailScreen } from "../tickets/screens/TicketConsumableDetailScreen";
+import { TicketsScreen } from "../tickets/screens/TicketsScreen";
+import { BarScanner } from "../tickets/screens/BarScanner";
 import CustomQRCode from "../shared/components/qr/CustomQRCode";
 import { BarScannerStaff } from "../staff/screens/BarScanner/BarScannerStaff";
 import { HomeStaff } from "../staff/screens/home/HomeStaff";
 import { theme } from "../theme";
 import { AuthStackParamList, RootStackParamList } from "./navigation-types";
-import { RecognitionsTabView } from "../home/recognitions/components/RecognitionsTabView";
-import RedeemableDetail from "../home/screens/reedemables/redeemable/RedeemableDetail";
-import TradeTicketShot from "../home/screens/reedemables/components/trade-ticket-shot/TradeTicketShot";
-import RecognitionDetails from "../home/recognitions/components/RecognitionDetails";
+import { RecognitionsTabView } from "../recognitions/screens/RecognitionsTabView";
+import RedeemableDetail from "../redeemables/screens/RedeemableDetail";
+import TradeTicketShot from "../redeemables/screens/TradeTicketShot";
+import RecognitionDetails from "../recognitions/components/RecognitionDetails";
 
 const authRouter = createNativeStackNavigator<AuthStackParamList>();
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -152,10 +152,16 @@ export function RootNavigator() {
         <Stack.Screen name="Calendar" component={CalendarScreen} />
         <Stack.Screen name="MyCommunities" component={MyCommunities} />
         <Stack.Screen name="Challenges" component={Challenges} />
-        <Stack.Screen name="ChallengeDetail" component={ChallengeDetailScreen} />
+        <Stack.Screen
+          name="ChallengeDetail"
+          component={ChallengeDetailScreen}
+        />
         <Stack.Screen name="RedeemableDetail" component={RedeemableDetail} />
         <Stack.Screen name="TradeTicket" component={TradeTicketShot} />
-        <Stack.Screen name="RecognitionDetails" component={RecognitionDetails} />
+        <Stack.Screen
+          name="RecognitionDetails"
+          component={RecognitionDetails}
+        />
       </Stack.Group>
     </Stack.Navigator>
   );

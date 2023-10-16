@@ -11,9 +11,9 @@ import {
 } from "native-base";
 import React from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { isDarkColor } from "../../helpers/isDarkColor";
+import { isDarkColor } from "../../helpers/is-dark-color/isDarkColor";
 import { RootState, useAppSelector } from "../../redux/store/store";
-import { useGetCurrentCreditsQuery } from "../../redux/services/user/user.service";
+import { useGetCurrentCreditsQuery } from "../../redux/services/user.service";
 
 interface LayoutProps {
   children: React.ReactNode;

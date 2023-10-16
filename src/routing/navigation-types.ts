@@ -1,11 +1,8 @@
-import {
-  Event,
-  User,
-} from '../redux/services/assistanceTicket/interfaces/assistanceTicket.interface';
-import { Challenge } from '../redux/services/challenges/interfaces/challenges.interfaces';
-import { IConsumable } from '../redux/services/consumableTicket/interfaces/consumablesTickets.interface';
-import { IRecognition } from '../redux/services/recognitions/interfaces/recognitions.interface';
-import { User as UserInterface } from '../redux/slices/user/user.interface';
+import { Event, User } from "../tickets/interfaces/assistanceTicket.interface";
+import { Challenge } from "../challenges/interfaces/challenges.interfaces";
+import { IConsumable } from "../tickets/interfaces/consumablesTickets.interface";
+import { IRecognition } from "../recognitions/interfaces/recognitions.interface";
+import { User as UserInterface } from "../profile/interfaces/user.interface";
 
 export type AuthStackParamList = {
   Login: undefined;

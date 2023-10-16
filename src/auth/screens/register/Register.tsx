@@ -1,7 +1,4 @@
-import {
-  NavigationProp,
-  useNavigation,
-} from "@react-navigation/native";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Formik } from "formik";
 import {
   Box,
@@ -14,20 +11,26 @@ import {
   Select,
   Text,
   VStack,
-  useToast
+  useToast,
 } from "native-base";
 import React, { useCallback, useState } from "react";
 import { KeyboardAvoidingView, Platform } from "react-native";
 import * as Yup from "yup";
-import { useJoinCommunityMutation, useLazyGetSearchCommunitiesQuery } from "../../../redux/services/community/communities.service";
-import { register } from "../../../redux/slices/user/user.thunk";
-import { RootState, useAppDispatch, useAppSelector } from "../../../redux/store/store";
+import {
+  useJoinCommunityMutation,
+  useLazyGetSearchCommunitiesQuery,
+} from "../../../redux/services/communities.service";
+import { register } from "../../../redux/thunks/user.thunk";
+import {
+  RootState,
+  useAppDispatch,
+  useAppSelector,
+} from "../../../redux/store/store";
 import { RootStackParamList } from "../../../routing/navigation-types";
 import CustomToast from "../../../shared/components/toast/CustomToast";
 import ValidatedInputText from "../../../shared/components/validated-inputText/ValidatedInputText";
 import Layout from "../../../shared/layout/Layout";
 import { theme } from "../../../theme";
-
 
 interface IRegisterFormValues {
   name: string;
@@ -46,9 +49,20 @@ interface DepartmentSelectProps {
 }
 
 export const departments = [
-  "Ahuachapán", "Santa Ana", "Sonsonate", "Chalatenango", "La Libertad",
-  "San Salvador", "Cuscatlán", "La Paz", "Cabañas", "San Vicente",
-  "Usulután", "San Miguel", "Morazán", "La Unión"
+  "Ahuachapán",
+  "Santa Ana",
+  "Sonsonate",
+  "Chalatenango",
+  "La Libertad",
+  "San Salvador",
+  "Cuscatlán",
+  "La Paz",
+  "Cabañas",
+  "San Vicente",
+  "Usulután",
+  "San Miguel",
+  "Morazán",
+  "La Unión",
 ];
 
 const registerValidationSchema = Yup.object().shape({
@@ -68,7 +82,11 @@ const registerValidationSchema = Yup.object().shape({
   department: Yup.string().required("Departamento es requerido"),
 });
 
-export const DepartmentSelect = ({ value, onChange, borderColor = "transparent" }: DepartmentSelectProps) => (
+export const DepartmentSelect = ({
+  value,
+  onChange,
+  borderColor = "transparent",
+}: DepartmentSelectProps) => (
   <Box alignItems="center" w="full">
     <FormControl w="100%" maxW="300px" borderRadius={10}>
       <FormControl.Label>Departamento</FormControl.Label>
@@ -97,7 +115,6 @@ export const DepartmentSelect = ({ value, onChange, borderColor = "transparent" 
   </Box>
 );
 
-
 export default function Register() {
   const { colors } = theme;
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -111,7 +128,6 @@ export default function Register() {
   const [getSearchCommunities, { data: searchCommunitiesData, error }] =
     useLazyGetSearchCommunitiesQuery();
 
-
   const initialValues: IRegisterFormValues = {
     name: "",
     lastname: "",
@@ -122,32 +138,33 @@ export default function Register() {
     department: "",
   };
 
-
-  const onRegister = useCallback((values: any) => {
-    setIsLoading(true);
-    dispatch(register(values))
-      .unwrap()
-      .then((response) => {
-        navigation.navigate('Step1');
-      }
-      )
-      .catch((error) => {
-        toast.show({
-          render: () => (
-            <CustomToast color={theme.colors.danger} message={error.message} />
-          ),
-          duration: 2000,
-          placement: "top",
-          color: theme.colors.danger,
+  const onRegister = useCallback(
+    (values: any) => {
+      setIsLoading(true);
+      dispatch(register(values))
+        .unwrap()
+        .then((response) => {
+          navigation.navigate("Step1");
+        })
+        .catch((error) => {
+          toast.show({
+            render: () => (
+              <CustomToast
+                color={theme.colors.danger}
+                message={error.message}
+              />
+            ),
+            duration: 2000,
+            placement: "top",
+            color: theme.colors.danger,
+          });
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [dispatch, toast]);
-
-
-
+    },
+    [dispatch, toast]
+  );
 
   return (
     <Layout backgroundColor={colors.background} showCredits={false}>
@@ -170,7 +187,13 @@ export default function Register() {
             validateOnBlur={false}
           >
             {({
-              handleChange, handleBlur, handleSubmit, values, errors, touched, setFieldValue,
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              errors,
+              touched,
+              setFieldValue,
             }) => (
               <VStack space={4}>
                 <ValidatedInputText
@@ -182,7 +205,7 @@ export default function Register() {
                   onChangeText={handleChange("name")}
                   onBlur={handleBlur("name")}
                   value={values.name}
-                  errors={touched.name ? errors.name : ''}
+                  errors={touched.name ? errors.name : ""}
                 />
 
                 <ValidatedInputText
@@ -238,7 +261,9 @@ export default function Register() {
 
                 <DepartmentSelect
                   value={values.department}
-                  onChange={(itemValue: any) => setFieldValue("department", itemValue)}
+                  onChange={(itemValue: any) =>
+                    setFieldValue("department", itemValue)
+                  }
                 />
 
                 <ValidatedInputText
