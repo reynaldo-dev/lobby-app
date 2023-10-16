@@ -45,7 +45,7 @@ export const Redeemables = () => {
   );
 
   return (
-    <Layout>
+    <Layout showCredits={false}>
       <Box flexDirection="row" alignItems="center" ml={2} height={50}>
         <Box>
           <TouchableOpacity onPress={() => navigation.goBack()}>

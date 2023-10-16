@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { Dimensions, Animated, Pressable } from 'react-native';
 import { Box } from 'native-base';
-import { TabView, SceneMap, Route, SceneRendererProps, TabBarProps } from 'react-native-tab-view';
+import React, { useState } from 'react';
+import { Animated, Dimensions, Pressable } from 'react-native';
+import { Route, SceneMap, SceneRendererProps, TabBarProps, TabView } from 'react-native-tab-view';
 import Layout from '../../../shared/layout/Layout';
 import { theme } from '../../../theme';
 import { HistoricRanking } from './components/HistoricRanking';
-import { WeeklyRanking } from './components/WeeklyRanking';
 import { MonthlyRanking } from './components/MonthlyRanking';
+import { WeeklyRanking } from './components/WeeklyRanking';
 
 interface MyRoute extends Route {
     title: string;
@@ -18,9 +18,10 @@ export const Ranking = () => {
 
     const [index, setIndex] = useState(0);
     const [routes] = useState([
-        { key: 'weekly', title: 'Ranking Semanal' },
-        { key: 'monthly', title: 'Ranking Mensual' },
-        { key: 'historic', title: 'Ranking Histórico' },
+        { key: 'weekly', title: 'Semanal' },
+        { key: 'monthly', title: 'Mensual' },
+        { key: 'yearly', title: 'Anual' },
+        { key: 'historic', title: 'Histórico' },
     ]);
 
     const initialLayout = { width: Dimensions.get('window').width };
@@ -28,6 +29,7 @@ export const Ranking = () => {
     const renderScene = SceneMap({
         weekly: WeeklyRanking,
         monthly: MonthlyRanking,
+        yearly: MonthlyRanking,
         historic: HistoricRanking,
     });
 

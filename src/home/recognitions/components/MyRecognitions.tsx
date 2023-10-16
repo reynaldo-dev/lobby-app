@@ -8,7 +8,7 @@ import RecognitionList from './RecognitionList';
 type MyRecognitionsScreenProps = NativeStackScreenProps<RootStackParamList, 'MyRecognitions'>;
 
 const MyRecognitions = ({ route }: MyRecognitionsScreenProps) => {
-    const [filter, setFilter] = useState<'all' | 'received' | 'given'>('all');
+    const [filter, setFilter] = useState<'received' | 'given'>('received');
 
     return (
         <VStack space={4} flex={1} mt={4}>

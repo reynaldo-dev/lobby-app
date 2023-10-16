@@ -1,38 +1,38 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { getAuthStateFromAsyncStorage } from "../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { getAuthStateFromAsyncStorage } from '../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage';
 import {
   ICreateRecognitionDto,
   IRecognition,
   IRecognitionCategory,
   IRecognitionHistory,
-} from "./interfaces/recognitions.interface";
+} from './interfaces/recognitions.interface';
 
 export const recognitionsApi = createApi({
-  reducerPath: "recognitionsService",
+  reducerPath: 'recognitionsService',
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://5e2c-190-150-88-140.ngrok-free.app/api",
+    baseUrl: 'http://db86-138-186-250-181.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
-        headers.set("authorization", bearerToken);
+        headers.set('authorization', bearerToken);
       }
       return headers;
     },
   }),
-  tagTypes: ["Recognition"],
+  tagTypes: ['Recognition'],
   refetchOnFocus: true,
   refetchOnMountOrArgChange: true,
   refetchOnReconnect: true,
   endpoints: (builder) => ({
     createRecognition: builder.mutation<IRecognition, ICreateRecognitionDto>({
       query: (newRecognition) => ({
-        url: "/recognitions",
-        method: "POST",
+        url: '/recognitions',
+        method: 'POST',
         body: newRecognition,
       }),
     }),
     getAllRecognitions: builder.query<IRecognition[], void>({
-      query: () => "/recognition",
+      query: () => '/recognition',
     }),
     getReceivedRecognitions: builder.query<IRecognition[], string>({
       query: (userId) => `/recognitions/received-recognitions/${userId}`,
@@ -44,7 +44,7 @@ export const recognitionsApi = createApi({
       query: (id) => `/recognition/${id}`,
     }),
     getRecognitionCategories: builder.query<IRecognitionCategory[], void>({
-      query: () => "/recognition-category",
+      query: () => '/recognition-category',
     }),
     findByRecognitionsCategory: builder.query<
       IRecognitionHistory[],
@@ -53,6 +53,12 @@ export const recognitionsApi = createApi({
       query: ({ id, category, withRecognitions }) => ({
         url: `/user-credit-history/user/${id}/recognitions`,
         params: { category, withRecognitions },
+      }),
+    }),
+    markRecognitionAsRead: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `/recognitions/${id}/read`,
+        method: 'PATCH',
       }),
     }),
   }),
@@ -66,4 +72,5 @@ export const {
   useGetRecognitionByIdQuery,
   useGetRecognitionCategoriesQuery,
   useFindByRecognitionsCategoryQuery,
+  useMarkRecognitionAsReadMutation,
 } = recognitionsApi;

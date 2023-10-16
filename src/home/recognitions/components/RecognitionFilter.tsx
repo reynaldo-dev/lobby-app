@@ -1,8 +1,8 @@
 import { Select, VStack } from 'native-base';
 
 interface RecognitionFilterProps {
-    currentFilter: 'all' | 'received' | 'given';
-    onChange: (type: 'all' | 'received' | 'given') => void;
+    currentFilter: 'received' | 'given';
+    onChange: (type: 'received' | 'given') => void;
 }
 
 const RecognitionFilter = ({ currentFilter, onChange }: RecognitionFilterProps) => {
@@ -14,10 +14,9 @@ const RecognitionFilter = ({ currentFilter, onChange }: RecognitionFilterProps) 
                 accessibilityLabel="Filtrar reconocimientos"
                 placeholder="Filtrar reconocimientos"
                 onValueChange={(value) => {
-                    onChange(value as 'all' | 'received' | 'given');
+                    onChange(value as 'received' | 'given');
                 }}
             >
-                <Select.Item label="Todos" value="all" />
                 <Select.Item label="Recibidos" value="received" />
                 <Select.Item label="Enviados" value="given" />
             </Select>

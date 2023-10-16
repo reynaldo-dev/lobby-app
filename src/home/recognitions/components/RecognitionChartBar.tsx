@@ -1,15 +1,14 @@
+import { Center, ScrollView, Spinner } from 'native-base';
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import Layout from '../../../shared/layout/Layout';
+import { StyleSheet, Text, View } from 'react-native';
 import { useFindByRecognitionsCategoryQuery } from '../../../redux/services/recognitions/recognitions.service';
 import { RootState, useAppSelector } from '../../../redux/store/store';
-import { Center, ScrollView, Spinner } from 'native-base';
+import Layout from '../../../shared/layout/Layout';
 
 const RecognitionChartBar = () => {
 
     const { user } = useAppSelector((state: RootState) => state.user);
     const { data: recognitionHistory, isError, isLoading, error } = useFindByRecognitionsCategoryQuery({ id: user?.id as string });
-    console.log(error, "error")
 
     if (isLoading) {
         return (
@@ -22,7 +21,7 @@ const RecognitionChartBar = () => {
     if (isError || !recognitionHistory) {
         return <Text>Error al cargar la data.</Text>;
     }
-    const maxValue = 100;
+    const maxValue = 10;
 
     return (
         <Layout showCredits={false}>
@@ -38,7 +37,7 @@ const RecognitionChartBar = () => {
                                 <View style={styles.progressBarContainer}>
                                     <View style={{ ...styles.progressBar, width: `${(value / maxValue) * 100}%` }} />
                                     <View style={styles.labelContainer}>
-                                        <Text style={styles.labelText}>{value}/{maxValue}</Text>
+                                        <Text style={styles.labelText}>{value}</Text>
                                     </View>
                                 </View>
                             </View>
@@ -76,6 +75,7 @@ const styles = StyleSheet.create({
     },
     labelText: {
         color: '#000',
+        marginRight: 10,
     },
 });
 

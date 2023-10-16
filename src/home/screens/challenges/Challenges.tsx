@@ -6,28 +6,43 @@ import { TouchableOpacity } from "react-native";
 import { useGetAllChallengesQuery } from '../../../redux/services/challenges/challenges.service';
 import { Challenge } from '../../../redux/services/challenges/interfaces/challenges.interfaces';
 import { RootStackParamList } from "../../../routing/navigation-types";
+import { NotFound } from '../../../shared/components/notFound/NotFound';
 import Layout from "../../../shared/layout/Layout";
 import { ChallengeCard } from './components/ChallengeCard';
-
 
 export const Challenges = () => {
     const navigation = useNavigation<NavigationProp<RootStackParamList, "Challenges">>();
     const { data: challengesData, isLoading, isError, error } = useGetAllChallengesQuery({ from: 0, limit: 10 });
 
-
-    if (isError || !challengesData) {
-        return (
-            <Layout showCredits={false}>
-                <Center>
-
+    const renderContent = () => {
+        if (isLoading) {
+            return (
+                <Center flex={1}>
+                    <Spinner />
                 </Center>
-            </Layout>
-        );
-    }
+            );
+        }
 
-    const renderChallengeItem = ({ item }: { item: Challenge }) => (
-        <ChallengeCard challenge={item} />
-    );
+        if (isError || !challengesData) {
+            return (
+                <Center flex={1}>
+                    <NotFound message='No se han encontrado retos activos' height={300} width={"90%"} />
+                </Center>
+            );
+        }
+
+        const renderChallengeItem = ({ item }: { item: Challenge }) => (
+            <ChallengeCard challenge={item} />
+        );
+
+        return (
+            <FlatList
+                data={challengesData.data}
+                renderItem={renderChallengeItem}
+                keyExtractor={(item) => item.id}
+            />
+        );
+    };
 
     return (
         <Layout showCredits={false}>
@@ -43,18 +58,7 @@ export const Challenges = () => {
                     </Text>
                 </Center>
             </Box>
-            {
-                isLoading ?
-                    <Center>
-                        <Spinner></Spinner>
-                    </Center>
-                    :
-                    <FlatList
-                        data={challengesData.data}
-                        renderItem={renderChallengeItem}
-                        keyExtractor={(item) => item.id}
-                    />
-            }
+            {renderContent()}
         </Layout>
     );
 };

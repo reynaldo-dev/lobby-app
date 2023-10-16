@@ -2,10 +2,10 @@
 import React from 'react';
 import { Avatar, Badge, Box, HStack, Text } from 'native-base';
 import defaultAvatar from '../../../../../assets/avatar.png';
-import { IRanking } from '../../../../redux/services/leagues/interfaces/league.interfaces';
+import { IRanking, IRankingCategory } from '../../../../redux/services/leagues/interfaces/league.interfaces';
 
 interface UserCardProps {
-    user: IRanking;
+    user: IRanking | IRankingCategory
     index: number;
 }
 

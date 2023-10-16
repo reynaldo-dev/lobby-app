@@ -87,7 +87,7 @@ export const RecognitionCard = ({
               />
               <Box
                 mt={2}
-                backgroundColor={league?.league.color || theme.colors.primary}
+                backgroundColor={league?.league?.color || theme.colors.primary}
                 px={2}
                 py={1}
                 borderRadius="sm"

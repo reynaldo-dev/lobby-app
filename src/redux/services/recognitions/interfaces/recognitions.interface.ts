@@ -16,6 +16,7 @@ export interface IRecognition {
   userSource: IUserRecognition;
   userTarget: IUserRecognition;
   createdAt: Date;
+  isRead: boolean;
 }
 
 export interface ICreateRecognitionDto {

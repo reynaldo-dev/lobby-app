@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { IConfirmOrderResponse } from "../redux/services/reedemables/interfaces/confirm-order.interface";
-import * as Print from "expo-print";
-import { shareAsync } from "expo-sharing";
+import React, { useEffect, useState } from 'react';
+import { IConfirmOrderResponse } from '../redux/services/reedemables/interfaces/confirm-order.interface';
+import * as Print from 'expo-print';
+import { shareAsync } from 'expo-sharing';
 export const useGenerateTradeTicket = (trade: IConfirmOrderResponse) => {
-  const [ticketLayout, setTicketLayout] = useState("");
+  const [ticketLayout, setTicketLayout] = useState('');
 
   const printToFile = async () => {
     const { uri } = await Print.printToFileAsync({ html: ticketLayout });
-    console.log("File has been saved to:", uri);
     await shareAsync(uri, {
-      UTI: ".pdf",
-      mimeType: "application/pdf",
+      UTI: '.pdf',
+      mimeType: 'application/pdf',
     });
   };
 

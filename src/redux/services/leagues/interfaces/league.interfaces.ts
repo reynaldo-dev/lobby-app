@@ -23,3 +23,18 @@ export interface IUserInLeague {
   email: string;
   picture: null;
 }
+
+export interface IRankingCategory {
+  id: string;
+  name: string;
+  lastname: string;
+  picture: null;
+  league: League;
+  total: number;
+}
+
+export interface League {
+  id: string;
+  name: string;
+  color: string;
+}

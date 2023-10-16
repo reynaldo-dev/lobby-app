@@ -44,12 +44,11 @@ export const SendRecognition: React.FC<SendRecognitionProps> = ({ route }) => {
 
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "SendRecognition">>();
-  const [createRecognition, { isLoading, isError, error }] =
+  const [createRecognition, { isLoading }] =
     useCreateRecognitionMutation();
   const {
     data: categoriesData,
     isLoading: isCategoriesLoading,
-    error: categoriesError,
   } = useGetRecognitionCategoriesQuery();
 
   const showToast = useCustomToast();
@@ -170,7 +169,7 @@ export const SendRecognition: React.FC<SendRecognitionProps> = ({ route }) => {
 
       <Modal
         isOpen={isSubmitting}
-        onClose={() => {}}
+        onClose={() => { }}
         closeOnOverlayClick={false}
       >
         <Box p={4} bg="white" rounded="lg">

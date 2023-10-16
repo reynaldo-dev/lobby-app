@@ -5,5 +5,5 @@ export function formatDate(date: Date | string): string {
     month: 'long',
     day: '2-digit',
   });
-  return `${formattedDate} del ${dateObject.getFullYear()}`;
+  return `${formattedDate}`;
 }

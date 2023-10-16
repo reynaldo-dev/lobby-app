@@ -1,30 +1,30 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
-import { getAuthStateFromAsyncStorage } from "../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage";
-import { User } from "../../slices/user/user.interface";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
+import { getAuthStateFromAsyncStorage } from '../../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage';
+import { User } from '../../slices/user/user.interface';
 import {
   IPasswordUpdatePayload,
   IPasswordUpdateResponse,
-} from "./interfaces/password-update";
+} from './interfaces/password-update';
 import {
   UpdateProfilePayload,
   UpdateProfileResponse,
-} from "./interfaces/update-profile";
-import { GetUserByFullNameArgs } from "./interfaces/user-search";
-import { ICurrentLeague } from "./interfaces/current-league.interface";
+} from './interfaces/update-profile';
+import { GetUserByFullNameArgs } from './interfaces/user-search';
+import { ICurrentLeague } from './interfaces/current-league.interface';
 
 export const userApi = createApi({
-  reducerPath: "userApi",
+  reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://5e2c-190-150-88-140.ngrok-free.app/api",
+    baseUrl: 'http://db86-138-186-250-181.ngrok-free.app/api',
     prepareHeaders: async (headers) => {
       const bearerToken = await getAuthStateFromAsyncStorage();
       if (bearerToken) {
-        headers.set("authorization", bearerToken);
+        headers.set('authorization', bearerToken);
       }
       return headers;
     },
   }),
-  tagTypes: ["User"],
+  tagTypes: ['User'],
   refetchOnFocus: true,
   refetchOnMountOrArgChange: true,
   refetchOnReconnect: true,
@@ -39,7 +39,7 @@ export const userApi = createApi({
     >({
       query: (payload) => ({
         url: `/user/${payload.id}`,
-        method: "PATCH",
+        method: 'PATCH',
         body: {
           name: payload.name,
           lastname: payload.lastname,
@@ -56,7 +56,7 @@ export const userApi = createApi({
     >({
       query: (payload) => ({
         url: `/user/password-update/${payload.id}`,
-        method: "PUT",
+        method: 'PUT',
         body: {
           lastPassword: payload.currentPassword,
           newPassword: payload.newPassword,
