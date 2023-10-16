@@ -4,10 +4,8 @@ import { Link, useToast } from "native-base";
 import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import * as Yup from "yup";
-import { login } from "../../../redux/slices/user/user.thunk";
-import {
-  useAppDispatch,
-} from "../../../redux/store/store";
+import { login } from "../../../redux/thunks/user.thunk";
+import { useAppDispatch } from "../../../redux/store/store";
 import TextField from "../../../shared/components/TextField/TextField";
 import CustomToast from "../../../shared/components/toast/CustomToast";
 import ValidatedInputText from "../../../shared/components/validated-inputText/ValidatedInputText";
@@ -15,7 +13,9 @@ import Layout from "../../../shared/layout/Layout";
 import { theme } from "../../../theme";
 
 const validationLoginSchema = Yup.object().shape({
-  email: Yup.string().email("Correo electrónico invalido").required("Correo electrónico es requerido"),
+  email: Yup.string()
+    .email("Correo electrónico invalido")
+    .required("Correo electrónico es requerido"),
 });
 interface LoginFormValues {
   email: string;
@@ -31,7 +31,6 @@ export default function Login() {
   const [toastVisible, setToastVisible] = useState(false);
   const [loading, setLoading] = useState(false);
 
-
   const onLogin = (values: LoginFormValues) => {
     setLoading(true);
     dispatch(login(values))
@@ -40,12 +39,8 @@ export default function Login() {
         if (!toastVisible) {
           setToastVisible(true);
           toast.show({
-
             render: () => (
-              <CustomToast
-                message={error.message}
-                color={colors.danger}
-              />
+              <CustomToast message={error.message} color={colors.danger} />
             ),
             placement: "top",
             duration: 2000,
@@ -57,7 +52,6 @@ export default function Login() {
         setLoading(false);
       });
   };
-
 
   return (
     <Layout backgroundColor={colors.white} showCredits={false}>

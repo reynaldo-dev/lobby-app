@@ -1,17 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { communitiesService } from "../services/community/communities.service";
-import user from "../slices/user/user.slice";
-import trade from "../slices/trade-ticket/trade-ticket.slice";
-import { assistanceTicketApi } from "../services/assistanceTicket/assitanceTicket.service";
-import { eventsApi } from "../services/events/events.service";
-import { consumablesTicketsApi } from "../services/consumableTicket/consumableTicket.service";
-import { userApi } from "../services/user/user.service";
-import { alliancesApi } from "../services/alliances/alliances.service";
-import { redeemablesApi } from "../services/reedemables/reedemeables.service";
-import { recognitionsApi } from "../services/recognitions/recognitions.service";
-import { leaguesApi } from "../services/leagues/leagues.service";
-import { challengesApi } from "../services/challenges/challenges.service";
+import { communitiesService } from "../services/communities.service";
+import user from "../slices/user.slice";
+import trade from "../slices/trade-ticket.slice";
+import { assistanceTicketApi } from "../services/assitanceTicket.service";
+import { eventsApi } from "../services/events.service";
+import { consumablesTicketsApi } from "../services/consumableTicket.service";
+import { userApi } from "../services/user.service";
+import { alliancesApi } from "../services/alliances.service";
+import { redeemablesApi } from "../services/redeemeables.service";
+import { recognitionsApi } from "../services/recognitions.service";
+import { leaguesApi } from "../services/leagues.service";
+import { challengesApi } from "../services/challenges.service";
 
 export const store = configureStore({
   reducer: {

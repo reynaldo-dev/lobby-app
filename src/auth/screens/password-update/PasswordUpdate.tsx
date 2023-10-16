@@ -1,12 +1,12 @@
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign } from "@expo/vector-icons";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Formik } from "formik";
 import { Box, Button, Center, Text, VStack, View, useToast } from "native-base";
 import React, { useState } from "react";
 import { TouchableOpacity } from "react-native";
 import * as Yup from "yup";
-import { useUpdatePasswordMutation } from "../../../redux/services/user/user.service";
-import { logout } from "../../../redux/slices/user/user.thunk";
+import { useUpdatePasswordMutation } from "../../../redux/services/user.service";
+import { logout } from "../../../redux/thunks/user.thunk";
 import {
   RootState,
   useAppDispatch,
@@ -43,8 +43,8 @@ export default function PasswordUpdate() {
 
   const toast = useToast();
 
-
-  const navigation = useNavigation<NavigationProp<RootStackParamList, "PasswordUpdate">>();
+  const navigation =
+    useNavigation<NavigationProp<RootStackParamList, "PasswordUpdate">>();
 
   const handleUpdatePassword = async (values: PasswordUpdateFormValues) => {
     if (updatePasswordSchema.isValidSync(values)) {
@@ -100,7 +100,12 @@ export default function PasswordUpdate() {
           </TouchableOpacity>
         </Box>
         <Center flex={1}>
-          <Text fontSize={16} color={"muted.500"} fontWeight="bold" marginRight={10}>
+          <Text
+            fontSize={16}
+            color={"muted.500"}
+            fontWeight="bold"
+            marginRight={10}
+          >
             Cambiar contraseña
           </Text>
         </Center>
