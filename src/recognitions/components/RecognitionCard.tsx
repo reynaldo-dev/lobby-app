@@ -5,11 +5,11 @@ import {
   Box,
   HStack,
   Icon,
-  Image,
   Pressable,
   Spinner,
   Text,
   VStack,
+  Image,
   useTheme,
 } from "native-base";
 import React from "react";
@@ -21,6 +21,7 @@ import {
 } from "../../redux/services/user.service";
 import { RootState, useAppSelector } from "../../redux/store/store";
 import { theme } from "../../theme";
+import CardSVG from "../../../assets/card-background.svg";
 
 type RecognitionCardProps = {
   name: string | undefined;
@@ -55,7 +56,7 @@ export const RecognitionCard = ({
   };
 
   return (
-    <Pressable onPress={onPressRecognitions}>
+    <Pressable onPress={onPressRecognitions} position={"relative"}>
       {({ isPressed }) => (
         <Box
           width="95%"

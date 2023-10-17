@@ -2,7 +2,7 @@ import { extendTheme } from "native-base";
 
 export const theme = extendTheme({
   colors: {
-    primary: "#F50057",
+    primary: "#dc0b1b",
     secondary: "#F27405",
     danger: "#EF4444",
     success: "#10B981",
@@ -18,5 +18,7 @@ export const theme = extendTheme({
 
     gray: "#f7f6fb",
     text: "#1F2937",
+
+    btHome: "#019f94",
   },
 });

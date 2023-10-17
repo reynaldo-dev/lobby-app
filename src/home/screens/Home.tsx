@@ -1,6 +1,7 @@
 import { AntDesign } from "@expo/vector-icons";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import {
+  Box,
   Button,
   Center,
   HStack,
@@ -15,6 +16,13 @@ import { RootStackParamList } from "../../routing/navigation-types";
 import Layout from "../../shared/layout/Layout";
 import { theme } from "../../theme";
 import { RecognitionCard } from "../../recognitions/components/RecognitionCard";
+import AlliancesSVG from "../../../assets/alliances.svg";
+import EventsSVG from "../../../assets/comming-events.svg";
+import HomeBTN from "../components/HomeBTN";
+import CommunitiesSVG from "../../../assets/communities.svg";
+import RecognitionSVG from "../../../assets/reconoce.svg";
+import RedeemablesSVG from "../../../assets/redeem.svg";
+import ChallengesSVG from "../../../assets/challenge.svg";
 
 export default function Home() {
   const { user } = useAppSelector((state: RootState) => state.user);
@@ -57,137 +65,60 @@ export default function Home() {
               score={2}
             />
             <Center>
-              <HStack width="95%" space={3}>
-                <Button
-                  flex={1}
-                  bg={theme.colors.primary}
-                  _text={{ color: "white" }}
-                  shadow={3}
-                  _pressed={{ opacity: 0.5 }}
+              <HStack w={"90%"} justifyContent={"space-evenly"} space={3}>
+                <HomeBTN
+                  color={theme.colors.primary}
+                  icon={<RecognitionSVG width={60} height={60} />}
                   onPress={onPressBtnStarMe}
-                >
-                  <HStack alignItems={"center"} space={1} alignSelf={"center"}>
-                    <Text
-                      textAlign={"center"}
-                      color={"white"}
-                      bold
-                      fontSize={"24"}
-                    >
-                      Reconoce
-                    </Text>
-                    <Icon as={AntDesign} name="staro" size="6" color="white" />
-                  </HStack>
-                  <Text textAlign={"center"} color={"white"} fontSize={"14"}>
-                    Presiona aqui para reconocer
-                  </Text>
-                </Button>
+                  title="Reconoce aquí"
+                  height={170}
+                  fontSize={20}
+                />
 
-                <Button
-                  flex={1}
-                  size={"lg"}
-                  height="100px"
-                  bg="warning"
-                  _text={{ color: "white" }}
-                  shadow={3}
-                  _pressed={{ opacity: 0.5 }}
+                <HomeBTN
+                  color={theme.colors.primary}
+                  icon={<RedeemablesSVG width={60} height={60} />}
                   onPress={onPressBtnPremios}
-                >
-                  <Text
-                    textAlign={"center"}
-                    color={"white"}
-                    bold
-                    fontSize={"16"}
-                  >
-                    Canjea tus creditos aqui
-                  </Text>
-                </Button>
+                  title="Centro de canje"
+                  height={170}
+                  fontSize={20}
+                />
               </HStack>
             </Center>
 
             <Center>
-              <HStack width="95%" space={3}>
-                <Button
-                  flex={1}
-                  size={"lg"}
-                  bg="#FF0000"
-                  _text={{ color: "white" }}
-                  shadow={3}
-                  _pressed={{ opacity: 0.5 }}
+              <HStack w={"90%"} justifyContent={"space-evenly"} space={3}>
+                <HomeBTN
+                  color={theme.colors.btHome}
+                  icon={<AlliancesSVG width={40} height={40} />}
                   onPress={onPressAlliances}
-                >
-                  <Text
-                    textAlign={"center"}
-                    color={"white"}
-                    bold
-                    fontSize={"16"}
-                  >
-                    Alianzas comerciales
-                  </Text>
-                </Button>
+                  title="Alianzas comerciales"
+                />
 
-                <Button
-                  flex={1}
-                  size={"lg"}
-                  height="100px"
-                  bg="danger"
-                  _text={{ color: "white" }}
-                  shadow={3}
-                  _pressed={{ opacity: 0.5 }}
+                <HomeBTN
+                  color={theme.colors.btHome}
+                  icon={<EventsSVG width={40} height={40} />}
                   onPress={onPressEvents}
-                >
-                  <Text
-                    textAlign={"center"}
-                    color={"white"}
-                    bold
-                    fontSize={"16"}
-                  >
-                    Próximos eventos
-                  </Text>
-                </Button>
+                  title="Próximos eventos"
+                />
               </HStack>
             </Center>
 
             <Center>
-              <HStack width="95%" space={3}>
-                <Button
-                  flex={1}
-                  size={"lg"}
-                  height="100px"
-                  bg="secondary"
-                  _text={{ color: "white" }}
-                  shadow={3}
-                  _pressed={{ opacity: 0.5 }}
+              <HStack w={"90%"} justifyContent={"space-evenly"} space={3}>
+                <HomeBTN
+                  color={theme.colors.btHome}
+                  icon={<CommunitiesSVG width={40} height={40} />}
                   onPress={onPressCommunities}
-                >
-                  <Text
-                    textAlign={"center"}
-                    color={"white"}
-                    bold
-                    fontSize={"16"}
-                  >
-                    Mis comunidades
-                  </Text>
-                </Button>
+                  title="Mis comunidades"
+                />
 
-                <Button
-                  flex={1}
-                  size={"lg"}
-                  height="100px"
-                  bg="danger"
-                  _text={{ color: "white" }}
-                  shadow={3}
-                  _pressed={{ opacity: 0.5 }}
+                <HomeBTN
+                  color={theme.colors.btHome}
+                  icon={<ChallengesSVG width={40} height={40} />}
                   onPress={onPressChallenges}
-                >
-                  <Text
-                    textAlign={"center"}
-                    color={"white"}
-                    bold
-                    fontSize={"16"}
-                  >
-                    Retos
-                  </Text>
-                </Button>
+                  title="Retos"
+                />
               </HStack>
             </Center>
           </VStack>
