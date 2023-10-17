@@ -1,6 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { NativeBaseProvider } from "native-base";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getUserCredentials } from "./redux/thunks/user.thunk";
 import { RootState, useAppDispatch, useAppSelector } from "./redux/store/store";
 import {
@@ -9,14 +9,29 @@ import {
   RootNavigatorStaff,
 } from "./routing/RouterStack";
 import { theme } from "./theme";
+import { getAuthStateFromAsyncStorage } from "./helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage";
 
 export default function Main() {
   const { isAuth, user } = useAppSelector((state: RootState) => state.user);
+  const [token, setToken] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const getAuthStatus = async () => {
+    const token = await getAuthStateFromAsyncStorage();
+    setToken(token);
+  };
+
   const dispatch = useAppDispatch();
-  const api = process.env.EXPO_PUBLIC_API_URL;
-  console.log(api);
   useEffect(() => {
-    dispatch(getUserCredentials());
+    getAuthStatus()
+      .then(() => {
+        dispatch(getUserCredentials());
+      })
+      .catch((error) => {
+        setError(
+          "No se ha podido iniciar sesión automaticamente, por favor coloca tu usuario y contraseña"
+        );
+      });
   }, []);
 
   return (

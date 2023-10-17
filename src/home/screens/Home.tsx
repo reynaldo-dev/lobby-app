@@ -60,8 +60,7 @@ export default function Home() {
               <HStack width="95%" space={3}>
                 <Button
                   flex={1}
-                  size={"lg"}
-                  bg="primary"
+                  bg={theme.colors.primary}
                   _text={{ color: "white" }}
                   shadow={3}
                   _pressed={{ opacity: 0.5 }}

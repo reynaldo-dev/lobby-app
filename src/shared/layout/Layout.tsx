@@ -14,6 +14,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { isDarkColor } from "../../helpers/is-dark-color/isDarkColor";
 import { RootState, useAppSelector } from "../../redux/store/store";
 import { useGetCurrentCreditsQuery } from "../../redux/services/user.service";
+import { theme } from "../../theme";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -48,22 +49,27 @@ export default function Layout({
       <StatusBar backgroundColor={backgroundColor} barStyle={barStyle} />
       {showCredits && (
         <Box
-          w={"95%"}
-          borderRadius={"full"}
-          alignSelf={"center"}
-          mx={4}
-          padding={2}
+          p={1}
+          bg={theme.colors.secondary}
+          mb={5}
+          mx={5}
+          flexDir={"row"}
+          alignItems={"center"}
+          justifyContent={"center"}
+          borderRadius={10}
         >
-          <Badge colorScheme="green" borderRadius="full" bg="#F59E0B">
-            <HStack space={2} alignItems="center">
-              <Icon as={FontAwesome5} name="coins" color="white" size={5} />
-              {isLoading && <Spinner color="white" />}
+          <Icon
+            as={FontAwesome5}
+            name="coins"
+            color={theme.colors.white}
+            size={5}
+            mr={2}
+          />
+          {isLoading && <Spinner color="white" />}
 
-              <Text color="white" bold fontSize={30}>
-                {data?.credits}
-              </Text>
-            </HStack>
-          </Badge>
+          <Text color={theme.colors.white} fontSize={"xl"}>
+            {data?.credits} creditos
+          </Text>
         </Box>
       )}
       {children}

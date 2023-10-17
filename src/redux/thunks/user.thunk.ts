@@ -3,6 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import http from "../../shared/api/api";
 import { IRegisterResponse } from "../../auth/interfaces/register-response.interface";
 import { Authentication } from "../../profile/interfaces/user.interface";
+import { getAuthStateFromAsyncStorage } from "../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage";
 
 export interface LoginPayload {
   email: string;
@@ -63,22 +64,25 @@ export const register = createAsyncThunk(
 export const getUserCredentials = createAsyncThunk(
   "user/getUserCredentials",
   async () => {
-    const authState = await AsyncStorage.getItem("authState");
-    if (authState) {
-      const auth = JSON.parse(authState) as Authentication;
-      return {
-        access_token: auth.access_token,
-        user: auth.user,
-        isAuth: auth.isAuth,
+    try {
+      const token = await getAuthStateFromAsyncStorage();
+      const user = await http.get<Authentication>("/auth/whoami", {
+        headers: {
+          Authorization: token,
+        },
+      });
+
+      const authState: Authentication = {
+        access_token: user.data.access_token,
+        user: user.data.user,
+        isAuth: true,
         error: null,
       };
-    } else {
-      return {
-        access_token: null,
-        user: null,
-        isAuth: false,
-        error: null,
-      };
+      const { error, ...rest } = authState;
+      await AsyncStorage.setItem("authState", JSON.stringify(rest));
+      return authState;
+    } catch (error: any) {
+      throw new Error(error.response.data.message);
     }
   }
 );
