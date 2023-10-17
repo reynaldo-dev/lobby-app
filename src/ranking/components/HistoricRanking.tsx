@@ -2,7 +2,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Button, Center, HStack, Icon, Spinner, Text } from "native-base";
 import React, { useState } from "react";
 import { FlatList, ListRenderItem, StyleSheet } from "react-native";
-import { IRanking } from "../interfaces/league.interfaces";
+import { IRankingHistoric } from "../interfaces/league.interfaces";
 import { useGetCurrentRankingQuery } from "../../redux/services/leagues.service";
 import { useGetRecognitionCategoriesQuery } from "../../redux/services/recognitions.service";
 import Layout from "../../shared/layout/Layout";
@@ -16,7 +16,7 @@ export const HistoricRanking = () => {
     useGetRecognitionCategoriesQuery();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  const renderRankingItem: ListRenderItem<IRanking> = ({
+  const renderRankingItem: ListRenderItem<IRankingHistoric> = ({
     item: user,
     index,
   }) => <RankingCard user={user} index={index} />;

@@ -1,7 +1,7 @@
 import { Center, CheckIcon, Select, Spinner, VStack } from "native-base";
 import React, { useEffect, useState } from "react";
 import { FlatList, ListRenderItem } from "react-native";
-import { IRankingCategory } from "../interfaces/league.interfaces";
+import { IRanking } from "../interfaces/league.interfaces";
 import { useLazyGetRankingByCategoryIdQuery } from "../../redux/services/leagues.service";
 import { useGetRecognitionCategoriesQuery } from "../../redux/services/recognitions.service";
 import { NotFoundRanking } from "../../shared/components/notFound/NotFoundRanking";
@@ -18,7 +18,7 @@ export const HistoricRankingByCategory = () => {
   );
   const [isRankingLoading, setIsRankingLoading] = useState<boolean>(false);
 
-  const renderRankingItem: ListRenderItem<IRankingCategory> = ({
+  const renderRankingItem: ListRenderItem<IRanking> = ({
     item: user,
     index,
   }) => <RankingCard user={user} index={index} />;

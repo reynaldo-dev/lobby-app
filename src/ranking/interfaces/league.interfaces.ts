@@ -6,7 +6,7 @@ export interface ILeague {
   color: string;
 }
 
-export interface IRanking {
+export interface IRankingHistoric {
   id: string;
   name: string;
   lastname: string;
@@ -24,7 +24,7 @@ export interface IUserInLeague {
   picture: null;
 }
 
-export interface IRankingCategory {
+export interface IRanking {
   id: string;
   name: string;
   lastname: string;
