@@ -1,9 +1,9 @@
 import LottieView from 'lottie-react-native';
 import { Center, Text } from "native-base";
 import React from 'react';
+import { Dimensions } from 'react-native';
 import notFound from '../../../../assets/notFountRanking.json';
 import { theme } from "../../../theme";
-
 
 type Props = {
     message: string;
@@ -11,7 +11,12 @@ type Props = {
     height?: number | string;
 }
 
-export const NotFoundRanking = ({ message, width = "100%", height = 300 }: Props) => {
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+
+const calculatedWidth = screenWidth * 0.8;
+const calculatedHeight = screenHeight * 0.4;
+
+export const NotFoundRanking = ({ message }: Props) => {
 
     return (
         <Center my={"auto"}>
@@ -20,8 +25,8 @@ export const NotFoundRanking = ({ message, width = "100%", height = 300 }: Props
                 autoPlay={true}
                 loop={true}
                 style={{
-                    width: width,
-                    height: height,
+                    width: calculatedWidth,
+                    height: calculatedHeight,
                 }}
             />
             <Text color={theme.colors.muted[400]}>

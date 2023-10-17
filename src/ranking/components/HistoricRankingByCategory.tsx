@@ -101,7 +101,6 @@ export const HistoricRankingByCategory = () => {
         <Center flex={1}>
           <NotFoundRanking
             message="Aún no hay posiciones para el ranking de esta categoría."
-            height={150}
           />
         </Center>
       )}

@@ -13,12 +13,13 @@ import { theme } from "../../theme";
 import { HistoricRanking } from "../components/HistoricRanking";
 import { MonthlyRanking } from "../components/MonthlyRanking";
 import { WeeklyRanking } from "../components/WeeklyRanking";
+import { YearlyRanking } from "../components/YearlyRanking";
 
 interface MyRoute extends Route {
   title: string;
 }
 
-interface RenderTabBarProps extends SceneRendererProps, TabBarProps<MyRoute> {}
+interface RenderTabBarProps extends SceneRendererProps, TabBarProps<MyRoute> { }
 
 export const Ranking = () => {
   const [index, setIndex] = useState(0);
@@ -34,7 +35,7 @@ export const Ranking = () => {
   const renderScene = SceneMap({
     weekly: WeeklyRanking,
     monthly: MonthlyRanking,
-    yearly: MonthlyRanking,
+    yearly: YearlyRanking,
     historic: HistoricRanking,
   });
 

@@ -8,19 +8,9 @@ interface UserCardProps {
   index: number;
 }
 
-export const RankingCard: React.FC<UserCardProps> = ({ user, index }) => {
-  const getBackgroundColor = (index: number) => {
-    switch (index) {
-      case 0:
-        return "gold";
-      case 1:
-        return "silver";
-      case 2:
-        return "#cd7f32";
-      default:
-        return "white";
-    }
-  };
+export const RankingCard = ({ user, index }: UserCardProps) => {
+  const backgroundColors = ["gold", "silver", "#cd7f32", "white"];
+  const backgroundColor = backgroundColors[index] || "white";
 
   const totalRecognitions = 'recognitionsReceivedCount' in user ? user.recognitionsReceivedCount : user.total;
 
@@ -32,7 +22,7 @@ export const RankingCard: React.FC<UserCardProps> = ({ user, index }) => {
       borderRadius="lg"
       p={4}
       mb={4}
-      backgroundColor={getBackgroundColor(index)}
+      backgroundColor={backgroundColor}
     >
       <HStack space={3} alignItems="center">
         <Text fontSize="md" bold>{index + 1}</Text>
@@ -49,7 +39,6 @@ export const RankingCard: React.FC<UserCardProps> = ({ user, index }) => {
           {user.league && (
             <Badge minW={"20%"} h={"50%"} backgroundColor={user.league.color}>{user.league.name}</Badge>
           )}
-          {/* <Text fontSize="sm">{totalRecognitions}</Text> */}
         </HStack>
       </HStack>
     </Box>

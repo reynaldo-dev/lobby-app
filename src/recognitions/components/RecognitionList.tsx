@@ -1,3 +1,4 @@
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 import {
   Avatar,
   Box,
@@ -12,19 +13,18 @@ import {
 } from "native-base";
 import React from "react";
 import avatarImage from "../../../assets/avatar.png";
-import {
-  IRecognition,
-  IUserRecognition,
-} from "../interfaces/recognitions.interface";
+import { useRefetchOnFocus } from "../../hooks/useRefetchOnFocus";
 import {
   useGetGivenRecognitionsQuery,
   useGetReceivedRecognitionsQuery,
   useMarkRecognitionAsReadMutation,
 } from "../../redux/services/recognitions.service";
 import { RootState, useAppSelector } from "../../redux/store/store";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { RootStackParamList } from "../../routing/navigation-types";
-import { useRefetchOnFocus } from "../../hooks/useRefetchOnFocus";
+import {
+  IRecognition,
+  IUserRecognition,
+} from "../interfaces/recognitions.interface";
 
 interface RecognitionListProps {
   type: "received" | "given";
@@ -73,7 +73,6 @@ const RecognitionList = ({ type }: RecognitionListProps) => {
   const handlePress = async (recognition: IRecognition) => {
     if (type === "received" && !recognition.isRead) {
       await markAsRead(recognition.id);
-      console.log("Marking recognition as read with ID:", recognition.id);
     }
     navigation.navigate("RecognitionDetails", { recognition });
   };

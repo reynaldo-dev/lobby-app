@@ -36,7 +36,6 @@ export const CommunityList = () => {
       ListEmptyComponent={
         <NotFound
           message="Aún no perteneces a ninguna comunidad."
-          height={250}
         />
       }
     />

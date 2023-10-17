@@ -7,6 +7,8 @@ import Layout from "../../shared/layout/Layout";
 import { theme } from "../../theme";
 import { IRanking } from "../interfaces/league.interfaces";
 import { RankingCard } from "./RankingCard";
+import { NotFoundRanking } from "../../shared/components/notFound/NotFoundRanking";
+import { IsError } from "../../shared/components/IsError/IsError";
 
 export const WeeklyRanking = () => {
   const { data: rankingData, isLoading, isError } = useGetWeeklyRankingQuery();
@@ -28,7 +30,7 @@ export const WeeklyRanking = () => {
   if (isError) {
     return (
       <Layout showCredits={false}>
-        <Text>Ocurrió un error al cargar el ranking semanal.</Text>
+        <IsError message="Ocurrio un error inesperado" />
       </Layout>
     );
   }
@@ -36,7 +38,7 @@ export const WeeklyRanking = () => {
   if (!rankingData || rankingData.length === 0) {
     return (
       <Layout showCredits={false}>
-        <Text>Aún no hay posiciones para el ranking semanal.</Text>
+        <NotFoundRanking message="Aún no hay posiciones para el ranking semanal" />
       </Layout>
     );
   }

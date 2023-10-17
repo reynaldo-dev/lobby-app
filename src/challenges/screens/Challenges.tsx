@@ -4,11 +4,11 @@ import { Box, Center, FlatList, Spinner, Text } from "native-base";
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import { useGetAllChallengesQuery } from "../../redux/services/challenges.service";
-import { Challenge } from "../interfaces/challenges.interfaces";
 import { RootStackParamList } from "../../routing/navigation-types";
 import { NotFound } from "../../shared/components/notFound/NotFound";
 import Layout from "../../shared/layout/Layout";
 import { ChallengeCard } from "../components/ChallengeCard";
+import { Challenge } from "../interfaces/challenges.interfaces";
 
 export const Challenges = () => {
   const navigation =
@@ -34,8 +34,6 @@ export const Challenges = () => {
         <Center flex={1}>
           <NotFound
             message="No se han encontrado retos activos"
-            height={300}
-            width={"90%"}
           />
         </Center>
       );

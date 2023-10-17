@@ -1,15 +1,15 @@
+import { AntDesign } from "@expo/vector-icons";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Box, Center, FlatList, Text } from "native-base";
-import Layout from "../../shared/layout/Layout";
 import React from "react";
 import { ActivityIndicator, TouchableOpacity } from "react-native";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { RootStackParamList } from "../../routing/navigation-types";
-import { AntDesign } from "@expo/vector-icons";
-import { CardHistory } from "../components/CardHistory";
-import { RootState, useAppSelector } from "../../redux/store/store";
 import { useGetInactiveEventsQuery } from "../../redux/services/events.service";
+import { RootState, useAppSelector } from "../../redux/store/store";
+import { RootStackParamList } from "../../routing/navigation-types";
 import { NotFound } from "../../shared/components/notFound/NotFound";
+import Layout from "../../shared/layout/Layout";
 import { theme } from "../../theme";
+import { CardHistory } from "../components/CardHistory";
 
 export const EventHistory = () => {
   const navigation =
@@ -34,7 +34,7 @@ export const EventHistory = () => {
     }
 
     if (isError || !validEvents.length) {
-      return <NotFound message="Aún no hay eventos pasados" height={300} />;
+      return <NotFound message="Aún no hay eventos pasados" />;
     }
 
     return (

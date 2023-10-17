@@ -1,15 +1,15 @@
+import { AntDesign } from "@expo/vector-icons";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Box, Center, Spinner, Text, theme } from "native-base";
+import React from "react";
 import { FlatList, TouchableOpacity } from "react-native";
-import { EventListSkeleton } from "../../home/components/EventListSkeleton";
-import { NotFound } from "../../shared/components/notFound/NotFound";
-import CardEvent from "../components/CardEvent";
 import { useGetMyEventsQuery } from "../../redux/services/events.service";
 import { RootState, useAppSelector } from "../../redux/store/store";
-import Layout from "../../shared/layout/Layout";
-import React from "react";
-import { AntDesign } from "@expo/vector-icons";
 import { RootStackParamList } from "../../routing/navigation-types";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { NotFound } from "../../shared/components/notFound/NotFound";
+import Layout from "../../shared/layout/Layout";
+import CardEvent from "../components/CardEvent";
+import { IGetMyEventsResponse } from "../interfaces/get-my-events";
 
 export const MyUpcomingEvents = () => {
   const { user } = useAppSelector((state: RootState) => state.user);
@@ -21,7 +21,7 @@ export const MyUpcomingEvents = () => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "MyUpcomingEvents">>();
 
-  const renderItem = ({ item }) => <CardEvent key={item.id} data={item} />;
+  const renderItem = ({ item }: { item: IGetMyEventsResponse }) => <CardEvent key={item.id} data={item} />;
 
   return (
     <Layout showCredits={false}>
@@ -64,7 +64,6 @@ export const MyUpcomingEvents = () => {
           ) : (
             <NotFound
               message="Aún no estás inscrito a ningún evento."
-              height={250}
             />
           )}
         </>

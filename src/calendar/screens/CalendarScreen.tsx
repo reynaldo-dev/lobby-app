@@ -77,7 +77,7 @@ export default function CalendarScreen() {
           renderItem={(item) => <RenderItem item={item} />}
           renderEmptyData={() => {
             return (
-              <NotFound message="No hay eventos para este día." height={400} />
+              <NotFound message="No hay eventos para este día." />
             );
           }}
         />
