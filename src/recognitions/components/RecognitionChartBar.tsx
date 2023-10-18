@@ -1,11 +1,12 @@
-import React from 'react';
-import { Dimensions } from 'react-native';
+import React from "react";
+import { Dimensions } from "react-native";
 import { BarChart } from "react-native-gifted-charts";
-import { Center, Spinner, Text } from "native-base";
+import { Center, Spinner, Text, View } from "native-base";
 import Layout from "../../shared/layout/Layout";
-import useTransformedData from '../../hooks/useTransformedData';
+import useTransformedData from "../../hooks/useTransformedData";
+import { theme } from "../../theme";
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 
 const RecognitionChartBar = () => {
   const { transformedData, noOfSections, maxValue } = useTransformedData();
@@ -22,16 +23,20 @@ const RecognitionChartBar = () => {
 
   return (
     <Layout showCredits={false}>
-      <BarChart
-        data={transformedData}
-        width={width}
-        horizontal
-        maxValue={maxValue}
-        noOfSections={noOfSections}
-        stepValue={stepValue}
-        disableScroll
-        isAnimated
-      />
+      <View mt={5}>
+        <BarChart
+          data={transformedData}
+          width={width}
+          horizontal
+          maxValue={maxValue}
+          noOfSections={noOfSections}
+          stepValue={stepValue}
+          isAnimated
+          disableScroll
+          barBorderTopRightRadius={5}
+          barBorderTopLeftRadius={5}
+        />
+      </View>
     </Layout>
   );
 };
