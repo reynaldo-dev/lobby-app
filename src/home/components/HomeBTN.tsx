@@ -40,7 +40,13 @@ export default function HomeBTN({
       >
         {icon}
       </Box>
-      <Text textAlign={"center"} color={"white"} bold fontSize={fontSize}>
+      <Text
+        textAlign={"center"}
+        color={"white"}
+        bold
+        fontSize={fontSize}
+        width={"100%"}
+      >
         {title}
       </Text>
     </Button>

@@ -8,6 +8,7 @@ import { RootStackParamList } from "../../routing/navigation-types";
 import Layout from "../../shared/layout/Layout";
 import { theme } from "../../theme";
 import ProfileMenu from "../components/ProfileMenu";
+import MaleAvatar from "../../../assets/male-avatar.svg";
 
 export default function Profile() {
   const { user } = useAppSelector((state: RootState) => state.user);
@@ -15,13 +16,13 @@ export default function Profile() {
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   return (
     <Layout backgroundColor={theme.colors.background} showCredits={false}>
-      <ScrollView>
+      <ScrollView mb={5}>
         <Box mx={5} my={5} flexDir="row" justifyContent="flex-end">
           <ProfileMenu />
         </Box>
 
         <VStack space={5} alignItems="center" mx={5}>
-          {user?.picture && (
+          {user?.picture ? (
             <Image
               source={{ uri: user.picture }}
               alt="Profile Picture"
@@ -30,6 +31,8 @@ export default function Profile() {
               borderColor="gray.300"
               borderWidth={2}
             />
+          ) : (
+            <MaleAvatar width={150} height={150} />
           )}
 
           <Center>
