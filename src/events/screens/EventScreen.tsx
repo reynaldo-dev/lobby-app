@@ -11,6 +11,8 @@ import {
   Button,
   Center,
   Divider,
+  HStack,
+  Heading,
   Icon,
   Pressable,
   ScrollView,
@@ -130,7 +132,6 @@ export default function EventScreen() {
                 onClose={() => setShowDialog(false)}
               >
                 <AlertDialog.Content style={{ borderRadius: 20, width: "80%" }}>
-                  <AlertDialog.Header>Confirmar Acción</AlertDialog.Header>
                   <AlertDialog.Body>
                     {isLoadingAction ? (
                       <Center>
@@ -141,37 +142,47 @@ export default function EventScreen() {
                         <Text style={{ flexWrap: "wrap" }}>Cargando...</Text>
                       </Center>
                     ) : (
-                      <Text style={{ flexWrap: "wrap" }}>
-                        ¿Estás seguro que quieres{" "}
-                        {isEnrolled ? "cancelar tu asistencia" : "asistir"} a
-                        este evento?
-                      </Text>
+                      <Box padding={2}>
+                        <Heading size="md">Confirmar asistencia</Heading>
+                        <Text style={{ flexWrap: "wrap" }} mt={2}>
+                          ¿Estás seguro que quieres{" "}
+                          {isEnrolled ? "cancelar tu asistencia" : "asistir"} a
+                          este evento?
+                        </Text>
+                        <HStack
+                          mt={3}
+                          space={3}
+                          width={"100%"}
+                          justifyContent={"flex-end"}
+                        >
+                          <Button
+                            ref={cancelRef}
+                            onPress={() => setShowDialog(false)}
+                            backgroundColor={theme.colors.white}
+                            borderColor={theme.colors.primary}
+                            borderWidth={1}
+                            mr={3}
+                            _text={{ color: theme.colors.primary }}
+                            disabled={isLoadingAction}
+                            _disabled={{ opacity: 0.5 }}
+                          >
+                            Cancelar
+                          </Button>
+                          <Button
+                            onPress={
+                              isEnrolled ? handleCancelEnrollment : handleEnroll
+                            }
+                            backgroundColor={theme.colors.primary}
+                            _text={{ color: "white" }}
+                            disabled={isLoadingAction}
+                            _disabled={{ opacity: 0.5 }}
+                          >
+                            Confirmar
+                          </Button>
+                        </HStack>
+                      </Box>
                     )}
                   </AlertDialog.Body>
-                  <AlertDialog.Footer>
-                    <Button
-                      ref={cancelRef}
-                      onPress={() => setShowDialog(false)}
-                      colorScheme="red"
-                      mr={3}
-                      _text={{ color: "white" }}
-                      disabled={isLoadingAction}
-                      _disabled={{ opacity: 0.5 }}
-                    >
-                      Cancelar
-                    </Button>
-                    <Button
-                      onPress={
-                        isEnrolled ? handleCancelEnrollment : handleEnroll
-                      }
-                      colorScheme="green"
-                      _text={{ color: "white" }}
-                      disabled={isLoadingAction}
-                      _disabled={{ opacity: 0.5 }}
-                    >
-                      Confirmar
-                    </Button>
-                  </AlertDialog.Footer>
                 </AlertDialog.Content>
               </AlertDialog>
 
