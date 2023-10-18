@@ -1,15 +1,15 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { NativeBaseProvider } from "native-base";
 import { useEffect, useState } from "react";
-import { getUserCredentials } from "./redux/thunks/user.thunk";
+import { getAuthStateFromAsyncStorage } from "./helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage";
 import { RootState, useAppDispatch, useAppSelector } from "./redux/store/store";
+import { getUserCredentials } from "./redux/thunks/user.thunk";
 import {
   AuthStack,
   RootNavigator,
   RootNavigatorStaff,
 } from "./routing/RouterStack";
 import { theme } from "./theme";
-import { getAuthStateFromAsyncStorage } from "./helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage";
 
 export default function Main() {
   const { isAuth, user } = useAppSelector((state: RootState) => state.user);
