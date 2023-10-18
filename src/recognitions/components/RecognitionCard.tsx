@@ -5,23 +5,23 @@ import {
   Box,
   HStack,
   Icon,
+  Image,
   Pressable,
   Spinner,
   Text,
   VStack,
-  Image,
   useTheme,
 } from "native-base";
 import React from "react";
 import avatarImage from "../../../assets/avatar.png";
-import { RootStackParamList } from "../../routing/navigation-types";
 import {
   useGetCurrentLeagueQuery,
   useGetCurrentRecognitionsCountQuery,
 } from "../../redux/services/user.service";
 import { RootState, useAppSelector } from "../../redux/store/store";
+import { RootStackParamList } from "../../routing/navigation-types";
 import { theme } from "../../theme";
-import CardSVG from "../../../assets/card-background.svg";
+import MaleAvatar from "../../../assets/male-avatar.svg";
 
 type RecognitionCardProps = {
   name: string | undefined;
@@ -80,12 +80,18 @@ export const RecognitionCard = ({
               >
                 {firstName} {firstLastName}
               </Text>
-              <Image
-                source={imageSource}
-                alt={"imagen del usuario"}
-                size={"xl"}
-                borderRadius="full"
-              />
+              {user?.picture ? (
+                <Image
+                  source={{ uri: user.picture }}
+                  alt="Profile Picture"
+                  size="100px"
+                  borderRadius="full"
+                  borderColor="gray.300"
+                  borderWidth={2}
+                />
+              ) : (
+                <MaleAvatar width={100} height={100} />
+              )}
               <Box
                 mt={2}
                 backgroundColor={league?.league?.color || theme.colors.primary}
