@@ -7,7 +7,7 @@ interface Props {
   icon: React.ReactNode;
   title: string;
   color: string;
-  height?: number;
+  height?: number[];
   fontSize?: number;
 }
 
@@ -16,7 +16,7 @@ export default function HomeBTN({
   icon,
   title,
   color,
-  height = 90,
+  height = [50, 60, 70],
   fontSize = 16,
 }: Props) {
   return (

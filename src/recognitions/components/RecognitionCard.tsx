@@ -56,7 +56,7 @@ export const RecognitionCard = ({
   };
 
   return (
-    <Pressable onPress={onPressRecognitions} position={"relative"}>
+    <Pressable onPress={onPressRecognitions}>
       {({ isPressed }) => (
         <Box
           width="95%"
