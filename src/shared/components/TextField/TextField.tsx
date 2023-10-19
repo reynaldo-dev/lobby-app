@@ -28,7 +28,7 @@ export default function TextField({
   const { colors } = theme;
   return (
     <Box alignItems="center" mb={10} mt={5}>
-      <FormControl w="100%" maxW="300px">
+      <FormControl w={["90%", "80%"]}>
         {formControlLabel ? (
           <FormControl.Label
             _text={{
@@ -41,6 +41,7 @@ export default function TextField({
         ) : null}
 
         <Input
+          height={[44, 60]}
           bgColor={colors.muted["200"]}
           style={styles.input}
           placeholder="Password"

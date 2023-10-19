@@ -1,8 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import { Formik } from "formik";
-import { Link, useToast } from "native-base";
+import { Box, Button, Link, View, useToast } from "native-base";
 import React, { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import * as Yup from "yup";
 import { login } from "../../../redux/thunks/user.thunk";
 import { useAppDispatch } from "../../../redux/store/store";
@@ -55,7 +55,7 @@ export default function Login() {
 
   return (
     <Layout backgroundColor={colors.white} showCredits={false}>
-      <View style={styles.container}>
+      <View flex={1} justifyContent={"center"} alignItems={"center"}>
         <Text style={{ ...styles.title, color: colors.primary }}>
           Bienvenido
         </Text>
@@ -73,7 +73,7 @@ export default function Login() {
             errors,
             touched,
           }) => (
-            <View style={styles.form}>
+            <View w={"95%"}>
               <ValidatedInputText
                 bgColor={colors.muted["200"]}
                 isInvalid={errors.email ? true : false}
@@ -94,16 +94,16 @@ export default function Login() {
                 errors={errors.password}
               />
 
-              <TouchableOpacity
-                disabled={loading}
-                style={{
-                  ...styles.loginButton,
-                  backgroundColor: colors.primary,
-                }}
-                onPress={handleSubmit as never}
-              >
-                <Text style={styles.loginButtonText}>Iniciar Sesión</Text>
-              </TouchableOpacity>
+              <Box alignItems="center" w="full">
+                <Button
+                  backgroundColor={colors.primary}
+                  disabled={loading}
+                  w={["90%", "80%"]}
+                  onPress={handleSubmit as never}
+                >
+                  <Text style={styles.loginButtonText}>Iniciar Sesión</Text>
+                </Button>
+              </Box>
             </View>
           )}
         </Formik>
@@ -134,9 +134,7 @@ const styles = StyleSheet.create({
     fontSize: 40,
     marginBottom: 30,
   },
-  form: {
-    width: "80%",
-  },
+
   input: {
     fontSize: 16,
     color: theme.colors.primary,
@@ -147,6 +145,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     alignItems: "center",
     justifyContent: "center",
+    width: "100%",
   },
   loginButtonText: {
     color: "#fff",

@@ -1,7 +1,14 @@
-import { Ionicons } from '@expo/vector-icons';
-import { Box, Button, FormControl, Input, WarningOutlineIcon } from "native-base";
+import { Ionicons } from "@expo/vector-icons";
+import {
+  Box,
+  Button,
+  FormControl,
+  Input,
+  WarningOutlineIcon,
+} from "native-base";
 import React, { useCallback, useState } from "react";
 import { StyleSheet } from "react-native";
+import { theme } from "../../../theme";
 
 interface ValidatedInputTextProps {
   isInvalid: boolean;
@@ -14,7 +21,14 @@ interface ValidatedInputTextProps {
   type?: "text" | "password" | undefined;
   errors: any;
   onBlur?: (e: any) => void;
-  keyboardType?: "numeric" | "phone-pad" | "default" | "email-address" | "number-pad" | "decimal-pad" | undefined;
+  keyboardType?:
+    | "numeric"
+    | "phone-pad"
+    | "default"
+    | "email-address"
+    | "number-pad"
+    | "decimal-pad"
+    | undefined;
 }
 
 const ValidatedInputText = ({
@@ -28,27 +42,20 @@ const ValidatedInputText = ({
   bgColor,
   type = "text",
   onBlur,
-  keyboardType
+  keyboardType,
 }: ValidatedInputTextProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = useCallback(() => {
-    setShowPassword(prev => !prev);
+    setShowPassword((prev) => !prev);
   }, []);
-
-
 
   return (
     <Box alignItems="center" w="full">
-      <FormControl
-        isInvalid={isInvalid}
-        w="100%"
-        maxW="300px"
-        borderRadius={10}
-      >
+      <FormControl isInvalid={isInvalid} borderRadius={10} w={["90%", "80%"]}>
         <FormControl.Label>{formControlLabel}</FormControl.Label>
         <Input
-          height={44}
+          height={[44, 60]}
           onBlur={onBlur}
           autoCorrect={true}
           bgColor={bgColor}
@@ -64,7 +71,11 @@ const ValidatedInputText = ({
           InputRightElement={
             type === "password" ? (
               <Button onPress={togglePasswordVisibility} variant="unstyled">
-                <Ionicons name={showPassword ? "eye-off" : "eye"} size={24} color="gray" />
+                <Ionicons
+                  name={showPassword ? "eye-off" : "eye"}
+                  size={24}
+                  color="gray"
+                />
               </Button>
             ) : undefined
           }
@@ -77,7 +88,7 @@ const ValidatedInputText = ({
       </FormControl>
     </Box>
   );
-}
+};
 
 const styles = StyleSheet.create({
   input: {

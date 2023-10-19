@@ -9,6 +9,7 @@ import {
   ScrollView,
   Text,
   VStack,
+  View,
 } from "native-base";
 import React from "react";
 import { RootState, useAppSelector } from "../../redux/store/store";
@@ -23,6 +24,8 @@ import CommunitiesSVG from "../../../assets/communities.svg";
 import RecognitionSVG from "../../../assets/reconoce.svg";
 import RedeemablesSVG from "../../../assets/redeem.svg";
 import ChallengesSVG from "../../../assets/challenge.svg";
+import { Dimensions } from "react-native";
+const screenHeight = Dimensions.get("window").height;
 
 export default function Home() {
   const { user } = useAppSelector((state: RootState) => state.user);
@@ -56,14 +59,17 @@ export default function Home() {
 
   return (
     <Layout backgroundColor={theme.colors.background}>
-      <VStack space={4} flex={1}>
-        <ScrollView>
-          <VStack space={4} flex={1}>
-            <RecognitionCard
-              name={user?.name}
-              lastName={user?.lastname}
-              score={2}
-            />
+      <View height={screenHeight}>
+        <Box flex={1}>
+          <RecognitionCard
+            name={user?.name}
+            lastName={user?.lastname}
+            score={2}
+          />
+        </Box>
+
+        <View flex={2}>
+          <VStack space={10} h={"100%"}>
             <Center>
               <HStack w={"90%"} justifyContent={"space-evenly"} space={3}>
                 <HomeBTN
@@ -71,7 +77,7 @@ export default function Home() {
                   icon={<RecognitionSVG width={60} height={60} />}
                   onPress={onPressBtnStarMe}
                   title="Reconoce aquí"
-                  height={170}
+                  height={[50, 100, 150]}
                   fontSize={20}
                 />
 
@@ -80,7 +86,7 @@ export default function Home() {
                   icon={<RedeemablesSVG width={60} height={60} />}
                   onPress={onPressBtnPremios}
                   title="Centro de canje"
-                  height={170}
+                  height={[50, 100, 150]}
                   fontSize={20}
                 />
               </HStack>
@@ -122,8 +128,8 @@ export default function Home() {
               </HStack>
             </Center>
           </VStack>
-        </ScrollView>
-      </VStack>
+        </View>
+      </View>
     </Layout>
   );
 }
