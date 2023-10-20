@@ -1,19 +1,17 @@
 import { FontAwesome5 } from "@expo/vector-icons";
 import {
-  Badge,
   Box,
-  HStack,
   Icon,
   Spinner,
   StatusBar,
   Text,
-  View,
+  View
 } from "native-base";
 import React from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { isDarkColor } from "../../helpers/is-dark-color/isDarkColor";
-import { RootState, useAppSelector } from "../../redux/store/store";
 import { useGetCurrentCreditsQuery } from "../../redux/services/user.service";
+import { RootState, useAppSelector } from "../../redux/store/store";
 import { theme } from "../../theme";
 
 interface LayoutProps {
@@ -51,7 +49,7 @@ export default function Layout({
         <Box
           p={1}
           bg={theme.colors.secondary}
-          mb={5}
+          mb={{ base: 2, sm: 5, md: 10, lg: 15 }}
           mx={5}
           flexDir={"row"}
           alignItems={"center"}
@@ -67,7 +65,14 @@ export default function Layout({
           />
           {isLoading && <Spinner color="white" />}
 
-          <Text color={theme.colors.white} fontSize={"xl"}>
+          <Text color={theme.colors.white}
+            fontSize={{
+              base: "md",
+              sm: "md",
+              md: "xl",
+              lg: "xl"
+            }}
+          >
             {data?.credits} creditos
           </Text>
         </Box>

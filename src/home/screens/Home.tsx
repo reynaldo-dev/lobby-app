@@ -1,33 +1,38 @@
-import { AntDesign } from "@expo/vector-icons";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import {
   Box,
-  Button,
   Center,
   HStack,
-  Icon,
-  ScrollView,
-  Text,
   VStack,
   View,
+  useBreakpointValue
 } from "native-base";
 import React from "react";
+import { Dimensions } from "react-native";
+import AlliancesSVG from "../../../assets/alliances.svg";
+import ChallengesSVG from "../../../assets/challenge.svg";
+import EventsSVG from "../../../assets/comming-events.svg";
+import CommunitiesSVG from "../../../assets/communities.svg";
+import RecognitionSVG from "../../../assets/reconoce.svg";
+import RedeemablesSVG from "../../../assets/redeem.svg";
+import { RecognitionCard } from "../../recognitions/components/RecognitionCard";
 import { RootState, useAppSelector } from "../../redux/store/store";
 import { RootStackParamList } from "../../routing/navigation-types";
 import Layout from "../../shared/layout/Layout";
 import { theme } from "../../theme";
-import { RecognitionCard } from "../../recognitions/components/RecognitionCard";
-import AlliancesSVG from "../../../assets/alliances.svg";
-import EventsSVG from "../../../assets/comming-events.svg";
 import HomeBTN from "../components/HomeBTN";
-import CommunitiesSVG from "../../../assets/communities.svg";
-import RecognitionSVG from "../../../assets/reconoce.svg";
-import RedeemablesSVG from "../../../assets/redeem.svg";
-import ChallengesSVG from "../../../assets/challenge.svg";
-import { Dimensions } from "react-native";
+
 const screenHeight = Dimensions.get("window").height;
 
 export default function Home() {
+
+  const iconResponsive = useBreakpointValue({
+    base: 30,
+    sm: 40,
+    md: 50,
+    lg: 60,
+  })
+
   const { user } = useAppSelector((state: RootState) => state.user);
 
   const navigation =
@@ -69,25 +74,23 @@ export default function Home() {
         </Box>
 
         <View flex={2}>
-          <VStack space={10} h={"100%"}>
+          <VStack space={[4, 4, 10, 10]} h={"100%"}>
             <Center>
               <HStack w={"90%"} justifyContent={"space-evenly"} space={3}>
                 <HomeBTN
                   color={theme.colors.primary}
-                  icon={<RecognitionSVG width={60} height={60} />}
+                  icon={<RecognitionSVG width={iconResponsive} height={iconResponsive} />}
                   onPress={onPressBtnStarMe}
                   title="Reconoce aquí"
-                  height={[50, 100, 150]}
-                  fontSize={20}
+                  height={[90, 100, 170]}
                 />
 
                 <HomeBTN
                   color={theme.colors.primary}
-                  icon={<RedeemablesSVG width={60} height={60} />}
+                  icon={<RedeemablesSVG width={iconResponsive} height={iconResponsive} />}
                   onPress={onPressBtnPremios}
                   title="Centro de canje"
-                  height={[50, 100, 150]}
-                  fontSize={20}
+                  height={[90, 100, 170]}
                 />
               </HStack>
             </Center>
@@ -96,14 +99,14 @@ export default function Home() {
               <HStack w={"90%"} justifyContent={"space-evenly"} space={3}>
                 <HomeBTN
                   color={theme.colors.btHome}
-                  icon={<AlliancesSVG width={40} height={40} />}
+                  icon={<AlliancesSVG width={iconResponsive} height={iconResponsive} />}
                   onPress={onPressAlliances}
                   title="Alianzas comerciales"
                 />
 
                 <HomeBTN
                   color={theme.colors.btHome}
-                  icon={<EventsSVG width={40} height={40} />}
+                  icon={<EventsSVG width={iconResponsive} height={iconResponsive} />}
                   onPress={onPressEvents}
                   title="Próximos eventos"
                 />
@@ -114,14 +117,14 @@ export default function Home() {
               <HStack w={"90%"} justifyContent={"space-evenly"} space={3}>
                 <HomeBTN
                   color={theme.colors.btHome}
-                  icon={<CommunitiesSVG width={40} height={40} />}
+                  icon={<CommunitiesSVG width={iconResponsive} height={iconResponsive} />}
                   onPress={onPressCommunities}
                   title="Mis comunidades"
                 />
 
                 <HomeBTN
                   color={theme.colors.btHome}
-                  icon={<ChallengesSVG width={40} height={40} />}
+                  icon={<ChallengesSVG width={iconResponsive} height={iconResponsive} />}
                   onPress={onPressChallenges}
                   title="Retos"
                 />
