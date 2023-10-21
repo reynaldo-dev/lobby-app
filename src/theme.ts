@@ -13,6 +13,7 @@ export const theme = extendTheme({
     black: "#000000",
     white: "#FFFFFF",
     background: "#f2f2f2",
+    transparent: "transparent",
 
     darkGray: "#6b6b6b",
 

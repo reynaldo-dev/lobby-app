@@ -1,17 +1,29 @@
+import { Center, Spinner, View, useBreakpointValue } from "native-base";
 import React from "react";
 import { Dimensions } from "react-native";
 import { BarChart } from "react-native-gifted-charts";
-import { Center, Spinner, Text, View } from "native-base";
-import Layout from "../../shared/layout/Layout";
 import useTransformedData from "../../hooks/useTransformedData";
-import { theme } from "../../theme";
+import Layout from "../../shared/layout/Layout";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 
 const RecognitionChartBar = () => {
   const { transformedData, noOfSections, maxValue } = useTransformedData();
 
   const stepValue = Math.max(maxValue / noOfSections, 1);
+
+  const heightBar = useBreakpointValue({
+    base: height / 1.5,
+    sm: height / 1.5,
+    md: height / 2.5,
+  })
+
+  const widthBar = useBreakpointValue({
+    base: width / 1.2,
+    sm: width / 1.2,
+    md: width / 1.1,
+  })
+
 
   if (transformedData.length === 0) {
     return (
@@ -23,16 +35,17 @@ const RecognitionChartBar = () => {
 
   return (
     <Layout showCredits={false}>
-      <View mt={5}>
+      <View height={height} _android={{ marginTop: 5 }} marginX={{ md: 5 }}>
         <BarChart
           data={transformedData}
-          width={width}
+          width={widthBar}
+          height={heightBar}
           horizontal
           maxValue={maxValue}
           noOfSections={noOfSections}
           stepValue={stepValue}
+          showScrollIndicator
           isAnimated
-          disableScroll
           barBorderTopRightRadius={5}
           barBorderTopLeftRadius={5}
         />
