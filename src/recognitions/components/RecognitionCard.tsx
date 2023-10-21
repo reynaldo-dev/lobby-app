@@ -14,6 +14,7 @@ import {
 } from "native-base";
 import React from "react";
 import avatarImage from "../../../assets/avatar.png";
+import MaleAvatar from "../../../assets/male-avatar.svg";
 import {
   useGetCurrentLeagueQuery,
   useGetCurrentRecognitionsCountQuery,
@@ -21,7 +22,6 @@ import {
 import { RootState, useAppSelector } from "../../redux/store/store";
 import { RootStackParamList } from "../../routing/navigation-types";
 import { theme } from "../../theme";
-import MaleAvatar from "../../../assets/male-avatar.svg";
 
 type RecognitionCardProps = {
   name: string | undefined;
@@ -62,20 +62,24 @@ export const RecognitionCard = ({
           width="95%"
           borderRadius="lg"
           alignSelf="center"
-          padding={4}
+          padding={[2, 4, 6, 8]}
           borderColor="darkGray"
           flexDirection="row"
           justifyContent="space-between"
           alignItems="center"
           backgroundColor={isPressed ? colors.primary[50] : colors.white}
-          shadow={2}
           style={{ transform: [{ scale: isPressed ? 0.98 : 1 }] }}
         >
           <HStack space={4}>
             <VStack space={2} alignItems="center" maxW={"40%"}>
               <Text
                 fontWeight="bold"
-                fontSize={"16"}
+                fontSize={{
+                  base: "sm",
+                  sm: "md",
+                  md: "xl",
+                  lg: "xl"
+                }}
                 textTransform={"capitalize"}
               >
                 {firstName} {firstLastName}
@@ -95,15 +99,19 @@ export const RecognitionCard = ({
               <Box
                 mt={2}
                 backgroundColor={league?.league?.color || theme.colors.primary}
-                px={2}
-                py={1}
+                p={1}
                 borderRadius="sm"
-                w={"100%"}
+                width={{ base: "70%", sm: "80%", md: "100%" }}
               >
                 {leagueIsLoading && <Spinner color="white" />}
                 {league && (
                   <Text
-                    fontSize={"16"}
+                    fontSize={{
+                      base: "sm",
+                      sm: "md",
+                      md: "xl",
+                      lg: "xl"
+                    }}
                     fontWeight="bold"
                     color="white"
                     textAlign={"center"}
@@ -117,29 +125,57 @@ export const RecognitionCard = ({
             <VStack flex={1}>
               <Box flexGrow={1} justifyContent="center" alignItems="center">
                 <VStack alignItems="center">
-                  <Text fontWeight="bold" fontSize="2xl">
+                  <Text fontWeight="bold"
+                    color={theme.colors.primary}
+                    fontSize={{
+                      base: "xl",
+                      sm: "xl",
+                      md: "4xl",
+                      lg: "2xl"
+                    }}
+                  >
                     Haz acumulado
                   </Text>
 
                   {isLoading && <Spinner color="primary" />}
 
                   <HStack space={2} alignItems="center">
-                    <Text fontWeight="bold" fontSize="3xl">
+                    <Text fontWeight="bold"
+                      fontSize={{
+                        base: "xl",
+                        sm: "xl",
+                        md: "3xl",
+                        lg: "2xl"
+                      }}
+                    >
                       {data?.recognitionsReceivedCount}
                     </Text>
                     <Icon as={AntDesign} name="star" size={8} color="primary" />
                   </HStack>
 
-                  <Text fontWeight="bold" fontSize="2xl">
+                  <Text fontWeight="bold"
+                    fontSize={{
+                      base: "xl",
+                      sm: "xl",
+                      md: "3xl",
+                      lg: "2xl"
+                    }}
+                  >
                     reconocimientos
                   </Text>
                 </VStack>
               </Box>
 
               <Box mt="auto">
-                <HStack justifyContent={"flex-end"}>
-                  <Text fontWeight="semibold" fontSize={"sm"}>
-                    Presiona aquí para leerlos
+                <HStack justifyContent={"flex-end"} alignItems={"center"}>
+                  <Text fontWeight="semibold"
+                    fontSize={{
+                      base: "sm",
+                      sm: "sm",
+                      md: "lg",
+                      lg: "lg"
+                    }}>
+                    Ver mis reconocimientos
                   </Text>
                   <Icon
                     as={Entypo}

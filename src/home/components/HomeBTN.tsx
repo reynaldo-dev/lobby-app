@@ -1,14 +1,12 @@
 import { Box, Button, Text } from "native-base";
 import React from "react";
 import { theme } from "../../theme";
-
 interface Props {
   onPress: () => void;
   icon: React.ReactNode;
   title: string;
   color: string;
   height?: number[];
-  fontSize?: number;
 }
 
 export default function HomeBTN({
@@ -16,15 +14,13 @@ export default function HomeBTN({
   icon,
   title,
   color,
-  height = [50, 60, 70],
-  fontSize = 16,
+  height = [70, 100, 120],
 }: Props) {
   return (
     <Button
       justifyContent={"center"}
       alignItems={"center"}
       background={color}
-      shadow={3}
       _pressed={{ opacity: 0.5 }}
       onPress={onPress}
       w={"50%"}
@@ -44,7 +40,12 @@ export default function HomeBTN({
         textAlign={"center"}
         color={"white"}
         bold
-        fontSize={fontSize}
+        fontSize={{
+          base: "sm",
+          sm: "md",
+          md: "2xl",
+          lg: "xl"
+        }}
         width={"100%"}
       >
         {title}

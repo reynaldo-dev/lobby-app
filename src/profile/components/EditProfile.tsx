@@ -12,7 +12,7 @@ import {
   useToast,
 } from "native-base";
 import React, { useState } from "react";
-import { Platform, TouchableOpacity } from "react-native";
+import { Dimensions, Platform, TouchableOpacity } from "react-native";
 import * as Yup from "yup";
 import { DepartmentSelect } from "../../auth/screens/register/Register";
 import { useUpdateProfileMutation } from "../../redux/services/user.service";
@@ -27,6 +27,9 @@ import CustomToast from "../../shared/components/toast/CustomToast";
 import ValidatedInputText from "../../shared/components/validated-inputText/ValidatedInputText";
 import Layout from "../../shared/layout/Layout";
 import { theme } from "../../theme";
+
+const screenHeight = Dimensions.get("window").height;
+
 
 const validationEditProfileSchema = Yup.object().shape({
   name: Yup.string().required("Nombre es requerido"),
@@ -105,9 +108,10 @@ export default function EditProfile() {
     <Layout backgroundColor={theme.colors.white} showCredits={false}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1 }}
+        h={screenHeight}
       >
-        <ScrollView>
+        <ScrollView
+        >
           <Box flexDirection="row" alignItems="center" ml={2} height={50}>
             <Box>
               <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -145,8 +149,7 @@ export default function EditProfile() {
               <VStack
                 space={4}
                 bg={theme.colors.white}
-                h="full"
-                justifyContent="center"
+                h={screenHeight}
                 alignItems="center"
               >
                 <ValidatedInputText
