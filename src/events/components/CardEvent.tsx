@@ -1,54 +1,93 @@
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import {
-  Box,
-  HStack,
-  Heading,
-  Icon,
-  Pressable,
-  Text,
-  VStack,
-} from "native-base";
-import { formatDate } from "../../helpers/date-format/DateFormat";
-import { IGetMyEventsResponse } from "../interfaces/get-my-events";
-import { RootStackParamList } from "../../routing/navigation-types";
-import { theme } from "../../theme";
-import { Entypo } from "@expo/vector-icons";
+import { Feather } from '@expo/vector-icons';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { Box, HStack, Heading, Pressable, Text, VStack } from 'native-base';
+import { usePartialDate } from '../../hooks/usePartialDate';
+import { RootStackParamList } from '../../routing/navigation-types';
+import { theme } from '../../theme';
+import { IUpcomingEvents } from '../interfaces/upcoming-events';
 
 interface CardEventProps {
-  data: IGetMyEventsResponse;
+     data: IUpcomingEvents;
 }
 
 const CardEvent = ({ data }: CardEventProps) => {
-  const navigation =
-    useNavigation<NavigationProp<RootStackParamList, "Event">>();
-  const eventDateTime = formatDate(data?.event.dateTime);
+     const { day, month, year } = usePartialDate(data.dateTime);
+     const navigation =
+          useNavigation<NavigationProp<RootStackParamList, 'Event'>>();
 
-  return (
-    <Pressable
-      onPress={() => navigation.navigate("Event", { id: data?.event.id })}
-      backgroundColor={theme.colors.white}
-      w="95%"
-      alignSelf="center"
-      borderRadius={10}
-      p={4}
-      marginBottom={4}
-    >
-      <VStack>
-        <Heading size="sm" color={theme.colors.muted[500]}>
-          {data?.event.title}
-        </Heading>
-        <HStack mt={2} alignItems="center" space={2}>
-          <Icon
-            as={Entypo}
-            name="calendar"
-            size={4}
-            color={theme.colors.secondary}
-          />
-          <Text color={theme.colors.secondary}>{eventDateTime}</Text>
-        </HStack>
-      </VStack>
-    </Pressable>
-  );
+     return (
+          <Pressable
+               onPress={() => navigation.navigate('Event', { id: data?.id })}
+               backgroundColor={theme.colors.white}
+               w="95%"
+               alignSelf="center"
+               borderRadius={10}
+               p={4}
+               marginBottom={4}
+          >
+               <HStack space={10}>
+                    <VStack
+                         alignItems="center"
+                         space={1}
+                         background={theme.colors.primary}
+                         borderRadius={10}
+                         width={{
+                              base: '30%',
+                              sm: '30%',
+                              md: '20%',
+                              lg: '20%',
+                         }}
+                    >
+                         <Text color={theme.colors.white}>{month}</Text>
+                         <Heading size="lg" color={theme.colors.white}>
+                              {day}
+                         </Heading>
+                         <Text color={theme.colors.white}>{year}</Text>
+                    </VStack>
+                    <Box
+                         justifyContent={'space-around'}
+                         width={{
+                              base: '60%',
+                              sm: '60%',
+                              md: '60%',
+                              lg: '60%',
+                         }}
+                    >
+                         <Text
+                              bold
+                              fontSize={{
+                                   base: 'md',
+                                   sm: 'md',
+                                   md: 'xl',
+                                   lg: 'md',
+                              }}
+                              color={theme.colors.muted[500]}
+                         >
+                              {data?.title}
+                         </Text>
+
+                         <HStack space={2}>
+                              <Text
+                                   fontSize={{
+                                        base: 'sm',
+                                        sm: 'sm',
+                                        md: 'md',
+                                        lg: 'md',
+                                   }}
+                                   color={theme.colors.muted[500]}
+                              >
+                                   {data?.community.name}
+                              </Text>
+                              <Feather
+                                   name="users"
+                                   size={16}
+                                   color={theme.colors.muted[500]}
+                              />
+                         </HStack>
+                    </Box>
+               </HStack>
+          </Pressable>
+     );
 };
 
 export default CardEvent;

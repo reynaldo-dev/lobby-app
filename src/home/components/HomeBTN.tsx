@@ -8,10 +8,11 @@ interface Props {
      color: string;
      height?: number[];
      titleColor?: string;
-     width?: ButtomWidth;
+     width?: ResponsiveSize;
+     fontSize?: ResponsiveSize;
 }
 
-interface ButtomWidth {
+interface ResponsiveSize {
      base: string;
      sm: string;
      md: string;
@@ -26,6 +27,7 @@ export default function HomeBTN({
      height = [150, 150, 230],
      width = { base: '50%', sm: '50%', md: '40%', lg: '40%' },
      titleColor = 'white',
+     fontSize = { base: '2xs', sm: 'xs', md: 'xl', lg: 'xl' },
 }: Props) {
      return (
           <Button
@@ -53,12 +55,7 @@ export default function HomeBTN({
                               textAlign={'center'}
                               color={titleColor}
                               bold
-                              fontSize={{
-                                   base: '2xs',
-                                   sm: 'xs',
-                                   md: 'xl',
-                                   lg: 'xl',
-                              }}
+                              fontSize={fontSize}
                          >
                               {item}
                          </Text>

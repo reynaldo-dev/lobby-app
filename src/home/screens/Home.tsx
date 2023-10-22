@@ -92,13 +92,19 @@ export default function Home(): JSX.Element {
                                              }
                                              onPress={onPressBtnStarMe}
                                              title="Reconoce aquí"
-                                             height={[150, 150, 350]}
+                                             height={[150, 150, 300]}
                                              titleColor={theme.colors.black}
                                              width={{
                                                   base: '40%',
                                                   sm: '40%',
-                                                  md: '40%',
+                                                  md: '30%',
                                                   lg: '40%',
+                                             }}
+                                             fontSize={{
+                                                  base: 'md',
+                                                  sm: 'md',
+                                                  md: 'xl',
+                                                  lg: 'xl',
                                              }}
                                         />
 
@@ -112,13 +118,19 @@ export default function Home(): JSX.Element {
                                              }
                                              onPress={onPressBtnPremios}
                                              title="Canjea creditos"
-                                             height={[150, 150, 350]}
+                                             height={[150, 150, 300]}
                                              titleColor={theme.colors.black}
                                              width={{
                                                   base: '40%',
                                                   sm: '40%',
-                                                  md: '40%',
+                                                  md: '30%',
                                                   lg: '40%',
+                                             }}
+                                             fontSize={{
+                                                  base: 'md',
+                                                  sm: 'md',
+                                                  md: 'xl',
+                                                  lg: 'xl',
                                              }}
                                         />
                                    </HStack>
@@ -157,7 +169,7 @@ export default function Home(): JSX.Element {
                                                   />
                                              }
                                              onPress={onPressEvents}
-                                             title="Próximos eventos"
+                                             title="Mi calendario"
                                              width={{
                                                   base: '25%',
                                                   sm: '25%',
