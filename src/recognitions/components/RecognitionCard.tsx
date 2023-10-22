@@ -1,4 +1,4 @@
-import { AntDesign, Entypo } from '@expo/vector-icons';
+import { Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import {
@@ -10,11 +10,14 @@ import {
      Spinner,
      Text,
      VStack,
+     useBreakpointValue,
      useTheme,
 } from 'native-base';
 import React from 'react';
 import avatarImage from '../../../assets/avatar.png';
 import MaleAvatar from '../../../assets/male-avatar.svg';
+import Star from '../../../assets/reconoce.svg';
+
 import {
      useGetCurrentLeagueQuery,
      useGetCurrentRecognitionsCountQuery,
@@ -36,6 +39,12 @@ export const RecognitionCard = ({
      imageSource = avatarImage,
      score,
 }: RecognitionCardProps) => {
+     const iconResponsive = useBreakpointValue({
+          base: 25,
+          sm: 25,
+          md: 40,
+          lg: 60,
+     });
      const { colors } = useTheme();
      const { user } = useAppSelector((state: RootState) => state.user);
      const { data, isLoading } = useGetCurrentRecognitionsCountQuery(
@@ -167,9 +176,12 @@ export const RecognitionCard = ({
                                                   alignItems="center"
                                              >
                                                   <Text
+                                                       color={
+                                                            theme.colors.primary
+                                                       }
                                                        fontWeight="bold"
                                                        fontSize={{
-                                                            base: 'xl',
+                                                            base: '2xl',
                                                             sm: 'xl',
                                                             md: '3xl',
                                                             lg: '2xl',
@@ -179,20 +191,17 @@ export const RecognitionCard = ({
                                                             data?.recognitionsReceivedCount
                                                        }
                                                   </Text>
-                                                  <Icon
-                                                       as={AntDesign}
-                                                       name="star"
-                                                       size={8}
-                                                       color="primary"
+                                                  <Star
+                                                       width={iconResponsive}
+                                                       height={iconResponsive}
                                                   />
                                              </HStack>
 
                                              <Text
-                                                  fontWeight="bold"
                                                   fontSize={{
-                                                       base: 'xl',
-                                                       sm: 'xl',
-                                                       md: '3xl',
+                                                       base: 'md',
+                                                       sm: 'md',
+                                                       md: '2xl',
                                                        lg: '2xl',
                                                   }}
                                              >
@@ -207,11 +216,10 @@ export const RecognitionCard = ({
                                              alignItems={'center'}
                                         >
                                              <Text
-                                                  fontWeight="semibold"
                                                   fontSize={{
-                                                       base: 'sm',
-                                                       sm: 'sm',
-                                                       md: 'lg',
+                                                       base: 'xs',
+                                                       sm: 'xs',
+                                                       md: 'md',
                                                        lg: 'lg',
                                                   }}
                                              >
