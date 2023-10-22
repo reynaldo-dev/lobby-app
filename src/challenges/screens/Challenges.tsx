@@ -10,6 +10,8 @@ import Layout from "../../shared/layout/Layout";
 import { ChallengeCard } from "../components/ChallengeCard";
 import { Challenge } from "../interfaces/challenges.interfaces";
 
+
+
 export const Challenges = () => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "Challenges">>();
@@ -29,7 +31,7 @@ export const Challenges = () => {
       );
     }
 
-    if (isError || !challengesData) {
+    if (isError || challengesData?.data?.length === 0) {
       return (
         <Center flex={1}>
           <NotFound
@@ -45,7 +47,7 @@ export const Challenges = () => {
 
     return (
       <FlatList
-        data={challengesData.data}
+        data={challengesData?.data}
         renderItem={renderChallengeItem}
         keyExtractor={(item) => item.id}
       />

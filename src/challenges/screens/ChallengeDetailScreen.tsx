@@ -2,39 +2,78 @@ import { FontAwesome, FontAwesome5, MaterialIcons } from "@expo/vector-icons";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import {
   AlertDialog,
+  Box,
   Button,
   Center,
   Divider,
   HStack,
+  Heading,
   ScrollView,
+  Spinner,
   Text,
   VStack,
   useDisclose,
 } from "native-base";
 import React from "react";
+import useCustomToast from "../../hooks/useCustomToast";
+import { useAmIOnChallengeQuery, useTakeChallengeMutation } from "../../redux/services/challenges.service";
+import { RootState, useAppSelector } from "../../redux/store/store";
 import { RootStackParamList } from "../../routing/navigation-types";
 import Layout from "../../shared/layout/Layout";
 import { theme } from "../../theme";
 
 export const ChallengeDetailScreen = () => {
+  const route = useRoute<RouteProp<RootStackParamList, "ChallengeDetail">>();
+  const { challenge } = route.params;
+
+  const { user } = useAppSelector((state: RootState) => state.user);
   const { isOpen, onOpen, onClose } = useDisclose();
   const cancelRef = React.useRef(null);
+  const showToast = useCustomToast();
+  const [takeChallenge, { isLoading }] = useTakeChallengeMutation();
 
-  //TODO: Implementar lógica de inscripción
-  const handleEnroll = () => {
-    console.log("Inscribirse en el reto");
-    onClose();
+  const { data: amIOnChallengeData, isLoading: amIOnChallengeLoading, refetch: refetchAmIOnChallenge, } = useAmIOnChallengeQuery({
+    challengeId: challenge.id,
+    userId: user?.id as string
+  });
+
+  const handleEnroll = async () => {
+    const challengeId = challenge.id;
+    const takeChallengeDto = { userId: user?.id as string };
+    try {
+      const response = await takeChallenge({ challengeId, takeChallengeDto });
+      onClose();
+      if ("data" in response) {
+        if (response.data.ok) {
+          showToast({
+            id: "enrollment-success",
+            title: response.data.message || "Inscripción exitosa",
+            backgroundColor: "success",
+            textColor: "white",
+          });
+        }
+        refetchAmIOnChallenge();
+      }
+      else if ("error" in response) {
+        showToast({
+          id: "enrollment-error",
+          title: "Error de inscripción",
+          backgroundColor: "danger",
+          textColor: "white",
+        });
+      }
+    } catch (error) {
+      showToast({
+        id: "enrollment-error",
+        title: "Error de inscripción 3",
+        backgroundColor: "danger",
+        textColor: "white",
+      });
+    }
   };
 
   const handleButtonPress = () => {
     onOpen();
-  };
-
-  const route = useRoute<RouteProp<RootStackParamList, "ChallengeDetail">>();
-  const { challenge } = route.params;
-
-  const handlePress = () => {
-    // handle your press events
   };
 
   const getChallengeDateFormatted = (date: string) => {
@@ -62,14 +101,22 @@ export const ChallengeDetailScreen = () => {
           {challenge.title}
         </Text>
         <Center mb={4}>
-          <Button
-            width={"50%"}
-            onPress={handleButtonPress}
-            backgroundColor={theme.colors.secondary}
-            style={{ borderRadius: 50 }}
-          >
-            Participar en el Reto
-          </Button>
+          {amIOnChallengeLoading ? (
+            <Spinner color={theme.colors.secondary} />
+          ) : amIOnChallengeData && amIOnChallengeData.amIOnChallenge ? (
+            <Text color={theme.colors.secondary}>
+              Ya estás participando en este reto.
+            </Text>
+          ) : (
+            <Button
+              width={"50%"}
+              onPress={handleButtonPress}
+              backgroundColor={theme.colors.secondary}
+              style={{ borderRadius: 50 }}
+            >
+              Participar en el Reto
+            </Button>
+          )}
         </Center>
 
         <AlertDialog
@@ -77,29 +124,54 @@ export const ChallengeDetailScreen = () => {
           leastDestructiveRef={cancelRef}
           onClose={onClose}
         >
-          <AlertDialog.Content>
-            <AlertDialog.Header>Confirmar Acción</AlertDialog.Header>
+          <AlertDialog.Content style={{ borderRadius: 20, width: "80%" }}>
             <AlertDialog.Body>
-              ¿Estás seguro que quieres inscribirte en este reto?
+              {isLoading ? (
+                <Center>
+                  <Spinner
+                    size="large"
+                    color={theme.colors.primary}
+                  />
+                  <Text style={{ flexWrap: "wrap" }}>Cargando...</Text>
+                </Center>
+              ) : (
+                <Box padding={2}>
+                  <Heading size="md">Confirmar inscripción</Heading>
+                  <Text style={{ flexWrap: "wrap" }} mt={2}>
+                    ¿Estás seguro que quieres inscribirte en este reto?
+                  </Text>
+                  <HStack
+                    mt={3}
+                    space={3}
+                    width={"100%"}
+                    justifyContent={"flex-end"}
+                  >
+                    <Button
+                      ref={cancelRef}
+                      onPress={onClose}
+                      backgroundColor={theme.colors.white}
+                      borderColor={theme.colors.primary}
+                      borderWidth={1}
+                      mr={3}
+                      _text={{ color: theme.colors.primary }}
+                      disabled={isLoading}
+                      _disabled={{ opacity: 0.5 }}
+                    >
+                      Cancelar
+                    </Button>
+                    <Button
+                      onPress={handleEnroll}
+                      backgroundColor={theme.colors.primary}
+                      _text={{ color: "white" }}
+                      disabled={isLoading}
+                      _disabled={{ opacity: 0.5 }}
+                    >
+                      Confirmar
+                    </Button>
+                  </HStack>
+                </Box>
+              )}
             </AlertDialog.Body>
-            <AlertDialog.Footer>
-              <Button
-                ref={cancelRef}
-                onPress={onClose}
-                colorScheme="red"
-                mr={3}
-                _text={{ color: "white" }}
-              >
-                Cancelar
-              </Button>
-              <Button
-                onPress={handleEnroll}
-                colorScheme="green"
-                _text={{ color: "white" }}
-              >
-                Confirmar
-              </Button>
-            </AlertDialog.Footer>
           </AlertDialog.Content>
         </AlertDialog>
 
