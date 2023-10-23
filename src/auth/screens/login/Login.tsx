@@ -109,6 +109,13 @@ export default function Login() {
                                              disabled={loading}
                                              w={['90%', '80%']}
                                              onPress={handleSubmit as never}
+                                             isLoading={loading}
+                                             _loading={{
+                                                  color: 'white',
+                                                  _spinner: {
+                                                       color: 'white',
+                                                  },
+                                             }}
                                         >
                                              <Text
                                                   style={styles.loginButtonText}

@@ -9,6 +9,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../../routing/navigation-types';
 import { Entypo } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import Layout from '../../shared/layout/Layout';
 
 export default function TradeTicketShot() {
      const trade = useAppSelector((state: RootState) => state.trade);
@@ -16,7 +17,7 @@ export default function TradeTicketShot() {
      const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
      return (
-          <View flex={1} backgroundColor={theme.colors.background}>
+          <Layout showCredits={false} backgroundColor={theme.colors.white}>
                <Center pb={5}>
                     <LottieView
                          source={ok}
@@ -44,8 +45,7 @@ export default function TradeTicketShot() {
                               El siguiete paso es compartir el ticket con un
                               encargado, haz click en el botón 'Compartir
                               ticket', solo puedes hacerlo desde esta pantalla,
-                              asi que este paso no se repetirá en el
-                              futuroshareback
+                              asi que este paso no se repetirá en el futuros.
                          </Text>
 
                          <Box
@@ -102,6 +102,6 @@ export default function TradeTicketShot() {
                          Si ya lo compartiste, haz click en el botón 'Volver'
                     </Text>
                </Center>
-          </View>
+          </Layout>
      );
 }
