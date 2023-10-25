@@ -13,10 +13,11 @@ import {
   Spinner,
   Text,
   VStack,
+  useBreakpointValue,
 } from "native-base";
 import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
-import avatarImage from "../../../assets/avatar.png";
+import MaleAvatar from '../../../assets/male-avatar.svg';
 import {
   useCreateRecognitionMutation,
   useGetRecognitionCategoriesQuery,
@@ -41,6 +42,13 @@ export const SendRecognition: React.FC<SendRecognitionProps> = ({ route }) => {
   const { user: userFromState } = useAppSelector(
     (state: RootState) => state.user
   );
+
+  const iconResponsive = useBreakpointValue({
+    base: 60,
+    sm: 45,
+    md: 70,
+    lg: 80,
+  });
 
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "SendRecognition">>();
@@ -105,16 +113,20 @@ export const SendRecognition: React.FC<SendRecognitionProps> = ({ route }) => {
       });
   };
 
-  const image = user?.picture ? { uri: user?.picture } : avatarImage;
+  const image = user?.picture ? { uri: user?.picture } : MaleAvatar;
 
   return (
-    <Layout showCredits={false}>
+    <Layout >
       <VStack flex={1} px={5} py={6} space={4}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <AntDesign name="left" size={24} color="black" />
         </TouchableOpacity>
         <HStack alignItems="center" space={4}>
-          <Avatar size="48px" source={image} />
+          {user.picture ? (
+            <Avatar source={{ uri: user.picture }} />
+          ) : (
+            <MaleAvatar width={iconResponsive} height={iconResponsive} />
+          )}
           <VStack>
             <Text fontSize="lg" bold textTransform={"capitalize"}>
               {user.name} {user.lastname}
@@ -166,7 +178,7 @@ export const SendRecognition: React.FC<SendRecognitionProps> = ({ route }) => {
 
       <Modal
         isOpen={isSubmitting}
-        onClose={() => {}}
+        onClose={() => { }}
         closeOnOverlayClick={false}
       >
         <Box p={4} bg="white" rounded="lg">

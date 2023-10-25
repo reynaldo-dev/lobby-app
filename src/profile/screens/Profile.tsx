@@ -1,21 +1,42 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { Box, Center, Image, ScrollView, Text, VStack } from 'native-base';
+import { Box, Center, Image, ScrollView, Text, VStack, useBreakpointValue } from 'native-base';
 import React from 'react';
+import { Dimensions } from 'react-native';
 import SvgQRCode from 'react-native-qrcode-svg';
+import MaleAvatar from '../../../assets/male-avatar.svg';
 import { RootState, useAppSelector } from '../../redux/store/store';
 import { RootStackParamList } from '../../routing/navigation-types';
 import Layout from '../../shared/layout/Layout';
 import { theme } from '../../theme';
 import ProfileMenu from '../components/ProfileMenu';
-import MaleAvatar from '../../../assets/male-avatar.svg';
+
+const { width: screenWidth } = Dimensions.get('window');
 
 export default function Profile() {
+
+     const profileImageSizeFactor = useBreakpointValue({
+          base: 0.3,
+          sm: 0.3,
+          md: 0.25,
+          lg: 0.2,
+     }) || 0.3;
+
+     const boxAndQRSizeFactor = useBreakpointValue({
+          base: 0.5,
+          sm: 0.9,
+          md: 0.7,
+          lg: 0.,
+     }) || 0.9;
+
+     const profileImageSize = screenWidth * profileImageSizeFactor;
+     const boxAndQRSize = screenWidth * boxAndQRSizeFactor;
+
      const { user } = useAppSelector((state: RootState) => state.user);
      const navigation =
           useNavigation<NativeStackNavigationProp<RootStackParamList>>();
      return (
-          <Layout backgroundColor={theme.colors.background} showCredits={false}>
+          <Layout backgroundColor={theme.colors.background} >
                <ScrollView mb={5}>
                     <Box mx={5} my={5} flexDir="row" justifyContent="flex-end">
                          <ProfileMenu />
@@ -26,18 +47,23 @@ export default function Profile() {
                               <Image
                                    source={{ uri: user.picture }}
                                    alt="Profile Picture"
-                                   size="150px"
+                                   size={profileImageSize}
                                    borderRadius="full"
                                    borderColor="gray.300"
                                    borderWidth={2}
                               />
                          ) : (
-                              <MaleAvatar width={150} height={150} />
+                              <MaleAvatar width={profileImageSize} height={profileImageSize} />
                          )}
 
                          <Center>
                               <Text
-                                   fontSize="2xl"
+                                   fontSize={{
+                                        base: 'lg',
+                                        sm: 'md',
+                                        md: '2xl',
+                                        lg: 'xl',
+                                   }}
                                    fontWeight="bold"
                                    color="text"
                                    textTransform={'capitalize'}
@@ -80,12 +106,16 @@ export default function Profile() {
                                         {user.phone}
                                    </Text>
                               )}
+                              <Text mt={2}>
+                                   <Text fontWeight="bold">Lugar de trabajo:</Text>{' '}
+                                   Banco Santa Ana
+                              </Text>
                          </Box>
 
                          <Box>
                               <SvgQRCode
                                    enableLinearGradient
-                                   size={300}
+                                   size={boxAndQRSize}
                                    value={JSON.stringify(user)}
                               />
                          </Box>

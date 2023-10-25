@@ -8,20 +8,20 @@ import {
   TabBarProps,
   TabView,
 } from "react-native-tab-view";
-import { AssistanceTickets } from "../components/AssistanceTickets";
-import { ConsumablesTickets } from "../components/ConsumablesTickets";
+import { useRefetchOnFocus } from "../../hooks/useRefetchOnFocus";
+import { useGetTicketsByUserIdQuery } from "../../redux/services/assitanceTicket.service";
+import { useGetTicketsByUserIdQuery as useGetConsumablesTicketsByUserIdQuery } from "../../redux/services/consumableTicket.service";
+import { RootState, useAppSelector } from "../../redux/store/store";
 import Layout from "../../shared/layout/Layout";
 import { theme } from "../../theme";
-import { useRefetchOnFocus } from "../../hooks/useRefetchOnFocus";
-import { RootState, useAppSelector } from "../../redux/store/store";
-import { useGetTicketsByUserIdQuery as useGetConsumablesTicketsByUserIdQuery } from "../../redux/services/consumableTicket.service";
-import { useGetTicketsByUserIdQuery } from "../../redux/services/assitanceTicket.service";
+import { AssistanceTickets } from "../components/AssistanceTickets";
+import { ConsumablesTickets } from "../components/ConsumablesTickets";
 
 interface MyRoute extends Route {
   title: string;
 }
 
-interface RenderTabBarProps extends SceneRendererProps, TabBarProps<MyRoute> {}
+interface RenderTabBarProps extends SceneRendererProps, TabBarProps<MyRoute> { }
 
 export const TicketsScreen = () => {
   const { user } = useAppSelector((state: RootState) => state.user);
@@ -77,7 +77,7 @@ export const TicketsScreen = () => {
   };
 
   return (
-    <Layout backgroundColor={theme.colors.background} showCredits={false}>
+    <Layout backgroundColor={theme.colors.background} >
       <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}

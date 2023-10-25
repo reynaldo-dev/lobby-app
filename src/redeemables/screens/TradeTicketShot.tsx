@@ -17,7 +17,7 @@ export default function TradeTicketShot() {
      const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
      return (
-          <Layout showCredits={false} backgroundColor={theme.colors.white}>
+          <Layout backgroundColor={theme.colors.white}>
                <Center pb={5}>
                     <LottieView
                          source={ok}

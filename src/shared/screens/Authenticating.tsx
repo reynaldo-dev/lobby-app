@@ -1,6 +1,5 @@
+import { Heading, Spinner, StatusBar, View } from 'native-base';
 import React from 'react';
-
-import { Heading, Spinner, StatusBar, Text, View } from 'native-base';
 import { theme } from '../../theme';
 
 export default function Authenticating() {

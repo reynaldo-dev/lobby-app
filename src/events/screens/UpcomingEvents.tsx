@@ -29,7 +29,7 @@ export const UpcomingEvents = () => {
      );
 
      return (
-          <Layout showCredits={false} backgroundColor={theme.colors.background}>
+          <Layout backgroundColor={theme.colors.background}>
                <Box flexDirection="row" alignItems="center" ml={2} height={50}>
                     <Box>
                          <TouchableOpacity onPress={() => navigation.goBack()}>

@@ -40,7 +40,7 @@ export const HistoricRankingByCategory = () => {
 
   if (isCategoriesLoading) {
     return (
-      <Layout showCredits={false}>
+      <Layout >
         <Center>
           <Spinner accessibilityLabel="Cargando..." />
         </Center>
@@ -56,7 +56,7 @@ export const HistoricRankingByCategory = () => {
 
   if (isCategoriesLoading) {
     return (
-      <Layout showCredits={false}>
+      <Layout >
         <Center>
           <Spinner accessibilityLabel="Cargando..." />
         </Center>
@@ -65,7 +65,7 @@ export const HistoricRankingByCategory = () => {
   }
 
   return (
-    <Layout showCredits={false}>
+    <Layout >
       <VStack alignItems="center" space={2} mb={4}>
         <Select
           selectedValue={selectedCategory}

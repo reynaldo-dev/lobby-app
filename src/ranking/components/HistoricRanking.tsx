@@ -2,11 +2,11 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Button, Center, HStack, Icon, Spinner, Text } from "native-base";
 import React, { useState } from "react";
 import { FlatList, ListRenderItem, StyleSheet } from "react-native";
-import { IRankingHistoric } from "../interfaces/league.interfaces";
 import { useGetCurrentRankingQuery } from "../../redux/services/leagues.service";
 import { useGetRecognitionCategoriesQuery } from "../../redux/services/recognitions.service";
 import Layout from "../../shared/layout/Layout";
 import { theme } from "../../theme";
+import { IRankingHistoric } from "../interfaces/league.interfaces";
 import { HistoricRankingByCategory } from "./HistoricRankingByCategory";
 import { RankingCard } from "./RankingCard";
 
@@ -23,7 +23,7 @@ export const HistoricRanking = () => {
 
   if (isLoading || isCategoriesLoading) {
     return (
-      <Layout showCredits={false}>
+      <Layout >
         <Center>
           <Spinner accessibilityLabel="Cargando..." />
         </Center>
@@ -33,18 +33,25 @@ export const HistoricRanking = () => {
 
   if (isError) {
     return (
-      <Layout showCredits={false}>
+      <Layout >
         <Text>Ocurrió un error al cargar el ranking.</Text>
       </Layout>
     );
   }
 
   return (
-    <Layout showCredits={false}>
+    <Layout >
       <Center>
         <HStack alignItems="center" space={2} mb={4}>
           <Icon name="trophy" as={FontAwesome} />
-          <Text fontSize="xl" fontWeight="bold">
+          <Text
+            fontSize={{
+              base: 'xl',
+              sm: 'xl',
+              md: '3xl',
+              lg: '3xl',
+            }}
+            fontWeight="bold">
             Mejores posiciones históricas
           </Text>
         </HStack>

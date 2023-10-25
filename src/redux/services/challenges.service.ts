@@ -28,7 +28,7 @@ export const challengesApi = createApi({
      endpoints: (builder) => ({
           getAllChallenges: builder.query<GetAllResponse, IPagination>({
                query: (pagination) =>
-                    `/challenges?from=${pagination.from}&limit=${pagination.limit}`,
+                    `/challenges/available?from=${pagination.from}&limit=${pagination.limit}`,
           }),
           getChallengeById: builder.query<void, string>({
                query: (id) => `/challenges/${id}`,

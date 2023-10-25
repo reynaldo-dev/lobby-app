@@ -11,24 +11,23 @@ import {
   Select,
   Text,
   VStack,
-  View,
-  useToast,
+  View
 } from "native-base";
 import React, { useCallback, useState } from "react";
 import { KeyboardAvoidingView, Platform } from "react-native";
 import * as Yup from "yup";
+import useCustomToast from "../../../hooks/useCustomToast";
 import {
   useJoinCommunityMutation,
   useLazyGetSearchCommunitiesQuery,
 } from "../../../redux/services/communities.service";
-import { register } from "../../../redux/thunks/user.thunk";
 import {
   RootState,
   useAppDispatch,
   useAppSelector,
 } from "../../../redux/store/store";
+import { register } from "../../../redux/thunks/user.thunk";
 import { RootStackParamList } from "../../../routing/navigation-types";
-import CustomToast from "../../../shared/components/toast/CustomToast";
 import ValidatedInputText from "../../../shared/components/validated-inputText/ValidatedInputText";
 import Layout from "../../../shared/layout/Layout";
 import { theme } from "../../../theme";
@@ -41,6 +40,7 @@ interface IRegisterFormValues {
   phone: string;
   city: string;
   department: string;
+  workplace: string;
 }
 
 interface DepartmentSelectProps {
@@ -81,8 +81,9 @@ const registerValidationSchema = Yup.object().shape({
     .matches(/^[0-9]+$/, "Solo se permiten números"),
   city: Yup.string().required("Ciudad es requerida"),
   department: Yup.string().required("Departamento es requerido"),
+  workplace: Yup.string().required("Lugar de trabajo es requerido"),
 });
-
+//TODO: clean code
 export const DepartmentSelect = ({
   value,
   onChange,
@@ -121,7 +122,7 @@ export default function Register() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const toast = useToast();
+  const showToast = useCustomToast();
   const { user } = useAppSelector((state: RootState) => state.user);
 
   const [joinCommunity] = useJoinCommunityMutation();
@@ -137,6 +138,7 @@ export default function Register() {
     phone: "",
     city: "",
     department: "",
+    workplace: "",
   };
 
   const onRegister = useCallback(
@@ -148,27 +150,22 @@ export default function Register() {
           navigation.navigate("Step1");
         })
         .catch((error) => {
-          toast.show({
-            render: () => (
-              <CustomToast
-                color={theme.colors.danger}
-                message={error.message}
-              />
-            ),
-            duration: 2000,
-            placement: "top",
-            color: theme.colors.danger,
+          showToast({
+            id: "registration-error",
+            title: error.message,
+            backgroundColor: "danger",
+            textColor: "white",
           });
         })
         .finally(() => {
           setIsLoading(false);
         });
     },
-    [dispatch, toast]
+    [dispatch, showToast]
   );
 
   return (
-    <Layout backgroundColor={colors.background} showCredits={false}>
+    <Layout backgroundColor={colors.background}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
@@ -178,7 +175,7 @@ export default function Register() {
             <Center>
               <Text
                 color={theme.colors.primary}
-                fontSize={["xl", "4xl"]}
+                fontSize={["2xl", "4xl"]}
                 my={5}
               >
                 Registrate
@@ -288,17 +285,26 @@ export default function Register() {
                     errors={touched.city && errors.city}
                   />
 
-                  <Center mx={10}>
+                  <ValidatedInputText
+                    bgColor={colors.muted["200"]}
+                    isInvalid={touched.workplace && errors.workplace ? true : false}
+                    formControlLabel="Lugar de trabajo"
+                    placeholder="Lugar de trabajo"
+                    placeholderTextColor={colors.muted["400"]}
+                    onChangeText={handleChange("workplace")}
+                    value={values.workplace}
+                    onBlur={handleBlur("workplace")}
+                    errors={touched.workplace && errors.workplace}
+                  />
+
+                  <Center>
                     <Button
                       isLoading={isLoading}
                       onPress={() => onRegister(values)}
-                      style={{
-                        backgroundColor: theme.colors.primary,
-                        width: "100%",
-                        padding: 10,
-                        borderRadius: 5,
-                        alignItems: "center",
-                      }}
+                      w={["90%", "80%"]}
+                      background={theme.colors.primary}
+                      p={3}
+                      borderRadius={"full"}
                     >
                       <Text color={theme.colors.white}>Regístrarse</Text>
                     </Button>

@@ -1,21 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { IConfirmOrderResponse } from "../redeemables/interfaces/confirm-order.interface";
-import * as Print from "expo-print";
-import { shareAsync } from "expo-sharing";
+import * as Print from 'expo-print';
+import { shareAsync } from 'expo-sharing';
+import { useEffect, useState } from 'react';
+import { IConfirmOrderResponse } from '../redeemables/interfaces/confirm-order.interface';
+
+//TODO: agregar centro de trabajo y telefono
 export const useGenerateTradeTicket = (trade: IConfirmOrderResponse) => {
-  const [ticketLayout, setTicketLayout] = useState("");
+     const [ticketLayout, setTicketLayout] = useState('');
 
-  const printToFile = async () => {
-    const { uri } = await Print.printToFileAsync({ html: ticketLayout });
-    await shareAsync(uri, {
-      UTI: ".pdf",
-      mimeType: "application/pdf",
-    });
-  };
+     const printToFile = async () => {
+          const { uri } = await Print.printToFileAsync({ html: ticketLayout });
+          await shareAsync(uri, {
+               UTI: '.pdf',
+               mimeType: 'application/pdf',
+          });
+     };
 
-  useEffect(() => {
-    setTicketLayout(
-      `
+     useEffect(() => {
+          setTicketLayout(
+               `
   <html>
   <head>
       <style>
@@ -65,7 +67,7 @@ export const useGenerateTradeTicket = (trade: IConfirmOrderResponse) => {
           </div>
           <div class="info">
               <p><strong>Fecha de creación:</strong>${new Date(
-                trade?.createdAt
+                   trade?.createdAt
               ).toLocaleString()}</p>
               <p><strong>ID de canje:</strong> ${trade?.id}</p>
           </div>
@@ -73,7 +75,7 @@ export const useGenerateTradeTicket = (trade: IConfirmOrderResponse) => {
               <h2>Artículo:</h2>
               <p><strong>ID del artículo:</strong> ${trade?.redeemedItem.id}</p>
               <p><strong>Nombre del artículo:</strong> ${
-                trade?.redeemedItem.name
+                   trade?.redeemedItem.name
               }</p>
           </div>
           <div class="info">
@@ -81,17 +83,17 @@ export const useGenerateTradeTicket = (trade: IConfirmOrderResponse) => {
               <p><strong>ID de usuario:</strong> ${trade?.user.id}</p>
               <p><strong>Nombre del usuario:</strong> ${trade?.user.name}</p>
               <p><strong>Apellido del usuario:</strong> ${
-                trade?.user.lastname
+                   trade?.user.lastname
               }</p>
           </div>
       </div>
   </body>
   </html>
 `
-    );
-  });
+          );
+     });
 
-  return {
-    printToFile,
-  };
+     return {
+          printToFile,
+     };
 };

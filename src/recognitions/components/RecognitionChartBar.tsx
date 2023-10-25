@@ -34,7 +34,7 @@ const RecognitionChartBar = () => {
   }
 
   return (
-    <Layout showCredits={false}>
+    <Layout >
       <View height={height} _android={{ marginTop: 5 }} marginX={{ md: 5 }}>
         <BarChart
           data={transformedData}

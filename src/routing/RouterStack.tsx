@@ -2,43 +2,43 @@ import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Icon } from 'native-base';
+import { Alliances } from '../alliances/screens/Alliances';
 import Login from '../auth/screens/login/Login';
 import PasswordUpdate from '../auth/screens/password-update/PasswordUpdate';
 import Register from '../auth/screens/register/Register';
-import { Recognitions } from '../recognitions/screens/Recognitions';
-import SendRecognition from '../recognitions/screens/SendRecognition';
-import { CommunityScreen } from '../community/screens/CommunityScreen';
-import { SearchCommunity } from '../community/screens/SearchCommunity';
-import { MyCommunities } from '../community/screens/MyCommunities';
-import EventScreen from '../events/screens/EventScreen';
 import CalendarScreen from '../calendar/screens/CalendarScreen';
-import { Challenges } from '../challenges/screens/Challenges';
 import { ChallengeDetailScreen } from '../challenges/screens/ChallengeDetailScreen';
+import { Challenges } from '../challenges/screens/Challenges';
+import { CommunityScreen } from '../community/screens/CommunityScreen';
+import { MyCommunities } from '../community/screens/MyCommunities';
+import { SearchCommunity } from '../community/screens/SearchCommunity';
+import EventScreen from '../events/screens/EventScreen';
+import { UpcomingEvents } from '../events/screens/UpcomingEvents';
 import Home from '../home/screens/Home';
 import Step1 from '../onboarding/screens/Step1';
 import Step2 from '../onboarding/screens/Step2';
 import Step3 from '../onboarding/screens/Step3';
 import Step4 from '../onboarding/screens/Step4';
-import Profile from '../profile/screens/Profile';
-import { Alliances } from '../alliances/screens/Alliances';
 import EditProfile from '../profile/components/EditProfile';
 import { EventHistory } from '../profile/screens/EventHistory';
+import Profile from '../profile/screens/Profile';
 import { Ranking } from '../ranking/screens/Ranking';
+import RecognitionDetails from '../recognitions/components/RecognitionDetails';
+import { Recognitions } from '../recognitions/screens/Recognitions';
+import { RecognitionsTabView } from '../recognitions/screens/RecognitionsTabView';
+import SendRecognition from '../recognitions/screens/SendRecognition';
+import RedeemableDetail from '../redeemables/screens/RedeemableDetail';
 import Redeemables from '../redeemables/screens/Reedemables';
-import { TicketAssistanceDetailScreen } from '../tickets/screens/TicketAssistanceDetailScreen';
-import { TicketConsumableDetailScreen } from '../tickets/screens/TicketConsumableDetailScreen';
-import { TicketsScreen } from '../tickets/screens/TicketsScreen';
-import { BarScanner } from '../tickets/screens/BarScanner';
+import TradeTicketShot from '../redeemables/screens/TradeTicketShot';
 import CustomQRCode from '../shared/components/qr/CustomQRCode';
 import { BarScannerStaff } from '../staff/screens/BarScanner/BarScannerStaff';
 import { HomeStaff } from '../staff/screens/home/HomeStaff';
 import { theme } from '../theme';
+import { BarScanner } from '../tickets/screens/BarScanner';
+import { TicketAssistanceDetailScreen } from '../tickets/screens/TicketAssistanceDetailScreen';
+import { TicketConsumableDetailScreen } from '../tickets/screens/TicketConsumableDetailScreen';
+import { TicketsScreen } from '../tickets/screens/TicketsScreen';
 import { AuthStackParamList, RootStackParamList } from './navigation-types';
-import { RecognitionsTabView } from '../recognitions/screens/RecognitionsTabView';
-import RedeemableDetail from '../redeemables/screens/RedeemableDetail';
-import TradeTicketShot from '../redeemables/screens/TradeTicketShot';
-import RecognitionDetails from '../recognitions/components/RecognitionDetails';
-import { UpcomingEvents } from '../events/screens/UpcomingEvents';
 
 const authRouter = createNativeStackNavigator<AuthStackParamList>();
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -300,6 +300,7 @@ export const BottomTabNavigation = () => {
                          ),
                     }}
                />
+
           </Tab.Navigator>
      );
 };

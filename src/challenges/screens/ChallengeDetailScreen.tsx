@@ -88,7 +88,7 @@ export const ChallengeDetailScreen = () => {
   };
 
   return (
-    <Layout showCredits={false}>
+    <Layout >
       <ScrollView flex={1} backgroundColor={theme.colors.background} p={4}>
         <Text
           bold

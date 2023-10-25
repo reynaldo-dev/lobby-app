@@ -34,7 +34,7 @@ export const Recognitions = () => {
   }, [getSearchUsers]);
 
   return (
-    <Layout showCredits={false}>
+    <Layout >
       <Input
         width={"95%"}
         p={3}

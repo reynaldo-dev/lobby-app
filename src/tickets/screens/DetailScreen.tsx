@@ -52,7 +52,7 @@ export const DetailScreen = ({
   };
 
   return (
-    <Layout showCredits={false}>
+    <Layout >
       <Box
         safeArea
         flex={1}

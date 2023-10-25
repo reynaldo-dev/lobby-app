@@ -23,7 +23,7 @@ interface MyRoute extends Route {
   title: string;
 }
 
-interface RenderTabBarProps extends SceneRendererProps, TabBarProps<MyRoute> {}
+interface RenderTabBarProps extends SceneRendererProps, TabBarProps<MyRoute> { }
 
 export const RecognitionsTabView = () => {
   const [index, setIndex] = useState(0);
@@ -66,7 +66,7 @@ export const RecognitionsTabView = () => {
   };
 
   return (
-    <Layout backgroundColor={"#f0f0f0"} showCredits={false}>
+    <Layout backgroundColor={"#f0f0f0"} >
       <Box flexDirection="row" alignItems="center" ml={2} height={50}>
         <Box>
           <TouchableOpacity onPress={() => navigation.goBack()}>

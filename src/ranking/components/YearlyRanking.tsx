@@ -29,7 +29,14 @@ const FiltersAndHeader = memo(({ year, setYear }: FiltersAndHeaderProps) => {
             <Center>
                 <HStack alignItems="center" space={2} mb={4}>
                     <Icon name="trophy" as={FontAwesome} />
-                    <Text fontSize="xl" fontWeight="bold">
+                    <Text
+                        fontSize={{
+                            base: 'xl',
+                            sm: 'xl',
+                            md: '3xl',
+                            lg: '3xl',
+                        }}
+                        fontWeight="bold">
                         Mejores posiciones anuales
                     </Text>
                 </HStack>
@@ -99,7 +106,7 @@ export const YearlyRanking = () => {
     }, [isLoading, isError, rankingData, renderRankingItem]);
 
     return (
-        <Layout showCredits={false}>
+        <Layout >
             <VStack space={4}>
                 <FiltersAndHeader year={year} setYear={setYear} />
                 {renderContent()}

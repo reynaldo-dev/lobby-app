@@ -10,9 +10,10 @@ import {
   Text,
   VStack,
   View,
+  useBreakpointValue,
 } from "native-base";
 import React from "react";
-import avatarImage from "../../../assets/avatar.png";
+import MaleAvatar from '../../../assets/male-avatar.svg';
 import { useRefetchOnFocus } from "../../hooks/useRefetchOnFocus";
 import {
   useGetGivenRecognitionsQuery,
@@ -32,6 +33,13 @@ interface RecognitionListProps {
 
 const RecognitionList = ({ type }: RecognitionListProps) => {
   const { user } = useAppSelector((state: RootState) => state.user);
+
+  const iconResponsive = useBreakpointValue({
+    base: 60,
+    sm: 45,
+    md: 70,
+    lg: 80,
+  });
 
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "Recognitions">>();
@@ -108,14 +116,11 @@ const RecognitionList = ({ type }: RecognitionListProps) => {
                     }}
                   />
                 )}
-                <Avatar
-                  size="48px"
-                  source={
-                    displayUser.picture
-                      ? { uri: displayUser.picture }
-                      : avatarImage
-                  }
-                />
+                {recognition.userSource.picture ? (
+                  <Avatar source={{ uri: recognition.userSource.picture }} />
+                ) : (
+                  <MaleAvatar width={iconResponsive} height={iconResponsive} />
+                )}
                 <VStack alignItems="flex-start" flex={1}>
                   <HStack space={1} width="100%">
                     <Text bold textTransform={"capitalize"}>

@@ -10,9 +10,10 @@ import {
   Spacer,
   Text,
   VStack,
+  useBreakpointValue,
 } from "native-base";
 import React from "react";
-import avatarImage from "../../../assets/avatar.png";
+import MaleAvatar from '../../../assets/male-avatar.svg';
 import { User } from "../../profile/interfaces/user.interface";
 import { RootState, useAppSelector } from "../../redux/store/store";
 import { RootStackParamList } from "../../routing/navigation-types";
@@ -28,6 +29,13 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
     useNavigation<
       NativeStackNavigationProp<RootStackParamList, "Recognitions">
     >();
+
+  const iconResponsive = useBreakpointValue({
+    base: 45,
+    sm: 45,
+    md: 70,
+    lg: 80,
+  });
 
   const onPress = (selectedUser: User) => {
     navigation.navigate("SendRecognition", { user: selectedUser });
@@ -45,10 +53,11 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
               style={{ transform: [{ scale: isPressed ? 0.98 : 1 }] }}
             >
               <HStack alignItems="center" space={2}>
-                <Avatar
-                  size="48px"
-                  source={user.picture ? { uri: user.picture } : avatarImage}
-                />
+                {user.picture ? (
+                  <Avatar source={{ uri: user.picture }} />
+                ) : (
+                  <MaleAvatar width={iconResponsive} height={iconResponsive} />
+                )}
                 <VStack>
                   <Text bold textTransform={"capitalize"}>
                     {user.name} {user.lastname}

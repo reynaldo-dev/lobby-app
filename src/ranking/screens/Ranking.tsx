@@ -19,7 +19,7 @@ interface MyRoute extends Route {
      title: string;
 }
 
-interface RenderTabBarProps extends SceneRendererProps, TabBarProps<MyRoute> {}
+interface RenderTabBarProps extends SceneRendererProps, TabBarProps<MyRoute> { }
 
 export const Ranking = () => {
      const [index, setIndex] = useState(0);
@@ -75,7 +75,7 @@ export const Ranking = () => {
      };
 
      return (
-          <Layout backgroundColor={theme.colors.white} showCredits={false}>
+          <Layout backgroundColor={theme.colors.white} >
                <TabView
                     navigationState={{ index, routes }}
                     renderScene={renderScene}

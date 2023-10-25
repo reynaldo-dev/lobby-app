@@ -92,7 +92,7 @@ export default function PasswordUpdate() {
     }
   };
   return (
-    <Layout backgroundColor={theme.colors.white} showCredits={false}>
+    <Layout backgroundColor={theme.colors.white} >
       <Box flexDirection="row" alignItems="center" ml={2} height={50}>
         <Box>
           <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -171,6 +171,6 @@ export default function PasswordUpdate() {
           }}
         </Formik>
       </View>
-    </Layout>
+    </ Layout>
   );
 }

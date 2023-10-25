@@ -96,7 +96,7 @@ export default function EventScreen() {
   };
 
   return (
-    <Layout backgroundColor={theme.colors.background} showCredits={false}>
+    <Layout backgroundColor={theme.colors.background} >
       <View flex={1}>
         <Box ml={4} mt={5}>
           <TouchableOpacity onPress={() => navigation.goBack()}>

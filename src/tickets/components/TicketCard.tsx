@@ -1,13 +1,13 @@
+import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Badge, HStack, Heading, Pressable, Text, VStack } from "native-base";
 import React from "react";
 import { formatDate } from "../../helpers/date-format/DateFormat";
-import { Event, User } from "../interfaces/assistanceTicket.interface";
-import { IConsumable } from "../interfaces/consumablesTickets.interface";
 import { RootStackParamList } from "../../routing/navigation-types";
 import { theme } from "../../theme";
-import { FontAwesome } from "@expo/vector-icons";
+import { Event, User } from "../interfaces/assistanceTicket.interface";
+import { IConsumable } from "../interfaces/consumablesTickets.interface";
 
 type TicketCardProps = {
   event: Event;

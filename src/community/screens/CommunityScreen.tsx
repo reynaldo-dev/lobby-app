@@ -108,7 +108,7 @@ export const CommunityScreen = () => {
   };
 
   return (
-    <Layout showCredits={false}>
+    <Layout >
       {isLoading ? (
         <SkeletonLayout />
       ) : (

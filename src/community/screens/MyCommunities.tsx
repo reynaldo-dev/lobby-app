@@ -23,7 +23,7 @@ export const MyCommunities = () => {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "MyUpcomingEvents">>();
   return (
-    <Layout showCredits={false}>
+    <Layout >
       <Box flexDirection="row" alignItems="center" ml={2} height={50}>
         <Box>
           <TouchableOpacity onPress={() => navigation.goBack()}>

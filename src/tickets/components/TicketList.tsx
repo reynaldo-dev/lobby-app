@@ -1,10 +1,10 @@
-import { Center, FlatList, Text, VStack } from "native-base";
+import { Center, FlatList, VStack } from "native-base";
 import React from "react";
+import { ActivityIndicator } from "react-native";
+import { TicketsNotFound } from "../../shared/components/notFound/TicketsNotFound";
 import { IAssistanceTicketByUserIDResponse } from "../interfaces/assistanceTicket.interface";
 import { ConsumableTicketData } from "../interfaces/consumablesTickets.interface";
 import { TicketCard } from "./TicketCard";
-import { ActivityIndicator } from "react-native";
-import { TicketsNotFound } from "../../shared/components/notFound/TicketsNotFound";
 
 type CommonTicket = IAssistanceTicketByUserIDResponse | ConsumableTicketData;
 
@@ -55,11 +55,12 @@ export const TicketList = ({
                 event={item.event}
                 user={item.user}
                 isActive={item.isActive}
+                userId={item.userId}
               />
             );
           }
         }}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id || 'default-key'}
       />
     </VStack>
   );

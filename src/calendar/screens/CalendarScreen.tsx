@@ -39,7 +39,7 @@ export default function CalendarScreen() {
     useNavigation<NavigationProp<RootStackParamList, "Calendar">>();
 
   return (
-    <Layout backgroundColor={theme.colors.background} showCredits={false}>
+    <Layout backgroundColor={theme.colors.background} >
       <Box flexDirection="row" alignItems="center" ml={2} height={50}>
         <Box>
           <TouchableOpacity onPress={() => navigation.goBack()}>

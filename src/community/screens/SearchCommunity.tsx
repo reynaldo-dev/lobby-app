@@ -68,7 +68,7 @@ export const SearchCommunity = () => {
   };
 
   return (
-    <Layout showCredits={false}>
+    <Layout >
       <View flex={1}>
         <HStack
           w="100%"
