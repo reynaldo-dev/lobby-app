@@ -4,7 +4,6 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Avatar, HStack, Input, Select, Text, VStack, useBreakpointValue } from "native-base";
 import React from "react";
 import { TouchableOpacity } from "react-native";
-// import avatarImage from "../../../assets/avatar.png";
 import MaleAvatar from '../../../assets/male-avatar.svg';
 import { formatDate } from "../../helpers/date-format/DateFormat";
 import { useGetRecognitionCategoriesQuery } from "../../redux/services/recognitions.service";

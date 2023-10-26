@@ -33,6 +33,7 @@ export default function Profile() {
      const boxAndQRSize = screenWidth * boxAndQRSizeFactor;
 
      const { user } = useAppSelector((state: RootState) => state.user);
+     console.log(user, "user")
      const navigation =
           useNavigation<NativeStackNavigationProp<RootStackParamList>>();
      return (
@@ -55,7 +56,6 @@ export default function Profile() {
                          ) : (
                               <MaleAvatar width={profileImageSize} height={profileImageSize} />
                          )}
-
                          <Center>
                               <Text
                                    fontSize={{
@@ -106,10 +106,12 @@ export default function Profile() {
                                         {user.phone}
                                    </Text>
                               )}
-                              <Text mt={2}>
-                                   <Text fontWeight="bold">Lugar de trabajo:</Text>{' '}
-                                   Banco Santa Ana
-                              </Text>
+                              {user?.workplace && (
+                                   <Text mt={2}>
+                                        <Text fontWeight="bold">Lugar de trabajo:</Text>{' '}
+                                        {user.workplace}
+                                   </Text>
+                              )}
                          </Box>
 
                          <Box>

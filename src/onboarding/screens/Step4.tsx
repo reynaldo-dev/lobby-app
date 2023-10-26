@@ -7,7 +7,7 @@ export default function Step4() {
       stepNumber={4}
       stepTitle="Sé parte de nuestras comunidades, eventos y gana créditos"
       stepImage={<StepImage />}
-      nextStep="Root"
+      nextStep="PasswordUpdate"
       continueButtonText='Empezar'
     />
   );

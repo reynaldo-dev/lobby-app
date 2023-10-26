@@ -177,8 +177,9 @@ export default function Register() {
                 color={theme.colors.primary}
                 fontSize={["2xl", "4xl"]}
                 my={5}
+                bold
               >
-                Registrate
+                ¡Registrate!
               </Text>
             </Center>
 

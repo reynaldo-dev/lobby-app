@@ -6,12 +6,12 @@ import React, { useState } from "react";
 import { TouchableOpacity } from "react-native";
 import * as Yup from "yup";
 import { useUpdatePasswordMutation } from "../../../redux/services/user.service";
-import { logout } from "../../../redux/thunks/user.thunk";
 import {
   RootState,
   useAppDispatch,
   useAppSelector,
 } from "../../../redux/store/store";
+import { logout } from "../../../redux/thunks/user.thunk";
 import { RootStackParamList } from "../../../routing/navigation-types";
 import CustomToast from "../../../shared/components/toast/CustomToast";
 import ValidatedInputText from "../../../shared/components/validated-inputText/ValidatedInputText";
@@ -157,14 +157,14 @@ export default function PasswordUpdate() {
 
                 <Button
                   onPress={() => handleUpdatePassword(values)}
-                  borderRadius={10}
-                  w="80%"
+                  borderRadius={"full"}
+                  w="90%"
                   backgroundColor={theme.colors.primary}
                   isLoading={isLoading}
                   spinnerPlacement="end"
                   _spinner={{ color: theme.colors.white }}
                 >
-                  <Text color={theme.colors.white}>Actualizar</Text>
+                  <Text color={theme.colors.white} bold>Actualizar contraseña</Text>
                 </Button>
               </VStack>
             );

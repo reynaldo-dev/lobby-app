@@ -152,7 +152,7 @@ export const RecognitionCard = ({
                                         color="white"
                                         textAlign={'center'}
                                    >
-                                        Nivel de reconocimiento: {league?.league?.name} Diamante
+                                        Nivel de reconocimiento: {league?.league?.name}
                                    </Text>
                               )}
                          </VStack>

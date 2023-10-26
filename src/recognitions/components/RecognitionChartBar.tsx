@@ -1,4 +1,4 @@
-import { Center, Spinner, View, useBreakpointValue } from "native-base";
+import { Center, Spinner, View, useBreakpointValue, Box, Text } from "native-base";
 import React from "react";
 import { Dimensions } from "react-native";
 import { BarChart } from "react-native-gifted-charts";
@@ -24,6 +24,24 @@ const RecognitionChartBar = () => {
     md: width / 1.1,
   })
 
+  const renderTooltip = (item, index) => {
+    return (
+      <View
+        style={{
+          position: 'absolute',
+          top: -20,
+          left: 4,
+          backgroundColor: 'white',
+          borderRadius: 5,
+          shadowColor: '#000',
+          transform: [{ rotate: '-90deg' }]
+        }}
+      >
+        <Text>Total: {item.value}</Text>
+      </View>
+    );
+  }
+
 
   if (transformedData.length === 0) {
     return (
@@ -48,6 +66,7 @@ const RecognitionChartBar = () => {
           isAnimated
           barBorderTopRightRadius={5}
           barBorderTopLeftRadius={5}
+          renderTooltip={renderTooltip}
         />
       </View>
     </Layout>
