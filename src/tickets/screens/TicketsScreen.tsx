@@ -38,7 +38,7 @@ export const TicketsScreen = () => {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: "assistance", title: "Asistencia" },
-    { key: "consumibles", title: "Consumibles" },
+    { key: "consumables", title: "Consumibles" },
   ]);
 
   const initialLayout = {
@@ -47,7 +47,7 @@ export const TicketsScreen = () => {
 
   const renderScene = SceneMap({
     assistance: AssistanceTickets,
-    consumibles: ConsumablesTickets,
+    consumables: ConsumablesTickets,
   });
 
   const renderTabBar = (props: RenderTabBarProps) => {
@@ -60,6 +60,7 @@ export const TicketsScreen = () => {
           const borderBottomWidth = index === i ? 2 : 0;
           return (
             <Box
+              key={route.key}
               flex={1}
               alignItems="center"
               p="3"

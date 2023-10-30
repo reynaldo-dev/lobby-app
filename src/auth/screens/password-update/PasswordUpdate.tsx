@@ -158,7 +158,7 @@ export default function PasswordUpdate() {
                 <Button
                   onPress={() => handleUpdatePassword(values)}
                   borderRadius={"full"}
-                  w="90%"
+                  w={["90%", "80%"]}
                   backgroundColor={theme.colors.primary}
                   isLoading={isLoading}
                   spinnerPlacement="end"

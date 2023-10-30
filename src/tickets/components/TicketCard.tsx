@@ -1,7 +1,7 @@
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Badge, HStack, Heading, Pressable, Text, VStack } from "native-base";
+import { Badge, HStack, Heading, Pressable, Text, VStack, useBreakpointValue } from "native-base";
 import React from "react";
 import { formatDate } from "../../helpers/date-format/DateFormat";
 import { RootStackParamList } from "../../routing/navigation-types";
@@ -28,6 +28,13 @@ export const TicketCard = ({
 }: TicketCardProps) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+  const iconsReponsive = useBreakpointValue({
+    base: 20,
+    sm: 20,
+    md: 25,
+    lg: 25,
+  });
 
   const handlePress = () => {
     if (consumable) {
@@ -65,32 +72,78 @@ export const TicketCard = ({
     >
       <VStack space={2} p={4}>
         <HStack space={2} justifyContent="space-between">
-          <Heading size="sm" ml={-1} flex={1} isTruncated>
+          <Heading
+            fontSize={{
+              base: 'sm',
+              sm: 'md',
+              md: 'xl',
+              lg: 'xl',
+            }}
+            ml={-1} flex={1} isTruncated>
             {event?.title}
           </Heading>
           <Badge colorScheme={isActive ? "green" : "red"}>
-            {isActive ? "Activo" : "Inactivo"}
+            <Text
+              bold
+              fontSize={{
+                base: 'sm',
+                sm: 'md',
+                md: 'lg',
+                lg: 'xl',
+              }}
+            >
+              {isActive ? "Activo" : "Inactivo"}
+            </Text>
           </Badge>
         </HStack>
-        <Text color="gray.500">
+        <Text color="gray.500"
+          fontSize={{
+            base: 'sm',
+            sm: 'md',
+            md: 'lg',
+            lg: 'xl',
+          }}
+        >
           {user?.name} {user?.lastname}
         </Text>
-        {consumable && <Text color="gray.500">{consumable?.name}</Text>}
+        {consumable &&
+          <Text
+            fontSize={{
+              base: 'sm',
+              sm: 'md',
+              md: 'lg',
+              lg: 'xl',
+            }}
+            color="gray.500">{consumable?.name}</Text>}
         <HStack justifyContent={"space-between"}>
           <HStack space={2}>
             <FontAwesome
               name={event.link ? "laptop" : "map-marker"}
-              size={20}
+              size={iconsReponsive}
               color="gray"
             />
-            <Text color="muted.500">
+            <Text
+              fontSize={{
+                base: 'sm',
+                sm: 'md',
+                md: 'lg',
+                lg: 'xl',
+              }}
+              color="muted.500">
               {event?.link ? "Virtual" : "Presencial"}
             </Text>
           </HStack>
 
           <HStack space={2}>
-            <FontAwesome name="clock-o" size={20} color="gray" />
-            <Text color="muted.500">{formattedDate}</Text>
+            <FontAwesome name="clock-o" size={iconsReponsive} color="gray" />
+            <Text
+              fontSize={{
+                base: 'sm',
+                sm: 'md',
+                md: 'lg',
+                lg: 'xl',
+              }}
+              color="muted.500">{formattedDate}</Text>
           </HStack>
         </HStack>
       </VStack>

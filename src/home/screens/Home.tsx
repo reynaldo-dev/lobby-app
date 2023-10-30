@@ -15,12 +15,14 @@ import EventsSVG from '../../../assets/comming-events.svg';
 import CommunitiesSVG from '../../../assets/communities.svg';
 import RecognitionSVG from '../../../assets/reconoce.svg';
 import RedeemablesSVG from '../../../assets/redeem.svg';
+import RigthArrow from "../../../assets/right-arrow.svg";
 import { RecognitionCard } from '../../recognitions/components/RecognitionCard';
 import { useAppSelector, type RootState } from '../../redux/store/store';
 import { type RootStackParamList } from '../../routing/navigation-types';
 import Layout from '../../shared/layout/Layout';
 import { theme } from '../../theme';
 import HomeBTN from '../components/HomeBTN';
+
 
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
@@ -32,6 +34,13 @@ export default function Home(): JSX.Element {
           sm: 45,
           md: 70,
           lg: 80,
+     });
+
+     const arrowResponsive = useBreakpointValue({
+          base: 15,
+          sm: 15,
+          md: 20,
+          lg: 25,
      });
 
      const { user } = useAppSelector((state: RootState) => state.user);
@@ -89,18 +98,24 @@ export default function Home(): JSX.Element {
                               padding={[2, 4, 4, 8]}
                               backgroundColor={theme.colors.primary}
                          >
-                              <Text
-                                   color={"white"}
-                                   bold
-                                   fontSize={{
-                                        base: 'sm',
-                                        sm: 'md',
-                                        md: 'xl',
-                                        lg: 'xl',
-                                   }}
+                              <HStack
+                                   space={2}
+                                   alignItems={"center"}
                               >
-                                   Ver mis reconocimientos
-                              </Text>
+                                   <Text
+                                        color={"white"}
+                                        bold
+                                        fontSize={{
+                                             base: 'sm',
+                                             sm: 'md',
+                                             md: 'xl',
+                                             lg: 'xl',
+                                        }}
+                                   >
+                                        Ver mis reconocimientos
+                                   </Text>
+                                   <RigthArrow width={arrowResponsive} height={arrowResponsive} />
+                              </HStack>
                          </Box>
                     </Pressable>
 

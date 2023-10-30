@@ -4,7 +4,6 @@ import { Box, Center, Spinner, Text } from 'native-base';
 import React from 'react';
 import { FlatList, TouchableOpacity } from 'react-native';
 import { useGetUpcomingEventsQuery } from '../../redux/services/events.service';
-import { RootState, useAppSelector } from '../../redux/store/store';
 import { RootStackParamList } from '../../routing/navigation-types';
 import { NotFound } from '../../shared/components/notFound/NotFound';
 import Layout from '../../shared/layout/Layout';
@@ -12,13 +11,14 @@ import { theme } from '../../theme';
 import CardEvent from '../components/CardEvent';
 import { IUpcomingEvents } from '../interfaces/upcoming-events';
 
+const currentDate = new Date().toISOString().slice(0, 10);
+
 export const UpcomingEvents = () => {
-     const { user } = useAppSelector((state: RootState) => state.user);
      const {
           isError,
           isLoading,
           data: events,
-     } = useGetUpcomingEventsQuery('2023-10-31');
+     } = useGetUpcomingEventsQuery(currentDate);
      const navigation =
           useNavigation<
                NavigationProp<RootStackParamList, 'MyUpcomingEvents'>

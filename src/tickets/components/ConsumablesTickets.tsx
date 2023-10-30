@@ -13,6 +13,7 @@ export const ConsumablesTickets = () => {
 
   return (
     <TicketList
+      key={2}
       tickets={activeTickets}
       error={!!error}
       isLoading={isLoading}

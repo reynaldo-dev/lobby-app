@@ -16,12 +16,12 @@ import { Dimensions, Platform, TouchableOpacity } from "react-native";
 import * as Yup from "yup";
 import { DepartmentSelect } from "../../auth/screens/register/Register";
 import { useUpdateProfileMutation } from "../../redux/services/user.service";
-import { logout } from "../../redux/thunks/user.thunk";
 import {
   RootState,
   useAppDispatch,
   useAppSelector,
 } from "../../redux/store/store";
+import { logout } from "../../redux/thunks/user.thunk";
 import { RootStackParamList } from "../../routing/navigation-types";
 import CustomToast from "../../shared/components/toast/CustomToast";
 import ValidatedInputText from "../../shared/components/validated-inputText/ValidatedInputText";
@@ -29,7 +29,6 @@ import Layout from "../../shared/layout/Layout";
 import { theme } from "../../theme";
 
 const screenHeight = Dimensions.get("window").height;
-
 
 const validationEditProfileSchema = Yup.object().shape({
   name: Yup.string().required("Nombre es requerido"),
@@ -43,6 +42,7 @@ const validationEditProfileSchema = Yup.object().shape({
     .matches(/^[0-9]+$/, "Solo se permiten números"),
   city: Yup.string().required("Ciudad es requerida"),
   department: Yup.string().required("Departamento es requerido"),
+  workplace: Yup.string().required("Lugar de trabajo es requerido"),
 });
 
 interface EditProfileFormValues {
@@ -52,6 +52,7 @@ interface EditProfileFormValues {
   phone: string;
   city: string;
   department: string;
+  workplace: string;
 }
 
 export default function EditProfile() {
@@ -70,6 +71,7 @@ export default function EditProfile() {
     phone: user!.phone as string,
     city: user!.city as string,
     department: user!.department as string,
+    workplace: user!.workplace as string,
   };
 
   const [updateProfile, { data, error }] = useUpdateProfileMutation();
@@ -215,9 +217,21 @@ export default function EditProfile() {
                   errors={errors.city}
                 />
 
+                <ValidatedInputText
+                  bgColor={theme.colors.muted["200"]}
+                  isInvalid={touched.workplace && errors.workplace ? true : false}
+                  formControlLabel="Lugar de trabajo"
+                  placeholder="Lugar de trabajo"
+                  placeholderTextColor={theme.colors.muted["400"]}
+                  onChangeText={handleChange("workplace")}
+                  value={values.workplace}
+                  onBlur={handleBlur("workplace")}
+                  errors={touched.workplace && errors.workplace}
+                />
+
                 <Button
-                  borderRadius={10}
-                  w="80%"
+                  borderRadius={"full"}
+                  w={["90%", "80%"]}
                   backgroundColor={theme.colors.primary}
                   onPress={() => handleSubmit()}
                   colorScheme="primary"

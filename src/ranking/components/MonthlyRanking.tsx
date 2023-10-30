@@ -43,7 +43,7 @@ const FiltersAndHeader = memo(({ month, setMonth, year, setYear }: FiltersAndHea
   return (
     <>
       <Center>
-        <HStack alignItems="center" space={2} mb={4}>
+        <HStack alignItems="center" space={2} mb={4} >
           <Icon name="trophy" as={FontAwesome} />
           <Text
             fontSize={{
@@ -61,7 +61,7 @@ const FiltersAndHeader = memo(({ month, setMonth, year, setYear }: FiltersAndHea
         <HStack space={4}>
           <Select
             selectedValue={month.toString()}
-            minWidth={150}
+            minWidth={"44%"}
             onValueChange={(value) => setMonth(Number(value))}
             _selectedItem={{
               bg: "cyan.600",
@@ -79,7 +79,7 @@ const FiltersAndHeader = memo(({ month, setMonth, year, setYear }: FiltersAndHea
 
           <Select
             selectedValue={year.toString()}
-            minWidth={150}
+            minWidth={"44%"}
             onValueChange={(value) => setYear(Number(value))}
             _selectedItem={{
               bg: "cyan.600",

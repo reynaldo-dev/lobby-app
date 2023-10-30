@@ -1,5 +1,5 @@
-import { FontAwesome, FontAwesome5, MaterialIcons } from "@expo/vector-icons";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { AntDesign, FontAwesome, FontAwesome5, MaterialIcons } from '@expo/vector-icons';
+import { NavigationProp, RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import {
   AlertDialog,
   Box,
@@ -15,6 +15,7 @@ import {
   useDisclose,
 } from "native-base";
 import React from "react";
+import { TouchableOpacity } from "react-native";
 import useCustomToast from "../../hooks/useCustomToast";
 import { useAmIOnChallengeQuery, useTakeChallengeMutation } from "../../redux/services/challenges.service";
 import { RootState, useAppSelector } from "../../redux/store/store";
@@ -31,6 +32,9 @@ export const ChallengeDetailScreen = () => {
   const cancelRef = React.useRef(null);
   const showToast = useCustomToast();
   const [takeChallenge, { isLoading }] = useTakeChallengeMutation();
+
+  const navigation =
+    useNavigation<NavigationProp<RootStackParamList, "ChallengeDetail">>();
 
   const { data: amIOnChallengeData, isLoading: amIOnChallengeLoading, refetch: refetchAmIOnChallenge, } = useAmIOnChallengeQuery({
     challengeId: challenge.id,
@@ -89,6 +93,11 @@ export const ChallengeDetailScreen = () => {
 
   return (
     <Layout >
+      <Box flexDirection="row" alignItems="center" ml={2} height={50}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <AntDesign name="left" size={24} color="black" />
+        </TouchableOpacity>
+      </Box>
       <ScrollView flex={1} backgroundColor={theme.colors.background} p={4}>
         <Text
           bold
@@ -194,12 +203,11 @@ export const ChallengeDetailScreen = () => {
               Hasta: {getChallengeDateFormatted(challenge.endDate)}
             </Text>
           </HStack>
-
           <Divider />
           <HStack space={2}>
             <FontAwesome name="ticket" size={20} color="gray" />
             <Text color="muted.500">
-              Cupones: {challenge.coupons} / {challenge.availableCoupons}
+              Cupones disponibles:  {challenge.availableCoupons} / {challenge.coupons}
             </Text>
           </HStack>
           <Divider />

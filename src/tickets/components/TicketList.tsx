@@ -1,7 +1,7 @@
 import { Center, FlatList, VStack } from "native-base";
 import React from "react";
 import { ActivityIndicator } from "react-native";
-import { TicketsNotFound } from "../../shared/components/notFound/TicketsNotFound";
+import { NotFound } from "../../shared/components/notFound/NotFound";
 import { IAssistanceTicketByUserIDResponse } from "../interfaces/assistanceTicket.interface";
 import { ConsumableTicketData } from "../interfaces/consumablesTickets.interface";
 import { TicketCard } from "./TicketCard";
@@ -30,7 +30,9 @@ export const TicketList = ({
   }
 
   if (error || !tickets || tickets.length === 0) {
-    return <TicketsNotFound message={errorMessage} height={450} />;
+    return (
+      <NotFound message={errorMessage} />
+    )
   }
 
   return (

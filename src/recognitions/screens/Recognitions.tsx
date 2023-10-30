@@ -1,14 +1,21 @@
 import { AntDesign } from "@expo/vector-icons";
-import { Center, Icon, Input, Spinner, Text } from "native-base";
+import { Box, Center, Icon, Input, Spinner, Text } from "native-base";
 import { useEffect, useState } from "react";
 import { ActivityIndicator } from "react-native";
 import { useLazyGetUserByFullNameQuery } from "../../redux/services/user.service";
 import Layout from "../../shared/layout/Layout";
 import UserList from "../components/UserList";
+import { TouchableOpacity } from "react-native";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { RootStackParamList } from "../../routing/navigation-types";
 
 export const Recognitions = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearching, setIsSearching] = useState(false);
+
+
+  const navigation =
+    useNavigation<NavigationProp<RootStackParamList, "Recognitions">>();
 
   const [getSearchUsers, { data: searchUsersData }] =
     useLazyGetUserByFullNameQuery();
@@ -35,6 +42,11 @@ export const Recognitions = () => {
 
   return (
     <Layout >
+      <Box mb={4} ml={2}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <AntDesign name="left" size={24} color="black" />
+        </TouchableOpacity>
+      </Box>
       <Input
         width={"95%"}
         p={3}

@@ -10,7 +10,7 @@
       [
         "expo-barcode-scanner",
         {
-          "cameraPermission": "Permitir a $(PRODUCT_NAME) acceos a la cámara."
+          "cameraPermission": "Permitir a $(PRODUCT_NAME) acceso a la cámara."
         }
       ]
     ],
@@ -20,13 +20,14 @@
       "backgroundColor": "#ffffff"
     },
     "assetBundlePatterns": [
-      "**/*"
+      "*/"
     ],
     "ios": {
       "supportsTablet": true,
+      "bundleIdentifier": "com.sv.davivienda.lobby",
+      "buildNumber":"1",
       "infoPlist": {
-        "NSCameraUsageDescription": "Permitir a $(PRODUCT_NAME) acceos a la cámara.",
-        "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
+        "NSCameraUsageDescription": "Permitir a $(PRODUCT_NAME) acceso a la cámara."
       }
     },
     "android": {
@@ -34,7 +35,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.dev.julioaguilar.lobby",
+      "package": "com.sv.davivienda.lobby",
+      "versionCode": 1,
       "permissions": [
         "android.permission.CAMERA"
       ]

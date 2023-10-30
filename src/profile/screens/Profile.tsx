@@ -26,14 +26,12 @@ export default function Profile() {
           base: 0.5,
           sm: 0.9,
           md: 0.7,
-          lg: 0.,
      }) || 0.9;
 
      const profileImageSize = screenWidth * profileImageSizeFactor;
      const boxAndQRSize = screenWidth * boxAndQRSizeFactor;
 
      const { user } = useAppSelector((state: RootState) => state.user);
-     console.log(user, "user")
      const navigation =
           useNavigation<NativeStackNavigationProp<RootStackParamList>>();
      return (
@@ -80,39 +78,66 @@ export default function Profile() {
                               </Text>
                          </Center>
 
-                         <Box
+                         <VStack
+                              space={2}
                               w="90%"
                               p={4}
                               borderRadius="md"
                               background={theme.colors.white}
                          >
                               {user?.city && (
-                                   <Text>
-                                        <Text fontWeight="bold">Ciudad:</Text>{' '}
+                                   <Text
+                                        fontSize={{
+                                             base: 'sm',
+                                             sm: 'md',
+                                             md: 'xl',
+                                             lg: 'xl',
+                                        }}>
+                                        <Text
+                                             fontWeight="bold">Ciudad: </Text>
                                         {user.city}
                                    </Text>
                               )}
                               {user?.department && (
-                                   <Text mt={2}>
-                                        <Text fontWeight="bold">
-                                             Departamento:
-                                        </Text>{' '}
+                                   <Text fontSize={{
+                                        base: 'sm',
+                                        sm: 'md',
+                                        md: 'xl',
+                                        lg: 'xl',
+                                   }}>
+                                        <Text
+                                             fontWeight="bold">Departamento: </Text>
                                         {user.department}
                                    </Text>
                               )}
                               {user?.phone && (
-                                   <Text mt={2}>
-                                        <Text fontWeight="bold">Teléfono:</Text>{' '}
+                                   <Text
+                                        fontSize={{
+                                             base: 'sm',
+                                             sm: 'md',
+                                             md: 'xl',
+                                             lg: 'xl',
+                                        }}
+                                   >
+                                        <Text fontWeight="bold">Teléfono: </Text>
                                         {user.phone}
                                    </Text>
                               )}
                               {user?.workplace && (
-                                   <Text mt={2}>
-                                        <Text fontWeight="bold">Lugar de trabajo:</Text>{' '}
+                                   <Text
+                                        fontSize={{
+                                             base: 'sm',
+                                             sm: 'md',
+                                             md: 'xl',
+                                             lg: 'xl',
+                                        }}
+                                   >
+                                        <Text
+                                             fontWeight="bold">Lugar de trabajo: </Text>
                                         {user.workplace}
                                    </Text>
                               )}
-                         </Box>
+                         </VStack>
 
                          <Box>
                               <SvgQRCode

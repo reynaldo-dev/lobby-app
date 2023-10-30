@@ -1,8 +1,8 @@
-import { Avatar, Badge, Box, HStack, Text, VStack, useBreakpointValue } from 'native-base';
+import { Avatar, Box, Text, VStack, useBreakpointValue } from 'native-base';
 import React from 'react';
-import { IRanking, IRankingHistoric } from '../interfaces/league.interfaces';
-import { theme } from '../../theme';
 import MaleAvatar from '../../../assets/male-avatar.svg';
+import { theme } from '../../theme';
+import { IRanking, IRankingHistoric } from '../interfaces/league.interfaces';
 
 interface UserCardProps {
      user: IRankingHistoric | IRanking;
@@ -34,8 +34,30 @@ export const RankingCard = ({ user, index }: UserCardProps) => {
                p={4}
                mb={4}
                backgroundColor={theme.colors.background}
+               flexDirection="row"
+               alignItems="center"
           >
-               <HStack space={3} alignItems="center">
+               <Text
+                    px={2}
+                    alignSelf={"center"}
+                    fontSize={{
+                         base: 'sm',
+                         sm: 'md',
+                         md: 'xl',
+                         lg: 'xl',
+                    }}
+                    bold
+               >
+                    {index + 1}
+               </Text>
+
+               {user.picture ? (
+                    <Avatar source={{ uri: user.picture }} />
+               ) : (
+                    <MaleAvatar width={iconResponsive} height={iconResponsive} />
+               )}
+
+               <VStack flex={1} mx={2}>
                     <Text
                          fontSize={{
                               base: 'sm',
@@ -44,36 +66,33 @@ export const RankingCard = ({ user, index }: UserCardProps) => {
                               lg: 'xl',
                          }}
                          bold
+                         isTruncated
+                         textTransform={'capitalize'}
                     >
-                         {index + 1}
+                         {`${user.name} ${user.lastname}`}
                     </Text>
-                    {user.picture ? (
-                         <Avatar source={{ uri: user.picture }} />
-                    ) : (
-                         <MaleAvatar width={iconResponsive} height={iconResponsive} />
-                    )}
-                    <HStack width="50%" space={2}>
-                         <VStack>
-                              <Text
-                                   fontSize={{
-                                        base: 'sm',
-                                        sm: 'md',
-                                        md: 'xl',
-                                        lg: 'xl',
-                                   }}
-                                   bold
-                                   isTruncated
-                                   textTransform={'capitalize'}
-                              >{`${user.name} ${user.lastname}`}</Text>
-                              <Text>Reconocimientos: {totalRecognitions}</Text>
-                         </VStack>
-                         {user.league && (
-                              <Text color={theme.colors.primary}>
-                                   {user.league.name}
-                              </Text>
-                         )}
-                    </HStack>
-               </HStack>
+                    <Text
+                         fontSize={{
+                              base: 'sm',
+                              sm: 'md',
+                              md: 'lg',
+                              lg: 'lg',
+                         }}
+                    >Reconocimientos: {totalRecognitions}</Text>
+               </VStack>
+
+               {user.league && (
+                    <Text
+                         fontSize={{
+                              base: 'sm',
+                              sm: 'md',
+                              md: 'xl',
+                              lg: 'xl',
+                         }}
+                         color={theme.colors.primary}>
+                         {user.league.name}
+                    </Text>
+               )}
           </Box>
      );
 };

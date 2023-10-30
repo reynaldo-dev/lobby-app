@@ -12,6 +12,7 @@ export const AssistanceTickets = () => {
 
   return (
     <TicketList
+      key={1}
       tickets={activeTickets}
       error={!!error}
       isLoading={isLoading}

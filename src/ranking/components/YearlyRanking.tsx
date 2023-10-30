@@ -45,7 +45,7 @@ const FiltersAndHeader = memo(({ year, setYear }: FiltersAndHeaderProps) => {
                 <HStack space={4}>
                     <Select
                         selectedValue={year.toString()}
-                        minWidth={150}
+                        minWidth={"90%"}
                         onValueChange={(value) => setYear(Number(value))}
                         _selectedItem={{
                             bg: "cyan.600",

@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { getAuthStateFromAsyncStorage } from '../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage';
 import { IGetMyEventsResponse } from '../../events/interfaces/get-my-events';
 import {
      GetEventByIDResponse,
@@ -8,9 +7,10 @@ import {
      IEventQr,
      IScanQrResponse,
 } from '../../events/interfaces/getEventByIdResponse';
-import { IInactiveEvents } from '../../shared/interfaces/shared.interface';
-import { environment } from '../../shared/environments/dev.environment';
 import { IUpcomingEvents } from '../../events/interfaces/upcoming-events';
+import { getAuthStateFromAsyncStorage } from '../../helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage';
+import { environment } from '../../shared/environments/dev.environment';
+import { IInactiveEvents } from '../../shared/interfaces/shared.interface';
 
 export const eventsApi = createApi({
      reducerPath: 'eventsApi',
@@ -48,7 +48,7 @@ export const eventsApi = createApi({
 
           getUpcomingEvents: builder.query<IUpcomingEvents[], string>({
                query: (fromDate: string) =>
-                    `/events/at-date?fromDate=${fromDate}`,
+                    `/events/at-date?fromDate=${fromDate}&ignoreUserRole=true`,
           }),
 
           enrollToEvent: builder.mutation<
