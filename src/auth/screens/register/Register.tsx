@@ -41,6 +41,7 @@ interface IRegisterFormValues {
   city: string;
   department: string;
   workplace: string;
+  enterprise_id: string;
 }
 
 interface DepartmentSelectProps {
@@ -82,6 +83,7 @@ const registerValidationSchema = Yup.object().shape({
   city: Yup.string().required("Ciudad es requerida"),
   department: Yup.string().required("Departamento es requerido"),
   workplace: Yup.string().required("Lugar de trabajo es requerido"),
+  enterprise_id: Yup.string().required("Id de la empresa es requerido"),
 });
 //TODO: clean code
 export const DepartmentSelect = ({
@@ -139,6 +141,7 @@ export default function Register() {
     city: "",
     department: "",
     workplace: "",
+    enterprise_id: ""
   };
 
   const onRegister = useCallback(
@@ -296,6 +299,18 @@ export default function Register() {
                     value={values.workplace}
                     onBlur={handleBlur("workplace")}
                     errors={touched.workplace && errors.workplace}
+                  />
+
+                  <ValidatedInputText
+                    bgColor={colors.muted["200"]}
+                    isInvalid={touched.enterprise_id && errors.enterprise_id ? true : false}
+                    formControlLabel="Id de empresa"
+                    placeholder="Id de empresa"
+                    placeholderTextColor={colors.muted["400"]}
+                    onChangeText={handleChange("enterprise_id")}
+                    value={values.enterprise_id}
+                    onBlur={handleBlur("enterprise_id")}
+                    errors={touched.enterprise_id && errors.enterprise_id}
                   />
 
                   <Center>
