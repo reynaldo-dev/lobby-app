@@ -8,6 +8,8 @@ import NoInternetConnection from './src/shared/screens/NoInternetConnection';
 import { useEffect, useState } from 'react';
 import { NativeBaseProvider } from 'native-base';
 import { theme } from './src/theme';
+import { GluestackUIProvider, Text, Box } from '@gluestack-ui/themed';
+import { config } from '@gluestack-ui/config';
 
 export default function App() {
      const [isInternetConnected, setIsInternetConnected] = useState(false);
@@ -29,7 +31,7 @@ export default function App() {
 
      return (
           <SafeAreaProvider>
-               <NativeBaseProvider theme={theme}>
+               <GluestackUIProvider config={config}>
                     {isInternetConnected ? (
                          <Provider store={store}>
                               <Main />
@@ -37,7 +39,7 @@ export default function App() {
                     ) : (
                          <NoInternetConnection />
                     )}
-               </NativeBaseProvider>
+               </GluestackUIProvider>
           </SafeAreaProvider>
      );
 }
