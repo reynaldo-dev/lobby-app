@@ -1,29 +1,45 @@
-import { View, Text, FlatList } from "native-base";
-import React from "react";
-import { theme } from "../../theme";
-import EventCommunityCard from "./EventCommunityCard";
-import { IEvent } from "../interfaces/community-response.interface";
+import { View, Text, FlatList, Box } from 'native-base';
+import React from 'react';
+import { theme } from '../../theme';
+import EventCommunityCard from './EventCommunityCard';
+import { IEvent } from '../interfaces/community-response.interface';
+import { NotFound } from '../../shared/components/notFound/NotFound';
+import { Dimensions } from 'react-native';
+const { height } = Dimensions.get('screen');
 
 interface EventListProps {
-  events: IEvent[] | undefined;
+     events: IEvent[] | undefined;
 }
 
 export default function EventList({ events }: EventListProps) {
-  return (
-    <View h="100%" w="100%" mt={10}>
-      <Text fontSize="md" bold ml={5} color={theme.colors.muted["400"]}>
-        Eventos
-      </Text>
+     return (
+          <View h="100%" w="100%" mt={10}>
+               <Text
+                    fontSize="md"
+                    bold
+                    ml={5}
+                    color={theme.colors.muted['400']}
+               >
+                    Eventos
+               </Text>
 
-      <FlatList
-        w="100%"
-        p={2}
-        mt={2}
-        data={events}
-        renderItem={(item) => <EventCommunityCard event={item?.item} />}
-        keyExtractor={(item) => item?.id}
-        showsHorizontalScrollIndicator={false}
-      />
-    </View>
-  );
+               {events && events?.length > 0 ? (
+                    <FlatList
+                         w="100%"
+                         p={2}
+                         mt={2}
+                         data={events}
+                         renderItem={(item) => (
+                              <EventCommunityCard event={item?.item} />
+                         )}
+                         keyExtractor={(item) => item?.id}
+                         showsHorizontalScrollIndicator={false}
+                    />
+               ) : (
+                    <Box flex={1}>
+                         <NotFound message="No se han encontrado eventos para ésta comunidad" />
+                    </Box>
+               )}
+          </View>
+     );
 }
