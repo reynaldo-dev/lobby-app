@@ -1,63 +1,64 @@
 export interface DataCommunityUser {
-  total: number;
-  data: DataCommunityUser[];
+     total: number;
+     data: DataCommunityUser[];
 }
 
 export interface ICommunitiesUser {
-  userId: string;
-  communityId: string;
-  createdAt: Date;
-  community: ICommunity;
-  user: User;
+     userId: string;
+     communityId: string;
+     createdAt: Date;
+     community: ICommunity;
+     user: User;
 }
 
 export interface ICommunity {
-  id: string;
-  name: string;
-  description: string;
-  color: string;
-  createdAt: Date;
-  _count: ICount;
+     id: string;
+     name: string;
+     description: string;
+     color: string;
+     createdAt: Date;
+     _count: ICount;
 }
 export interface IUserCommunity {
-  userId: string;
-  communityId: string;
-  createdAt: Date;
-  community: ICommunity;
+     userId: string;
+     communityId: string;
+     createdAt: Date;
+     community: ICommunity;
 }
 
 export interface User {
-  id: string;
-  isActive: boolean;
-  email: string;
-  name: string;
-  lastname: string;
-  createdAt: Date;
-  rolId: string;
+     id: string;
+     isActive: boolean;
+     email: string;
+     name: string;
+     lastname: string;
+     createdAt: Date;
+     rolId: string;
 }
 
 export interface ICommunityResponse {
-  id: string;
-  name: string;
-  description: string;
-  color: string;
-  createdAt: string;
-  Event: Event[];
-  count: ICount;
+     id: string;
+     name: string;
+     description: string;
+     color: string;
+     createdAt: string;
+     Event: Event[];
+     count: ICount;
+     link: string;
 }
 
 export interface Event {
-  id: string;
-  title: string;
-  description: string;
-  status: string;
-  isPrivate: string;
-  createdAt: string;
-  place: string;
-  communityId: string;
-  dateTime: string;
+     id: string;
+     title: string;
+     description: string;
+     status: string;
+     isPrivate: string;
+     createdAt: string;
+     place: string;
+     communityId: string;
+     dateTime: string;
 }
 
 interface ICount {
-  users: number;
+     users: number;
 }
