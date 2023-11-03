@@ -1,21 +1,19 @@
-import React, { useState } from "react";
-import Layout from "../../shared/layout/Layout";
-import { theme } from "../../theme";
-import { useGetRedeemableByIdQuery } from "../../redux/services/redeemeables.service";
+import { AntDesign, Entypo } from "@expo/vector-icons";
 import { useRoute } from "@react-navigation/native";
 import {
   Box,
   Button,
-  Container,
   Heading,
   Image,
-  Pressable,
   Spinner,
   Text,
-  View,
+  View
 } from "native-base";
+import React, { useState } from "react";
 import giftImage from "../../../assets/gift.png";
-import { AntDesign, Entypo } from "@expo/vector-icons";
+import { useGetRedeemableByIdQuery } from "../../redux/services/redeemeables.service";
+import Layout from "../../shared/layout/Layout";
+import { theme } from "../../theme";
 import ConfirmOrder from "../components/ConfirmOrder";
 
 export default function RedeemableDetail() {
@@ -33,12 +31,13 @@ export default function RedeemableDetail() {
 
       {data && (
         <View mx={5}>
-          <Box w={["100%", "100%", "40"]} h={["72", "64", "48"]} shadow={"2"}>
+          <Box w={["100%", "100%", "100%"]} h={["72", "64", "48"]}>
             <Image
-              w={["100%", "100%", "100%"]}
+              w={"100%"}
               h="100%"
               source={data && data.picture ? { uri: data.picture } : giftImage}
               alt={data?.name}
+              resizeMode="contain"
             />
           </Box>
           <View mt={5}>
@@ -53,9 +52,6 @@ export default function RedeemableDetail() {
             >
               {data && data?.stock > 0 ? "Disponible" : "No Disponible"}
             </Text>
-            {/* <Heading size="sm" color={theme.colors.muted[500]} mt={2}>
-              Costo: {data?.required_token_amount} creditos
-            </Heading> */}
 
             <Button
               disabled={data && data?.stock <= 0}

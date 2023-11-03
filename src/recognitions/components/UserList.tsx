@@ -59,10 +59,24 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
                   <MaleAvatar width={iconResponsive} height={iconResponsive} />
                 )}
                 <VStack>
-                  <Text bold textTransform={"capitalize"}>
+                  <Text bold textTransform={"capitalize"}
+                    fontSize={{
+                      base: 'sm',
+                      sm: 'md',
+                      md: 'lg',
+                      lg: 'xl',
+                    }}
+                  >
                     {user.name} {user.lastname}
                   </Text>
-                  <Text textTransform={"capitalize"}>{user?.rol?.role}</Text>
+                  <Text textTransform={"capitalize"}
+                    fontSize={{
+                      base: 'sm',
+                      sm: 'sm',
+                      md: 'md',
+                      lg: 'xl',
+                    }}
+                  >{user?.rol?.role}</Text>
                 </VStack>
                 <Spacer />
               </HStack>

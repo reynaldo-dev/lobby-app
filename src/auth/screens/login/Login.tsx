@@ -8,7 +8,6 @@ import * as Yup from 'yup';
 import BackgroundImage from '../../../../assets/backgroundLogin.svg';
 import { useAppDispatch } from '../../../redux/store/store';
 import { login } from '../../../redux/thunks/user.thunk';
-import TextField from '../../../shared/components/TextField/TextField';
 import CustomToast from '../../../shared/components/toast/CustomToast';
 import ValidatedInputText from '../../../shared/components/validated-inputText/ValidatedInputText';
 import Layout from '../../../shared/layout/Layout';
@@ -95,11 +94,11 @@ export default function Login() {
                               }) => (
                                    <View w={'95%'}>
                                         <ValidatedInputText
-                                             bgColor={colors.muted['200']}
+                                             bgColor={colors.tertiary}
                                              isInvalid={!!errors.email}
                                              placeholder="johndoe@example.com"
                                              placeholderTextColor={
-                                                  colors.muted['400']
+                                                  theme.colors.muted[400]
                                              }
                                              onChangeText={handleChange('email')}
                                              value={values.email}
@@ -107,18 +106,20 @@ export default function Login() {
                                              keyboardType="email-address"
                                         />
 
-                                        <TextField
+                                        <ValidatedInputText
+                                             bgColor={colors.tertiary}
                                              isInvalid={!!errors.password}
-                                             placeholder="********"
+                                             placeholder="Contraseña"
                                              placeholderTextColor={
-                                                  colors.muted['400']
+                                                  theme.colors.muted[400]
                                              }
                                              onChangeText={handleChange('password')}
+                                             type='password'
                                              value={values.password}
                                              errors={errors.password}
                                         />
 
-                                        <Box alignItems="center" w="full">
+                                        <Box alignItems="center" w="full" mt={4}>
                                              <Button
                                                   backgroundColor={colors.primary}
                                                   borderRadius={"full"}

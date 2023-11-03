@@ -18,13 +18,13 @@ import {
 import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import MaleAvatar from '../../../assets/male-avatar.svg';
+import useCustomToast from "../../hooks/useCustomToast";
 import {
   useCreateRecognitionMutation,
   useGetRecognitionCategoriesQuery,
 } from "../../redux/services/recognitions.service";
 import { RootState, useAppSelector } from "../../redux/store/store";
 import { RootStackParamList } from "../../routing/navigation-types";
-import useCustomToast from "../../hooks/useCustomToast";
 import Layout from "../../shared/layout/Layout";
 import { theme } from "../../theme";
 
@@ -113,8 +113,6 @@ export const SendRecognition: React.FC<SendRecognitionProps> = ({ route }) => {
       });
   };
 
-  const image = user?.picture ? { uri: user?.picture } : MaleAvatar;
-
   return (
     <Layout >
       <VStack flex={1} px={5} py={6} space={4}>
@@ -128,10 +126,24 @@ export const SendRecognition: React.FC<SendRecognitionProps> = ({ route }) => {
             <MaleAvatar width={iconResponsive} height={iconResponsive} />
           )}
           <VStack>
-            <Text fontSize="lg" bold textTransform={"capitalize"}>
+            <Text
+              fontSize={{
+                base: 'sm',
+                sm: 'md',
+                md: 'xl',
+                lg: '2xl',
+              }}
+              bold textTransform={"capitalize"}>
               {user.name} {user.lastname}
             </Text>
-            <Text color="gray.500" textTransform={"capitalize"}>
+            <Text
+              fontSize={{
+                base: 'sm',
+                sm: 'sm',
+                md: 'lg',
+                lg: '2xl',
+              }}
+              color="gray.500" textTransform={"capitalize"}>
               {user?.rol?.role}
             </Text>
           </VStack>
@@ -139,6 +151,12 @@ export const SendRecognition: React.FC<SendRecognitionProps> = ({ route }) => {
 
         <Select
           selectedValue={selectedCategory}
+          fontSize={{
+            base: 'sm',
+            sm: 'sm',
+            md: 'md',
+            lg: 'lg',
+          }}
           accessibilityLabel="Selecciona una categoría"
           placeholder="Selecciona una categoría"
           onValueChange={(itemValue) =>
@@ -156,6 +174,12 @@ export const SendRecognition: React.FC<SendRecognitionProps> = ({ route }) => {
         </Select>
 
         <Input
+          fontSize={{
+            base: 'sm',
+            sm: 'sm',
+            md: 'lg',
+            lg: 'lg',
+          }}
           height="200px"
           multiline
           numberOfLines={5}
@@ -172,7 +196,14 @@ export const SendRecognition: React.FC<SendRecognitionProps> = ({ route }) => {
           style={styles.buttonStyle}
           isLoading={isLoading}
         >
-          <Text style={styles.buttonText}>Enviar reconocimiento</Text>
+          <Text
+            fontSize={{
+              base: 'sm',
+              sm: 'sm',
+              md: 'lg',
+              lg: 'lg',
+            }}
+            style={styles.buttonText}>Enviar reconocimiento</Text>
         </Button>
       </VStack>
 

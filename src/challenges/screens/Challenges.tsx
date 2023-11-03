@@ -1,61 +1,62 @@
 import { AntDesign } from "@expo/vector-icons";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { Box, Center, FlatList, Spinner, Text } from "native-base";
-import React from "react";
-import { TouchableOpacity } from "react-native";
-import { useGetAllChallengesQuery } from "../../redux/services/challenges.service";
-import { RootStackParamList } from "../../routing/navigation-types";
-import { NotFound } from "../../shared/components/notFound/NotFound";
+import { useNavigation } from "@react-navigation/native";
+import { Box, Center, Text } from "native-base";
+import React, { useState } from "react";
+import { Animated, Dimensions, Pressable, TouchableOpacity } from "react-native";
+import { Route, SceneMap, SceneRendererProps, TabBarProps, TabView } from "react-native-tab-view";
 import Layout from "../../shared/layout/Layout";
-import { ChallengeCard } from "../components/ChallengeCard";
-import { Challenge } from "../interfaces/challenges.interfaces";
+import { theme } from "../../theme";
+import { ChallengesTab } from "../components/ChallengesTab";
+import { MyChallengesTab } from "../components/MyChallengesTab";
 
+interface MyRoute extends Route {
+  title: string;
+}
 
+interface RenderTabBarProps extends SceneRendererProps, TabBarProps<MyRoute> { }
 
 export const Challenges = () => {
-  const navigation =
-    useNavigation<NavigationProp<RootStackParamList, "Challenges">>();
-  const {
-    data: challengesData,
-    isLoading,
-    isError,
-    error,
-  } = useGetAllChallengesQuery({ from: 0, limit: 10 });
+  const [index, setIndex] = useState(0);
+  const navigation = useNavigation();
 
-  const renderContent = () => {
-    if (isLoading) {
-      return (
-        <Center flex={1}>
-          <Spinner />
-        </Center>
-      );
-    }
+  const [routes] = useState([
+    { key: "AllChallenges", title: "Todos los retos" },
+    { key: "MyChallenges", title: "Mis retos" },
+  ]);
 
-    if (isError || challengesData?.data?.length === 0) {
-      return (
-        <Center flex={1}>
-          <NotFound
-            message="No se han encontrado retos activos"
-          />
-        </Center>
-      );
-    }
+  const initialLayout = { width: Dimensions.get("window").width };
 
-    const renderChallengeItem = ({ item }: { item: Challenge }) => (
-      <ChallengeCard challenge={item} />
-    );
+  const renderScene = SceneMap({
+    AllChallenges: ChallengesTab,
+    MyChallenges: MyChallengesTab,
+  });
 
+  const renderTabBar = (props: RenderTabBarProps) => {
     return (
-      <FlatList
-        data={challengesData?.data}
-        renderItem={renderChallengeItem}
-        keyExtractor={(item) => item.id}
-      />
+      <Box flexDirection="row" borderBottomWidth={1} borderColor="coolGray.200">
+        {props.navigationState.routes.map((route, i) => {
+          const borderBottomWidth = index === i ? 2 : 0;
+          return (
+            <Box
+              flex={1}
+              alignItems="center"
+              p="3"
+              borderBottomWidth={borderBottomWidth}
+              borderColor={"primary"}
+              key={i}
+            >
+              <Pressable onPress={() => setIndex(i)}>
+                <Animated.Text>{route.title}</Animated.Text>
+              </Pressable>
+            </Box>
+          );
+        })}
+      </Box>
     );
   };
 
   return (
-    <Layout >
+    <Layout backgroundColor={"#f0f0f0"}>
       <Box flexDirection="row" alignItems="center" ml={2} height={50}>
         <Box>
           <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -65,7 +66,7 @@ export const Challenges = () => {
         <Center flex={1}>
           <Text
             fontSize={16}
-            color={"muted.500"}
+            color={theme.colors.muted}
             fontWeight="bold"
             marginRight={10}
           >
@@ -73,7 +74,13 @@ export const Challenges = () => {
           </Text>
         </Center>
       </Box>
-      {renderContent()}
+      <TabView
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        renderTabBar={renderTabBar}
+        onIndexChange={setIndex}
+        initialLayout={initialLayout}
+      />
     </Layout>
   );
 };

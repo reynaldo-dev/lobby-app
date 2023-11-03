@@ -1,18 +1,17 @@
 import { AntDesign } from "@expo/vector-icons";
-import { Box, Center, Icon, Input, Spinner, Text } from "native-base";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { Box, Center, Icon, Input, Spinner } from "native-base";
 import { useEffect, useState } from "react";
-import { ActivityIndicator } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { useLazyGetUserByFullNameQuery } from "../../redux/services/user.service";
+import { RootStackParamList } from "../../routing/navigation-types";
+import { NotFoundRanking } from "../../shared/components/notFound/NotFoundRanking";
 import Layout from "../../shared/layout/Layout";
 import UserList from "../components/UserList";
-import { TouchableOpacity } from "react-native";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { RootStackParamList } from "../../routing/navigation-types";
 
 export const Recognitions = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearching, setIsSearching] = useState(false);
-
 
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "Recognitions">>();
@@ -73,6 +72,12 @@ export const Recognitions = () => {
             />
           ) : undefined
         }
+        fontSize={{
+          base: 'sm',
+          sm: 'sm',
+          md: 'lg',
+          lg: 'xl',
+        }}
         placeholder="Buscar usuario"
         value={searchTerm}
         onChangeText={setSearchTerm}
@@ -86,9 +91,8 @@ export const Recognitions = () => {
         searchUsersData.length > 0 ? (
           <UserList users={searchUsersData} />
         ) : (
-          //TODO: cambiar por un componente de error
           <Center flex={1}>
-            <Text>No se encontraron resultados</Text>
+            <NotFoundRanking message="No se encontraron usuarios" />
           </Center>
         )
       ) : null}

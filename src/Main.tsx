@@ -1,5 +1,4 @@
 import { NavigationContainer } from '@react-navigation/native';
-
 import { Suspense, useEffect, useState } from 'react';
 import { getAuthStateFromAsyncStorage } from './helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage';
 import { RootState, useAppDispatch, useAppSelector } from './redux/store/store';
