@@ -159,7 +159,6 @@ export default function Register() {
     <Layout backgroundColor={colors.background}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1 }}
       >
         <ScrollView>
           <View>

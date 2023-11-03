@@ -1,4 +1,5 @@
 import { AntDesign } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Formik } from "formik";
 import { Box, Button, Center, Text, VStack, View, useToast } from "native-base";
@@ -46,15 +47,14 @@ export default function PasswordUpdate() {
   const navigation =
     useNavigation<NavigationProp<RootStackParamList, "PasswordUpdate">>();
 
-  const handleUpdatePassword = async (values: PasswordUpdateFormValues) => {
+  const handleUpdatePassword = (values: PasswordUpdateFormValues) => {
     if (updatePasswordSchema.isValidSync(values)) {
       setIsLoading(true);
       updatePassword({
         currentPassword: values.currentPassword,
         newPassword: values.newPassword,
         id: user?.id as string,
-      })
-        .unwrap()
+      }).unwrap()
         .catch((error) => {
           toast.show({
             render: () => (
@@ -91,6 +91,7 @@ export default function PasswordUpdate() {
         });
     }
   };
+
   return (
     <Layout backgroundColor={theme.colors.white} >
       <Box flexDirection="row" alignItems="center" ml={2} height={50}>

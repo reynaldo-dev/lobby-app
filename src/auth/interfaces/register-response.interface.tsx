@@ -11,4 +11,5 @@ export interface User {
   isActive: boolean;
   role: string;
   credits: number;
+  workplace: string;
 }
