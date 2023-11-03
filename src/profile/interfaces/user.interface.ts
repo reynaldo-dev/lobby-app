@@ -19,6 +19,7 @@ export interface User {
      leagueId?: string;
      rol?: Rol;
      workplace: string;
+     hasLoggedInBefore?: boolean;
 }
 
 interface Rol {

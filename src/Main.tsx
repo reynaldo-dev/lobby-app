@@ -5,6 +5,7 @@ import { RootState, useAppDispatch, useAppSelector } from './redux/store/store';
 import { getUserCredentials } from './redux/thunks/user.thunk';
 import {
      AuthStack,
+     FirstTimeStack,
      RootNavigator,
      RootNavigatorStaff,
 } from './routing/RouterStack';
@@ -48,7 +49,11 @@ export default function Main() {
                ) : (
                     <NavigationContainer>
                          {isAuth ? (
-                              user?.role === 'funcionario' ? (
+                              !user?.hasLoggedInBefore ? (
+                                   <Suspense fallback={null}>
+                                        <FirstTimeStack />
+                                   </Suspense>
+                              ) : user?.role === 'funcionario' ? (
                                    <Suspense fallback={null}>
                                         <RootNavigator />
                                    </Suspense>

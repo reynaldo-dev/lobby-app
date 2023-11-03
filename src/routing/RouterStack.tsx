@@ -66,6 +66,58 @@ export const AuthStack = () => {
      );
 };
 
+export function FirstTimeStack() {
+     return (
+
+          <Stack.Navigator
+               initialRouteName="Step1"
+               screenOptions={{
+                    gestureEnabled: true,
+               }}
+          >
+               <Stack.Screen
+                    name="Step1"
+                    component={Step1}
+                    options={{
+                         headerShown: false,
+                    }}
+               />
+               <Stack.Screen
+                    name="Step2"
+                    component={Step2}
+                    options={{
+                         headerShown: false,
+                    }}
+               />
+
+               <Stack.Screen
+                    name="Step3"
+                    component={Step3}
+                    options={{
+                         headerShown: false,
+                    }}
+               />
+
+               <Stack.Screen
+                    name="Step4"
+                    component={Step4}
+                    options={{
+                         headerShown: false,
+                    }}
+               />
+
+               <Stack.Screen
+                    name="PasswordUpdate"
+                    component={PasswordUpdate}
+                    options={{
+                         headerShown: false,
+                    }}
+               />
+          </Stack.Navigator>
+     );
+
+}
+
 export function RootNavigator() {
      return (
           <Stack.Navigator
