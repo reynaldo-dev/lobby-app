@@ -18,13 +18,7 @@ import { KeyboardAvoidingView, Platform } from "react-native";
 import * as Yup from "yup";
 import useCustomToast from "../../../hooks/useCustomToast";
 import {
-  useJoinCommunityMutation,
-  useLazyGetSearchCommunitiesQuery,
-} from "../../../redux/services/communities.service";
-import {
-  RootState,
-  useAppDispatch,
-  useAppSelector,
+  useAppDispatch
 } from "../../../redux/store/store";
 import { register } from "../../../redux/thunks/user.thunk";
 import { RootStackParamList } from "../../../routing/navigation-types";
@@ -85,7 +79,7 @@ const registerValidationSchema = Yup.object().shape({
   workplace: Yup.string().required("Lugar de trabajo es requerido"),
   enterprise_id: Yup.string().required("Id de la empresa es requerido"),
 });
-//TODO: clean code
+
 export const DepartmentSelect = ({
   value,
   onChange,
@@ -98,17 +92,17 @@ export const DepartmentSelect = ({
         // @ts-ignore-next-line
         optimized={false}
         height={[12, 50, 60]}
-        color="#000"
+        color={theme.colors.black}
         fontSize={16}
         selectedValue={value}
         onValueChange={onChange}
         placeholder="Selecciona un departamento"
         borderColor={borderColor}
-        bgColor={"#fff"}
+        bgColor={theme.colors.white}
         _selectedItem={{
           bg: "cyan.400",
           endIcon: <CheckIcon size={5} />,
-          color: "#000",
+          color: "black",
         }}
       >
         {departments.map((dept, index) => (
@@ -125,12 +119,6 @@ export default function Register() {
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const showToast = useCustomToast();
-  const { user } = useAppSelector((state: RootState) => state.user);
-
-  const [joinCommunity] = useJoinCommunityMutation();
-
-  const [getSearchCommunities, { data: searchCommunitiesData, error }] =
-    useLazyGetSearchCommunitiesQuery();
 
   const initialValues: IRegisterFormValues = {
     name: "",
@@ -204,11 +192,11 @@ export default function Register() {
               }) => (
                 <VStack space={4}>
                   <ValidatedInputText
-                    bgColor={colors.muted["200"]}
+                    bgColor={colors.muted[200]}
                     isInvalid={touched.name && errors.name ? true : false}
                     formControlLabel="Nombres"
                     placeholder="Nombres"
-                    placeholderTextColor={colors.muted["400"]}
+                    placeholderTextColor={colors.muted[400]}
                     onChangeText={handleChange("name")}
                     onBlur={handleBlur("name")}
                     value={values.name}
@@ -216,13 +204,13 @@ export default function Register() {
                   />
 
                   <ValidatedInputText
-                    bgColor={colors.muted["200"]}
+                    bgColor={colors.muted[200]}
                     isInvalid={
                       touched.lastname && errors.lastname ? true : false
                     }
                     formControlLabel="Apellidos"
                     placeholder="Apellidos"
-                    placeholderTextColor={colors.muted["400"]}
+                    placeholderTextColor={colors.muted[400]}
                     onChangeText={handleChange("lastname")}
                     value={values.lastname}
                     onBlur={handleBlur("lastname")}
@@ -230,11 +218,11 @@ export default function Register() {
                   />
 
                   <ValidatedInputText
-                    bgColor={colors.muted["200"]}
+                    bgColor={colors.muted[200]}
                     isInvalid={touched.email && errors.email ? true : false}
                     formControlLabel="Correo electrónico"
                     placeholder="Correo electrónico"
-                    placeholderTextColor={colors.muted["400"]}
+                    placeholderTextColor={colors.muted[400]}
                     onChangeText={handleChange("email")}
                     value={values.email}
                     onBlur={handleBlur("email")}
@@ -243,13 +231,13 @@ export default function Register() {
                   />
 
                   <ValidatedInputText
-                    bgColor={colors.muted["200"]}
+                    bgColor={colors.muted[200]}
                     isInvalid={
                       touched.password && errors.password ? true : false
                     }
                     formControlLabel="Contraseña"
                     placeholder="Contraseña"
-                    placeholderTextColor={colors.muted["400"]}
+                    placeholderTextColor={colors.muted[400]}
                     onChangeText={handleChange("password")}
                     value={values.password}
                     onBlur={handleBlur("password")}
@@ -258,11 +246,11 @@ export default function Register() {
                   />
 
                   <ValidatedInputText
-                    bgColor={colors.muted["200"]}
+                    bgColor={colors.muted[200]}
                     isInvalid={touched.phone && errors.phone ? true : false}
                     formControlLabel="Teléfono"
                     placeholder="1234-5678"
-                    placeholderTextColor={colors.muted["400"]}
+                    placeholderTextColor={colors.muted[400]}
                     onChangeText={handleChange("phone")}
                     value={values.phone}
                     onBlur={handleBlur("phone")}
@@ -278,11 +266,11 @@ export default function Register() {
                   />
 
                   <ValidatedInputText
-                    bgColor={colors.muted["200"]}
+                    bgColor={colors.muted[200]}
                     isInvalid={touched.city && errors.city ? true : false}
                     formControlLabel="Ciudad"
                     placeholder="Ciudad"
-                    placeholderTextColor={colors.muted["400"]}
+                    placeholderTextColor={colors.muted[400]}
                     onChangeText={handleChange("city")}
                     value={values.city}
                     onBlur={handleBlur("city")}
@@ -290,11 +278,11 @@ export default function Register() {
                   />
 
                   <ValidatedInputText
-                    bgColor={colors.muted["200"]}
+                    bgColor={colors.muted[200]}
                     isInvalid={touched.workplace && errors.workplace ? true : false}
                     formControlLabel="Lugar de trabajo"
                     placeholder="Lugar de trabajo"
-                    placeholderTextColor={colors.muted["400"]}
+                    placeholderTextColor={colors.muted[400]}
                     onChangeText={handleChange("workplace")}
                     value={values.workplace}
                     onBlur={handleBlur("workplace")}
@@ -302,11 +290,11 @@ export default function Register() {
                   />
 
                   <ValidatedInputText
-                    bgColor={colors.muted["200"]}
+                    bgColor={colors.muted[200]}
                     isInvalid={touched.enterprise_id && errors.enterprise_id ? true : false}
                     formControlLabel="Id de empresa"
                     placeholder="Id de empresa"
-                    placeholderTextColor={colors.muted["400"]}
+                    placeholderTextColor={colors.muted[400]}
                     onChangeText={handleChange("enterprise_id")}
                     value={values.enterprise_id}
                     onBlur={handleBlur("enterprise_id")}

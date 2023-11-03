@@ -1,11 +1,10 @@
-import { View, Text } from "react-native";
-import React from "react";
-import { Button, Icon, Menu } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { RootStackParamList } from "../../routing/navigation-types";
+import { Button, Icon, Menu } from "native-base";
+import React from "react";
 import { useAppDispatch } from "../../redux/store/store";
 import { logout } from "../../redux/thunks/user.thunk";
+import { RootStackParamList } from "../../routing/navigation-types";
 
 export default function ProfileMenu() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();

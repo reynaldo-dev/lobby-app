@@ -1,20 +1,18 @@
+import { AntDesign } from "@expo/vector-icons";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 import {
   Box,
   Center,
-  CheckIcon,
   FlatList,
-  Select,
   Spinner,
-  Text,
+  Text
 } from "native-base";
 import React from "react";
 import { TouchableOpacity } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
-import RedeemableCard from "../components/RedeemableCard";
-import { RootStackParamList } from "../../routing/navigation-types";
 import { useGetRedeemablesQuery } from "../../redux/services/redeemeables.service";
+import { RootStackParamList } from "../../routing/navigation-types";
 import Layout from "../../shared/layout/Layout";
+import RedeemableCard from "../components/RedeemableCard";
 
 export const Redeemables = () => {
   const navigation =
@@ -25,24 +23,6 @@ export const Redeemables = () => {
     isError,
     error,
   } = useGetRedeemablesQuery();
-
-  const [selectedTokenType, setSelectedTokenType] = React.useState<
-    string | undefined
-  >(undefined);
-
-  const tokenTypes = React.useMemo(() => {
-    const types = redeemables
-      ? [...new Set(redeemables.map((r) => r.token.name))]
-      : [];
-    return ["Todos", ...types];
-  }, [redeemables]);
-
-  const filteredRedeemables = redeemables?.filter(
-    (redeemable) =>
-      !selectedTokenType ||
-      selectedTokenType === "Todos" ||
-      redeemable.token.name === selectedTokenType
-  );
 
   return (
     <Layout >
@@ -64,32 +44,13 @@ export const Redeemables = () => {
         </Center>
       </Box>
 
-      <Center>
-        <Select
-          my={4}
-          selectedValue={selectedTokenType}
-          width={"95%"}
-          accessibilityLabel="Filtrar por tipo de token"
-          placeholder="Filtrar por tipo de token"
-          onValueChange={(itemValue) => setSelectedTokenType(itemValue)}
-          _selectedItem={{
-            bg: "primary.600",
-            endIcon: <CheckIcon size={5} />,
-          }}
-        >
-          {tokenTypes.map((type, index) => (
-            <Select.Item key={index} label={type} value={type} />
-          ))}
-        </Select>
-      </Center>
-
       {isLoading ? (
         <Center flex={1}>
           <Spinner size="lg" color="blue" />
         </Center>
       ) : (
         <FlatList
-          data={filteredRedeemables}
+          data={redeemables}
           renderItem={({ item }) => <RedeemableCard redeemable={item} />}
           keyExtractor={(item) => item.id}
           contentContainerStyle={{ padding: 4 }}

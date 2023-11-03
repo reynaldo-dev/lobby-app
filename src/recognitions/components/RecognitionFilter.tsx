@@ -9,6 +9,12 @@ const RecognitionFilter = ({ currentFilter, onChange }: RecognitionFilterProps) 
     return (
         <VStack alignItems="center" space={4}>
             <Select
+                fontSize={{
+                    base: 'sm',
+                    sm: 'sm',
+                    md: 'lg',
+                    lg: 'lg',
+                }}
                 selectedValue={currentFilter}
                 w="95%"
                 accessibilityLabel="Filtrar reconocimientos"

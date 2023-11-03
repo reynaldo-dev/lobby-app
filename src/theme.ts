@@ -4,6 +4,7 @@ export const theme = extendTheme({
      colors: {
           primary: '#dc0b1b',
           secondary: '#F27405',
+          tertiary: '#e5e5e5',
           danger: '#EF4444',
           success: '#10B981',
           warning: '#F59E0B',
@@ -14,13 +15,9 @@ export const theme = extendTheme({
           white: '#FFFFFF',
           background: '#f2f2f2',
           transparent: 'transparent',
-          muted: '#e5e5e5',
-
           darkGray: '#6b6b6b',
-
           gray: '#f7f6fb',
           text: '#1F2937',
-
           btHome: '#019f94',
      },
 });

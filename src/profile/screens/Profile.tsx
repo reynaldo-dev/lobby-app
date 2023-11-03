@@ -1,12 +1,9 @@
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { Box, Center, Image, ScrollView, Text, VStack, useBreakpointValue } from 'native-base';
 import React from 'react';
 import { Dimensions } from 'react-native';
 import SvgQRCode from 'react-native-qrcode-svg';
 import MaleAvatar from '../../../assets/male-avatar.svg';
 import { RootState, useAppSelector } from '../../redux/store/store';
-import { RootStackParamList } from '../../routing/navigation-types';
 import Layout from '../../shared/layout/Layout';
 import { theme } from '../../theme';
 import ProfileMenu from '../components/ProfileMenu';
@@ -32,8 +29,7 @@ export default function Profile() {
      const boxAndQRSize = screenWidth * boxAndQRSizeFactor;
 
      const { user } = useAppSelector((state: RootState) => state.user);
-     const navigation =
-          useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
      return (
           <Layout backgroundColor={theme.colors.background} >
                <ScrollView mb={5}>

@@ -4,18 +4,17 @@ import {
      Box,
      Button,
      Center,
-     Container,
-     Heading,
      Icon,
-     Modal,
      Skeleton,
      StatusBar,
      Text,
      VStack,
      View,
-     useToast,
+     useToast
 } from 'native-base';
 import React, { useState } from 'react';
+import { Platform } from 'react-native';
+import { isDarkColor } from '../../helpers/is-dark-color/isDarkColor';
 import { ICommunityResponse } from '../../interfaces/community.interface';
 import {
      useGetCommunitiesByUserIdQuery,
@@ -31,8 +30,6 @@ import Layout from '../../shared/layout/Layout';
 import { theme } from '../../theme';
 import CommunityCover from '../components/CommunityCover';
 import EventList from '../components/EventList';
-import { Platform } from 'react-native';
-import { isDarkColor } from '../../helpers/is-dark-color/isDarkColor';
 
 export const CommunityScreen = () => {
      const { user } = useAppSelector((state: RootState) => state.user);
