@@ -30,11 +30,7 @@ export default function RenderItem({ item }: IRenderItemProps) {
                          size={20}
                          color="gray"
                     />
-                    <Text
-                         fontSize="sm"
-                         color={theme.colors.muted['500']}
-                         ml={2}
-                    >
+                    <Text fontSize="sm" ml={2}>
                          {isPlaceVirtual ? 'Virtual' : item?.place}
                     </Text>
                </View>

@@ -7,7 +7,6 @@ import LottieView from 'lottie-react-native';
 import NoInternetConnection from './src/shared/screens/NoInternetConnection';
 import { useEffect, useState } from 'react';
 import { NativeBaseProvider } from 'native-base';
-import { theme } from './src/theme';
 
 export default function App() {
      const [isInternetConnected, setIsInternetConnected] = useState(false);
@@ -29,7 +28,7 @@ export default function App() {
 
      return (
           <SafeAreaProvider>
-               <NativeBaseProvider theme={theme}>
+               <NativeBaseProvider>
                     {isInternetConnected ? (
                          <Provider store={store}>
                               <Main />

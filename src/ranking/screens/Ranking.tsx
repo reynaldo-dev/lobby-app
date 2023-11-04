@@ -19,7 +19,7 @@ interface MyRoute extends Route {
      title: string;
 }
 
-interface RenderTabBarProps extends SceneRendererProps, TabBarProps<MyRoute> { }
+interface RenderTabBarProps extends SceneRendererProps, TabBarProps<MyRoute> {}
 
 export const Ranking = () => {
      const [index, setIndex] = useState(0);
@@ -44,11 +44,7 @@ export const Ranking = () => {
                (_: any, i: number) => i
           );
           return (
-               <Box
-                    flexDirection="row"
-                    borderBottomWidth={1}
-                    borderColor="coolGray.200"
-               >
+               <Box flexDirection="row" borderBottomWidth={1}>
                     {props.navigationState.routes.map(
                          (route: any, i: number) => {
                               const borderBottomWidth = index === i ? 2 : 0;
@@ -58,7 +54,7 @@ export const Ranking = () => {
                                         alignItems="center"
                                         p="3"
                                         borderBottomWidth={borderBottomWidth}
-                                        borderColor={'primary'}
+                                        borderColor={theme.colors.primary}
                                         key={i}
                                    >
                                         <Pressable onPress={() => setIndex(i)}>
@@ -75,7 +71,7 @@ export const Ranking = () => {
      };
 
      return (
-          <Layout backgroundColor={theme.colors.white} >
+          <Layout backgroundColor={theme.colors.white}>
                <TabView
                     navigationState={{ index, routes }}
                     renderScene={renderScene}

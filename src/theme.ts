@@ -1,6 +1,4 @@
-import { extendTheme } from 'native-base';
-
-export const theme = extendTheme({
+export const theme = {
      colors: {
           primary: '#dc0b1b',
           secondary: '#F27405',
@@ -20,4 +18,4 @@ export const theme = extendTheme({
           text: '#1F2937',
           btHome: '#019f94',
      },
-});
+};

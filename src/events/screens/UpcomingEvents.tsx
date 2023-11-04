@@ -37,12 +37,7 @@ export const UpcomingEvents = () => {
                          </TouchableOpacity>
                     </Box>
                     <Center flex={1}>
-                         <Text
-                              fontSize={16}
-                              color={'muted.500'}
-                              fontWeight="bold"
-                              marginRight={10}
-                         >
+                         <Text fontSize={16} fontWeight="bold" marginRight={10}>
                               Próximos eventos
                          </Text>
                     </Center>
@@ -60,12 +55,7 @@ export const UpcomingEvents = () => {
                                    keyExtractor={(item) => item.id.toString()}
                                    ListFooterComponent={
                                         <Center flex={1}>
-                                             <Text
-                                                  color={
-                                                       theme.colors.muted[400]
-                                                  }
-                                                  mb={5}
-                                             >
+                                             <Text mb={5}>
                                                   No hay más eventos próximos
                                              </Text>
                                         </Center>

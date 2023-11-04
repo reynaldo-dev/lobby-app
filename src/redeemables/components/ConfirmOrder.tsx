@@ -105,13 +105,13 @@ export default function ConfirmOrder({
                               </Heading>
 
                               <Container mt={5}>
-                                   <Text color={theme.colors.muted[700]}>
+                                   <Text>
                                         <Text color={theme.colors.primary}>
                                              Canjeable:
                                         </Text>{' '}
                                         {item}
                                    </Text>
-                                   <Text mt={2} color={theme.colors.muted[700]}>
+                                   <Text mt={2}>
                                         <Text color={theme.colors.primary}>
                                              Costo:
                                         </Text>{' '}

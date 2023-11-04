@@ -10,15 +10,11 @@ interface UserCardProps {
 }
 
 export const RankingCard = ({ user, index }: UserCardProps) => {
-     // const backgroundColors = ['gold', 'silver', '#cd7f32', 'white'];
-     // const backgroundColor = backgroundColors[index] || 'white';
-
      const iconResponsive = useBreakpointValue({
           base: 45,
           sm: 45,
           md: 70,
           lg: 80,
-
      });
 
      const totalRecognitions =
@@ -39,7 +35,7 @@ export const RankingCard = ({ user, index }: UserCardProps) => {
           >
                <Text
                     px={2}
-                    alignSelf={"center"}
+                    alignSelf={'center'}
                     fontSize={{
                          base: 'sm',
                          sm: 'md',
@@ -54,7 +50,10 @@ export const RankingCard = ({ user, index }: UserCardProps) => {
                {user.picture ? (
                     <Avatar source={{ uri: user.picture }} />
                ) : (
-                    <MaleAvatar width={iconResponsive} height={iconResponsive} />
+                    <MaleAvatar
+                         width={iconResponsive}
+                         height={iconResponsive}
+                    />
                )}
 
                <VStack flex={1} mx={2}>
@@ -78,7 +77,9 @@ export const RankingCard = ({ user, index }: UserCardProps) => {
                               md: 'lg',
                               lg: 'lg',
                          }}
-                    >Reconocimientos: {totalRecognitions}</Text>
+                    >
+                         Reconocimientos: {totalRecognitions}
+                    </Text>
                </VStack>
 
                {user.league && (
@@ -89,7 +90,8 @@ export const RankingCard = ({ user, index }: UserCardProps) => {
                               md: 'xl',
                               lg: 'xl',
                          }}
-                         color={theme.colors.primary}>
+                         color={theme.colors.primary}
+                    >
                          {user.league.name}
                     </Text>
                )}

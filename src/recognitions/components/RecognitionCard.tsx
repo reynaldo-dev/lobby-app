@@ -6,7 +6,7 @@ import {
      Text,
      VStack,
      View,
-     useBreakpointValue
+     useBreakpointValue,
 } from 'native-base';
 import React from 'react';
 import CreditsIcon from '../../../assets/CreditsWhite.svg';
@@ -46,7 +46,8 @@ export const RecognitionCard = ({
      });
 
      const { user } = useAppSelector((state: RootState) => state.user);
-     const { data: CurrentCredits, isLoading: CreditsLoading } = useGetCurrentCreditsQuery(user?.id as string);
+     const { data: CurrentCredits, isLoading: CreditsLoading } =
+          useGetCurrentCreditsQuery(user?.id as string);
      const { data, isLoading } = useGetCurrentRecognitionsCountQuery(
           user?.id as string
      );
@@ -59,7 +60,7 @@ export const RecognitionCard = ({
      return (
           <>
                <Box
-                    w={"95%"}
+                    w={'95%'}
                     borderRadius="full"
                     alignSelf="center"
                     padding={[2, 4, 6, 8]}
@@ -86,7 +87,10 @@ export const RecognitionCard = ({
                          justifyContent="space-evenly"
                          alignItems="center"
                     >
-                         <CreditsIcon width={iconResponsive} height={iconResponsive} />
+                         <CreditsIcon
+                              width={iconResponsive}
+                              height={iconResponsive}
+                         />
                          {CreditsLoading && <Spinner color="white" />}
                          <Text
                               fontWeight="bold"
@@ -115,15 +119,15 @@ export const RecognitionCard = ({
                                    alt="Profile Picture"
                                    size={iconResponsive}
                                    borderRadius="full"
-                                   borderColor="gray.300"
                                    borderWidth={2}
                               />
                          ) : (
-                              <MaleAvatar width={ImageResponsive} height={ImageResponsive} />
+                              <MaleAvatar
+                                   width={ImageResponsive}
+                                   height={ImageResponsive}
+                              />
                          )}
-                         <VStack
-                              maxW={"60%"}
-                         >
+                         <VStack maxW={'60%'}>
                               <Text
                                    fontWeight="bold"
                                    fontSize={{
@@ -137,9 +141,7 @@ export const RecognitionCard = ({
                               >
                                    {firstName} {firstLastName}
                               </Text>
-                              {leagueIsLoading && (
-                                   <Spinner color="white" />
-                              )}
+                              {leagueIsLoading && <Spinner color="white" />}
                               {league && (
                                    <Text
                                         fontSize={{
@@ -152,12 +154,13 @@ export const RecognitionCard = ({
                                         color="white"
                                         textAlign={'center'}
                                    >
-                                        Nivel de reconocimiento: {league?.league?.name}
+                                        Nivel de reconocimiento:{' '}
+                                        {league?.league?.name}
                                    </Text>
                               )}
                          </VStack>
                     </HStack>
-               </Box >
+               </Box>
                <Box
                     position="absolute"
                     bottom="-15%"
@@ -168,12 +171,10 @@ export const RecognitionCard = ({
                     padding={4}
                     zIndex={1}
                >
-                    <HStack
-                         justifyContent="space-evenly"
-                    >
+                    <HStack justifyContent="space-evenly">
                          <Text
                               bold
-                              color={"primary"}
+                              color={'primary'}
                               fontSize={{
                                    base: 'md',
                                    sm: 'md',
@@ -184,10 +185,7 @@ export const RecognitionCard = ({
                               Total de{'\n'}Reconocimientos
                          </Text>
                          {isLoading && <Spinner color="primary" />}
-                         <HStack
-                              space={2}
-                              alignItems="center"
-                         >
+                         <HStack space={2} alignItems="center">
                               <RecognitionSVG
                                    width={iconResponsive}
                                    height={iconResponsive}

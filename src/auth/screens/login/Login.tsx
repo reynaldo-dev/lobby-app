@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 import { Box, Button, Link, Text, View, useToast } from 'native-base';
 import React, { useState } from 'react';
-import { Dimensions, StyleSheet, } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Yup from 'yup';
 import BackgroundImage from '../../../../assets/backgroundLogin.svg';
@@ -63,19 +63,31 @@ export default function Login() {
 
      return (
           <Layout backgroundColor={colors.white}>
-               <View style={{
-                    position: 'absolute',
-                    top: insets.top,
-                    left: 0,
-                    width: Dimensions.get('window').width,
-                    height: Dimensions.get('window').height,
-                    zIndex: 1,
-               }}>
+               <View
+                    style={{
+                         position: 'absolute',
+                         top: insets.top,
+                         left: 0,
+                         width: Dimensions.get('window').width,
+                         height: Dimensions.get('window').height,
+                         zIndex: 1,
+                    }}
+               >
                     <BackgroundImage />
                </View>
-               <View flex={1} justifyContent={'center'} alignItems={'center'} style={styles.contentContainer}>
+               <View
+                    flex={1}
+                    justifyContent={'center'}
+                    alignItems={'center'}
+                    style={styles.contentContainer}
+               >
                     <View style={styles.whiteBox}>
-                         <Text color={theme.colors.primary} fontSize={"4xl"} bold my={5}>
+                         <Text
+                              color={theme.colors.primary}
+                              fontSize={'4xl'}
+                              bold
+                              my={5}
+                         >
                               ¡Bienvenido!
                          </Text>
 
@@ -98,9 +110,11 @@ export default function Login() {
                                              isInvalid={!!errors.email}
                                              placeholder="johndoe@example.com"
                                              placeholderTextColor={
-                                                  theme.colors.muted[400]
+                                                  theme.colors.tertiary
                                              }
-                                             onChangeText={handleChange('email')}
+                                             onChangeText={handleChange(
+                                                  'email'
+                                             )}
                                              value={values.email}
                                              errors={errors.email}
                                              keyboardType="email-address"
@@ -111,21 +125,31 @@ export default function Login() {
                                              isInvalid={!!errors.password}
                                              placeholder="Contraseña"
                                              placeholderTextColor={
-                                                  theme.colors.muted[400]
+                                                  theme.colors.tertiary
                                              }
-                                             onChangeText={handleChange('password')}
-                                             type='password'
+                                             onChangeText={handleChange(
+                                                  'password'
+                                             )}
+                                             type="password"
                                              value={values.password}
                                              errors={errors.password}
                                         />
 
-                                        <Box alignItems="center" w="full" mt={4}>
+                                        <Box
+                                             alignItems="center"
+                                             w="full"
+                                             mt={4}
+                                        >
                                              <Button
-                                                  backgroundColor={colors.primary}
-                                                  borderRadius={"full"}
+                                                  backgroundColor={
+                                                       colors.primary
+                                                  }
+                                                  borderRadius={'full'}
                                                   disabled={loading}
                                                   w={['90%', '80%']}
-                                                  onPress={handleSubmit as never}
+                                                  onPress={
+                                                       handleSubmit as never
+                                                  }
                                                   isLoading={loading}
                                                   _loading={{
                                                        color: 'white',
@@ -135,7 +159,9 @@ export default function Login() {
                                                   }}
                                              >
                                                   <Text
-                                                       style={styles.loginButtonText}
+                                                       style={
+                                                            styles.loginButtonText
+                                                       }
                                                   >
                                                        Iniciar Sesión
                                                   </Text>
@@ -145,13 +171,19 @@ export default function Login() {
                               )}
                          </Formik>
                          <Link
-                              _text={{ color: colors.dark, textDecoration: 'none' }}
+                              _text={{
+                                   color: colors.dark,
+                                   textDecoration: 'none',
+                              }}
                               mt={5}
                               onPress={() => {
                                    navigation.navigate('Register' as never);
                               }}
                          >
-                              ¿No tienes una cuenta? <Text color={theme.colors.secondary}>Regístrate</Text>
+                              ¿No tienes una cuenta?{' '}
+                              <Text color={theme.colors.secondary}>
+                                   Regístrate
+                              </Text>
                          </Link>
                     </View>
                </View>

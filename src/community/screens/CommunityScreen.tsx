@@ -10,7 +10,7 @@ import {
      Text,
      VStack,
      View,
-     useToast
+     useToast,
 } from 'native-base';
 import React, { useState } from 'react';
 import { Platform } from 'react-native';
@@ -137,15 +137,11 @@ export const CommunityScreen = () => {
                                         h="100%"
                                         p={2}
                                    >
-                                        <Text
-                                             fontSize="md"
-                                             color={theme.colors.muted['500']}
-                                        >
+                                        <Text fontSize="md">
                                              {members?.totalMembers}
                                         </Text>
                                         <Icon
                                              ml={2}
-                                             color={theme.colors.muted['500']}
                                              as={Ionicons}
                                              name="people-outline"
                                              size="md"
@@ -216,54 +212,21 @@ const SkeletonLayout = () => {
           <View flex={1}>
                <View flex={1}>
                     <Box flex={1} justifyContent="center" alignItems="center">
-                         <Skeleton.Text
-                              lines={1}
-                              w="1/2"
-                              endColor={theme.colors.muted['300']}
-                         />
-                         <Skeleton.Text
-                              lines={1}
-                              w="70%"
-                              mt={5}
-                              endColor={theme.colors.muted['300']}
-                         />
+                         <Skeleton.Text lines={1} w="1/2" />
+                         <Skeleton.Text lines={1} w="70%" mt={5} />
                     </Box>
                     <Box justifyContent="space-between" flexDir="row" mx={2}>
-                         <Skeleton
-                              borderRadius="full"
-                              w={10}
-                              endColor={theme.colors.muted['300']}
-                         />
-                         <Skeleton
-                              borderRadius="full"
-                              w={100}
-                              endColor={theme.colors.muted['300']}
-                         />
+                         <Skeleton borderRadius="full" w={10} />
+                         <Skeleton borderRadius="full" w={100} />
                     </Box>
                </View>
 
                <View flex={3} mt={5} mb={2}>
                     <VStack mx={4} flex={1} space={23}>
-                         <Skeleton
-                              borderRadius={10}
-                              flex={1}
-                              endColor={theme.colors.muted['300']}
-                         />
-                         <Skeleton
-                              borderRadius={10}
-                              flex={1}
-                              endColor={theme.colors.muted['300']}
-                         />
-                         <Skeleton
-                              borderRadius={10}
-                              flex={1}
-                              endColor={theme.colors.muted['300']}
-                         />
-                         <Skeleton
-                              borderRadius={10}
-                              flex={1}
-                              endColor={theme.colors.muted['300']}
-                         />
+                         <Skeleton borderRadius={10} flex={1} />
+                         <Skeleton borderRadius={10} flex={1} />
+                         <Skeleton borderRadius={10} flex={1} />
+                         <Skeleton borderRadius={10} flex={1} />
                     </VStack>
                </View>
           </View>

@@ -61,7 +61,6 @@ const CardEvent = ({ data }: CardEventProps) => {
                                    md: 'xl',
                                    lg: 'md',
                               }}
-                              color={theme.colors.muted[500]}
                          >
                               {data?.title}
                          </Text>
@@ -74,15 +73,10 @@ const CardEvent = ({ data }: CardEventProps) => {
                                         md: 'md',
                                         lg: 'md',
                                    }}
-                                   color={theme.colors.muted[500]}
                               >
                                    {data?.community.name}
                               </Text>
-                              <Feather
-                                   name="users"
-                                   size={16}
-                                   color={theme.colors.muted[500]}
-                              />
+                              <Feather name="users" size={16} />
                          </HStack>
                     </Box>
                </HStack>
