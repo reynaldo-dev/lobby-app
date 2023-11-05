@@ -35,7 +35,7 @@ export default function HomeBTN({
           base: isPrimary ? 0.9 : 0.6,
           sm: isPrimary ? 1.0 : 0.7,
           md: isPrimary ? 1.2 : 0.7,
-          lg: isPrimary ? 1.5 : 1,
+          lg: isPrimary ? 1.2 : 0.7,
      }) || 1
 
      const buttonHeight = Math.min(windowHeight * 0.2 * scaleFactor, windowHeight);

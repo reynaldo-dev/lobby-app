@@ -15,7 +15,9 @@ export const theme = {
           transparent: 'transparent',
           darkGray: '#6b6b6b',
           gray: '#f7f6fb',
-          text: '#1F2937',
+          text: {
+               900: '#1F2937',
+          },
           btHome: '#019f94',
      },
 };

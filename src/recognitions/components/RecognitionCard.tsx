@@ -6,7 +6,7 @@ import {
      Text,
      VStack,
      View,
-     useBreakpointValue,
+     useBreakpointValue
 } from 'native-base';
 import React from 'react';
 import CreditsIcon from '../../../assets/CreditsWhite.svg';
@@ -78,7 +78,7 @@ export const RecognitionCard = ({
                     </View>
 
                     <Box
-                         bg="primary"
+                         backgroundColor={'primary'}
                          alignSelf={'center'}
                          w={{ base: '50%', sm: '50%', md: '40%', lg: '40%' }}
                          borderRadius="full"
@@ -168,7 +168,7 @@ export const RecognitionCard = ({
                     right="10%"
                     backgroundColor="white"
                     borderRadius="full"
-                    padding={4}
+                    padding={2}
                     zIndex={1}
                >
                     <HStack justifyContent="space-evenly">
@@ -179,7 +179,7 @@ export const RecognitionCard = ({
                                    base: 'md',
                                    sm: 'md',
                                    md: '2xl',
-                                   lg: 'xl',
+                                   lg: '2xl',
                               }}
                          >
                               Total de{'\n'}Reconocimientos
@@ -198,7 +198,7 @@ export const RecognitionCard = ({
                                         base: 'md',
                                         sm: 'md',
                                         md: '2xl',
-                                        lg: 'xl',
+                                        lg: '2xl',
                                    }}
                               >
                                    {data?.recognitionsReceivedCount}

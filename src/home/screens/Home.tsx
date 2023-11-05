@@ -91,9 +91,9 @@ export default function Home(): JSX.Element {
                               mt={6}
                               alignSelf={'center'}
                               alignItems={'center'}
-                              w={screenWidth * 0.75}
+                              w={screenWidth * 0.80}
                               borderRadius={'full'}
-                              padding={[2, 4, 4, 8]}
+                              padding={[2, 4, 4, 4]}
                               backgroundColor={theme.colors.primary}
                          >
                               <HStack space={2} alignItems={'center'}>
@@ -117,7 +117,7 @@ export default function Home(): JSX.Element {
                          </Box>
                     </Pressable>
 
-                    <View mt={[4, 10, 15]}>
+                    <View mt={[4, 10, 10]}>
                          <VStack space={4} h={'100%'}>
                               <HStack
                                    w={'100%'}
@@ -140,7 +140,7 @@ export default function Home(): JSX.Element {
                                              base: 'md',
                                              sm: 'md',
                                              md: '2xl',
-                                             lg: 'xl',
+                                             lg: '2xl',
                                         }}
                                    />
 
@@ -161,7 +161,7 @@ export default function Home(): JSX.Element {
                                              base: 'md',
                                              sm: 'md',
                                              md: '2xl',
-                                             lg: 'xl',
+                                             lg: '2xl',
                                         }}
                                    />
                               </HStack>

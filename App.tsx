@@ -1,15 +1,17 @@
+import * as Network from 'expo-network';
+import { NativeBaseProvider, extendTheme } from 'native-base';
+import { useEffect, useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import Main from './src/Main';
 import { store } from './src/redux/store/store';
-import * as Network from 'expo-network';
-import LottieView from 'lottie-react-native';
 import NoInternetConnection from './src/shared/screens/NoInternetConnection';
-import { useEffect, useState } from 'react';
-import { NativeBaseProvider } from 'native-base';
+import { theme as CustomTheme } from './src/theme';
 
 export default function App() {
      const [isInternetConnected, setIsInternetConnected] = useState(false);
+     const theme = extendTheme(CustomTheme);
+
 
      const verifyConnection = async () => {
           Network.getNetworkStateAsync()
@@ -28,7 +30,7 @@ export default function App() {
 
      return (
           <SafeAreaProvider>
-               <NativeBaseProvider>
+               <NativeBaseProvider theme={theme}>
                     {isInternetConnected ? (
                          <Provider store={store}>
                               <Main />
