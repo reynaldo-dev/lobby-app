@@ -1,3 +1,6 @@
+import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { Box, Center, Text } from 'native-base';
 import React, { useState } from 'react';
 import {
      Animated,
@@ -6,25 +9,22 @@ import {
      TouchableOpacity,
 } from 'react-native';
 import {
-     TabView,
-     SceneMap,
      Route,
+     SceneMap,
      SceneRendererProps,
      TabBarProps,
+     TabView,
 } from 'react-native-tab-view';
-import { Box, Center, Text } from 'native-base';
 import Layout from '../../shared/layout/Layout';
-import MyRecognitions from './MyRecognitions';
-import RecognitionChartBar from '../components/RecognitionChartBar';
-import { AntDesign } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
 import { theme } from '../../theme';
+import RecognitionChartBar from '../components/RecognitionChartBar';
+import MyRecognitions from './MyRecognitions';
 
 interface MyRoute extends Route {
      title: string;
 }
 
-interface RenderTabBarProps extends SceneRendererProps, TabBarProps<MyRoute> {}
+interface RenderTabBarProps extends SceneRendererProps, TabBarProps<MyRoute> { }
 
 export const RecognitionsTabView = () => {
      const [index, setIndex] = useState(0);
@@ -44,7 +44,7 @@ export const RecognitionsTabView = () => {
 
      const renderTabBar = (props: RenderTabBarProps) => {
           return (
-               <Box flexDirection="row" borderBottomWidth={1}>
+               <Box flexDirection="row" borderBottomWidth={1} borderColor={theme.colors.coolGray[200]}>
                     {props.navigationState.routes.map((route, i) => {
                          const borderBottomWidth = index === i ? 2 : 0;
                          return (

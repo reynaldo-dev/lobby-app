@@ -80,8 +80,7 @@ const registerValidationSchema = Yup.object().shape({
 
 export const DepartmentSelect = ({
      value,
-     onChange,
-     borderColor = 'transparent',
+     onChange
 }: DepartmentSelectProps) => (
      <Box alignItems="center" w="full">
           <FormControl w={['90%', '80%']} borderRadius={10}>
@@ -95,7 +94,7 @@ export const DepartmentSelect = ({
                     selectedValue={value}
                     onValueChange={onChange}
                     placeholder="Selecciona un departamento"
-                    borderColor={borderColor}
+                    borderColor={theme.colors.coolGray[200]}
                     bgColor={theme.colors.white}
                     _selectedItem={{
                          bg: 'cyan.400',
@@ -192,7 +191,7 @@ export default function Register() {
                                                   bgColor={colors.tertiary}
                                                   isInvalid={
                                                        touched.name &&
-                                                       errors.name
+                                                            errors.name
                                                             ? true
                                                             : false
                                                   }
@@ -217,7 +216,7 @@ export default function Register() {
                                                   bgColor={colors.tertiary}
                                                   isInvalid={
                                                        touched.lastname &&
-                                                       errors.lastname
+                                                            errors.lastname
                                                             ? true
                                                             : false
                                                   }
@@ -243,7 +242,7 @@ export default function Register() {
                                                   bgColor={colors.tertiary}
                                                   isInvalid={
                                                        touched.email &&
-                                                       errors.email
+                                                            errors.email
                                                             ? true
                                                             : false
                                                   }
@@ -268,7 +267,7 @@ export default function Register() {
                                                   bgColor={colors.tertiary}
                                                   isInvalid={
                                                        touched.password &&
-                                                       errors.password
+                                                            errors.password
                                                             ? true
                                                             : false
                                                   }
@@ -295,7 +294,7 @@ export default function Register() {
                                                   bgColor={colors.tertiary}
                                                   isInvalid={
                                                        touched.phone &&
-                                                       errors.phone
+                                                            errors.phone
                                                             ? true
                                                             : false
                                                   }
@@ -330,7 +329,7 @@ export default function Register() {
                                                   bgColor={colors.tertiary}
                                                   isInvalid={
                                                        touched.city &&
-                                                       errors.city
+                                                            errors.city
                                                             ? true
                                                             : false
                                                   }
@@ -354,7 +353,7 @@ export default function Register() {
                                                   bgColor={colors.tertiary}
                                                   isInvalid={
                                                        touched.workplace &&
-                                                       errors.workplace
+                                                            errors.workplace
                                                             ? true
                                                             : false
                                                   }
@@ -380,7 +379,7 @@ export default function Register() {
                                                   bgColor={colors.tertiary}
                                                   isInvalid={
                                                        touched.enterprise_id &&
-                                                       errors.enterprise_id
+                                                            errors.enterprise_id
                                                             ? true
                                                             : false
                                                   }

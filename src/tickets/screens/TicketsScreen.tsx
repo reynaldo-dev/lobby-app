@@ -21,7 +21,7 @@ interface MyRoute extends Route {
      title: string;
 }
 
-interface RenderTabBarProps extends SceneRendererProps, TabBarProps<MyRoute> {}
+interface RenderTabBarProps extends SceneRendererProps, TabBarProps<MyRoute> { }
 
 export const TicketsScreen = () => {
      const { user } = useAppSelector((state: RootState) => state.user);
@@ -51,11 +51,8 @@ export const TicketsScreen = () => {
      });
 
      const renderTabBar = (props: RenderTabBarProps) => {
-          const inputRange = props.navigationState.routes.map(
-               (_: any, i: number) => i
-          );
           return (
-               <Box flexDirection="row" borderBottomWidth={1}>
+               <Box flexDirection="row" borderBottomWidth={1} borderColor={theme.colors.coolGray[200]}>
                     {props.navigationState.routes.map(
                          (route: any, i: number) => {
                               const borderBottomWidth = index === i ? 2 : 0;
