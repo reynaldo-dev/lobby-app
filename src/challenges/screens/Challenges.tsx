@@ -33,7 +33,7 @@ export const Challenges = () => {
 
   const renderTabBar = (props: RenderTabBarProps) => {
     return (
-      <Box flexDirection="row" borderBottomWidth={1} borderColor="coolGray.200">
+      <Box flexDirection="row" borderBottomWidth={1} borderColor={theme.colors.coolGray[200]}>
         {props.navigationState.routes.map((route, i) => {
           const borderBottomWidth = index === i ? 2 : 0;
           return (

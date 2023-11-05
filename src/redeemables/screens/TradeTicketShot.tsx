@@ -38,10 +38,7 @@ export default function TradeTicketShot() {
                               Hiciste el caje con éxito
                          </Heading>
 
-                         <Text
-                              color={theme.colors.muted[500]}
-                              textAlign={'center'}
-                         >
+                         <Text textAlign={'center'}>
                               El siguiete paso es compartir el ticket con un
                               encargado, haz click en el botón 'Compartir
                               ticket', solo puedes hacerlo desde esta pantalla,
@@ -98,7 +95,7 @@ export default function TradeTicketShot() {
                          </Box>
                     </Box>
 
-                    <Text color={theme.colors.muted[500]} mt={10}>
+                    <Text mt={10}>
                          Si ya lo compartiste, haz click en el botón 'Volver'
                     </Text>
                </Center>

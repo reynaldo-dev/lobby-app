@@ -25,13 +25,7 @@ export default function MainModal({
                     size="xl"
                >
                     <Modal.Content height="100%">
-                         {header && (
-                              <Modal.Header
-                                   _text={{ color: theme.colors.muted['400'] }}
-                              >
-                                   {header}
-                              </Modal.Header>
-                         )}
+                         {header && <Modal.Header>{header}</Modal.Header>}
                          <Modal.CloseButton />
 
                          {children}

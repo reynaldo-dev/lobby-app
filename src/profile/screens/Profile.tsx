@@ -20,7 +20,7 @@ export default function Profile() {
      }) || 0.3;
 
      const boxAndQRSizeFactor = useBreakpointValue({
-          base: 0.5,
+          base: 0.6,
           sm: 0.9,
           md: 0.7,
      }) || 0.9;
