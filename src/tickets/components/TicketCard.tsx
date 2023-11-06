@@ -94,13 +94,14 @@ export const TicketCard = ({
                               {event?.title}
                          </Heading>
                          <Badge
-                              colorScheme={
+                              bgColor={
                                    isActive
                                         ? theme.colors.success
                                         : theme.colors.danger
                               }
                          >
                               <Text
+                                   color={theme.colors.white}
                                    bold
                                    fontSize={{
                                         base: 'sm',
@@ -140,7 +141,7 @@ export const TicketCard = ({
                               <FontAwesome
                                    name={event.link ? 'laptop' : 'map-marker'}
                                    size={iconsReponsive}
-                                   color="gray"
+                                   color={theme.colors.coolGray[900]}
                               />
                               <Text
                                    fontSize={{
@@ -158,7 +159,7 @@ export const TicketCard = ({
                               <FontAwesome
                                    name="clock-o"
                                    size={iconsReponsive}
-                                   color="gray"
+                                   color={theme.colors.coolGray[900]}
                               />
                               <Text
                                    fontSize={{

@@ -8,9 +8,10 @@ import { RootStackParamList } from '../../routing/navigation-types';
 
 export interface ChallengeCardProps {
      challenge: Challenge;
+     showDetail?: boolean;
 }
 
-export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
+export const ChallengeCard = ({ challenge, showDetail = true }: ChallengeCardProps) => {
      const navigation =
           useNavigation<
                NavigationProp<RootStackParamList, 'ChallengeDetail'>
@@ -39,12 +40,16 @@ export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
                               isTruncated
                               textTransform={'capitalize'}
                          >
-                              {challenge.title}
+                              {challenge?.title}
                          </Text>
-                         <Badge>{challenge.category.name}</Badge>
+                         {
+                              showDetail && (
+                                   <Badge>{challenge?.category?.name}</Badge>
+                              )
+                         }
                     </HStack>
                     <Text isTruncated numberOfLines={2}>
-                         {challenge.description}
+                         {challenge?.description}
                     </Text>
                     <HStack>
                          <VStack space={2}>
@@ -52,31 +57,34 @@ export const ChallengeCard = ({ challenge }: ChallengeCardProps) => {
                                    <FontAwesome name="calendar" size={20} />
                                    <Text>
                                         Desde:{' '}
-                                        {formatDate(challenge.initialDate)}
+                                        {formatDate(challenge?.initialDate)}
                                    </Text>
                               </HStack>
                               <HStack space={2}>
-                                   <FontAwesome name="calendar" size={20} />
+                                   <FontAwesome name="calendar" size={20} color={theme.colors.coolGray[900]} />
                                    <Text>
-                                        Hasta: {formatDate(challenge.endDate)}
+                                        Hasta: {formatDate(challenge?.endDate)}
                                    </Text>
                               </HStack>
                          </VStack>
                     </HStack>
 
                     <VStack space={2}>
-                         <HStack space={2}>
-                              <FontAwesome name="ticket" size={20} />
-                              <Text>
-                                   Cupones disponibles:{' '}
-                                   {challenge.availableCoupons} /{' '}
-                                   {challenge.coupons}
-                              </Text>
-                         </HStack>
+                         {
+                              showDetail && (
+                                   <HStack space={2}>
+                                        <FontAwesome name="ticket" size={20} />
+                                        <Text>
+                                             Cupones disponibles:{' '}
+                                             {challenge?.availableCoupons} /{' '}
+                                             {challenge?.coupons}
+                                        </Text>
+                                   </HStack>)
+                         }
 
                          <HStack space={2}>
                               <FontAwesome5 name="coins" size={20} />
-                              <Text>Créditos: {challenge.credits}</Text>
+                              <Text>Créditos: {challenge?.credits}</Text>
                          </HStack>
                     </VStack>
                </VStack>

@@ -69,7 +69,7 @@ export const Ranking = () => {
      };
 
      return (
-          <Layout backgroundColor={theme.colors.white}>
+          <Layout backgroundColor={theme.colors.background}>
                <TabView
                     navigationState={{ index, routes }}
                     renderScene={renderScene}

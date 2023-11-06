@@ -14,15 +14,12 @@ export interface Challenge {
      coupons: number;
      category: Category;
      availableCoupons: number;
+     indications: string[];
 }
 
 export interface GetAllResponse {
      total: number;
      data: Challenge[];
-}
-
-export interface Indications {
-     indications: string[];
 }
 
 export interface GetByIdResponse {
@@ -51,4 +48,13 @@ export interface TakeChallengeResponse {
 
 export interface TakeChallengeDto {
      userId: string;
+}
+
+export interface IMyChallenges {
+     id: string;
+     isActive: boolean;
+     challengeId: string;
+     done: boolean;
+     claimedBy: string;
+     challenge: Challenge;
 }

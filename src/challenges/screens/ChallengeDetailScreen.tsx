@@ -36,6 +36,7 @@ import { RootStackParamList } from '../../routing/navigation-types';
 import Layout from '../../shared/layout/Layout';
 import { theme } from '../../theme';
 
+
 export const ChallengeDetailScreen = () => {
      const route = useRoute<RouteProp<RootStackParamList, 'ChallengeDetail'>>();
      const { challenge } = route.params;
@@ -138,13 +139,13 @@ export const ChallengeDetailScreen = () => {
                          mb={4}
                          textTransform={'capitalize'}
                     >
-                         {challenge.title}
+                         {challenge?.title}
                     </Text>
                     <Center mb={4}>
                          {amIOnChallengeLoading ? (
                               <Spinner color={theme.colors.secondary} />
                          ) : amIOnChallengeData &&
-                           amIOnChallengeData.amIOnChallenge ? (
+                              amIOnChallengeData.amIOnChallenge ? (
                               <Text color={theme.colors.secondary}>
                                    Ya estás participando en este reto.
                               </Text>
@@ -243,7 +244,7 @@ export const ChallengeDetailScreen = () => {
                     </AlertDialog>
 
                     <Center>
-                         <Text mb={4}>{challenge.description}</Text>
+                         <Text mb={4}>{challenge?.description}</Text>
                     </Center>
                     <VStack space={4} mb={4}>
                          <HStack space={2}>
@@ -251,7 +252,7 @@ export const ChallengeDetailScreen = () => {
                               <Text>
                                    Desde:{' '}
                                    {getChallengeDateFormatted(
-                                        challenge.initialDate
+                                        challenge?.initialDate
                                    )}
                               </Text>
                          </HStack>
@@ -261,29 +262,41 @@ export const ChallengeDetailScreen = () => {
                               <Text>
                                    Hasta:{' '}
                                    {getChallengeDateFormatted(
-                                        challenge.endDate
+                                        challenge?.endDate
                                    )}
                               </Text>
                          </HStack>
                          <Divider />
-                         <HStack space={2}>
-                              <FontAwesome name="ticket" size={20} />
-                              <Text>
-                                   Cupones disponibles:{' '}
-                                   {challenge.availableCoupons} /{' '}
-                                   {challenge.coupons}
-                              </Text>
-                         </HStack>
-                         <Divider />
+                         {
+                              challenge.availableCoupons &&
+                              (
+                                   <>
+                                        <HStack space={2}>
+                                             <FontAwesome name="ticket" size={20} />
+                                             <Text>
+                                                  Cupones disponibles:{' '}
+                                                  {challenge?.availableCoupons} /{' '}
+                                                  {challenge?.coupons}
+                                             </Text>
+                                        </HStack>
+                                        <Divider />
+                                   </>
+                              )
+                         }
                          <HStack space={2}>
                               <FontAwesome5 name="coins" size={20} />
-                              <Text>Créditos: {challenge.credits}</Text>
+                              <Text>Créditos: {challenge?.credits}</Text>
                          </HStack>
                          <Divider />
-                         <HStack space={2}>
-                              <MaterialIcons name="category" size={20} />
-                              <Text>Categoría: {challenge.category.name}</Text>
-                         </HStack>
+                         {
+                              challenge.category &&
+                              (
+                                   <HStack space={2}>
+                                        <MaterialIcons name="category" size={20} />
+                                        <Text>Categoría: {challenge?.category?.name}</Text>
+                                   </HStack>
+                              )
+                         }
                     </VStack>
                </ScrollView>
           </Layout>

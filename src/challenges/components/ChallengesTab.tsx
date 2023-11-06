@@ -7,40 +7,23 @@ import { Challenge } from '../interfaces/challenges.interfaces';
 
 export const ChallengesTab = () => {
     const [challenges, setChallenges] = React.useState<Challenge[]>([]);
-    const [loadingMore, setLoadingMore] = React.useState(false);
-    const [pagination, setPagination] = React.useState({ from: 0, limit: 10 });
 
     const {
         data: challengesData,
         isLoading,
         isError,
-    } = useGetAllChallengesQuery(pagination);
+    } = useGetAllChallengesQuery({ from: 0, limit: 10 });
 
     React.useEffect(() => {
-        if (challengesData?.data) {
-            setChallenges(prev => [...prev, ...challengesData.data]);
-            setLoadingMore(false);
-        }
-    }, [challengesData]);
+        challengesData?.data
+        setChallenges(challengesData?.data);
 
-    const loadMoreChallenges = () => {
-        if (!loadingMore) {
-            setLoadingMore(true);
-            setPagination(prev => ({
-                from: prev.from + prev.limit,
-                limit: 10
-            }));
-        }
-    };
+    }, [challengesData]);
 
     const renderChallengeItem = ({ item }: { item: Challenge }) => (
         <ChallengeCard challenge={item} />
     );
 
-    const renderFooter = () => {
-        if (!loadingMore) return null;
-        return <Spinner />;
-    };
 
     if (isLoading) {
         return (
@@ -50,7 +33,7 @@ export const ChallengesTab = () => {
         );
     }
 
-    if (isError || challenges.length === 0) {
+    if (isError || challenges?.length === 0) {
         return (
             <Center flex={1}>
                 <NotFound message="No se han encontrado retos activos" />
@@ -64,9 +47,6 @@ export const ChallengesTab = () => {
                 data={challenges}
                 renderItem={renderChallengeItem}
                 keyExtractor={(item) => item.id}
-                onEndReached={loadMoreChallenges}
-                onEndReachedThreshold={0.1}
-                ListFooterComponent={renderFooter}
             />
         </>
     );

@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
      AmIOnChallengeResponse,
      GetAllResponse,
+     IMyChallenges,
      TakeChallengeDto,
      TakeChallengeResponse,
 } from '../../challenges/interfaces/challenges.interfaces';
@@ -26,7 +27,7 @@ export const challengesApi = createApi({
      refetchOnMountOrArgChange: true,
      refetchOnReconnect: true,
      endpoints: (builder) => ({
-          getAllChallenges: builder.query<GetAllResponse, IPagination>({
+          getAllChallenges: builder.query<GetAllResponse[], IPagination>({
                query: (pagination) =>
                     `/challenges/available?from=${pagination.from}&limit=${pagination.limit}`,
           }),
@@ -40,12 +41,9 @@ export const challengesApi = createApi({
                query: ({ challengeId, userId }) =>
                     `/challenges/am-i-on-challenge/${challengeId}?userId=${userId}`,
           }),
-          findMyChallenges: builder.query<
-               void,
-               { userId: string; done: boolean; challengeId: string }
-          >({
-               query: ({ userId, done, challengeId }) =>
-                    `/challenges/my-challenges/${userId}?done=${done}&challengeId=${challengeId}`,
+          findMyChallenges: builder.query<IMyChallenges[], { userId: string }>({
+               query: ({ userId }) =>
+                    `/challenges/my-challenges/${userId}?done=${false}`,
           }),
           takeChallenge: builder.mutation<
                TakeChallengeResponse,
