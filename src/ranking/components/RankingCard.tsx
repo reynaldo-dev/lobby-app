@@ -29,7 +29,7 @@ export const RankingCard = ({ user, index }: UserCardProps) => {
                borderRadius="lg"
                p={4}
                mb={4}
-               backgroundColor={theme.colors.background}
+               backgroundColor={theme.colors.white}
                flexDirection="row"
                alignItems="center"
           >

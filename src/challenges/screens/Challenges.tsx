@@ -66,7 +66,7 @@ export const Challenges = () => {
         <Center flex={1}>
           <Text
             fontSize={16}
-            color={theme.colors.muted}
+            color={theme.colors.coolGray[900]}
             fontWeight="bold"
             marginRight={10}
           >

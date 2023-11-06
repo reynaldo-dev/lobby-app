@@ -19,6 +19,7 @@ import { User } from '../../interfaces/community.interface';
 import { RootStackParamList } from '../../routing/navigation-types';
 import Layout from '../../shared/layout/Layout';
 import { Event } from '../interfaces/assistanceTicket.interface';
+import { theme } from '../../theme';
 
 type Props = {
      event: Event;
@@ -63,14 +64,13 @@ export const DetailScreen = ({
      };
 
      return (
-          <Layout>
+          <Layout backgroundColor={theme.colors.background}>
                <Box
                     safeArea
                     flex={1}
                     p="2"
                     w="100%"
                     mx="auto"
-                    bg="white"
                     justifyContent="center"
                >
                     <HStack

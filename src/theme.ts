@@ -21,6 +21,7 @@ export const theme = {
           btHome: '#019f94',
           coolGray: {
                200: '#e5e7eb',
+               900: '#737373',
           },
      },
 };
