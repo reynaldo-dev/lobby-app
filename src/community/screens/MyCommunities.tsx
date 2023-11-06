@@ -25,7 +25,7 @@ export const MyCommunities = () => {
                     <Center flex={1}>
                          <Text
                               fontSize={16}
-                              color={'muted.500'}
+                              color={theme.colors.coolGray[900]}
                               fontWeight="bold"
                               marginRight={10}
                          >

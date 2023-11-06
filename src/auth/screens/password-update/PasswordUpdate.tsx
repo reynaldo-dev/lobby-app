@@ -1,5 +1,4 @@
 import { AntDesign } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
 import { Box, Button, Center, Text, VStack, View, useToast } from 'native-base';
@@ -130,7 +129,7 @@ export default function PasswordUpdate() {
                                         alignItems="center"
                                    >
                                         <ValidatedInputText
-                                             bgColor={theme.colors.muted['200']}
+                                             bgColor={theme.colors.coolGray[900]}
                                              isInvalid={
                                                   errors.currentPassword
                                                        ? true
@@ -139,7 +138,7 @@ export default function PasswordUpdate() {
                                              formControlLabel="Contraseña actual"
                                              placeholder="Contraseña actual"
                                              placeholderTextColor={
-                                                  theme.colors.muted['400']
+                                                  theme.colors.coolGray[900]
                                              }
                                              onChangeText={handleChange(
                                                   'currentPassword'

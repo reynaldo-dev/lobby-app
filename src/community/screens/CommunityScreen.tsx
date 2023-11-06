@@ -108,6 +108,10 @@ export const CommunityScreen = () => {
           });
      };
 
+     if (isLoading || !community) {
+          return <SkeletonLayout />;
+     }
+
      return (
           <Layout>
                {isLoading ? (
@@ -118,6 +122,7 @@ export const CommunityScreen = () => {
                               backgroundColor={community?.color}
                               barStyle={barStyle}
                          />
+
                          <CommunityCover
                               community={community as ICommunityResponse}
                          />
@@ -197,9 +202,11 @@ export const CommunityScreen = () => {
                                         </Text>
                                    </Button>
                               </Box>
-                              <Center mb={100} mx={2}>
-                                   <EventList events={community?.Event} />
-                              </Center>
+                              {community.Event && (
+                                   <Center mb={100} mx={2}>
+                                        <EventList events={community.Event} />
+                                   </Center>
+                              )}
                          </View>
                     </>
                )}

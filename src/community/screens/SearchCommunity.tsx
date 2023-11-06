@@ -19,6 +19,7 @@ import {
 } from '../../redux/services/communities.service';
 import Layout from '../../shared/layout/Layout';
 import CommunityCard from '../components/CommunityCard';
+import { theme } from '../../theme';
 
 export const SearchCommunity = () => {
      const [searchTerm, setSearchTerm] = useState('');
@@ -108,7 +109,7 @@ export const SearchCommunity = () => {
                                                   }
                                                   size={5}
                                                   ml="2"
-                                                  color="muted.400"
+                                                  color={theme.colors.coolGray[900]}
                                              />
                                         }
                                         InputRightElement={
@@ -119,7 +120,7 @@ export const SearchCommunity = () => {
                                                        }
                                                        size={5}
                                                        mr="2"
-                                                       color="muted.400"
+                                                       color={theme.colors.coolGray[900]}
                                                        onPress={clearSearch}
                                                   />
                                              ) : undefined

@@ -1,10 +1,9 @@
 import {
      Center,
      Spinner,
-     View,
-     useBreakpointValue,
-     Box,
      Text,
+     View,
+     useBreakpointValue
 } from 'native-base';
 import React from 'react';
 import { Dimensions } from 'react-native';
@@ -21,14 +20,16 @@ const RecognitionChartBar = () => {
 
      const heightBar = useBreakpointValue({
           base: height / 1.5,
-          sm: height / 1.5,
+          sm: height / 1.6,
           md: height / 2.5,
+          lg: height / 2.5,
      });
 
      const widthBar = useBreakpointValue({
           base: width / 1.2,
-          sm: width / 1.2,
+          sm: width / 1.6,
           md: width / 1.1,
+          lg: width / 1.1,
      });
 
      const renderTooltip = (item, index) => {

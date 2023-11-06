@@ -1,17 +1,17 @@
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import * as Linking from 'expo-linking';
 import {
      Box,
      Button,
      Center,
-     Container,
      HStack,
      Heading,
      Icon,
      Modal,
      Text,
-     View,
+     View
 } from 'native-base';
 import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
@@ -19,8 +19,6 @@ import { isDarkColor } from '../../helpers/is-dark-color/isDarkColor';
 import { RootStackParamList } from '../../routing/navigation-types';
 import { theme } from '../../theme';
 import { GetCommunityByIDResponse } from '../interfaces/community-response.interface';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import * as Linking from 'expo-linking';
 
 interface CommunityCoverProps {
      community: GetCommunityByIDResponse;
@@ -112,7 +110,7 @@ export default function CommunityCover({ community }: CommunityCoverProps) {
                               <View>
                                    <Heading
                                         size="sm"
-                                        color={theme.colors.text}
+                                        color={theme.colors.text[900]}
                                         textAlign={'center'}
                                    >
                                         Estás por visitar la siguiente URL
@@ -120,7 +118,7 @@ export default function CommunityCover({ community }: CommunityCoverProps) {
 
                                    <Center mt={5} width={'100%'}>
                                         <Text
-                                             color={theme.colors.muted[700]}
+                                             color={theme.colors.coolGray[900]}
                                              textAlign={'center'}
                                         >
                                              {community?.link}

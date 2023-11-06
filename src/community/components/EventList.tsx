@@ -1,11 +1,9 @@
-import { View, Text, FlatList, Box } from 'native-base';
+import { Box, FlatList, Text, View } from 'native-base';
 import React from 'react';
-import { theme } from '../../theme';
-import EventCommunityCard from './EventCommunityCard';
-import { IEvent } from '../interfaces/community-response.interface';
 import { NotFound } from '../../shared/components/notFound/NotFound';
-import { Dimensions } from 'react-native';
-const { height } = Dimensions.get('screen');
+import { theme } from '../../theme';
+import { IEvent } from '../interfaces/community-response.interface';
+import EventCommunityCard from './EventCommunityCard';
 
 interface EventListProps {
      events: IEvent[] | undefined;
@@ -18,7 +16,7 @@ export default function EventList({ events }: EventListProps) {
                     fontSize="md"
                     bold
                     ml={5}
-                    color={theme.colors.muted['400']}
+                    color={theme.colors.coolGray[900]}
                >
                     Eventos
                </Text>
