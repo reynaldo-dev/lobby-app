@@ -42,7 +42,7 @@
       ]
     },
     "web": {
-      "favicon": "./assets/logo.png"
+      "favicon": "./assets/images/icon.png"
     },
     "extra": {
       "eas": {
