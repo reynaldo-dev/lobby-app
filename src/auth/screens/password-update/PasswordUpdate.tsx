@@ -129,7 +129,7 @@ export default function PasswordUpdate() {
                                         alignItems="center"
                                    >
                                         <ValidatedInputText
-                                             bgColor={theme.colors.coolGray[900]}
+                                             bgColor={theme.colors.tertiary}
                                              isInvalid={
                                                   errors.currentPassword
                                                        ? true
@@ -138,7 +138,7 @@ export default function PasswordUpdate() {
                                              formControlLabel="Contraseña actual"
                                              placeholder="Contraseña actual"
                                              placeholderTextColor={
-                                                  theme.colors.coolGray[900]
+                                                  theme.colors.tertiary
                                              }
                                              onChangeText={handleChange(
                                                   'currentPassword'

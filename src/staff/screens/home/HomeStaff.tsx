@@ -1,9 +1,11 @@
-import { Button, Icon, Text, VStack } from 'native-base';
-import Layout from '../../../shared/layout/Layout';
 import { AntDesign } from '@expo/vector-icons';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { Button, Text, VStack } from 'native-base';
 import { RootStackParamList } from '../../../routing/navigation-types';
+import Layout from '../../../shared/layout/Layout';
 
+
+//TODO: responsive
 export const HomeStaff = () => {
      const navigation =
           useNavigation<
@@ -27,7 +29,9 @@ export const HomeStaff = () => {
                          }
                          onPress={onPress}
                     >
-                         Iniciar Escaneo
+                         <Text>
+                              Iniciar Escaneo
+                         </Text>
                     </Button>
                </VStack>
           </Layout>

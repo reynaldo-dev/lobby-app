@@ -9,6 +9,7 @@ import {
      RootNavigator,
      RootNavigatorStaff,
 } from './routing/RouterStack';
+import { AppRoles } from './shared/enum/roles';
 import Authenticating from './shared/screens/Authenticating';
 
 export default function Main() {
@@ -53,11 +54,11 @@ export default function Main() {
                                    <Suspense fallback={null}>
                                         <FirstTimeStack />
                                    </Suspense>
-                              ) : user?.role === 'funcionario' ? (
+                              ) : user?.role === AppRoles.OFFICER ? (
                                    <Suspense fallback={null}>
                                         <RootNavigator />
                                    </Suspense>
-                              ) : user?.role === 'staff' ? (
+                              ) : user?.role === AppRoles.STAFF ? (
                                    <Suspense fallback={null}>
                                         <RootNavigatorStaff />
                                    </Suspense>

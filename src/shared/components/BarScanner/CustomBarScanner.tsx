@@ -1,11 +1,10 @@
+import { AntDesign } from '@expo/vector-icons';
 import { NavigationProp } from "@react-navigation/native";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import { Text } from "native-base";
-import React, { ReactNode, useEffect, useState } from "react";
+import { Center, Text } from "native-base";
+import React, { useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, TouchableOpacity, View, ViewStyle } from "react-native";
-import { AntDesign } from '@expo/vector-icons';
 import { PrivateStackParamList } from "../../../routing/navigation-types";
-
 
 interface BarScannerProps {
     onBarCodeScanned: (data: { type: string, data: string }) => Promise<void>;
@@ -28,11 +27,21 @@ export const CustomBarScanner = ({ onBarCodeScanned, isLoading, navigation, scan
     }, []);
 
     if (hasPermission === null) {
-        return <Text>Solicitando permisos para acceder a la cámara.</Text>;
+        return (
+            <Center flex={1} pt="3">
+                <Text>
+                    Solicitando permisos para acceder a la cámara.
+                </Text>
+            </Center>
+        );
     }
 
     if (hasPermission === false) {
-        return <Text>Accedo denegado a la cámara.</Text>;
+        <Center flex={1} pt="3">
+            <Text>
+                Acceso denegado a la cámara.
+            </Text>
+        </Center>
     }
 
     return (
