@@ -2,12 +2,14 @@ import { Ionicons } from '@expo/vector-icons';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Button, Icon, Menu } from 'native-base';
 import React from 'react';
-import { useAppDispatch } from '../../redux/store/store';
+import { RootState, useAppDispatch, useAppSelector } from '../../redux/store/store';
 import { logout } from '../../redux/thunks/user.thunk';
 import { RootStackParamList } from '../../routing/navigation-types';
 import { theme } from '../../theme';
+import { AppRoles } from '../../shared/enum/roles';
 
 export default function ProfileMenu() {
+     const { user } = useAppSelector((state: RootState) => state.user);
      const navigation = useNavigation<NavigationProp<RootStackParamList>>();
      const dispatch = useAppDispatch();
      return (
@@ -30,21 +32,26 @@ export default function ProfileMenu() {
                     );
                }}
           >
-               <Menu.Item
-                    onPress={() => {
-                         navigation.navigate('EditProfile');
-                    }}
-               >
-                    Editar
-               </Menu.Item>
+               {
+                    user?.role !== AppRoles.STAFF &&
+                    <>
+                         <Menu.Item
+                              onPress={() => {
+                                   navigation.navigate('EditProfile');
+                              }}
+                         >
+                              Editar
+                         </Menu.Item>
 
-               <Menu.Item
-                    onPress={() => {
-                         navigation.navigate('PasswordUpdate');
-                    }}
-               >
-                    Cambiar contraseña
-               </Menu.Item>
+                         <Menu.Item
+                              onPress={() => {
+                                   navigation.navigate('PasswordUpdate');
+                              }}
+                         >
+                              Cambiar contraseña
+                         </Menu.Item>
+                    </>
+               }
                <Menu.Item
                     onPress={() => {
                          dispatch(logout());
