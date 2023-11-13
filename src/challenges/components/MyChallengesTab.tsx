@@ -15,8 +15,6 @@ export const MyChallengesTab = () => {
         isError,
     } = useFindMyChallengesQuery({ userId: user?.id as string });
 
-    console.log(challengesData, "challengesData")
-
     const renderChallengeItem = ({ item }: { item: IMyChallenges }) => (
         <ChallengeCard challenge={item.challenge} showDetail={false} />
     );

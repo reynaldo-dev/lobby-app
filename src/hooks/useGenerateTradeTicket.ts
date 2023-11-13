@@ -60,10 +60,7 @@ export const useGenerateTradeTicket = (trade: IConfirmOrderResponse) => {
   <body>
       <div class="invoice">
           <div class="header">
-              <h1>Ticket de canje</h1>
-              <img
-      src="../../../../../../assets/logo.png"
-      style="width: 90vw;" />
+              <h1>Ticket de canje</h1>       
           </div>
           <div class="info">
               <p><strong>Fecha de creación:</strong>${new Date(
@@ -84,6 +81,10 @@ export const useGenerateTradeTicket = (trade: IConfirmOrderResponse) => {
               <p><strong>Nombre del usuario:</strong> ${trade?.user.name}</p>
               <p><strong>Apellido del usuario:</strong> ${
                    trade?.user.lastname
+              }</p>
+              <p><strong>Télefono del usuario:</strong> ${trade?.user.phone}</p>
+              <p><strong>Lugar de trabajo del usuario:</strong> ${
+                   trade?.user.workplace
               }</p>
           </div>
       </div>

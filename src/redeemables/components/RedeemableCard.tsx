@@ -31,13 +31,12 @@ const RedeemableCard: React.FC<RedeemableCardProps> = ({ redeemable }) => {
                     overflow="hidden"
                     width={'95%'}
                     height={['96', '96', '48']}
-                    shadow="1"
                     marginBottom={4}
+                    background={theme.colors.white}
                >
                     <Box
                          w={['100%', '100%', '40']}
                          h={['50%', '50%', '48']}
-                         shadow={'2'}
                     >
                          <Image
                               w={['100%', '100%', '40']}
@@ -96,7 +95,7 @@ const RedeemableCard: React.FC<RedeemableCardProps> = ({ redeemable }) => {
                                    }
                                    bg={theme.colors.primary}
                                    borderRadius={'md'}
-                                   padding={2}
+                                   padding={3}
                               >
                                    <Text
                                         fontWeight="400"
