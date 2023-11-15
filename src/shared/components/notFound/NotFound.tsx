@@ -16,7 +16,7 @@ const calculatedHeight = screenHeight * 0.3;
 
 export const NotFound = ({ message }: Props) => {
      return (
-          <Center my={'auto'}>
+          <Center>
                <LottieView
                     source={notFound}
                     autoPlay={true}
@@ -26,7 +26,14 @@ export const NotFound = ({ message }: Props) => {
                          height: calculatedHeight,
                     }}
                />
-               <Text>{message}</Text>
+               <Text color={theme.colors.coolGray[900]}
+                    fontSize={{
+                         base: 'sm',
+                         sm: 'md',
+                         md: 'xl',
+                         lg: '2xl',
+                    }}
+               >{message}</Text>
           </Center>
      );
 };

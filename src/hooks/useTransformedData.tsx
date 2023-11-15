@@ -3,10 +3,12 @@ import LabelComponent from '../recognitions/components/LabelComponent';
 import { useFindByRecognitionsCategoryQuery } from "../redux/services/recognitions.service";
 import { RootState, useAppSelector } from "../redux/store/store";
 import { theme } from '../theme';
+import { Text } from 'native-base';
 
 interface TransformedDataItem {
   value: number;
   labelComponent?: () => JSX.Element;
+  topLabelComponent?: () => JSX.Element;
   frontColor: string;
 }
 
@@ -28,6 +30,14 @@ const useTransformedData = () => {
       const newData = recognitionHistory.map(item => ({
         value: item.total,
         labelComponent: () => <LabelComponent value={item.category.name} />,
+        topLabelComponent: () => <Text
+          fontSize={{
+            base: 'sm',
+            sm: 'md',
+            md: 'xl',
+            lg: 'xl',
+          }}
+        >{item.total}</Text>,
         frontColor: theme.colors.primary as string,
       }));
       setTransformedData(newData);

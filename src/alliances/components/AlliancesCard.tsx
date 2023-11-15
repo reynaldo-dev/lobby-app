@@ -1,4 +1,4 @@
-import { Box, VStack, Text } from 'native-base';
+import { Box, Text, VStack } from 'native-base';
 import { formatDate } from '../../helpers/date-format/DateFormat';
 import { IAlliances } from '../../shared/interfaces/shared.interface';
 import { theme } from '../../theme';
@@ -29,7 +29,9 @@ export const AlliancesCard = ({ alliance }: AllianceCardProps) => {
                <Text fontStyle="italic" mb={3}>
                     Válido desde {formattedInitialDate} hasta {formattedEndDate}
                </Text>
-               <Box rounded="md" p={3} borderWidth={1} mt={2}>
+               <Box rounded="md" p={3} borderWidth={1} mt={2}
+                    bg={theme.colors.green[200]}
+               >
                     <Text fontWeight="bold" mb={2}>
                          Beneficios
                     </Text>

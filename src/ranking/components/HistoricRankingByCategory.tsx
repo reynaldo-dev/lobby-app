@@ -8,6 +8,7 @@ import { NotFoundRanking } from '../../shared/components/notFound/NotFoundRankin
 import Layout from '../../shared/layout/Layout';
 import { RankingCard } from './RankingCard';
 import { theme } from '../../theme';
+import { CustomSpinner } from '../../shared/components/CustomSpinner/CustomSpinner';
 
 export const HistoricRankingByCategory = () => {
      const { data: categoriesData, isLoading: isCategoriesLoading } =
@@ -61,17 +62,13 @@ export const HistoricRankingByCategory = () => {
 
      if (isCategoriesLoading) {
           return (
-               <Layout>
-                    <Center>
-                         <Spinner accessibilityLabel="Cargando..." />
-                    </Center>
-               </Layout>
+               <CustomSpinner />
           );
      }
 
      return (
           <Layout>
-               <VStack alignItems="center" space={2} mb={4}>
+               <VStack alignItems="center" space={2} my={4}>
                     <Select
                          selectedValue={selectedCategory}
                          width={'90%'}

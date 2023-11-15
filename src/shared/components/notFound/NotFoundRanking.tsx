@@ -28,7 +28,15 @@ export const NotFoundRanking = ({ message }: Props) => {
                          height: calculatedHeight,
                     }}
                />
-               <Text>{message}</Text>
+               <Text
+                    color={theme.colors.coolGray[900]}
+                    fontSize={{
+                         base: 'sm',
+                         sm: 'md',
+                         md: 'xl',
+                         lg: 'xl',
+                    }}
+               >{message}</Text>
           </Center>
      );
 };

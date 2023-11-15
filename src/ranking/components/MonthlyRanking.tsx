@@ -17,6 +17,7 @@ import { NotFoundRanking } from '../../shared/components/notFound/NotFoundRankin
 import Layout from '../../shared/layout/Layout';
 import { IRanking } from '../interfaces/league.interfaces';
 import { RankingCard } from './RankingCard';
+import { CustomSpinner } from '../../shared/components/CustomSpinner/CustomSpinner';
 
 const months = [
      'Enero',
@@ -44,7 +45,7 @@ const FiltersAndHeader = memo(
           return (
                <>
                     <Center>
-                         <HStack alignItems="center" space={2} mb={4}>
+                         <HStack alignItems="center" space={2} my={4}>
                               <Icon name="trophy" as={FontAwesome} />
                               <Text
                                    fontSize={{
@@ -131,9 +132,7 @@ export const MonthlyRanking = () => {
      const renderContent = useCallback(() => {
           if (isLoading) {
                return (
-                    <Center flex={1}>
-                         <Spinner accessibilityLabel="Cargando..." />
-                    </Center>
+                    <CustomSpinner />
                );
           }
 

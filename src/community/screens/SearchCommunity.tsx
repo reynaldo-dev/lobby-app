@@ -11,15 +11,16 @@ import {
      View,
 } from 'native-base';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { ICommunity } from '../../interfaces/community.interface';
 import {
      useGetCommunitiesQuery,
      useLazyGetSearchCommunitiesQuery,
 } from '../../redux/services/communities.service';
+import { CustomSpinner } from '../../shared/components/CustomSpinner/CustomSpinner';
 import Layout from '../../shared/layout/Layout';
-import CommunityCard from '../components/CommunityCard';
 import { theme } from '../../theme';
+import CommunityCard from '../components/CommunityCard';
 
 export const SearchCommunity = () => {
      const [searchTerm, setSearchTerm] = useState('');
@@ -134,9 +135,7 @@ export const SearchCommunity = () => {
                          </Box>
                     </HStack>
                     {isLoading || isSearching ? (
-                         <Center flex={1}>
-                              <ActivityIndicator size="large" color="#0000ff" />
-                         </Center>
+                         <CustomSpinner />
                     ) : searchResults?.length === 0 ? (
                          <Center my={'auto'}>
                               <Text>No se encontraron comunidades</Text>

@@ -35,14 +35,14 @@ export const RecognitionCard = ({
           base: 25,
           sm: 25,
           md: 40,
-          lg: 60,
+          lg: 50,
      });
 
      const ImageResponsive = useBreakpointValue({
           base: 120,
           sm: 125,
           md: 150,
-          lg: 60,
+          lg: 170,
      });
 
      const { user } = useAppSelector((state: RootState) => state.user);
@@ -61,9 +61,9 @@ export const RecognitionCard = ({
           <>
                <Box
                     w={'95%'}
-                    borderRadius="full"
+                    borderRadius="xl "
                     alignSelf="center"
-                    padding={[2, 4, 6, 8]}
+                    padding={[2, 4, 6, 6]}
                     position={'relative'}
                >
                     <View
@@ -80,7 +80,7 @@ export const RecognitionCard = ({
                     <Box
                          backgroundColor={'primary'}
                          alignSelf={'center'}
-                         w={{ base: '50%', sm: '50%', md: '40%', lg: '40%' }}
+                         w={{ base: '50%', sm: '50%', md: '40%', lg: '30%' }}
                          borderRadius="full"
                          padding={2}
                          flexDirection="row"
@@ -99,7 +99,7 @@ export const RecognitionCard = ({
                                    base: 'md',
                                    sm: 'md',
                                    md: '2xl',
-                                   lg: 'xl',
+                                   lg: '3xl',
                               }}
                               textAlign={'center'}
                          >
@@ -134,7 +134,7 @@ export const RecognitionCard = ({
                                         base: '2xl',
                                         sm: 'md',
                                         md: '4xl',
-                                        lg: 'xl',
+                                        lg: '5xl',
                                    }}
                                    color="white"
                                    textTransform={'capitalize'}
@@ -148,7 +148,7 @@ export const RecognitionCard = ({
                                              base: 'sm',
                                              sm: 'md',
                                              md: '2xl',
-                                             lg: 'xl',
+                                             lg: '3xl',
                                         }}
                                         fontWeight="bold"
                                         color="white"
@@ -179,7 +179,7 @@ export const RecognitionCard = ({
                                    base: 'md',
                                    sm: 'md',
                                    md: '2xl',
-                                   lg: '2xl',
+                                   lg: '3xl',
                               }}
                          >
                               Total de{'\n'}Reconocimientos
@@ -198,7 +198,7 @@ export const RecognitionCard = ({
                                         base: 'md',
                                         sm: 'md',
                                         md: '2xl',
-                                        lg: '2xl',
+                                        lg: '3xl',
                                    }}
                               >
                                    {data?.recognitionsReceivedCount}

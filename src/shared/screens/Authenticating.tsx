@@ -13,12 +13,12 @@ export default function Authenticating() {
           >
                <StatusBar backgroundColor={theme.colors.white} />
                <Image
-                    w={['100%', '90%', '50%', '50%']}
-                    h={['60%', '60%', '40%', '40%']}
+                    w={['100%', '90%', '50%', '60%']}
+                    h={['60%', '60%', '40%', '60%']}
                     source={splashScreen}
                     alt={"Cargando..."}
                />
-               <Spinner color={theme.colors.primary} />
+               <Spinner color={theme.colors.primary} size={"lg"} />
           </View>
      );
 }

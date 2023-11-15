@@ -38,11 +38,34 @@ const CardEvent = ({ data }: CardEventProps) => {
                               lg: '20%',
                          }}
                     >
-                         <Text color={theme.colors.white}>{month}</Text>
+                         <Text
+                              fontSize={{
+                                   base: 'md',
+                                   sm: 'md',
+                                   md: '2xl',
+                                   lg: '2xl',
+                              }}
+                              color={theme.colors.white}
+
+                         >{month}</Text>
                          <Heading size="lg" color={theme.colors.white}>
-                              {day}
+                              <Text
+                                   fontSize={{
+                                        base: 'xl',
+                                        sm: 'xl',
+                                        md: '2xl',
+                                        lg: '3xl',
+                                   }}
+                              >{day}</Text>
                          </Heading>
-                         <Text color={theme.colors.white}>{year}</Text>
+                         <Text color={theme.colors.white}
+                              fontSize={{
+                                   base: 'md',
+                                   sm: 'md',
+                                   md: '2xl',
+                                   lg: '2xl',
+                              }}
+                         >{year}</Text>
                     </VStack>
                     <Box
                          justifyContent={'space-around'}
@@ -59,7 +82,7 @@ const CardEvent = ({ data }: CardEventProps) => {
                                    base: 'md',
                                    sm: 'md',
                                    md: 'xl',
-                                   lg: 'md',
+                                   lg: 'xl',
                               }}
                          >
                               {data?.title}

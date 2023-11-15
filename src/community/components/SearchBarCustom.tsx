@@ -27,7 +27,7 @@ export const SearchBarCustom = () => {
                >
                     <HStack space={2}>
                          <Icon as={<AntDesign name="search1" />} size={5} />
-                         <Text>Buscar comunidad</Text>
+                         <Text color={theme.colors.coolGray[900]}>Buscar comunidad</Text>
                     </HStack>
                </Pressable>
           </Stack>

@@ -42,7 +42,7 @@ export const HistoricRanking = () => {
   return (
     <Layout >
       <Center>
-        <HStack alignItems="center" space={2} mb={4}>
+        <HStack alignItems="center" space={2} my={4}>
           <Icon name="trophy" as={FontAwesome} />
           <Text
             fontSize={{

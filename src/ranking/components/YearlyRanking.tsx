@@ -5,13 +5,13 @@ import {
      HStack,
      Icon,
      Select,
-     Spinner,
      Text,
-     VStack,
+     VStack
 } from 'native-base';
 import React, { memo, useCallback, useState } from 'react';
 import { FlatList, ListRenderItem } from 'react-native';
 import { useGetAnnualRankingQuery } from '../../redux/services/leagues.service';
+import { CustomSpinner } from '../../shared/components/CustomSpinner/CustomSpinner';
 import { IsError } from '../../shared/components/IsError/IsError';
 import { NotFoundRanking } from '../../shared/components/notFound/NotFoundRanking';
 import Layout from '../../shared/layout/Layout';
@@ -27,7 +27,7 @@ const FiltersAndHeader = memo(({ year, setYear }: FiltersAndHeaderProps) => {
      return (
           <>
                <Center>
-                    <HStack alignItems="center" space={2} mb={4}>
+                    <HStack alignItems="center" space={2} my={4}>
                          <Icon name="trophy" as={FontAwesome} />
                          <Text
                               fontSize={{
@@ -86,9 +86,7 @@ export const YearlyRanking = () => {
      const renderContent = useCallback(() => {
           if (isLoading) {
                return (
-                    <Center flex={1}>
-                         <Spinner accessibilityLabel="Cargando..." />
-                    </Center>
+                    <CustomSpinner />
                );
           }
 

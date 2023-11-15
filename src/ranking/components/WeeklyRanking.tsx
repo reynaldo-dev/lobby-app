@@ -1,8 +1,9 @@
 import { FontAwesome } from "@expo/vector-icons";
-import { Center, HStack, Icon, Spinner, Text } from "native-base";
+import { Center, HStack, Icon, Text } from "native-base";
 import React from "react";
 import { FlatList, ListRenderItem } from "react-native";
 import { useGetWeeklyRankingQuery } from "../../redux/services/leagues.service";
+import { CustomSpinner } from "../../shared/components/CustomSpinner/CustomSpinner";
 import { IsError } from "../../shared/components/IsError/IsError";
 import { NotFoundRanking } from "../../shared/components/notFound/NotFoundRanking";
 import Layout from "../../shared/layout/Layout";
@@ -18,11 +19,7 @@ export const WeeklyRanking = () => {
 
   if (isLoading) {
     return (
-      <Layout >
-        <Center>
-          <Spinner accessibilityLabel="Cargando..." />
-        </Center>
-      </Layout>
+      <CustomSpinner />
     );
   }
 
@@ -45,7 +42,7 @@ export const WeeklyRanking = () => {
   return (
     <Layout >
       <Center>
-        <HStack alignItems="center" space={2} mb={4}>
+        <HStack alignItems="center" space={2} my={4}>
           <Icon name="trophy" as={FontAwesome} size={[6, 6, 8]} />
           <Text
             fontSize={{

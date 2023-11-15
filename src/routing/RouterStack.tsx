@@ -242,6 +242,12 @@ export function RootNavigator() {
                          name="RecognitionDetails"
                          component={RecognitionDetails}
                     />
+
+                    <Stack.Screen
+                         name="UpcomingEvents"
+                         component={UpcomingEvents}
+                    />
+
                </Stack.Group>
           </Stack.Navigator>
      );
@@ -281,7 +287,6 @@ export const BottomTabNavigation = () => {
                     options={{
                          title: 'Cupones',
                          headerShown: false,
-
                          tabBarIcon: ({ color }) => (
                               <Icon
                                    as={MaterialCommunityIcons}
@@ -298,36 +303,11 @@ export const BottomTabNavigation = () => {
                     component={Ranking}
                     options={{
                          title: 'Ranking',
-                         headerStyle: {
-                              backgroundColor: theme.colors.background,
-                         },
                          headerShown: false,
-
                          tabBarIcon: ({ color }) => (
                               <Icon
                                    as={AntDesign}
                                    name="Trophy"
-                                   size={6}
-                                   color={color}
-                              />
-                         ),
-                    }}
-               />
-
-               <Tab.Screen
-                    name="Eventos"
-                    component={UpcomingEvents}
-                    options={{
-                         title: 'Eventos',
-                         headerStyle: {
-                              backgroundColor: theme.colors.background,
-                         },
-                         headerShown: false,
-
-                         tabBarIcon: ({ color }) => (
-                              <Icon
-                                   as={AntDesign}
-                                   name="calendar"
                                    size={6}
                                    color={color}
                               />
@@ -341,7 +321,6 @@ export const BottomTabNavigation = () => {
                     options={{
                          title: 'Perfil',
                          headerShown: false,
-
                          tabBarIcon: ({ color }) => (
                               <Icon
                                    as={AntDesign}

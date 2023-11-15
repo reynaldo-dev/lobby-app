@@ -1,28 +1,36 @@
+import { Text, View, useBreakpointValue } from 'native-base';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { theme } from '../../theme';
 
 interface LabelProps {
      value: string;
 }
 
-const LabelComponent = ({ value }: LabelProps) => (
-     <View style={styles.labelContainer}>
-          <Text style={styles.labelText}>{value}</Text>
-     </View>
-);
+const LabelComponent = ({ value }: LabelProps) => {
 
-const styles = StyleSheet.create({
-     labelContainer: {
-          position: 'absolute',
-          left: 55,
-          alignItems: 'flex-start',
-          width: 200,
-          top: -30,
-     },
-     labelText: {
-          fontSize: 12,
-     },
-});
+     const topResponsive = useBreakpointValue({
+          base: 32,
+          sm: 32,
+          md: 32,
+          lg: 40,
+     });
 
+     return (
+          <View
+               position={"absolute"}
+               left={55}
+               alignItems={"flex-start"}
+               width={200}
+               top={-topResponsive}
+          >
+               <Text
+                    fontSize={{
+                         base: 'xs',
+                         sm: 'sm',
+                         md: 'md',
+                         lg: 'lg',
+                    }}
+               >{value}</Text>
+          </View>
+     )
+}
 export default LabelComponent;

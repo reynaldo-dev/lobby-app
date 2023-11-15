@@ -1,10 +1,11 @@
 import { AntDesign } from '@expo/vector-icons';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { Box, Center, Spinner, Text } from 'native-base';
+import { Box, Center, Text } from 'native-base';
 import React from 'react';
 import { FlatList, TouchableOpacity } from 'react-native';
 import { useGetUpcomingEventsQuery } from '../../redux/services/events.service';
 import { RootStackParamList } from '../../routing/navigation-types';
+import { CustomSpinner } from '../../shared/components/CustomSpinner/CustomSpinner';
 import { NotFound } from '../../shared/components/notFound/NotFound';
 import Layout from '../../shared/layout/Layout';
 import { theme } from '../../theme';
@@ -21,7 +22,7 @@ export const UpcomingEvents = () => {
      } = useGetUpcomingEventsQuery(currentDate);
      const navigation =
           useNavigation<
-               NavigationProp<RootStackParamList, 'MyUpcomingEvents'>
+               NavigationProp<RootStackParamList, 'UpcomingEvents'>
           >();
 
      const renderItem = ({ item }: { item: IUpcomingEvents }) => (
@@ -43,9 +44,7 @@ export const UpcomingEvents = () => {
                     </Center>
                </Box>
                {isLoading ? (
-                    <Center flex={1}>
-                         <Spinner size="lg" />
-                    </Center>
+                    <CustomSpinner />
                ) : (
                     <>
                          {events && events.length > 0 ? (
@@ -55,14 +54,21 @@ export const UpcomingEvents = () => {
                                    keyExtractor={(item) => item.id.toString()}
                                    ListFooterComponent={
                                         <Center flex={1}>
-                                             <Text mb={5}>
+                                             <Text mb={5}
+                                                  fontSize={{
+                                                       base: 'md',
+                                                       sm: 'md',
+                                                       md: 'xl',
+                                                       lg: '2xl',
+                                                  }}
+                                             >
                                                   No hay más eventos próximos
                                              </Text>
                                         </Center>
                                    }
                               />
                          ) : (
-                              <NotFound message="Aún no estás inscrito a ningún evento." />
+                              <NotFound message="No hay eventos próximos." />
                          )}
                     </>
                )}

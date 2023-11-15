@@ -1,6 +1,7 @@
-import { Center, FlatList, Spinner, View } from 'native-base';
+import { FlatList, View } from 'native-base';
 import { useGetCommunitiesByUserIdQuery } from '../../redux/services/communities.service';
 import { RootState, useAppSelector } from '../../redux/store/store';
+import { CustomSpinner } from '../../shared/components/CustomSpinner/CustomSpinner';
 import { NotFound } from '../../shared/components/notFound/NotFound';
 import CommunityCard from './CommunityCard';
 
@@ -13,9 +14,7 @@ export const CommunityList = () => {
      const communities = communityData?.map((item) => item.community);
 
      return communityIsLoading ? (
-          <Center>
-               <Spinner size={'lg'} />
-          </Center>
+          <CustomSpinner />
      ) : (
           <FlatList
                data={communities}

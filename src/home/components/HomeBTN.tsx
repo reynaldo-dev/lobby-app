@@ -28,14 +28,15 @@ export default function HomeBTN({
      color,
      width,
      titleColor = 'white',
-     fontSize = { base: '2xs', sm: 'xs', md: 'xl', lg: 'xl' },
+     fontSize = { base: '2xs', sm: 'xs', md: 'xl', lg: '3xl' },
      isPrimary = false,
 }: Props) {
+
      const scaleFactor = useBreakpointValue({
           base: isPrimary ? 0.9 : 0.6,
           sm: isPrimary ? 1.0 : 0.7,
           md: isPrimary ? 1.2 : 0.7,
-          lg: isPrimary ? 1.2 : 0.7,
+          lg: isPrimary ? 1.3 : 0.8,
      }) || 1
 
      const buttonHeight = Math.min(windowHeight * 0.2 * scaleFactor, windowHeight);
@@ -55,7 +56,7 @@ export default function HomeBTN({
                     background={theme.colors.white}
                     rounded="full"
                     width="auto"
-                    padding={2}
+                    padding={[2, 2, 2, 4]}
                     mb={2}
                >
                     {icon}

@@ -31,7 +31,7 @@ export default function Home(): JSX.Element {
           base: 35,
           sm: 45,
           md: 70,
-          lg: 80,
+          lg: 120,
      });
 
      const arrowResponsive = useBreakpointValue({
@@ -61,7 +61,7 @@ export default function Home(): JSX.Element {
      };
 
      const onPressEvents: () => void = () => {
-          navigation.navigate('Calendar');
+          navigation.navigate('UpcomingEvents');
      };
 
      const onPressCommunities: () => void = () => {
@@ -104,7 +104,7 @@ export default function Home(): JSX.Element {
                                              base: 'sm',
                                              sm: 'md',
                                              md: 'xl',
-                                             lg: 'xl',
+                                             lg: '3xl',
                                         }}
                                    >
                                         Ver mis reconocimientos
@@ -117,7 +117,7 @@ export default function Home(): JSX.Element {
                          </Box>
                     </Pressable>
 
-                    <View mt={[4, 10, 10]}>
+                    <View mt={[4, 10, 8]}>
                          <VStack space={4} h={'100%'}>
                               <HStack
                                    w={'100%'}
@@ -140,7 +140,7 @@ export default function Home(): JSX.Element {
                                              base: 'md',
                                              sm: 'md',
                                              md: '2xl',
-                                             lg: '2xl',
+                                             lg: '3xl',
                                         }}
                                    />
 
@@ -161,7 +161,7 @@ export default function Home(): JSX.Element {
                                              base: 'md',
                                              sm: 'md',
                                              md: '2xl',
-                                             lg: '2xl',
+                                             lg: '3xl',
                                         }}
                                    />
                               </HStack>
@@ -182,7 +182,7 @@ export default function Home(): JSX.Element {
                                              base: 'sm',
                                              sm: 'md',
                                              md: 'xl',
-                                             lg: 'xl',
+                                             lg: '2xl',
                                         }}
                                    />
 
@@ -195,13 +195,13 @@ export default function Home(): JSX.Element {
                                              />
                                         }
                                         onPress={onPressEvents}
-                                        title="Mi calendario"
+                                        title="Eventos"
                                         width={'45%'}
                                         fontSize={{
                                              base: 'sm',
                                              sm: 'md',
                                              md: 'xl',
-                                             lg: 'xl',
+                                             lg: '2xl',
                                         }}
                                    />
                               </HStack>
@@ -222,7 +222,7 @@ export default function Home(): JSX.Element {
                                              base: 'sm',
                                              sm: 'md',
                                              md: 'xl',
-                                             lg: 'xl',
+                                             lg: '2xl',
                                         }}
                                    />
 
@@ -241,7 +241,7 @@ export default function Home(): JSX.Element {
                                              base: 'sm',
                                              sm: 'md',
                                              md: 'xl',
-                                             lg: 'xl',
+                                             lg: '2xl',
                                         }}
                                    />
                               </HStack>
