@@ -56,7 +56,7 @@ export const Challenges = () => {
   };
 
   return (
-    <Layout backgroundColor={"#f0f0f0"}>
+    <Layout backgroundColor={theme.colors.background}>
       <Box flexDirection="row" alignItems="center" ml={2} height={50}>
         <Box>
           <TouchableOpacity onPress={() => navigation.goBack()}>
