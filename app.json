@@ -12,6 +12,13 @@
         {
           "cameraPermission": "Permitir a $(PRODUCT_NAME) acceso a la cámara."
         }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/icon.png",
+          "color": "#ffffff"        
+        }
       ]
     ],
     "splash": {
@@ -36,6 +43,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.sv.davivienda.lobby",
+      "googleServicesFile": "./google-services.json",
       "versionCode": 1,
       "permissions": [
         "android.permission.CAMERA"
@@ -50,5 +58,5 @@
       }
     },
     "owner": "dev.julioaguilar"
-  }
+  }  
 }

@@ -1,6 +1,8 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { Suspense, useEffect, useState } from 'react';
 import { getAuthStateFromAsyncStorage } from './helpers/get-auth-state-from-asyncStorage/getAuthStatateFromAsyncStorage';
+import useNotificationListener from './hooks/useNotificationsListener';
+import useRegisterPushNotifications from './hooks/useRegisterPushNotifications';
 import { RootState, useAppDispatch, useAppSelector } from './redux/store/store';
 import { getUserCredentials } from './redux/thunks/user.thunk';
 import {

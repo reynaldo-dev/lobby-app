@@ -33,7 +33,6 @@ import TradeTicketShot from '../redeemables/screens/TradeTicketShot';
 import CustomQRCode from '../shared/components/qr/CustomQRCode';
 import { BarScannerStaff } from '../staff/screens/BarScanner/BarScannerStaff';
 import { HomeStaff } from '../staff/screens/home/HomeStaff';
-import { theme } from '../theme';
 import { BarScanner } from '../tickets/screens/BarScanner';
 import { TicketAssistanceDetailScreen } from '../tickets/screens/TicketAssistanceDetailScreen';
 import { TicketConsumableDetailScreen } from '../tickets/screens/TicketConsumableDetailScreen';
