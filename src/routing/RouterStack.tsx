@@ -39,6 +39,7 @@ import { TicketAssistanceDetailScreen } from '../tickets/screens/TicketAssistanc
 import { TicketConsumableDetailScreen } from '../tickets/screens/TicketConsumableDetailScreen';
 import { TicketsScreen } from '../tickets/screens/TicketsScreen';
 import { AuthStackParamList, RootStackParamList } from './navigation-types';
+import CustomNotifications from '../notifications/CustomNotifications';
 
 const authRouter = createNativeStackNavigator<AuthStackParamList>();
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -266,7 +267,7 @@ export const BottomTabNavigation = () => {
           >
                <Tab.Screen
                     name="Home"
-                    component={Home}
+                    component={CustomNotifications}
                     options={{
                          title: 'Inicio',
                          headerShown: false,

@@ -12,6 +12,13 @@
         {
           "cameraPermission": "Permitir a $(PRODUCT_NAME) acceso a la cámara."
         }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/icon.png",
+          "color": "#ffffff"        
+        }
       ]
     ],
     "splash": {
