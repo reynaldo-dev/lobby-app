@@ -14,8 +14,6 @@ export const Redeemables = () => {
      const {
           data: redeemables,
           isLoading,
-          isError,
-          error,
      } = useGetRedeemablesQuery();
 
      return (
