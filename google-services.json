@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "855570209300",
+    "project_id": "lobby-af973",
+    "storage_bucket": "lobby-af973.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855570209300:android:b9242932f8d109b4f6e501",
+        "android_client_info": {
+          "package_name": "com.sv.davivienda.lobby"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCd6OZfvevjr2l6abXuODMRE4U2678rCFI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -33,13 +33,11 @@ import TradeTicketShot from '../redeemables/screens/TradeTicketShot';
 import CustomQRCode from '../shared/components/qr/CustomQRCode';
 import { BarScannerStaff } from '../staff/screens/BarScanner/BarScannerStaff';
 import { HomeStaff } from '../staff/screens/home/HomeStaff';
-import { theme } from '../theme';
 import { BarScanner } from '../tickets/screens/BarScanner';
 import { TicketAssistanceDetailScreen } from '../tickets/screens/TicketAssistanceDetailScreen';
 import { TicketConsumableDetailScreen } from '../tickets/screens/TicketConsumableDetailScreen';
 import { TicketsScreen } from '../tickets/screens/TicketsScreen';
 import { AuthStackParamList, RootStackParamList } from './navigation-types';
-import CustomNotifications from '../notifications/CustomNotifications';
 
 const authRouter = createNativeStackNavigator<AuthStackParamList>();
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -267,7 +265,7 @@ export const BottomTabNavigation = () => {
           >
                <Tab.Screen
                     name="Home"
-                    component={CustomNotifications}
+                    component={Home}
                     options={{
                          title: 'Inicio',
                          headerShown: false,

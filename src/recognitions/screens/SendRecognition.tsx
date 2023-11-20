@@ -27,6 +27,7 @@ import { RootState, useAppSelector } from '../../redux/store/store';
 import { RootStackParamList } from '../../routing/navigation-types';
 import Layout from '../../shared/layout/Layout';
 import { theme } from '../../theme';
+import { useSendNotificationMutation } from '../../redux/services/notifications.service';
 
 type SendRecognitionProps = NativeStackScreenProps<
      RootStackParamList,
@@ -57,6 +58,9 @@ export const SendRecognition: React.FC<SendRecognitionProps> = ({ route }) => {
      const [createRecognition, { isLoading }] = useCreateRecognitionMutation();
      const { data: categoriesData, isLoading: isCategoriesLoading } =
           useGetRecognitionCategoriesQuery();
+
+     const [sendNotification] = useSendNotificationMutation();
+
 
      const showToast = useCustomToast();
      const { user } = route.params;
@@ -100,6 +104,7 @@ export const SendRecognition: React.FC<SendRecognitionProps> = ({ route }) => {
                          textColor: 'white',
                     });
                     setMessage('');
+
                     navigation.goBack();
                })
                .catch((error) => {
@@ -113,6 +118,12 @@ export const SendRecognition: React.FC<SendRecognitionProps> = ({ route }) => {
                .finally(() => {
                     setIsSubmitting(false);
                });
+
+          await sendNotification({
+               userId: user?.id as string,
+               title: "Notificación de Reconocimiento",
+               body: `Has recibido un reconocimiento de ${userFromState?.name} ${userFromState?.lastname}`,
+          }).unwrap();
      };
 
      return (
@@ -219,7 +230,7 @@ export const SendRecognition: React.FC<SendRecognitionProps> = ({ route }) => {
 
                <Modal
                     isOpen={isSubmitting}
-                    onClose={() => {}}
+                    onClose={() => { }}
                     closeOnOverlayClick={false}
                >
                     <Box p={4} bg="white" rounded="lg">
