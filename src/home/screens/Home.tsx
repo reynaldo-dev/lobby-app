@@ -2,6 +2,7 @@ import { useNavigation, type NavigationProp } from '@react-navigation/native';
 import {
      Box,
      HStack,
+     ScrollView,
      Text,
      VStack,
      View,
@@ -78,7 +79,7 @@ export default function Home(): JSX.Element {
 
      return (
           <Layout backgroundColor={theme.colors.background}>
-               <View height={screenHeight}>
+               <ScrollView>
                     <Box marginBottom={[6, 8, 10, 10]}>
                          <RecognitionCard
                               name={user?.name}
@@ -247,7 +248,7 @@ export default function Home(): JSX.Element {
                               </HStack>
                          </VStack>
                     </View>
-               </View>
+               </ScrollView>
           </Layout>
      );
 }

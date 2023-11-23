@@ -1,4 +1,4 @@
-const dotenv = require('dotenv');
+const dotEnv = require('dotenv');
 
 try {
      if (!process.env.TARGET_ENV) {

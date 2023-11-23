@@ -41,7 +41,7 @@ const DetailItem = ({
                {label}
           </Text>
 
-          <Text color="gray.500" fontSize={['sm', 'lg', 'md']}>
+          <Text color={theme.colors.darkGray} fontSize={['sm', 'lg', 'md']}>
                {value}
           </Text>
      </Box>
@@ -336,6 +336,7 @@ export default function EventScreen() {
                                              fontSize="sm"
                                              isTruncated
                                              maxWidth="80%"
+                                             color={theme.colors.darkGray}
                                         >
                                              {content}
                                         </Text>
