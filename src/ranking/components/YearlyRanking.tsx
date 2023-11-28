@@ -14,8 +14,7 @@ import { useGetAnnualRankingQuery } from '../../redux/services/leagues.service';
 import { CustomSpinner } from '../../shared/components/CustomSpinner/CustomSpinner';
 import { IsError } from '../../shared/components/IsError/IsError';
 import { NotFoundRanking } from '../../shared/components/notFound/NotFoundRanking';
-import Layout from '../../shared/layout/Layout';
-import { IRanking } from '../interfaces/league.interfaces';
+import { UserData } from '../interfaces/league.interfaces';
 import { RankingCard } from './RankingCard';
 
 interface FiltersAndHeaderProps {
@@ -78,7 +77,7 @@ export const YearlyRanking = () => {
           isError,
      } = useGetAnnualRankingQuery({ year });
 
-     const renderRankingItem = useCallback<ListRenderItem<IRanking>>(
+     const renderRankingItem = useCallback<ListRenderItem<UserData>>(
           ({ item: user, index }) => <RankingCard user={user} index={index} />,
           []
      );
@@ -94,7 +93,7 @@ export const YearlyRanking = () => {
                return <IsError message="Ocurrio un error inesperado" />;
           }
 
-          if (!rankingData || rankingData.length === 0) {
+          if (!rankingData || rankingData.topThirtyUsers.length === 0) {
                return (
                     <NotFoundRanking message="No se encontró información sobre este año" />
                );
@@ -102,7 +101,7 @@ export const YearlyRanking = () => {
 
           return (
                <FlatList
-                    data={rankingData}
+                    data={rankingData.topThirtyUsers}
                     renderItem={renderRankingItem}
                     keyExtractor={(user) => user.id}
                />
@@ -110,11 +109,11 @@ export const YearlyRanking = () => {
      }, [isLoading, isError, rankingData, renderRankingItem]);
 
      return (
-          <Layout>
+          <>
                <VStack space={4}>
                     <FiltersAndHeader year={year} setYear={setYear} />
                     {renderContent()}
                </VStack>
-          </Layout>
+          </>
      );
 };

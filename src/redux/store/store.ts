@@ -33,7 +33,10 @@ export const store = configureStore({
           [fcmTokensApi.reducerPath]: fcmTokensApi.reducer,
      },
      middleware: (getDefaultMiddleware) =>
-          getDefaultMiddleware().concat(
+          getDefaultMiddleware({
+               immutableCheck: { warnAfter: 128 },
+               serializableCheck: { warnAfter: 128 },
+          }).concat(
                communitiesService.middleware,
                assistanceTicketApi.middleware,
                eventsApi.middleware,

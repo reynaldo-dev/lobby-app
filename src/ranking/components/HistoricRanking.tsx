@@ -1,46 +1,44 @@
 import { FontAwesome } from "@expo/vector-icons";
-import { Button, Center, HStack, Icon, Spinner, Text } from "native-base";
+import { Button, Center, HStack, Icon, Text } from "native-base";
 import React, { useState } from "react";
 import { FlatList, ListRenderItem, StyleSheet } from "react-native";
 import { useGetCurrentRankingQuery } from "../../redux/services/leagues.service";
 import { useGetRecognitionCategoriesQuery } from "../../redux/services/recognitions.service";
-import Layout from "../../shared/layout/Layout";
+import { RootState, useAppSelector } from "../../redux/store/store";
+import { CustomSpinner } from "../../shared/components/CustomSpinner/CustomSpinner";
+import { IsError } from "../../shared/components/IsError/IsError";
 import { theme } from "../../theme";
-import { IRankingHistoric } from "../interfaces/league.interfaces";
+import { IRankingHistoric, UserData } from "../interfaces/league.interfaces";
 import { HistoricRankingByCategory } from "./HistoricRankingByCategory";
 import { RankingCard } from "./RankingCard";
 
 export const HistoricRanking = () => {
-  const { data: rankingData, isLoading, isError } = useGetCurrentRankingQuery();
+  const { user } = useAppSelector((state: RootState) => state.user);
+  const { data: rankingData, isLoading, isError, refetch } = useGetCurrentRankingQuery(user?.id as string);
   const { data: categoriesData, isLoading: isCategoriesLoading } =
     useGetRecognitionCategoriesQuery();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  const renderRankingItem: ListRenderItem<IRankingHistoric> = ({
+  const renderRankingItem: ListRenderItem<UserData> = ({
     item: user,
     index,
   }) => <RankingCard user={user} index={index} />;
 
   if (isLoading || isCategoriesLoading) {
     return (
-      <Layout >
-        <Center>
-          <Spinner accessibilityLabel="Cargando..." />
-        </Center>
-      </Layout>
+      <CustomSpinner />
     );
   }
 
   if (isError) {
-    return (
-      <Layout >
-        <Text>Ocurrió un error al cargar el ranking.</Text>
-      </Layout>
-    );
+    return <IsError
+      message="Ha ocurrido un error inesperado"
+      refetchFunction={refetch as () => void}
+      showRefetchButton={true} />;
   }
 
   return (
-    <Layout >
+    < >
       <Center>
         <HStack alignItems="center" space={2} my={4}>
           <Icon name="trophy" as={FontAwesome} />
@@ -81,13 +79,13 @@ export const HistoricRanking = () => {
             </Button>
           </Center>
           <FlatList
-            data={rankingData}
+            data={rankingData?.topThirtyUsers}
             renderItem={renderRankingItem}
             keyExtractor={(user) => user.id}
           />
         </>
       )}
-    </Layout>
+    </>
   );
 };
 

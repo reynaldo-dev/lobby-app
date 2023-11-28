@@ -15,9 +15,10 @@ import { useGetMonthlyRankingQuery } from '../../redux/services/leagues.service'
 import { IsError } from '../../shared/components/IsError/IsError';
 import { NotFoundRanking } from '../../shared/components/notFound/NotFoundRanking';
 import Layout from '../../shared/layout/Layout';
-import { IRanking } from '../interfaces/league.interfaces';
+import { IRanking, UserData } from '../interfaces/league.interfaces';
 import { RankingCard } from './RankingCard';
 import { CustomSpinner } from '../../shared/components/CustomSpinner/CustomSpinner';
+import { RootState, useAppSelector } from '../../redux/store/store';
 
 const months = [
      'Enero',
@@ -113,6 +114,7 @@ const FiltersAndHeader = memo(
 );
 
 export const MonthlyRanking = () => {
+     const { user } = useAppSelector((state: RootState) => state.user);
      const [month, setMonth] = useState(new Date().getMonth() + 1);
      const [year, setYear] = useState(new Date().getFullYear());
      const {
@@ -122,9 +124,10 @@ export const MonthlyRanking = () => {
      } = useGetMonthlyRankingQuery({
           month,
           year,
+          userId: user?.id,
      });
 
-     const renderRankingItem = useCallback<ListRenderItem<IRanking>>(
+     const renderRankingItem = useCallback<ListRenderItem<UserData>>(
           ({ item: user, index }) => <RankingCard user={user} index={index} />,
           []
      );
@@ -140,15 +143,13 @@ export const MonthlyRanking = () => {
                return <IsError message="Ocurrio un error inesperado" />;
           }
 
-          if (!rankingData || rankingData.length === 0) {
-               return (
-                    <NotFoundRanking message="No se encontró información sobre este mes" />
-               );
+          if (!rankingData || rankingData.topThirtyUsers.length === 0) {
+               return <NotFoundRanking message="No se encontró información sobre este mes" />;
           }
 
           return (
                <FlatList
-                    data={rankingData}
+                    data={rankingData.topThirtyUsers}
                     renderItem={renderRankingItem}
                     keyExtractor={(user) => user.id}
                />
@@ -156,7 +157,7 @@ export const MonthlyRanking = () => {
      }, [isLoading, isError, rankingData, renderRankingItem]);
 
      return (
-          <Layout>
+          <>
                <VStack space={4}>
                     <FiltersAndHeader
                          month={month}
@@ -166,6 +167,6 @@ export const MonthlyRanking = () => {
                     />
                     {renderContent()}
                </VStack>
-          </Layout>
+          </>
      );
 };

@@ -24,7 +24,6 @@ import Layout from '../../shared/layout/Layout';
 import { theme } from '../../theme';
 import HomeBTN from '../components/HomeBTN';
 
-const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 
 export default function Home(): JSX.Element {

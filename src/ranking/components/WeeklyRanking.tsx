@@ -7,12 +7,12 @@ import { CustomSpinner } from "../../shared/components/CustomSpinner/CustomSpinn
 import { IsError } from "../../shared/components/IsError/IsError";
 import { NotFoundRanking } from "../../shared/components/notFound/NotFoundRanking";
 import Layout from "../../shared/layout/Layout";
-import { IRanking } from "../interfaces/league.interfaces";
+import { IRanking, UserData } from "../interfaces/league.interfaces";
 import { RankingCard } from "./RankingCard";
 
 export const WeeklyRanking = () => {
   const { data: rankingData, isLoading, isError } = useGetWeeklyRankingQuery();
-  const renderRankingItem: ListRenderItem<IRanking> = ({
+  const renderRankingItem: ListRenderItem<UserData> = ({
     item: user,
     index,
   }) => <RankingCard user={user} index={index} />;
@@ -31,7 +31,7 @@ export const WeeklyRanking = () => {
     );
   }
 
-  if (!rankingData || rankingData.length === 0) {
+  if (!rankingData || rankingData.topThirtyUsers.length === 0) {
     return (
       <Layout >
         <NotFoundRanking message="Aún no hay posiciones para el ranking semanal" />
@@ -40,7 +40,7 @@ export const WeeklyRanking = () => {
   }
 
   return (
-    <Layout >
+    <>
       <Center>
         <HStack alignItems="center" space={2} my={4}>
           <Icon name="trophy" as={FontAwesome} size={[6, 6, 8]} />
@@ -57,11 +57,11 @@ export const WeeklyRanking = () => {
         </HStack>
       </Center>
       <FlatList
-        data={rankingData}
+        data={rankingData.topThirtyUsers}
         renderItem={renderRankingItem}
         keyExtractor={(user) => user.id}
       />
-    </Layout>
+    </>
   );
 };
 

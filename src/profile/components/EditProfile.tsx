@@ -171,7 +171,7 @@ export default function EditProfile() {
                                              formControlLabel="Nombre"
                                              placeholder="Nombre"
                                              placeholderTextColor={
-                                                  theme.colors.text
+                                                  theme.colors.darkGray
                                              }
                                              onChangeText={handleChange('name')}
                                              value={values.name}
@@ -186,7 +186,7 @@ export default function EditProfile() {
                                              formControlLabel="Apellido"
                                              placeholder="Apellido"
                                              placeholderTextColor={
-                                                  theme.colors.text
+                                                  theme.colors.darkGray
                                              }
                                              onChangeText={handleChange(
                                                   'lastname'
@@ -203,7 +203,7 @@ export default function EditProfile() {
                                              formControlLabel="Correo eléctronico"
                                              placeholder="Email"
                                              placeholderTextColor={
-                                                  theme.colors.text
+                                                  theme.colors.darkGray
                                              }
                                              onChangeText={handleChange(
                                                   'email'
@@ -218,9 +218,9 @@ export default function EditProfile() {
                                                   errors.phone ? true : false
                                              }
                                              formControlLabel="Teléfono"
-                                             placeholder="1234-5678"
+                                             placeholder="12345678"
                                              placeholderTextColor={
-                                                  theme.colors.text
+                                                  theme.colors.darkGray
                                              }
                                              onChangeText={handleChange(
                                                   'phone'
@@ -247,7 +247,7 @@ export default function EditProfile() {
                                              formControlLabel="Ciudad"
                                              placeholder="Ciudad"
                                              placeholderTextColor={
-                                                  theme.colors.text
+                                                  theme.colors.darkGray
                                              }
                                              onChangeText={handleChange('city')}
                                              value={values.city}
@@ -258,14 +258,14 @@ export default function EditProfile() {
                                              bgColor={theme.colors.tertiary}
                                              isInvalid={
                                                   touched.workplace &&
-                                                  errors.workplace
+                                                       errors.workplace
                                                        ? true
                                                        : false
                                              }
                                              formControlLabel="Lugar de trabajo"
                                              placeholder="Lugar de trabajo"
                                              placeholderTextColor={
-                                                  theme.colors.text
+                                                  theme.colors.darkGray
                                              }
                                              onChangeText={handleChange(
                                                   'workplace'

@@ -1,14 +1,13 @@
-import { Center, CheckIcon, Select, Spinner, VStack } from 'native-base';
+import { Center, CheckIcon, Select, VStack } from 'native-base';
 import React, { useEffect, useState } from 'react';
 import { FlatList, ListRenderItem } from 'react-native';
-import { IRanking } from '../interfaces/league.interfaces';
 import { useLazyGetRankingByCategoryIdQuery } from '../../redux/services/leagues.service';
 import { useGetRecognitionCategoriesQuery } from '../../redux/services/recognitions.service';
-import { NotFoundRanking } from '../../shared/components/notFound/NotFoundRanking';
-import Layout from '../../shared/layout/Layout';
-import { RankingCard } from './RankingCard';
-import { theme } from '../../theme';
 import { CustomSpinner } from '../../shared/components/CustomSpinner/CustomSpinner';
+import { NotFoundRanking } from '../../shared/components/notFound/NotFoundRanking';
+import { theme } from '../../theme';
+import { UserData } from '../interfaces/league.interfaces';
+import { RankingCard } from './RankingCard';
 
 export const HistoricRankingByCategory = () => {
      const { data: categoriesData, isLoading: isCategoriesLoading } =
@@ -20,7 +19,7 @@ export const HistoricRankingByCategory = () => {
      >(categoriesData?.[0]?.id);
      const [isRankingLoading, setIsRankingLoading] = useState<boolean>(false);
 
-     const renderRankingItem: ListRenderItem<IRanking> = ({
+     const renderRankingItem: ListRenderItem<UserData> = ({
           item: user,
           index,
      }) => <RankingCard user={user} index={index} />;
@@ -46,11 +45,7 @@ export const HistoricRankingByCategory = () => {
 
      if (isCategoriesLoading) {
           return (
-               <Layout>
-                    <Center>
-                         <Spinner accessibilityLabel="Cargando..." />
-                    </Center>
-               </Layout>
+               <CustomSpinner />
           );
      }
 
@@ -67,8 +62,8 @@ export const HistoricRankingByCategory = () => {
      }
 
      return (
-          <Layout>
-               <VStack alignItems="center" space={2} my={4}>
+          <>
+               <VStack alignItems="center" space={2} my={4} >
                     <Select
                          selectedValue={selectedCategory}
                          width={'90%'}
@@ -92,12 +87,10 @@ export const HistoricRankingByCategory = () => {
                     </Select>
                </VStack>
                {isRankingLoading ? (
-                    <Center flex={1}>
-                         <Spinner accessibilityLabel="Cargando ranking..." />
-                    </Center>
-               ) : categoryRankingData?.length ? (
+                    <CustomSpinner />
+               ) : categoryRankingData?.topThirtyUsers.length ? (
                     <FlatList
-                         data={categoryRankingData}
+                         data={categoryRankingData.topThirtyUsers}
                          renderItem={renderRankingItem}
                          keyExtractor={(user) => user.id}
                     />
@@ -106,6 +99,6 @@ export const HistoricRankingByCategory = () => {
                          <NotFoundRanking message="Aún no hay posiciones para el ranking de esta categoría." />
                     </Center>
                )}
-          </Layout>
+          </>
      );
 };

@@ -1,5 +1,5 @@
 import { AntDesign, Entypo } from '@expo/vector-icons';
-import { useRoute } from '@react-navigation/native';
+import { NavigationProp, useNavigation, useRoute } from '@react-navigation/native';
 import { Box, Button, Heading, Image, Spinner, Text, View } from 'native-base';
 import React, { useState } from 'react';
 import giftImage from '../../../assets/gift.png';
@@ -7,14 +7,23 @@ import { useGetRedeemableByIdQuery } from '../../redux/services/redeemeables.ser
 import Layout from '../../shared/layout/Layout';
 import { theme } from '../../theme';
 import ConfirmOrder from '../components/ConfirmOrder';
+import { TouchableOpacity } from 'react-native';
+import { RootStackParamList } from '../../routing/navigation-types';
 
 export default function RedeemableDetail() {
      const route = useRoute();
      const { id } = route.params as { id: string };
      const { isError, isLoading, data } = useGetRedeemableByIdQuery(id);
      const [showModal, setShowModal] = useState(false);
+     const navigation =
+          useNavigation<NavigationProp<RootStackParamList, 'RedeemableDetail'>>();
      return (
           <Layout backgroundColor={theme.colors.background}>
+               <Box ml={2}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                         <AntDesign name="left" size={24} color="black" />
+                    </TouchableOpacity>
+               </Box>
                {isLoading && (
                     <View flex={1} justifyContent="center" alignItems="center">
                          <Spinner size="lg" color={theme.colors.primary} />

@@ -2,10 +2,10 @@ import { Avatar, Box, Text, VStack, useBreakpointValue } from 'native-base';
 import React from 'react';
 import MaleAvatar from '../../../assets/male-avatar.svg';
 import { theme } from '../../theme';
-import { IRanking, IRankingHistoric } from '../interfaces/league.interfaces';
+import { IRanking, IRankingHistoric, UserData } from '../interfaces/league.interfaces';
 
 interface UserCardProps {
-     user: IRankingHistoric | IRanking;
+     user: IRankingHistoric | UserData;
      index: number;
 }
 
@@ -20,8 +20,18 @@ export const RankingCard = ({ user, index }: UserCardProps) => {
      const totalRecognitions =
           'recognitionsReceivedCount' in user
                ? user.recognitionsReceivedCount
-               : user.total;
+               : user.totalRecognitions;
 
+     let positionColor: string;
+     if (index === 0) {
+          positionColor = "#FFD700";
+     } else if (index === 1) {
+          positionColor = "#C0C0C0";
+     } else if (index === 2) {
+          positionColor = "#CD7F32";
+     } else {
+          positionColor = theme.colors.black;
+     }
      return (
           <Box
                width="90%"
@@ -34,7 +44,7 @@ export const RankingCard = ({ user, index }: UserCardProps) => {
                alignItems="center"
           >
                <Text
-                    px={2}
+                    pr={3}
                     alignSelf={'center'}
                     fontSize={{
                          base: 'sm',
@@ -43,8 +53,9 @@ export const RankingCard = ({ user, index }: UserCardProps) => {
                          lg: 'xl',
                     }}
                     bold
+                    color={positionColor}
                >
-                    {index + 1}
+                    #{index + 1}
                </Text>
 
                {user.picture ? (

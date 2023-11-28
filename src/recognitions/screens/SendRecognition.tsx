@@ -61,7 +61,6 @@ export const SendRecognition: React.FC<SendRecognitionProps> = ({ route }) => {
 
      const [sendNotification] = useSendNotificationMutation();
 
-
      const showToast = useCustomToast();
      const { user } = route.params;
 
@@ -104,7 +103,6 @@ export const SendRecognition: React.FC<SendRecognitionProps> = ({ route }) => {
                          textColor: 'white',
                     });
                     setMessage('');
-
                     navigation.goBack();
                })
                .catch((error) => {

@@ -15,13 +15,16 @@ import { MonthlyRanking } from '../components/MonthlyRanking';
 import { WeeklyRanking } from '../components/WeeklyRanking';
 import { YearlyRanking } from '../components/YearlyRanking';
 
+
 interface MyRoute extends Route {
      title: string;
 }
 
 interface RenderTabBarProps extends SceneRendererProps, TabBarProps<MyRoute> { }
-
+const av = new Animated.Value(0);
+av.addListener(() => { return });
 export const Ranking = () => {
+
      const [index, setIndex] = useState(0);
      const [routes] = useState([
           { key: 'weekly', title: 'Semanal' },
@@ -38,6 +41,7 @@ export const Ranking = () => {
           yearly: YearlyRanking,
           historic: HistoricRanking,
      });
+
 
      const renderTabBar = (props: RenderTabBarProps) => {
 

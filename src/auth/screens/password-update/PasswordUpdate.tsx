@@ -25,15 +25,20 @@ const updatePasswordSchema = Yup.object().shape({
      newPassword: Yup.string()
           .min(8, 'La contraseña debe tener al menos 8 caracteres')
           .required('La contraseña es requerida'),
+     confirmPassword: Yup.string()
+          .oneOf([Yup.ref('newPassword')], 'Las contraseñas deben coincidir')
+          .required('Confirmar contraseña es requerida'),
 });
 interface PasswordUpdateFormValues {
      currentPassword: string;
      newPassword: string;
+     confirmPassword: string;
 }
 export default function PasswordUpdate() {
      const values: PasswordUpdateFormValues = {
           currentPassword: '',
           newPassword: '',
+          confirmPassword: '',
      };
      const { user } = useAppSelector((state: RootState) => state.user);
      const dispatch = useAppDispatch();
@@ -120,7 +125,10 @@ export default function PasswordUpdate() {
                               handleSubmit,
                               values,
                               errors,
+                              isValid,
+                              dirty
                          }) => {
+                              const isButtonDisabled = !isValid || !dirty || isLoading;
                               return (
                                    <VStack
                                         space={4}
@@ -132,8 +140,12 @@ export default function PasswordUpdate() {
                                              bgColor={theme.colors.tertiary}
                                              isInvalid={
                                                   errors.currentPassword
-                                                       ? true
-                                                       : false
+                                                       &&
+                                                       touched.currentPassword
+                                                       ?
+                                                       true
+                                                       :
+                                                       false
                                              }
                                              formControlLabel="Contraseña actual"
                                              placeholder="Contraseña actual"
@@ -145,6 +157,7 @@ export default function PasswordUpdate() {
                                              )}
                                              value={values.currentPassword}
                                              errors={errors.currentPassword}
+                                             onBlur={handleBlur('currentPassword')}
                                              type="password"
                                         />
 
@@ -152,8 +165,12 @@ export default function PasswordUpdate() {
                                              bgColor={theme.colors.tertiary}
                                              isInvalid={
                                                   errors.newPassword
-                                                       ? true
-                                                       : false
+                                                       &&
+                                                       touched.newPassword
+                                                       ?
+                                                       true
+                                                       :
+                                                       false
                                              }
                                              formControlLabel="Contraseña nueva"
                                              placeholder="Contraseña nueva"
@@ -165,23 +182,42 @@ export default function PasswordUpdate() {
                                              )}
                                              value={values.newPassword}
                                              errors={errors.newPassword}
+                                             onBlur={handleBlur('newPassword')}
+                                             type="password"
+                                        />
+
+                                        <ValidatedInputText
+                                             bgColor={theme.colors.tertiary}
+                                             isInvalid={
+                                                  errors.confirmPassword
+                                                       &&
+                                                       touched.confirmPassword
+                                                       ?
+                                                       true
+                                                       :
+                                                       false
+                                             }
+                                             formControlLabel="Confirmar contraseña nueva"
+                                             placeholder="Confirmar contraseña nueva"
+                                             placeholderTextColor={theme.colors.tertiary}
+                                             onChangeText={handleChange('confirmPassword')}
+                                             value={values.confirmPassword}
+                                             errors={errors.confirmPassword}
+                                             onBlur={handleBlur('confirmPassword')}
                                              type="password"
                                         />
 
                                         <Button
-                                             onPress={() =>
-                                                  handleUpdatePassword(values)
-                                             }
+                                             onPress={() => handleSubmit()}
                                              borderRadius={'full'}
                                              w={['90%', '80%']}
-                                             backgroundColor={
-                                                  theme.colors.primary
-                                             }
+                                             backgroundColor={theme.colors.primary}
                                              isLoading={isLoading}
                                              spinnerPlacement="end"
                                              _spinner={{
                                                   color: theme.colors.white,
                                              }}
+                                             isDisabled={isButtonDisabled}
                                         >
                                              <Text
                                                   color={theme.colors.white}
