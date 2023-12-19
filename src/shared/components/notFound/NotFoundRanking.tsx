@@ -29,6 +29,7 @@ export const NotFoundRanking = ({ message }: Props) => {
                     }}
                />
                <Text
+                    textAlign={'center'}
                     color={theme.colors.coolGray[900]}
                     fontSize={{
                          base: 'sm',

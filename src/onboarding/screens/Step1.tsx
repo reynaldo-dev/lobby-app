@@ -18,8 +18,7 @@ export default function Step1() {
 
   const handleCreateToken = async (token: string) => {
     try {
-      const response = await createFcmToken({ token: token, userId: user?.id as string }).unwrap();
-      console.log('Token FCM creado:', response);
+      await createFcmToken({ token: token, userId: user?.id as string }).unwrap();
     } catch (error) {
       console.error('Error al crear el token FCM:', error);
     }

@@ -54,6 +54,13 @@ export const leaguesApi = createApi({
           getAnnualRanking: builder.query<IRanking, { year?: number }>({
                query: ({ year }) => `/leagues/ranking/annual/${year}`,
           }),
+          getAnnualRankingByCategoryId: builder.query<
+               IRanking,
+               { year?: number; userId: string; categoryId: string }
+          >({
+               query: ({ year, userId, categoryId }) =>
+                    `/leagues/ranking/annual/${year}/${userId}/${categoryId}`,
+          }),
           getWeeklyRanking: builder.query<IRanking, void>({
                query: () => `/leagues/ranking/weekly`,
           }),
@@ -70,4 +77,5 @@ export const {
      useGetMonthlyRankingQuery,
      useGetWeeklyRankingQuery,
      useLazyGetRankingByCategoryIdQuery,
+     useLazyGetAnnualRankingByCategoryIdQuery,
 } = leaguesApi;
